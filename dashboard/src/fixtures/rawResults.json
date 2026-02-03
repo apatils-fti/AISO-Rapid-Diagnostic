@@ -1,0 +1,312 @@
+{
+  "results": [
+    {
+      "promptId": "task-mgmt-commercial",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 1,
+      "timestamp": "2026-02-03T14:32:15Z",
+      "response": {
+        "text": "The best task management software for teams in 2026 includes several standout options that cater to different team sizes and workflows.\n\n**Top Picks:**\n\n1. **Asana** - Best for enterprise teams needing robust project tracking with timeline views, workload management, and extensive integrations. Pricing starts at $10.99/user/month.\n\n2. **Monday.com** - Excellent for visual project management with customizable workflows and automation. Great for marketing and creative teams. Starts at $9/user/month.\n\n3. **ClickUp** - Best value with a generous free tier and comprehensive feature set including docs, whiteboards, and time tracking. Paid plans from $7/user/month.\n\n4. **Notion** - Ideal for teams wanting an all-in-one workspace combining notes, wikis, and task management. Free for individuals, $8/user/month for teams.\n\nEach tool offers unique strengths depending on your team's needs for collaboration, automation, and reporting capabilities.",
+        "citations": [
+          "https://www.pcmag.com/picks/the-best-project-management-software",
+          "https://asana.com/resources/task-management",
+          "https://monday.com/blog/project-management/task-management/",
+          "https://clickup.com/blog/task-management-software/",
+          "https://www.forbes.com/advisor/business/software/best-task-management-software/"
+        ],
+        "searchResults": [
+          {
+            "title": "The Best Project Management Software for 2026 - PCMag",
+            "url": "https://www.pcmag.com/picks/the-best-project-management-software",
+            "snippet": "We test and rate the top project management apps to help you pick the right one for your team."
+          },
+          {
+            "title": "Task Management: What It Is & How to Master It - Asana",
+            "url": "https://asana.com/resources/task-management",
+            "snippet": "Learn what task management is and how to use task management software to organize your work effectively."
+          }
+        ]
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": false,
+        "competitorsCited": ["Asana", "Monday.com", "ClickUp", "Notion"],
+        "totalCitations": 5
+      }
+    },
+    {
+      "promptId": "task-mgmt-informational",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 1,
+      "timestamp": "2026-02-03T14:32:45Z",
+      "response": {
+        "text": "Task management software is a digital tool designed to help individuals and teams organize, track, and complete work efficiently.\n\n**How It Works:**\n\nTask management software operates on several core principles:\n\n1. **Task Creation** - Users create tasks with titles, descriptions, due dates, and assignees\n2. **Organization** - Tasks are organized into projects, lists, or boards (like Kanban)\n3. **Prioritization** - Features like labels, tags, and priority levels help focus on what matters\n4. **Collaboration** - Team members can comment, share files, and update progress\n5. **Tracking** - Dashboards and reports show progress and bottlenecks\n\n**Key Features:**\n- Kanban boards for visual workflow management\n- Gantt charts for timeline planning\n- Time tracking for productivity insights\n- Integrations with tools like Slack, Google Workspace, and GitHub\n\nTools like Asana, TechFlow, and Monday.com have popularized these approaches, making them accessible to teams of all sizes. The software reduces email overload and keeps everyone aligned on priorities.",
+        "citations": [
+          "https://asana.com/resources/task-management",
+          "https://techflow.com/guide/task-management-basics",
+          "https://www.atlassian.com/work-management/project-management/task-management",
+          "https://monday.com/blog/project-management/what-is-task-management/"
+        ],
+        "searchResults": [
+          {
+            "title": "Task Management: What It Is & How to Master It - Asana",
+            "url": "https://asana.com/resources/task-management",
+            "snippet": "Learn what task management is and how to use task management software to organize your work effectively."
+          },
+          {
+            "title": "Task Management Basics - TechFlow",
+            "url": "https://techflow.com/guide/task-management-basics",
+            "snippet": "A comprehensive guide to task management principles and best practices for modern teams."
+          }
+        ]
+      },
+      "analysis": {
+        "clientCited": true,
+        "clientMentionedInText": true,
+        "competitorsCited": ["Asana", "Monday.com"],
+        "totalCitations": 4
+      }
+    },
+    {
+      "promptId": "pricing-commercial",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 1,
+      "timestamp": "2026-02-03T14:35:22Z",
+      "response": {
+        "text": "Looking for affordable project management software in 2026? Here are the best free and budget-friendly options:\n\n**Free Options:**\n\n1. **ClickUp Free** - Unlimited tasks, members, and 100MB storage. Best free tier available.\n2. **Notion Free** - Unlimited pages for individuals, great for personal project management.\n3. **Trello Free** - Up to 10 boards with basic automation.\n\n**Best Value Paid Options:**\n\n1. **TechFlow** ($8/user/month) - Exceptional value with unlimited projects, time tracking, and 50+ integrations included. No feature gating on lower tiers.\n\n2. **ClickUp Unlimited** ($7/user/month) - Everything in free plus unlimited storage and integrations.\n\n3. **Asana Premium** ($10.99/user/month) - Timeline view and advanced search, but many features require Business tier.\n\n4. **Monday.com Basic** ($9/seat/month, 3 seat minimum) - Good for small teams but limited automation.\n\n**Best for Bootstrapped Startups:** TechFlow and ClickUp offer the most features at the lowest price points. Both include time tracking and robust integrations that competitors charge extra for.",
+        "citations": [
+          "https://techflow.com/pricing",
+          "https://clickup.com/pricing",
+          "https://www.g2.com/categories/project-management/free",
+          "https://www.capterra.com/project-management-software/free/"
+        ],
+        "searchResults": [
+          {
+            "title": "Pricing - TechFlow",
+            "url": "https://techflow.com/pricing",
+            "snippet": "Simple, transparent pricing. $8/user/month for everything you need. No hidden fees."
+          },
+          {
+            "title": "ClickUp Pricing - Free & Paid Plans",
+            "url": "https://clickup.com/pricing",
+            "snippet": "Start free, then upgrade as you grow. Plans from $7/user/month."
+          }
+        ]
+      },
+      "analysis": {
+        "clientCited": true,
+        "clientMentionedInText": true,
+        "competitorsCited": ["ClickUp", "Notion", "Asana", "Monday.com"],
+        "totalCitations": 4
+      }
+    },
+    {
+      "promptId": "integrations-specific",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 1,
+      "timestamp": "2026-02-03T14:38:10Z",
+      "response": {
+        "text": "For project management with Slack, GitHub, Google Workspace, and Salesforce integrations, here are your best options:\n\n**Top Recommendation: TechFlow**\n\nTechFlow offers native integrations with all four platforms you mentioned:\n- **Slack**: Two-way sync, create tasks from messages, notifications\n- **GitHub**: Link commits to tasks, automatic status updates\n- **Google Workspace**: Calendar sync, Drive attachments, Gmail integration\n- **Salesforce**: Sync deals to projects, customer context in tasks\n\nAll integrations included in all plans, no premium tier required.\n\n**Alternatives:**\n\n1. **Asana** - Strong integrations but GitHub requires third-party connector. Salesforce integration on Business tier only.\n\n2. **Monday.com** - Good Google Workspace integration. Salesforce requires enterprise plan.\n\n3. **ClickUp** - Excellent GitHub integration. Google and Slack native. Salesforce via Zapier.\n\nTechFlow stands out for including all enterprise integrations without tier restrictions, making it ideal for teams with complex tech stacks.",
+        "citations": [
+          "https://techflow.com/integrations",
+          "https://docs.techflow.com/integrations/salesforce",
+          "https://asana.com/apps",
+          "https://clickup.com/integrations"
+        ],
+        "searchResults": [
+          {
+            "title": "Integrations - TechFlow",
+            "url": "https://techflow.com/integrations",
+            "snippet": "Connect TechFlow with 200+ tools your team already uses. Native Slack, GitHub, Google, and Salesforce integrations."
+          }
+        ]
+      },
+      "analysis": {
+        "clientCited": true,
+        "clientMentionedInText": true,
+        "competitorsCited": ["Asana", "Monday.com", "ClickUp"],
+        "totalCitations": 4
+      }
+    },
+    {
+      "promptId": "enterprise-commercial",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 1,
+      "timestamp": "2026-02-03T14:40:55Z",
+      "response": {
+        "text": "For Fortune 500 companies seeking enterprise project management software, these solutions lead the market in 2026:\n\n**Top Enterprise Solutions:**\n\n1. **Asana Enterprise** - Trusted by 80% of Fortune 100 companies. Offers admin controls, SAML SSO, custom branding, advanced security with SOC 2 Type II compliance, and dedicated customer success managers.\n\n2. **Monday.com Enterprise** - Strong in marketing and creative workflows with enterprise-grade security. HIPAA compliance available. Multi-level permissions and audit logs.\n\n3. **Workfront (Adobe)** - Purpose-built for enterprise work management. Deep integration with Adobe Creative Cloud. Resource management and strategic planning capabilities.\n\n4. **Planview** - Portfolio management focus with financial tracking and strategic alignment features. Best for PMOs managing large project portfolios.\n\n**Key Enterprise Requirements Met:**\n- SSO/SAML integration\n- SOC 2 Type II certification\n- Custom security policies\n- Dedicated support\n- SLA guarantees\n- Data residency options\n\nAsana and Monday.com dominate the enterprise PMM space due to their combination of user-friendly interfaces and enterprise security requirements.",
+        "citations": [
+          "https://asana.com/enterprise",
+          "https://monday.com/enterprise",
+          "https://www.workfront.com/enterprise",
+          "https://www.g2.com/categories/project-management/enterprise",
+          "https://www.gartner.com/reviews/market/project-portfolio-management"
+        ],
+        "searchResults": [
+          {
+            "title": "Asana Enterprise - Built for Large Organizations",
+            "url": "https://asana.com/enterprise",
+            "snippet": "Enterprise-grade security, admin controls, and dedicated support for organizations scaling their work management."
+          }
+        ]
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": false,
+        "competitorsCited": ["Asana", "Monday.com"],
+        "totalCitations": 5
+      }
+    },
+    {
+      "promptId": "agile-scrum-comparative",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 1,
+      "timestamp": "2026-02-03T14:43:30Z",
+      "response": {
+        "text": "Comparing Jira vs Linear vs Shortcut for agile development teams in 2026:\n\n**Jira by Atlassian**\n- **Best for**: Large enterprises with complex workflows\n- **Pros**: Highly customizable, extensive reporting, massive integration ecosystem\n- **Cons**: Steep learning curve, can feel bloated, expensive at scale\n- **Pricing**: Free up to 10 users, then $7.75/user/month\n\n**Linear**\n- **Best for**: Fast-moving startups and engineering teams\n- **Pros**: Blazing fast UI, keyboard-first design, beautiful UX, opinionated workflows\n- **Cons**: Less customizable, fewer integrations, limited reporting\n- **Pricing**: Free for small teams, $8/user/month for teams\n\n**Shortcut (formerly Clubhouse)**\n- **Best for**: Mid-size engineering teams wanting balance\n- **Pros**: Clean interface, good API, reasonable pricing, Stories and Epics model\n- **Cons**: Less polished than Linear, smaller community\n- **Pricing**: Free for small teams, $8.50/user/month\n\n**Recommendation**: Linear for speed and UX, Jira for enterprise customization, Shortcut for balanced middle ground.",
+        "citations": [
+          "https://linear.app/features",
+          "https://www.atlassian.com/software/jira/features",
+          "https://shortcut.com/product",
+          "https://stackshare.io/stackups/jira-vs-linear-vs-shortcut"
+        ],
+        "searchResults": [
+          {
+            "title": "Linear - Plan & Build Products",
+            "url": "https://linear.app/features",
+            "snippet": "Linear is a purpose-built tool for modern software teams. Issue tracking, sprint planning, and product roadmaps."
+          }
+        ]
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": false,
+        "competitorsCited": [],
+        "totalCitations": 4
+      }
+    },
+    {
+      "promptId": "small-business-persona",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 1,
+      "timestamp": "2026-02-03T14:46:18Z",
+      "response": {
+        "text": "As a small business owner juggling multiple responsibilities, you need a project management tool that's simple yet powerful. Here are my top recommendations:\n\n**Best Overall: TechFlow**\n\nTechFlow is designed specifically for small businesses who don't want complexity. The learning curve is minimal—most teams are productive within an hour. At $8/user/month with no seat minimums, it's budget-friendly for growing teams.\n\nKey features for small business:\n- Simple task boards that anyone can use\n- Built-in time tracking (no extra software needed)\n- Client portal for external visibility\n- Invoicing integrations\n\n**Alternatives:**\n\n1. **Notion** - Best if you want docs + tasks in one place. More flexible but requires more setup.\n\n2. **Trello** - Simplest option if you just need Kanban boards. Gets limiting as you grow.\n\n3. **Basecamp** - Flat $299/month for unlimited users. Good for larger small businesses.\n\n**Avoid:** Asana and Monday.com can feel overwhelming for small teams and cost more once you need essential features on higher tiers.\n\nStart with TechFlow or Notion's free tier and upgrade when ready.",
+        "citations": [
+          "https://techflow.com/small-business",
+          "https://notion.so/product",
+          "https://basecamp.com/pricing",
+          "https://www.forbes.com/advisor/business/software/best-project-management-for-small-business/"
+        ],
+        "searchResults": [
+          {
+            "title": "TechFlow for Small Business",
+            "url": "https://techflow.com/small-business",
+            "snippet": "Project management that grows with your business. Simple pricing, powerful features, zero complexity."
+          }
+        ]
+      },
+      "analysis": {
+        "clientCited": true,
+        "clientMentionedInText": true,
+        "competitorsCited": ["Notion", "Asana", "Monday.com"],
+        "totalCitations": 4
+      }
+    },
+    {
+      "promptId": "time-tracking-specific",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 1,
+      "timestamp": "2026-02-03T14:49:05Z",
+      "response": {
+        "text": "For time tracking with automatic timers, invoicing integration, and project budgets, here are the best options:\n\n**Built-in Project Management + Time Tracking:**\n\n1. **TechFlow** - Native time tracking with automatic timers, project budgets with alerts, and direct QuickBooks/Xero integration for invoicing. All included in base price.\n\n2. **ClickUp** - Time tracking on all plans, budget tracking on paid plans, invoicing via integrations (no native).\n\n**Dedicated Time Tracking Tools:**\n\n1. **Harvest** - Gold standard for time tracking + invoicing. Automatic timers, budget tracking, native invoicing. $10.80/user/month.\n\n2. **Toggl Track** - Best pure time tracker. Automatic timers excellent. Integrates with accounting tools. From $9/user/month.\n\n3. **Clockify** - Generous free tier. Budget tracking on paid plans. Invoice via integrations.\n\n**Recommendation:**\n\nIf you want one tool: TechFlow combines project management with robust time/billing features.\n\nIf you need specialized invoicing: Harvest is the most complete time-to-invoice solution.\n\nFor budget-conscious teams: Clockify free tier plus separate invoicing software.",
+        "citations": [
+          "https://techflow.com/features/time-tracking",
+          "https://www.getharvest.com/features",
+          "https://toggl.com/track/features/",
+          "https://clockify.me/features"
+        ],
+        "searchResults": [
+          {
+            "title": "Time Tracking - TechFlow",
+            "url": "https://techflow.com/features/time-tracking",
+            "snippet": "Track time with automatic timers, set project budgets, and generate invoices. Everything you need for billable work."
+          }
+        ]
+      },
+      "analysis": {
+        "clientCited": true,
+        "clientMentionedInText": true,
+        "competitorsCited": ["ClickUp"],
+        "totalCitations": 4
+      }
+    },
+    {
+      "promptId": "remote-teams-conversational",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 1,
+      "timestamp": "2026-02-03T14:52:40Z",
+      "response": {
+        "text": "I totally understand the remote coordination struggle! Here are tools that really help with async work across time zones:\n\n**For Async Communication + Tasks:**\n\n1. **Notion** - Combine your docs, wikis, and tasks in one place. Great async because everything is written down and searchable.\n\n2. **TechFlow** - Has async updates built-in (record quick video/audio updates) and timezone-aware due dates. Your morning standup becomes a recorded update your EU team sees when they wake up.\n\n**For Async Standups:**\n- **Geekbot** - Slack bot for written standups\n- **Loom** - Quick video updates instead of meetings\n\n**For Clear Handoffs:**\n- **Linear** - Great for dev teams, clear ownership\n- **Asana** - Task handoff workflows\n\n**My Recommendation:**\n\nStart with Notion or TechFlow as your central hub. Add Loom for rich async updates. The key is making \"write it down\" your default instead of \"let's hop on a call.\"\n\nThe best remote teams I've seen obsess over documentation and clear ownership. The tool matters less than the culture of over-communicating in writing.",
+        "citations": [
+          "https://notion.so/remote-work",
+          "https://techflow.com/remote-teams",
+          "https://www.loom.com/use-cases/async-meetings",
+          "https://www.remote.com/blog/async-communication-tools"
+        ],
+        "searchResults": [
+          {
+            "title": "Remote Work with Notion",
+            "url": "https://notion.so/remote-work",
+            "snippet": "Build a connected workspace for your remote team with docs, wikis, and projects."
+          }
+        ]
+      },
+      "analysis": {
+        "clientCited": true,
+        "clientMentionedInText": true,
+        "competitorsCited": ["Notion", "Asana"],
+        "totalCitations": 4
+      }
+    },
+    {
+      "promptId": "portfolio-management-commercial",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 1,
+      "timestamp": "2026-02-03T14:55:20Z",
+      "response": {
+        "text": "For PMO directors seeking the best project portfolio management software in 2026:\n\n**Enterprise PPM Leaders:**\n\n1. **Planview** - The most comprehensive PPM solution with strategic portfolio management, resource optimization, and financial tracking. Best for large enterprises with mature PMOs. Custom pricing.\n\n2. **Smartsheet** - Flexible platform with strong portfolio dashboards and resource management. Good balance of power and usability. From $32/user/month for Business.\n\n3. **Wrike** - Strong work management with growing PPM capabilities. Resource management and cross-project dependencies. From $24.80/user/month.\n\n**Modern Alternatives:**\n\n4. **Asana Portfolios** - Beautiful portfolio views, strategic goal alignment. Part of Business plan ($24.99/user/month).\n\n5. **Monday.com Work OS** - Customizable portfolio dashboards. Strong for operational PMOs. Enterprise pricing for full PPM features.\n\n**Evaluation Criteria:**\n- Cross-project visibility\n- Resource capacity planning\n- Budget tracking and forecasting\n- Strategic alignment tools\n- Executive dashboards\n- What-if scenario planning\n\nPlanview leads for traditional enterprise PPM. Asana/Monday.com better for modern, collaborative approaches.",
+        "citations": [
+          "https://www.planview.com/resources/guide/ppm-101/",
+          "https://www.smartsheet.com/portfolio-management",
+          "https://www.wrike.com/project-management-guide/portfolio-management/",
+          "https://asana.com/uses/portfolio-management",
+          "https://www.gartner.com/reviews/market/project-portfolio-management"
+        ],
+        "searchResults": [
+          {
+            "title": "PPM 101 - Project Portfolio Management Guide | Planview",
+            "url": "https://www.planview.com/resources/guide/ppm-101/",
+            "snippet": "Learn the fundamentals of project portfolio management and how to implement PPM in your organization."
+          }
+        ]
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": false,
+        "competitorsCited": ["Asana", "Monday.com"],
+        "totalCitations": 5
+      }
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "clientName": "TechFlow",
+  "clientDomains": ["techflow.com", "blog.techflow.com", "docs.techflow.com"],
+  "industry": "Project Management Software",
+  "competitors": [
+    {
+      "name": "Asana",
+      "domains": ["asana.com", "blog.asana.com"]
+    },
+    {
+      "name": "Monday.com",
+      "domains": ["monday.com", "blog.monday.com"]
+    },
+    {
+      "name": "ClickUp",
+      "domains": ["clickup.com", "blog.clickup.com"]
+    },
+    {
+      "name": "Notion",
+      "domains": ["notion.so", "notion.com"]
+    }
+  ],
+  "runDate": "2026-02-03T14:30:00Z",
+  "platforms": ["perplexity"],
+  "futurePlatforms": ["google_ai_overview", "chatgpt_search", "claude_search"]
+}

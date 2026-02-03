@@ -1,0 +1,111 @@
+'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import {
+  LayoutDashboard,
+  Grid3X3,
+  Users,
+  Layers,
+  List,
+  Download,
+  Settings,
+  Activity,
+} from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { clientConfig } from '@/lib/fixtures';
+import { formatDateShort } from '@/lib/utils';
+
+const navItems = [
+  {
+    label: 'Overview',
+    href: '/dashboard',
+    icon: LayoutDashboard,
+  },
+  {
+    label: 'Topics',
+    href: '/topics',
+    icon: Grid3X3,
+  },
+  {
+    label: 'Competitors',
+    href: '/competitors',
+    icon: Users,
+  },
+  {
+    label: 'Gap Analysis',
+    href: '/gap-analysis',
+    icon: Layers,
+  },
+  {
+    label: 'Prompt Detail',
+    href: '/prompts',
+    icon: List,
+  },
+];
+
+export function Sidebar() {
+  const pathname = usePathname();
+
+  return (
+    <aside className="fixed left-0 top-0 z-40 h-screen w-60 border-r border-[#2A2D37] bg-[#0F1117]">
+      <div className="flex h-full flex-col">
+        {/* Logo */}
+        <div className="flex h-16 items-center gap-2 border-b border-[#2A2D37] px-4">
+          <Activity className="h-6 w-6 text-[#00D4AA]" />
+          <span className="font-heading text-lg font-semibold text-[#E5E7EB]">
+            AI Search Diagnostic
+          </span>
+        </div>
+
+        {/* Client Info */}
+        <div className="border-b border-[#2A2D37] px-4 py-4">
+          <div className="text-sm font-medium text-[#E5E7EB]">
+            {clientConfig.clientName}
+          </div>
+          <div className="text-xs text-[#6B7280]">
+            Run: {formatDateShort(clientConfig.runDate)}
+          </div>
+        </div>
+
+        {/* Navigation */}
+        <nav className="flex-1 space-y-1 px-3 py-4">
+          {navItems.map((item) => {
+            const isActive =
+              pathname === item.href ||
+              (item.href !== '/dashboard' && pathname.startsWith(item.href));
+            const Icon = item.icon;
+
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                  isActive
+                    ? 'bg-[#00D4AA]/10 text-[#00D4AA]'
+                    : 'text-[#9CA3AF] hover:bg-[#1A1D27] hover:text-[#E5E7EB]'
+                )}
+              >
+                <Icon className="h-5 w-5" />
+                {item.label}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Bottom Actions */}
+        <div className="border-t border-[#2A2D37] p-3 space-y-1">
+          <button className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-[#9CA3AF] hover:bg-[#1A1D27] hover:text-[#E5E7EB] transition-colors">
+            <Download className="h-5 w-5" />
+            Export Report
+          </button>
+          <button className="flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-[#9CA3AF] hover:bg-[#1A1D27] hover:text-[#E5E7EB] transition-colors">
+            <Settings className="h-5 w-5" />
+            Settings
+          </button>
+        </div>
+      </div>
+    </aside>
+  );
+}

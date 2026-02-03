@@ -1,0 +1,1219 @@
+{
+  "summary": {
+    "overallScore": 34,
+    "totalPrompts": 90,
+    "totalCitations": 487,
+    "clientCitations": 42,
+    "citationShare": 0.086,
+    "parametricMentionRate": 0.12,
+    "ragCitationRate": 0.22,
+    "topCompetitor": {
+      "name": "Asana",
+      "citationShare": 0.28
+    },
+    "platformBreakdown": {
+      "perplexity": {
+        "citationShare": 0.086,
+        "promptsCited": 18,
+        "totalPrompts": 90,
+        "avgCitationPosition": 3.2,
+        "available": true
+      },
+      "google_ai_overview": {
+        "available": false,
+        "comingSoon": true
+      },
+      "chatgpt_search": {
+        "available": false,
+        "comingSoon": true
+      },
+      "claude_search": {
+        "available": false,
+        "comingSoon": true
+      }
+    }
+  },
+  "topicResults": [
+    {
+      "topicId": "task-management",
+      "topicName": "Task Management",
+      "category": "Core Features",
+      "overallScore": 45,
+      "isotopeResults": {
+        "informational": {
+          "cited": true,
+          "citationCount": 2,
+          "avgPosition": 2.5,
+          "consistency": 0.67,
+          "runs": 3,
+          "runsWithCitation": 2,
+          "competitorCitations": { "Asana": 3, "Monday.com": 2, "ClickUp": 1, "Notion": 1 }
+        },
+        "commercial": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 3, "Monday.com": 3, "ClickUp": 2, "Notion": 2 }
+        },
+        "comparative": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 4.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 3, "Monday.com": 3, "ClickUp": 3, "Notion": 0 }
+        },
+        "persona": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 1, "ClickUp": 2, "Notion": 1 }
+        },
+        "specific": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 3.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 1, "Monday.com": 2, "ClickUp": 1, "Notion": 0 }
+        },
+        "conversational": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 1, "Notion": 1 }
+        }
+      },
+      "robustnessScore": 0.50,
+      "parametricPresence": {
+        "mentioned": true,
+        "mentionRate": 0.33,
+        "sentiment": "neutral",
+        "position": "secondary"
+      }
+    },
+    {
+      "topicId": "team-collaboration",
+      "topicName": "Team Collaboration",
+      "category": "Core Features",
+      "overallScore": 28,
+      "isotopeResults": {
+        "informational": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 4.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 1, "Notion": 3 }
+        },
+        "commercial": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 3, "Monday.com": 2, "ClickUp": 2, "Notion": 3 }
+        },
+        "comparative": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 1, "Notion": 3 }
+        },
+        "persona": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 1, "ClickUp": 1, "Notion": 2 }
+        },
+        "specific": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 5.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 1, "Monday.com": 2, "ClickUp": 1, "Notion": 2 }
+        },
+        "conversational": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 1, "ClickUp": 1, "Notion": 2 }
+        }
+      },
+      "robustnessScore": 0.33,
+      "parametricPresence": {
+        "mentioned": false,
+        "mentionRate": 0.11,
+        "sentiment": "neutral",
+        "position": "absent"
+      }
+    },
+    {
+      "topicId": "project-tracking",
+      "topicName": "Project Tracking",
+      "category": "Core Features",
+      "overallScore": 38,
+      "isotopeResults": {
+        "informational": {
+          "cited": true,
+          "citationCount": 2,
+          "avgPosition": 3.0,
+          "consistency": 0.67,
+          "runs": 3,
+          "runsWithCitation": 2,
+          "competitorCitations": { "Asana": 3, "Monday.com": 3, "ClickUp": 2, "Notion": 1 }
+        },
+        "commercial": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 3, "Monday.com": 3, "ClickUp": 3, "Notion": 1 }
+        },
+        "comparative": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 3, "Monday.com": 3, "ClickUp": 2, "Notion": 0 }
+        },
+        "persona": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 4.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 1, "Notion": 1 }
+        },
+        "specific": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 2, "Notion": 0 }
+        },
+        "conversational": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 3, "ClickUp": 1, "Notion": 1 }
+        }
+      },
+      "robustnessScore": 0.33,
+      "parametricPresence": {
+        "mentioned": true,
+        "mentionRate": 0.22,
+        "sentiment": "neutral",
+        "position": "secondary"
+      }
+    },
+    {
+      "topicId": "resource-allocation",
+      "topicName": "Resource Allocation",
+      "category": "Advanced Features",
+      "overallScore": 22,
+      "isotopeResults": {
+        "informational": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 3, "ClickUp": 1, "Notion": 0 }
+        },
+        "commercial": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 3, "ClickUp": 2, "Notion": 1 }
+        },
+        "comparative": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 1, "Monday.com": 2, "ClickUp": 1, "Notion": 0 }
+        },
+        "persona": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 5.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 1, "Notion": 0 }
+        },
+        "specific": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 4.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 1, "Monday.com": 2, "ClickUp": 1, "Notion": 0 }
+        },
+        "conversational": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 1, "Monday.com": 2, "ClickUp": 1, "Notion": 1 }
+        }
+      },
+      "robustnessScore": 0.33,
+      "parametricPresence": {
+        "mentioned": false,
+        "mentionRate": 0.0,
+        "sentiment": "neutral",
+        "position": "absent"
+      }
+    },
+    {
+      "topicId": "gantt-charts",
+      "topicName": "Gantt Charts",
+      "category": "Advanced Features",
+      "overallScore": 18,
+      "isotopeResults": {
+        "informational": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 3, "ClickUp": 2, "Notion": 0 }
+        },
+        "commercial": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 3, "Monday.com": 3, "ClickUp": 2, "Notion": 0 }
+        },
+        "comparative": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 3, "ClickUp": 2, "Notion": 0 }
+        },
+        "persona": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 1, "Notion": 0 }
+        },
+        "specific": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 5.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 2, "Notion": 0 }
+        },
+        "conversational": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 1, "Monday.com": 2, "ClickUp": 1, "Notion": 1 }
+        }
+      },
+      "robustnessScore": 0.17,
+      "parametricPresence": {
+        "mentioned": false,
+        "mentionRate": 0.0,
+        "sentiment": "neutral",
+        "position": "absent"
+      }
+    },
+    {
+      "topicId": "agile-scrum",
+      "topicName": "Agile & Scrum Tools",
+      "category": "Methodologies",
+      "overallScore": 15,
+      "isotopeResults": {
+        "informational": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 1, "ClickUp": 3, "Notion": 1 }
+        },
+        "commercial": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 3, "Notion": 1 }
+        },
+        "comparative": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 1, "ClickUp": 3, "Notion": 0 }
+        },
+        "persona": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 1, "ClickUp": 3, "Notion": 0 }
+        },
+        "specific": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 6.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 1, "Monday.com": 1, "ClickUp": 3, "Notion": 0 }
+        },
+        "conversational": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 1, "Monday.com": 1, "ClickUp": 2, "Notion": 1 }
+        }
+      },
+      "robustnessScore": 0.17,
+      "parametricPresence": {
+        "mentioned": false,
+        "mentionRate": 0.0,
+        "sentiment": "neutral",
+        "position": "absent"
+      }
+    },
+    {
+      "topicId": "time-tracking",
+      "topicName": "Time Tracking",
+      "category": "Productivity",
+      "overallScore": 42,
+      "isotopeResults": {
+        "informational": {
+          "cited": true,
+          "citationCount": 2,
+          "avgPosition": 3.0,
+          "consistency": 0.67,
+          "runs": 3,
+          "runsWithCitation": 2,
+          "competitorCitations": { "Asana": 1, "Monday.com": 2, "ClickUp": 3, "Notion": 0 }
+        },
+        "commercial": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 4.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 3, "Notion": 0 }
+        },
+        "comparative": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 1, "Monday.com": 1, "ClickUp": 2, "Notion": 0 }
+        },
+        "persona": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 4.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 1, "Monday.com": 1, "ClickUp": 2, "Notion": 0 }
+        },
+        "specific": {
+          "cited": true,
+          "citationCount": 2,
+          "avgPosition": 2.5,
+          "consistency": 0.67,
+          "runs": 3,
+          "runsWithCitation": 2,
+          "competitorCitations": { "Asana": 1, "Monday.com": 2, "ClickUp": 2, "Notion": 0 }
+        },
+        "conversational": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 1, "Monday.com": 1, "ClickUp": 2, "Notion": 1 }
+        }
+      },
+      "robustnessScore": 0.67,
+      "parametricPresence": {
+        "mentioned": true,
+        "mentionRate": 0.22,
+        "sentiment": "positive",
+        "position": "secondary"
+      }
+    },
+    {
+      "topicId": "client-reporting",
+      "topicName": "Client Reporting",
+      "category": "Productivity",
+      "overallScore": 32,
+      "isotopeResults": {
+        "informational": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 4.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 2, "Monday.com": 3, "ClickUp": 1, "Notion": 1 }
+        },
+        "commercial": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 3, "ClickUp": 2, "Notion": 1 }
+        },
+        "comparative": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 1, "Monday.com": 3, "ClickUp": 1, "Notion": 0 }
+        },
+        "persona": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 5.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 1, "Notion": 1 }
+        },
+        "specific": {
+          "cited": true,
+          "citationCount": 2,
+          "avgPosition": 3.0,
+          "consistency": 0.67,
+          "runs": 3,
+          "runsWithCitation": 2,
+          "competitorCitations": { "Asana": 1, "Monday.com": 3, "ClickUp": 1, "Notion": 0 }
+        },
+        "conversational": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 1, "Monday.com": 2, "ClickUp": 1, "Notion": 1 }
+        }
+      },
+      "robustnessScore": 0.50,
+      "parametricPresence": {
+        "mentioned": true,
+        "mentionRate": 0.11,
+        "sentiment": "neutral",
+        "position": "mentioned"
+      }
+    },
+    {
+      "topicId": "integrations",
+      "topicName": "Integrations",
+      "category": "Technical",
+      "overallScore": 58,
+      "isotopeResults": {
+        "informational": {
+          "cited": true,
+          "citationCount": 2,
+          "avgPosition": 2.0,
+          "consistency": 0.67,
+          "runs": 3,
+          "runsWithCitation": 2,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 2, "Notion": 1 }
+        },
+        "commercial": {
+          "cited": true,
+          "citationCount": 2,
+          "avgPosition": 2.5,
+          "consistency": 0.67,
+          "runs": 3,
+          "runsWithCitation": 2,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 2, "Notion": 2 }
+        },
+        "comparative": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 3.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 2, "Monday.com": 1, "ClickUp": 2, "Notion": 1 }
+        },
+        "persona": {
+          "cited": true,
+          "citationCount": 2,
+          "avgPosition": 2.0,
+          "consistency": 0.67,
+          "runs": 3,
+          "runsWithCitation": 2,
+          "competitorCitations": { "Asana": 1, "Monday.com": 1, "ClickUp": 1, "Notion": 1 }
+        },
+        "specific": {
+          "cited": true,
+          "citationCount": 3,
+          "avgPosition": 1.5,
+          "consistency": 1.0,
+          "runs": 3,
+          "runsWithCitation": 3,
+          "competitorCitations": { "Asana": 2, "Monday.com": 1, "ClickUp": 2, "Notion": 1 }
+        },
+        "conversational": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 3.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 1, "Notion": 2 }
+        }
+      },
+      "robustnessScore": 1.0,
+      "parametricPresence": {
+        "mentioned": true,
+        "mentionRate": 0.33,
+        "sentiment": "positive",
+        "position": "secondary"
+      }
+    },
+    {
+      "topicId": "pricing",
+      "topicName": "Pricing & Value",
+      "category": "Business",
+      "overallScore": 62,
+      "isotopeResults": {
+        "informational": {
+          "cited": true,
+          "citationCount": 2,
+          "avgPosition": 2.0,
+          "consistency": 0.67,
+          "runs": 3,
+          "runsWithCitation": 2,
+          "competitorCitations": { "Asana": 1, "Monday.com": 1, "ClickUp": 2, "Notion": 1 }
+        },
+        "commercial": {
+          "cited": true,
+          "citationCount": 3,
+          "avgPosition": 1.5,
+          "consistency": 1.0,
+          "runs": 3,
+          "runsWithCitation": 3,
+          "competitorCitations": { "Asana": 1, "Monday.com": 2, "ClickUp": 3, "Notion": 2 }
+        },
+        "comparative": {
+          "cited": true,
+          "citationCount": 2,
+          "avgPosition": 2.5,
+          "consistency": 0.67,
+          "runs": 3,
+          "runsWithCitation": 2,
+          "competitorCitations": { "Asana": 3, "Monday.com": 3, "ClickUp": 3, "Notion": 2 }
+        },
+        "persona": {
+          "cited": true,
+          "citationCount": 2,
+          "avgPosition": 2.0,
+          "consistency": 0.67,
+          "runs": 3,
+          "runsWithCitation": 2,
+          "competitorCitations": { "Asana": 1, "Monday.com": 1, "ClickUp": 2, "Notion": 2 }
+        },
+        "specific": {
+          "cited": true,
+          "citationCount": 3,
+          "avgPosition": 1.0,
+          "consistency": 1.0,
+          "runs": 3,
+          "runsWithCitation": 3,
+          "competitorCitations": { "Asana": 0, "Monday.com": 1, "ClickUp": 3, "Notion": 1 }
+        },
+        "conversational": {
+          "cited": true,
+          "citationCount": 2,
+          "avgPosition": 2.0,
+          "consistency": 0.67,
+          "runs": 3,
+          "runsWithCitation": 2,
+          "competitorCitations": { "Asana": 1, "Monday.com": 1, "ClickUp": 2, "Notion": 2 }
+        }
+      },
+      "robustnessScore": 1.0,
+      "parametricPresence": {
+        "mentioned": true,
+        "mentionRate": 0.44,
+        "sentiment": "positive",
+        "position": "primary"
+      }
+    },
+    {
+      "topicId": "small-business",
+      "topicName": "Small Business",
+      "category": "Business",
+      "overallScore": 48,
+      "isotopeResults": {
+        "informational": {
+          "cited": true,
+          "citationCount": 2,
+          "avgPosition": 3.0,
+          "consistency": 0.67,
+          "runs": 3,
+          "runsWithCitation": 2,
+          "competitorCitations": { "Asana": 1, "Monday.com": 2, "ClickUp": 1, "Notion": 3 }
+        },
+        "commercial": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 4.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 2, "Notion": 3 }
+        },
+        "comparative": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 1, "Monday.com": 1, "ClickUp": 1, "Notion": 3 }
+        },
+        "persona": {
+          "cited": true,
+          "citationCount": 2,
+          "avgPosition": 2.5,
+          "consistency": 0.67,
+          "runs": 3,
+          "runsWithCitation": 2,
+          "competitorCitations": { "Asana": 1, "Monday.com": 1, "ClickUp": 1, "Notion": 2 }
+        },
+        "specific": {
+          "cited": true,
+          "citationCount": 2,
+          "avgPosition": 2.0,
+          "consistency": 0.67,
+          "runs": 3,
+          "runsWithCitation": 2,
+          "competitorCitations": { "Asana": 0, "Monday.com": 1, "ClickUp": 1, "Notion": 2 }
+        },
+        "conversational": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 3.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 1, "Monday.com": 1, "ClickUp": 1, "Notion": 2 }
+        }
+      },
+      "robustnessScore": 0.83,
+      "parametricPresence": {
+        "mentioned": true,
+        "mentionRate": 0.22,
+        "sentiment": "positive",
+        "position": "secondary"
+      }
+    },
+    {
+      "topicId": "enterprise",
+      "topicName": "Enterprise",
+      "category": "Business",
+      "overallScore": 12,
+      "isotopeResults": {
+        "informational": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 3, "Monday.com": 2, "ClickUp": 1, "Notion": 1 }
+        },
+        "commercial": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 3, "Monday.com": 3, "ClickUp": 2, "Notion": 1 }
+        },
+        "comparative": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 3, "Monday.com": 3, "ClickUp": 2, "Notion": 0 }
+        },
+        "persona": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 3, "Monday.com": 2, "ClickUp": 1, "Notion": 1 }
+        },
+        "specific": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 6.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 3, "Monday.com": 2, "ClickUp": 2, "Notion": 0 }
+        },
+        "conversational": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 1, "Notion": 1 }
+        }
+      },
+      "robustnessScore": 0.17,
+      "parametricPresence": {
+        "mentioned": false,
+        "mentionRate": 0.0,
+        "sentiment": "neutral",
+        "position": "absent"
+      }
+    },
+    {
+      "topicId": "remote-teams",
+      "topicName": "Remote Teams",
+      "category": "Use Cases",
+      "overallScore": 35,
+      "isotopeResults": {
+        "informational": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 4.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 1, "Notion": 2 }
+        },
+        "commercial": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 3, "Monday.com": 2, "ClickUp": 2, "Notion": 3 }
+        },
+        "comparative": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 1, "Notion": 2 }
+        },
+        "persona": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 4.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 2, "Monday.com": 1, "ClickUp": 1, "Notion": 2 }
+        },
+        "specific": {
+          "cited": true,
+          "citationCount": 2,
+          "avgPosition": 3.0,
+          "consistency": 0.67,
+          "runs": 3,
+          "runsWithCitation": 2,
+          "competitorCitations": { "Asana": 1, "Monday.com": 1, "ClickUp": 1, "Notion": 2 }
+        },
+        "conversational": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 5.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 1, "Notion": 2 }
+        }
+      },
+      "robustnessScore": 0.67,
+      "parametricPresence": {
+        "mentioned": true,
+        "mentionRate": 0.11,
+        "sentiment": "neutral",
+        "position": "mentioned"
+      }
+    },
+    {
+      "topicId": "workflow-automation",
+      "topicName": "Workflow Automation",
+      "category": "Technical",
+      "overallScore": 38,
+      "isotopeResults": {
+        "informational": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 4.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 2, "Monday.com": 3, "ClickUp": 2, "Notion": 1 }
+        },
+        "commercial": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 4.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 2, "Monday.com": 3, "ClickUp": 3, "Notion": 1 }
+        },
+        "comparative": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 3, "Monday.com": 3, "ClickUp": 3, "Notion": 0 }
+        },
+        "persona": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 4.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 2, "Notion": 1 }
+        },
+        "specific": {
+          "cited": true,
+          "citationCount": 2,
+          "avgPosition": 3.0,
+          "consistency": 0.67,
+          "runs": 3,
+          "runsWithCitation": 2,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 2, "Notion": 1 }
+        },
+        "conversational": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 2, "Notion": 1 }
+        }
+      },
+      "robustnessScore": 0.67,
+      "parametricPresence": {
+        "mentioned": true,
+        "mentionRate": 0.11,
+        "sentiment": "neutral",
+        "position": "mentioned"
+      }
+    },
+    {
+      "topicId": "portfolio-management",
+      "topicName": "Portfolio Management",
+      "category": "Advanced Features",
+      "overallScore": 25,
+      "isotopeResults": {
+        "informational": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 3, "Monday.com": 2, "ClickUp": 1, "Notion": 1 }
+        },
+        "commercial": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 3, "Monday.com": 3, "ClickUp": 2, "Notion": 1 }
+        },
+        "comparative": {
+          "cited": false,
+          "citationCount": 0,
+          "avgPosition": null,
+          "consistency": 0.0,
+          "runs": 3,
+          "runsWithCitation": 0,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 1, "Notion": 0 }
+        },
+        "persona": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 5.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 3, "Monday.com": 2, "ClickUp": 1, "Notion": 1 }
+        },
+        "specific": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 4.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 2, "Notion": 0 }
+        },
+        "conversational": {
+          "cited": true,
+          "citationCount": 1,
+          "avgPosition": 5.0,
+          "consistency": 0.33,
+          "runs": 3,
+          "runsWithCitation": 1,
+          "competitorCitations": { "Asana": 2, "Monday.com": 2, "ClickUp": 1, "Notion": 1 }
+        }
+      },
+      "robustnessScore": 0.50,
+      "parametricPresence": {
+        "mentioned": false,
+        "mentionRate": 0.0,
+        "sentiment": "neutral",
+        "position": "absent"
+      }
+    }
+  ],
+  "competitorOverview": [
+    {
+      "name": "TechFlow",
+      "isClient": true,
+      "overallCitationShare": 0.086,
+      "topicShares": {
+        "task-management": 0.08,
+        "team-collaboration": 0.05,
+        "project-tracking": 0.07,
+        "resource-allocation": 0.05,
+        "gantt-charts": 0.03,
+        "agile-scrum": 0.02,
+        "time-tracking": 0.10,
+        "client-reporting": 0.08,
+        "integrations": 0.15,
+        "pricing": 0.18,
+        "small-business": 0.12,
+        "enterprise": 0.02,
+        "remote-teams": 0.08,
+        "workflow-automation": 0.09,
+        "portfolio-management": 0.06
+      },
+      "strongestTopics": ["pricing", "integrations", "small-business"],
+      "weakestTopics": ["enterprise", "agile-scrum", "gantt-charts"],
+      "avgCitationPosition": 3.2,
+      "parametricMentionRate": 0.12
+    },
+    {
+      "name": "Asana",
+      "isClient": false,
+      "overallCitationShare": 0.28,
+      "topicShares": {
+        "task-management": 0.32,
+        "team-collaboration": 0.25,
+        "project-tracking": 0.30,
+        "resource-allocation": 0.22,
+        "gantt-charts": 0.28,
+        "agile-scrum": 0.24,
+        "time-tracking": 0.18,
+        "client-reporting": 0.22,
+        "integrations": 0.25,
+        "pricing": 0.12,
+        "small-business": 0.15,
+        "enterprise": 0.42,
+        "remote-teams": 0.28,
+        "workflow-automation": 0.30,
+        "portfolio-management": 0.38
+      },
+      "strongestTopics": ["enterprise", "portfolio-management", "task-management"],
+      "weakestTopics": ["pricing", "small-business", "time-tracking"],
+      "avgCitationPosition": 1.8,
+      "parametricMentionRate": 0.78
+    },
+    {
+      "name": "Monday.com",
+      "isClient": false,
+      "overallCitationShare": 0.22,
+      "topicShares": {
+        "task-management": 0.28,
+        "team-collaboration": 0.22,
+        "project-tracking": 0.32,
+        "resource-allocation": 0.30,
+        "gantt-charts": 0.32,
+        "agile-scrum": 0.16,
+        "time-tracking": 0.20,
+        "client-reporting": 0.35,
+        "integrations": 0.18,
+        "pricing": 0.15,
+        "small-business": 0.18,
+        "enterprise": 0.30,
+        "remote-teams": 0.22,
+        "workflow-automation": 0.32,
+        "portfolio-management": 0.28
+      },
+      "strongestTopics": ["client-reporting", "project-tracking", "gantt-charts"],
+      "weakestTopics": ["agile-scrum", "pricing", "integrations"],
+      "avgCitationPosition": 2.1,
+      "parametricMentionRate": 0.65
+    },
+    {
+      "name": "ClickUp",
+      "isClient": false,
+      "overallCitationShare": 0.18,
+      "topicShares": {
+        "task-management": 0.18,
+        "team-collaboration": 0.15,
+        "project-tracking": 0.22,
+        "resource-allocation": 0.14,
+        "gantt-charts": 0.22,
+        "agile-scrum": 0.38,
+        "time-tracking": 0.32,
+        "client-reporting": 0.14,
+        "integrations": 0.20,
+        "pricing": 0.28,
+        "small-business": 0.14,
+        "enterprise": 0.16,
+        "remote-teams": 0.15,
+        "workflow-automation": 0.28,
+        "portfolio-management": 0.15
+      },
+      "strongestTopics": ["agile-scrum", "time-tracking", "pricing"],
+      "weakestTopics": ["client-reporting", "resource-allocation", "small-business"],
+      "avgCitationPosition": 2.4,
+      "parametricMentionRate": 0.45
+    },
+    {
+      "name": "Notion",
+      "isClient": false,
+      "overallCitationShare": 0.14,
+      "topicShares": {
+        "task-management": 0.12,
+        "team-collaboration": 0.28,
+        "project-tracking": 0.08,
+        "resource-allocation": 0.04,
+        "gantt-charts": 0.02,
+        "agile-scrum": 0.08,
+        "time-tracking": 0.04,
+        "client-reporting": 0.08,
+        "integrations": 0.15,
+        "pricing": 0.18,
+        "small-business": 0.32,
+        "enterprise": 0.08,
+        "remote-teams": 0.25,
+        "workflow-automation": 0.10,
+        "portfolio-management": 0.08
+      },
+      "strongestTopics": ["small-business", "team-collaboration", "remote-teams"],
+      "weakestTopics": ["gantt-charts", "resource-allocation", "time-tracking"],
+      "avgCitationPosition": 2.8,
+      "parametricMentionRate": 0.52
+    }
+  ],
+  "gapAnalysis": {
+    "quadrant": "low-parametric-moderate-rag",
+    "parametricScore": 12,
+    "ragScore": 22,
+    "insight": "TechFlow's content performs moderately when retrieved by search, but the brand has very low inherent recognition in AI models. This suggests a content discoverability strength but a fundamental brand awareness gap in training data. The brand excels in value-focused and integration queries but is virtually invisible for enterprise and methodology-specific searches.",
+    "recommendations": [
+      "Increase presence on high-authority sites that feed LLM training data (Wikipedia, industry publications, Stack Overflow discussions)",
+      "Create more original research and data-driven content that gets widely referenced",
+      "Focus commercial-intent content on specific differentiators rather than generic feature pages",
+      "Develop comparison pages that directly address head-to-head queries with major competitors",
+      "Build case studies for enterprise deployments to gain credibility in that segment",
+      "Partner with agile/scrum thought leaders to increase visibility in methodology conversations"
+    ]
+  }
+}
