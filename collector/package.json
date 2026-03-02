@@ -1,0 +1,15 @@
+{
+  "name": "aiso-collector",
+  "version": "1.0.0",
+  "description": "AISO Rapid Diagnostic — Perplexity Sonar collection engine",
+  "type": "module",
+  "scripts": {
+    "collect": "tsx src/collect.ts",
+    "analyze": "tsx src/analyze.ts",
+    "dry-run": "tsx src/collect.ts --dry-run"
+  },
+  "dependencies": {
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0"
+  }
+}

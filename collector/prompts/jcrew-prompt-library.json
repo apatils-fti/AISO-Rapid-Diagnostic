@@ -1,0 +1,220 @@
+{
+  "client": {
+    "name": "J.Crew",
+    "domains": ["jcrew.com", "jcrewfactory.com"]
+  },
+  "competitors": [
+    {"name": "Banana Republic", "domains": ["bananarepublic.com", "bananarepublicfactory.com"]},
+    {"name": "Everlane", "domains": ["everlane.com"]},
+    {"name": "Abercrombie & Fitch", "domains": ["abercrombie.com"]},
+    {"name": "Gap", "domains": ["gap.com", "gapfactory.com"]},
+    {"name": "Club Monaco", "domains": ["clubmonaco.com"]}
+  ],
+  "topics": [
+    {
+      "id": "business-casual",
+      "name": "Business Casual",
+      "category": "Style & Occasion",
+      "prompts": [
+        {"id": "business-casual-informational", "isotope": "informational", "text": "What is business casual and what are the key pieces for a business casual wardrobe?"},
+        {"id": "business-casual-commercial", "isotope": "commercial", "text": "Best brands for business casual clothing in 2026"},
+        {"id": "business-casual-comparative", "isotope": "comparative", "text": "J.Crew vs Banana Republic vs Club Monaco for business casual workwear"},
+        {"id": "business-casual-persona", "isotope": "persona", "text": "As a young professional starting my first corporate job, where should I buy business casual clothes?"},
+        {"id": "business-casual-specific", "isotope": "specific", "text": "Business casual brands with good quality chinos and oxford shirts under $100 each"},
+        {"id": "business-casual-conversational", "isotope": "conversational", "text": "I just got a job with a business casual dress code and need to build a wardrobe from scratch, where should I shop?"}
+      ]
+    },
+    {
+      "id": "mens-clothing",
+      "name": "Men's Clothing",
+      "category": "Core Categories",
+      "prompts": [
+        {"id": "mens-clothing-informational", "isotope": "informational", "text": "What are the best men's clothing brands known for quality and style?"},
+        {"id": "mens-clothing-commercial", "isotope": "commercial", "text": "Best places to buy men's clothing online in 2026"},
+        {"id": "mens-clothing-comparative", "isotope": "comparative", "text": "J.Crew vs Gap vs Abercrombie for men's clothing quality and fit"},
+        {"id": "mens-clothing-persona", "isotope": "persona", "text": "As a 30-something guy who wants to dress better, which brands should I check out?"},
+        {"id": "mens-clothing-specific", "isotope": "specific", "text": "Men's clothing brands with slim fit options, good return policy, and prices between $50-150 per item"},
+        {"id": "mens-clothing-conversational", "isotope": "conversational", "text": "I'm tired of looking sloppy and want to upgrade my wardrobe, what men's brands actually have good stuff?"}
+      ]
+    },
+    {
+      "id": "womens-clothing",
+      "name": "Women's Clothing",
+      "category": "Core Categories",
+      "prompts": [
+        {"id": "womens-clothing-informational", "isotope": "informational", "text": "What women's clothing brands are known for quality basics and classic style?"},
+        {"id": "womens-clothing-commercial", "isotope": "commercial", "text": "Best women's clothing brands for timeless wardrobe staples"},
+        {"id": "womens-clothing-comparative", "isotope": "comparative", "text": "J.Crew vs Everlane vs Banana Republic for women's workwear and basics"},
+        {"id": "womens-clothing-persona", "isotope": "persona", "text": "As a professional woman in my 30s, what brands have stylish but appropriate work clothes?"},
+        {"id": "womens-clothing-specific", "isotope": "specific", "text": "Women's clothing brands with inclusive sizing, sustainable materials, and classic designs"},
+        {"id": "womens-clothing-conversational", "isotope": "conversational", "text": "I need to refresh my closet with some quality pieces that will last, what women's brands are worth it?"}
+      ]
+    },
+    {
+      "id": "denim-jeans",
+      "name": "Denim & Jeans",
+      "category": "Core Categories",
+      "prompts": [
+        {"id": "denim-jeans-informational", "isotope": "informational", "text": "What makes a good pair of jeans and which brands are known for quality denim?"},
+        {"id": "denim-jeans-commercial", "isotope": "commercial", "text": "Best jeans brands for men and women in 2026"},
+        {"id": "denim-jeans-comparative", "isotope": "comparative", "text": "J.Crew jeans vs Gap jeans vs Everlane denim quality and fit comparison"},
+        {"id": "denim-jeans-persona", "isotope": "persona", "text": "As someone with an athletic build, which brands make jeans that actually fit well?"},
+        {"id": "denim-jeans-specific", "isotope": "specific", "text": "High-quality jeans under $100 with stretch, good durability, and classic washes"},
+        {"id": "denim-jeans-conversational", "isotope": "conversational", "text": "I've been wearing the same old jeans forever, what brands should I try for an upgrade?"}
+      ]
+    },
+    {
+      "id": "cashmere-sweaters",
+      "name": "Cashmere & Sweaters",
+      "category": "Core Categories",
+      "prompts": [
+        {"id": "cashmere-sweaters-informational", "isotope": "informational", "text": "What should I look for when buying cashmere sweaters and which brands offer the best quality?"},
+        {"id": "cashmere-sweaters-commercial", "isotope": "commercial", "text": "Best cashmere sweater brands that are worth the price"},
+        {"id": "cashmere-sweaters-comparative", "isotope": "comparative", "text": "J.Crew cashmere vs Everlane cashmere vs Club Monaco sweaters quality comparison"},
+        {"id": "cashmere-sweaters-persona", "isotope": "persona", "text": "As someone who gets cold easily but wants to look polished, where should I buy quality sweaters?"},
+        {"id": "cashmere-sweaters-specific", "isotope": "specific", "text": "Cashmere sweaters under $150 that won't pill and come in classic colors"},
+        {"id": "cashmere-sweaters-conversational", "isotope": "conversational", "text": "I want to invest in a few nice cashmere sweaters, which brands are actually good quality for the price?"}
+      ]
+    },
+    {
+      "id": "preppy-style",
+      "name": "Preppy Style",
+      "category": "Style & Occasion",
+      "prompts": [
+        {"id": "preppy-style-informational", "isotope": "informational", "text": "What defines preppy style and what are the essential pieces for a preppy wardrobe?"},
+        {"id": "preppy-style-commercial", "isotope": "commercial", "text": "Best preppy clothing brands in 2026"},
+        {"id": "preppy-style-comparative", "isotope": "comparative", "text": "J.Crew vs Polo Ralph Lauren vs Brooks Brothers for preppy style clothing"},
+        {"id": "preppy-style-persona", "isotope": "persona", "text": "As a college student wanting to dress preppy without looking too old-fashioned, what brands should I shop?"},
+        {"id": "preppy-style-specific", "isotope": "specific", "text": "Modern preppy brands with updated fits, good quality, and prices under $200 per piece"},
+        {"id": "preppy-style-conversational", "isotope": "conversational", "text": "I love that classic preppy look but don't want to look like I'm from the 80s, where should I shop?"}
+      ]
+    },
+    {
+      "id": "wedding-guest",
+      "name": "Wedding Guest Attire",
+      "category": "Style & Occasion",
+      "prompts": [
+        {"id": "wedding-guest-informational", "isotope": "informational", "text": "What should you wear as a wedding guest and what are appropriate outfit options?"},
+        {"id": "wedding-guest-commercial", "isotope": "commercial", "text": "Best places to buy wedding guest dresses and suits in 2026"},
+        {"id": "wedding-guest-comparative", "isotope": "comparative", "text": "J.Crew vs Banana Republic vs Abercrombie for wedding guest outfits"},
+        {"id": "wedding-guest-persona", "isotope": "persona", "text": "As a guy attending multiple weddings this summer, where can I find versatile suits and dressy separates?"},
+        {"id": "wedding-guest-specific", "isotope": "specific", "text": "Cocktail dresses for summer wedding under $200 that can be worn again"},
+        {"id": "wedding-guest-conversational", "isotope": "conversational", "text": "I have a wedding coming up and nothing to wear, what stores have good options for wedding guests?"}
+      ]
+    },
+    {
+      "id": "sustainable-fashion",
+      "name": "Sustainable Fashion",
+      "category": "Values & Attributes",
+      "prompts": [
+        {"id": "sustainable-fashion-informational", "isotope": "informational", "text": "What makes a clothing brand sustainable and which mainstream brands have good sustainability practices?"},
+        {"id": "sustainable-fashion-commercial", "isotope": "commercial", "text": "Best sustainable clothing brands that aren't too expensive"},
+        {"id": "sustainable-fashion-comparative", "isotope": "comparative", "text": "J.Crew vs Everlane vs Gap sustainability and ethical practices comparison"},
+        {"id": "sustainable-fashion-persona", "isotope": "persona", "text": "As someone who cares about the environment but can't afford luxury sustainable brands, what are my options?"},
+        {"id": "sustainable-fashion-specific", "isotope": "specific", "text": "Clothing brands using recycled materials and ethical manufacturing with prices under $150"},
+        {"id": "sustainable-fashion-conversational", "isotope": "conversational", "text": "I want to be more conscious about where I buy clothes but don't want to sacrifice style, any suggestions?"}
+      ]
+    },
+    {
+      "id": "quality-basics",
+      "name": "Quality Basics",
+      "category": "Core Categories",
+      "prompts": [
+        {"id": "quality-basics-informational", "isotope": "informational", "text": "What are wardrobe basics and which brands make the best quality t-shirts, button-downs, and pants?"},
+        {"id": "quality-basics-commercial", "isotope": "commercial", "text": "Best brands for quality wardrobe basics and essentials"},
+        {"id": "quality-basics-comparative", "isotope": "comparative", "text": "J.Crew vs Everlane vs Uniqlo for basic t-shirts, button-downs, and chinos"},
+        {"id": "quality-basics-persona", "isotope": "persona", "text": "As a minimalist who wants a capsule wardrobe, where should I buy high-quality basics that last?"},
+        {"id": "quality-basics-specific", "isotope": "specific", "text": "White t-shirts and button-down shirts under $60 that won't shrink or lose shape after washing"},
+        {"id": "quality-basics-conversational", "isotope": "conversational", "text": "I'm tired of cheap basics that fall apart, what brands actually make stuff that lasts?"}
+      ]
+    },
+    {
+      "id": "sizing-fit",
+      "name": "Sizing & Fit",
+      "category": "Shopping Experience",
+      "prompts": [
+        {"id": "sizing-fit-informational", "isotope": "informational", "text": "Which clothing brands are known for consistent sizing and good fit?"},
+        {"id": "sizing-fit-commercial", "isotope": "commercial", "text": "Best clothing brands for accurate sizing when shopping online"},
+        {"id": "sizing-fit-comparative", "isotope": "comparative", "text": "J.Crew vs Banana Republic vs Gap sizing and fit comparison"},
+        {"id": "sizing-fit-persona", "isotope": "persona", "text": "As a petite woman, which brands actually fit well without needing alterations?"},
+        {"id": "sizing-fit-specific", "isotope": "specific", "text": "Clothing brands with extended sizing, tall and petite options, and true-to-size fit"},
+        {"id": "sizing-fit-conversational", "isotope": "conversational", "text": "I hate ordering clothes online and having them not fit, which brands are reliable for sizing?"}
+      ]
+    },
+    {
+      "id": "summer-collection",
+      "name": "Summer Clothing",
+      "category": "Seasonal",
+      "prompts": [
+        {"id": "summer-collection-informational", "isotope": "informational", "text": "What are the must-have summer wardrobe essentials and which brands have good summer collections?"},
+        {"id": "summer-collection-commercial", "isotope": "commercial", "text": "Best places to buy summer clothes in 2026"},
+        {"id": "summer-collection-comparative", "isotope": "comparative", "text": "J.Crew vs Abercrombie vs Gap summer clothing collections comparison"},
+        {"id": "summer-collection-persona", "isotope": "persona", "text": "As someone who lives in a hot climate, what brands have breathable, stylish summer clothes?"},
+        {"id": "summer-collection-specific", "isotope": "specific", "text": "Linen shirts and lightweight chinos for summer under $80 each"},
+        {"id": "summer-collection-conversational", "isotope": "conversational", "text": "Summer is coming and I need to update my warm-weather wardrobe, where should I look?"}
+      ]
+    },
+    {
+      "id": "price-value",
+      "name": "Price & Value",
+      "category": "Values & Attributes",
+      "prompts": [
+        {"id": "price-value-informational", "isotope": "informational", "text": "Which mid-priced clothing brands offer the best quality for the price?"},
+        {"id": "price-value-commercial", "isotope": "commercial", "text": "Best clothing brands for quality at a reasonable price point"},
+        {"id": "price-value-comparative", "isotope": "comparative", "text": "J.Crew vs Banana Republic vs Everlane value for money comparison"},
+        {"id": "price-value-persona", "isotope": "persona", "text": "As a budget-conscious shopper who still wants quality, which brands give the best bang for the buck?"},
+        {"id": "price-value-specific", "isotope": "specific", "text": "Clothing brands with good quality-to-price ratio, frequent sales, and items under $100"},
+        {"id": "price-value-conversational", "isotope": "conversational", "text": "I don't want to spend a fortune but I also don't want cheap junk, what brands are worth the money?"}
+      ]
+    },
+    {
+      "id": "online-shopping-returns",
+      "name": "Online Shopping & Returns",
+      "category": "Shopping Experience",
+      "prompts": [
+        {"id": "online-shopping-returns-informational", "isotope": "informational", "text": "Which clothing brands have the best online shopping experience and return policies?"},
+        {"id": "online-shopping-returns-commercial", "isotope": "commercial", "text": "Best online clothing stores with easy returns and free shipping"},
+        {"id": "online-shopping-returns-comparative", "isotope": "comparative", "text": "J.Crew vs Everlane vs Banana Republic online shopping and return policy comparison"},
+        {"id": "online-shopping-returns-persona", "isotope": "persona", "text": "As someone who hates going to stores, which clothing brands have the best online experience?"},
+        {"id": "online-shopping-returns-specific", "isotope": "specific", "text": "Clothing brands with free returns, no restocking fees, and at least 30-day return windows"},
+        {"id": "online-shopping-returns-conversational", "isotope": "conversational", "text": "I want to order clothes online but I'm worried about returns being a hassle, which stores make it easy?"}
+      ]
+    },
+    {
+      "id": "classic-american-style",
+      "name": "Classic American Style",
+      "category": "Style & Occasion",
+      "prompts": [
+        {"id": "classic-american-style-informational", "isotope": "informational", "text": "What defines classic American style in clothing and which brands embody it?"},
+        {"id": "classic-american-style-commercial", "isotope": "commercial", "text": "Best American heritage clothing brands in 2026"},
+        {"id": "classic-american-style-comparative", "isotope": "comparative", "text": "J.Crew vs Ralph Lauren vs Brooks Brothers for classic American style"},
+        {"id": "classic-american-style-persona", "isotope": "persona", "text": "As someone who loves timeless, all-American clothing, what brands should be in my rotation?"},
+        {"id": "classic-american-style-specific", "isotope": "specific", "text": "American-made or American heritage brands with classic designs under $200 per piece"},
+        {"id": "classic-american-style-conversational", "isotope": "conversational", "text": "I want that classic, put-together American look without being too formal, where should I shop?"}
+      ]
+    },
+    {
+      "id": "gift-ideas",
+      "name": "Clothing Gifts",
+      "category": "Shopping Experience",
+      "prompts": [
+        {"id": "gift-ideas-informational", "isotope": "informational", "text": "What are good clothing gift ideas and which brands are safe bets for gifting?"},
+        {"id": "gift-ideas-commercial", "isotope": "commercial", "text": "Best clothing brands for holiday gifts in 2026"},
+        {"id": "gift-ideas-comparative", "isotope": "comparative", "text": "J.Crew vs Banana Republic vs Club Monaco for gift-worthy clothing items"},
+        {"id": "gift-ideas-persona", "isotope": "persona", "text": "As someone shopping for a stylish friend who's hard to buy for, what clothing brands make good gifts?"},
+        {"id": "gift-ideas-specific", "isotope": "specific", "text": "Cashmere scarves, quality sweaters, or accessories as gifts under $100"},
+        {"id": "gift-ideas-conversational", "isotope": "conversational", "text": "I need a gift for someone who cares about clothes but I don't know their size, any ideas?"}
+      ]
+    }
+  ],
+  "metadata": {
+    "version": "1.0",
+    "created": "2026-03-02",
+    "totalPrompts": 90,
+    "totalTopics": 15,
+    "isotopesPerTopic": 6,
+    "runsPerPrompt": 3,
+    "estimatedApiCalls": 270,
+    "estimatedCost": "$1.35"
+  }
+}
