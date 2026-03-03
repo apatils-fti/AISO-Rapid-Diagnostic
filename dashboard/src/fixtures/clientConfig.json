@@ -21,6 +21,6 @@
     }
   ],
   "runDate": "2026-02-03T14:30:00Z",
-  "platforms": ["perplexity"],
-  "futurePlatforms": ["google_ai_overview", "chatgpt_search", "claude_search"]
+  "platforms": ["perplexity", "chatgpt_search"],
+  "futurePlatforms": ["google_ai_overview", "claude_search"]
 }
