@@ -1,7 +1,8 @@
 {
   "client": {
     "name": "J.Crew",
-    "domains": ["jcrew.com", "jcrewfactory.com"]
+    "domains": ["jcrew.com", "jcrewfactory.com"],
+    "industry": "fashion-apparel"
   },
   "competitors": [
     {"name": "Banana Republic", "domains": ["bananarepublic.com", "bananarepublicfactory.com"]},

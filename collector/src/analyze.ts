@@ -23,6 +23,16 @@ import type {
   CollectionManifest,
   PromptLibrary,
 } from './types.js';
+import {
+  analyzeTextMentions,
+  aggregateTextMetrics,
+  type TextAnalysisResult,
+  type AggregatedTextMetrics,
+} from './text-analysis.js';
+import {
+  getIndustryProfile,
+  type IndustryProfile,
+} from './industry-profiles.js';
 
 // ── Types for the dashboard's analyzedMetrics.json ──
 
@@ -84,6 +94,17 @@ interface AnalyzedMetrics {
     ragCitationRate: number;
     topCompetitor: { name: string; citationShare: number };
     platformBreakdown: Record<string, PlatformBreakdown>;
+    // NEW: Text-based metrics
+    brandMentionRate: number;      // % of responses mentioning client
+    firstMentionRate: number;      // % where client is mentioned first
+    avgMentionPosition: number;    // Average position (1 = first)
+    shareOfVoice: number;          // Client mentions / all brand mentions
+    // Industry context
+    industry: {
+      id: string;
+      name: string;
+      citationExpectation: string;
+    };
   };
   topicResults: TopicResult[];
   competitorOverview: CompetitorOverview[];
@@ -93,6 +114,11 @@ interface AnalyzedMetrics {
     ragScore: number;
     insight: string;
     recommendations: string[];
+  };
+  // NEW: Detailed text metrics
+  textMetrics: {
+    overall: AggregatedTextMetrics;
+    byTopic: Record<string, AggregatedTextMetrics>;
   };
 }
 
@@ -201,13 +227,48 @@ async function main() {
   const clientName = library.client.name;
   const clientDomains = library.client.domains;
   const competitors = library.competitors;
+  const competitorNames = competitors.map(c => c.name);
   const allCompetitors = [
     { name: clientName, domains: clientDomains, isClient: true },
     ...competitors.map(c => ({ ...c, isClient: false })),
   ];
 
+  // Get industry profile for scoring weights
+  const industryId = (library.client as { industry?: string }).industry ?? 'default';
+  const industryProfile = getIndustryProfile(industryId);
+  console.log(`  Industry: ${industryProfile.name} (${industryProfile.citationExpectation} citation expectation)`);
+  console.log('');
+
   // Load all result files
   const results = readResultFiles(opts.inputDir);
+  console.log(`  Loaded ${results.length} prompt results`);
+
+  // ── Compute text-based metrics ──
+  const allTextAnalyses: TextAnalysisResult[] = [];
+  const textAnalysesByTopic: Record<string, TextAnalysisResult[]> = {};
+
+  for (const result of results) {
+    for (const run of result.runs) {
+      const responseText = run.response.choices?.[0]?.message?.content ?? '';
+      if (responseText) {
+        const analysis = analyzeTextMentions(responseText, clientName, competitorNames);
+        allTextAnalyses.push(analysis);
+
+        // Track by topic
+        if (!textAnalysesByTopic[result.topicId]) {
+          textAnalysesByTopic[result.topicId] = [];
+        }
+        textAnalysesByTopic[result.topicId].push(analysis);
+      }
+    }
+  }
+
+  const overallTextMetrics = aggregateTextMetrics(allTextAnalyses, clientName);
+  const textMetricsByTopic: Record<string, AggregatedTextMetrics> = {};
+  for (const [topicId, analyses] of Object.entries(textAnalysesByTopic)) {
+    textMetricsByTopic[topicId] = aggregateTextMetrics(analyses, clientName);
+  }
+  console.log(`  Analyzed ${allTextAnalyses.length} responses for text mentions`);
   console.log(`  Loaded ${results.length} prompt results`);
 
   // ── Aggregate per-topic, per-isotope ──
@@ -434,7 +495,8 @@ async function main() {
 
   // ── Summary ──
 
-  const overallScore = topicResults.length > 0
+  // Legacy score (for backward compatibility with topic-level metrics)
+  const legacyOverallScore = topicResults.length > 0
     ? Math.round(topicResults.reduce((s, t) => s + t.overallScore, 0) / topicResults.length)
     : 0;
 
@@ -453,6 +515,22 @@ async function main() {
 
   const clientPos = positionSums[clientName];
   const avgClientPosition = clientPos && clientPos.count > 0 ? clientPos.sum / clientPos.count : 0;
+
+  // NEW: Industry-weighted scoring using text metrics
+  const { domainCitationWeight, brandMentionWeight, positionWeight, shareOfVoiceWeight } = industryProfile.metrics;
+
+  // Normalize position score (1st place = 100%, 5th place = 0%)
+  const positionScore = overallTextMetrics.avgMentionPosition > 0
+    ? Math.max(0, 1 - (overallTextMetrics.avgMentionPosition - 1) / 4)
+    : 0;
+
+  // Calculate weighted overall score using industry-specific weights
+  const overallScore = Math.round(
+    (overallCitationShare * domainCitationWeight) +
+    (overallTextMetrics.brandMentionRate * brandMentionWeight) +
+    (positionScore * positionWeight) +
+    (overallTextMetrics.shareOfVoice * shareOfVoiceWeight)
+  );
 
   // ── Gap analysis ──
 
@@ -489,6 +567,17 @@ async function main() {
         chatgpt_search: { available: false, comingSoon: true },
         claude_search: { available: false, comingSoon: true },
       },
+      // NEW: Text-based metrics
+      brandMentionRate: overallTextMetrics.brandMentionRate,
+      firstMentionRate: overallTextMetrics.firstMentionRate,
+      avgMentionPosition: overallTextMetrics.avgMentionPosition,
+      shareOfVoice: overallTextMetrics.shareOfVoice,
+      // Industry context
+      industry: {
+        id: industryProfile.id,
+        name: industryProfile.name,
+        citationExpectation: industryProfile.citationExpectation,
+      },
     },
     topicResults,
     competitorOverview,
@@ -498,6 +587,11 @@ async function main() {
       ragScore,
       insight: generateInsight(clientName, parametricScore, ragScore, topCompetitor?.name ?? 'competitors'),
       recommendations: generateRecommendations(parametricScore, ragScore, clientName, topicResults),
+    },
+    // NEW: Detailed text metrics
+    textMetrics: {
+      overall: overallTextMetrics,
+      byTopic: textMetricsByTopic,
     },
   };
 
@@ -509,7 +603,7 @@ async function main() {
   const clientConfig = {
     clientName: library.client.name,
     clientDomains: library.client.domains,
-    industry: 'Fashion & Apparel', // inferred from J.Crew
+    industry: industryProfile.name,
     competitors: library.competitors.map(c => ({ name: c.name, domains: c.domains })),
     runDate: new Date().toISOString(),
     platforms: ['perplexity'],
@@ -572,12 +666,32 @@ async function main() {
   console.log('');
   console.log('═══════════════════════════════════════════════');
   console.log('  Analysis complete!');
-  console.log(`  Overall Score:     ${overallScore}/100`);
+  console.log('');
+  console.log('  ── Overall Score ──');
+  console.log(`  Score:             ${overallScore}/100 (industry-weighted)`);
+  console.log(`  Industry:          ${industryProfile.name}`);
+  console.log('');
+  console.log('  ── Text-Based Metrics (NEW) ──');
+  console.log(`  Brand Mention:     ${(overallTextMetrics.brandMentionRate * 100).toFixed(1)}% of responses`);
+  console.log(`  First Mention:     ${(overallTextMetrics.firstMentionRate * 100).toFixed(1)}% mentioned first`);
+  console.log(`  Avg Position:      ${overallTextMetrics.avgMentionPosition > 0 ? overallTextMetrics.avgMentionPosition.toFixed(1) : 'N/A'}`);
+  console.log(`  Share of Voice:    ${(overallTextMetrics.shareOfVoice * 100).toFixed(1)}%`);
+  console.log('');
+  console.log('  ── Domain Citation Metrics ──');
   console.log(`  Citation Share:    ${(overallCitationShare * 100).toFixed(1)}%`);
   console.log(`  Prompts Cited:     ${clientPromptsCited}/${results.length}`);
-  console.log(`  Parametric Rate:   ${(avgParametric * 100).toFixed(1)}%`);
-  console.log(`  RAG Rate:          ${(avgRag * 100).toFixed(1)}%`);
-  console.log(`  Top Competitor:    ${topCompetitor?.name ?? 'N/A'} (${((topCompetitor?.overallCitationShare ?? 0) * 100).toFixed(1)}%)`);
+  console.log('');
+  console.log('  ── Competitor Analysis ──');
+  console.log(`  Top Competitor:    ${topCompetitor?.name ?? 'N/A'} (${((topCompetitor?.overallCitationShare ?? 0) * 100).toFixed(1)}% citations)`);
+  // Show top competitor by text mentions
+  const competitorTextMetrics = Object.entries(overallTextMetrics.brandMetrics)
+    .filter(([name]) => name !== clientName)
+    .sort(([, a], [, b]) => b.mentionRate - a.mentionRate);
+  if (competitorTextMetrics.length > 0) {
+    const [topByMention, metrics] = competitorTextMetrics[0];
+    console.log(`  Top by Mentions:   ${topByMention} (${(metrics.mentionRate * 100).toFixed(1)}% mention rate)`);
+  }
+  console.log('');
   console.log(`  Quadrant:          ${quadrant}`);
   console.log('');
   console.log(`  Output written to: ${opts.outputDir}`);

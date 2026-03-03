@@ -3,6 +3,8 @@
 export interface ClientInfo {
   name: string;
   domains: string[];
+  /** Industry profile ID for scoring weights (e.g., 'fashion-apparel', 'saas-software') */
+  industry?: string;
 }
 
 export interface CompetitorInfo {

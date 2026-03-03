@@ -72,6 +72,12 @@ export interface PlatformBreakdown {
   comingSoon?: boolean;
 }
 
+export interface IndustryInfo {
+  id: string;
+  name: string;
+  citationExpectation: string;
+}
+
 export interface Summary {
   overallScore: number;
   totalPrompts: number;
@@ -85,6 +91,12 @@ export interface Summary {
     citationShare: number;
   };
   platformBreakdown: Record<string, PlatformBreakdown>;
+  // NEW: Text-based metrics
+  brandMentionRate?: number;
+  firstMentionRate?: number;
+  avgMentionPosition?: number;
+  shareOfVoice?: number;
+  industry?: IndustryInfo;
 }
 
 export interface CompetitorOverview {
@@ -106,11 +118,36 @@ export interface GapAnalysis {
   recommendations: string[];
 }
 
+// Text Analysis Types
+export interface BrandTextMetrics {
+  mentionRate: number;
+  avgMentionCount: number;
+  firstMentionRate: number;
+  totalMentions: number;
+}
+
+export interface AggregatedTextMetrics {
+  brandMentionRate: number;
+  firstMentionRate: number;
+  avgMentionPosition: number;
+  shareOfVoice: number;
+  totalResponses: number;
+  responsesWithMention: number;
+  responsesWithFirstMention: number;
+  brandMetrics: Record<string, BrandTextMetrics>;
+}
+
+export interface TextMetrics {
+  overall: AggregatedTextMetrics;
+  byTopic: Record<string, AggregatedTextMetrics>;
+}
+
 export interface AnalyzedMetrics {
   summary: Summary;
   topicResults: TopicResult[];
   competitorOverview: CompetitorOverview[];
   gapAnalysis: GapAnalysis;
+  textMetrics?: TextMetrics;
 }
 
 // Raw Results Types
