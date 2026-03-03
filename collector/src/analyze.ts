@@ -219,6 +219,26 @@ function getResponseText(response: any): string {
   return response.choices?.[0]?.message?.content ?? '';
 }
 
+/** Infer platform from model name (useful when platform tag is missing or incorrect). */
+function inferPlatformFromModel(model: string): 'perplexity' | 'chatgpt_search' {
+  const modelLower = model.toLowerCase();
+  if (modelLower.includes('sonar')) {
+    return 'perplexity';
+  }
+  if (modelLower.includes('gpt') && modelLower.includes('search')) {
+    return 'chatgpt_search';
+  }
+  // Default based on other patterns
+  if (modelLower.includes('pplx') || modelLower.includes('perplexity')) {
+    return 'perplexity';
+  }
+  if (modelLower.includes('openai') || modelLower.includes('gpt')) {
+    return 'chatgpt_search';
+  }
+  // Fallback to perplexity for backward compatibility
+  return 'perplexity';
+}
+
 // ── Main Analysis ──
 
 async function main() {
@@ -356,8 +376,9 @@ async function main() {
       const perRunCompetitorCitations: Record<string, number> = {};
       for (const comp of competitors) perRunCompetitorCitations[comp.name] = 0;
 
-      // Track platform for this result
-      const platform = result.platform ?? 'perplexity';
+      // Track platform for this result - infer from model name for reliability
+      // (handles cases where platform tag was incorrectly set or missing)
+      const platform = inferPlatformFromModel(result.model);
       if (platformMetrics[platform]) {
         platformMetrics[platform].totalPrompts++;
       }
@@ -713,7 +734,7 @@ async function main() {
     results: results.slice(0, 15).flatMap(r =>
       r.runs.map(run => ({
         promptId: r.promptId,
-        platform: r.platform,
+        platform: inferPlatformFromModel(r.model),
         model: r.model,
         runId: run.runId,
         timestamp: run.timestamp,
