@@ -325,6 +325,44 @@ async function main() {
     chatgpt_search: { totalCitations: 0, clientCitations: 0, promptsCited: 0, totalPrompts: 0, positionSum: 0, positionCount: 0, textAnalyses: [] },
   };
 
+  // ── Count platform metrics for ALL results (independent of topic matching) ──
+  for (const result of results) {
+    const platform = inferPlatformFromModel(result.model);
+    if (!platformMetrics[platform]) continue;
+
+    platformMetrics[platform].totalPrompts++;
+
+    let promptCitedOnThisPlatform = false;
+    for (const run of result.runs) {
+      const citations = run.response.citations ?? [];
+      const responseText = getResponseText(run.response);
+
+      platformMetrics[platform].totalCitations += citations.length;
+
+      // Track text analysis per platform
+      if (responseText) {
+        const analysis = analyzeTextMentions(responseText, clientName, competitorNames);
+        platformMetrics[platform].textAnalyses.push(analysis);
+      }
+
+      // Check for client citations
+      for (let i = 0; i < citations.length; i++) {
+        if (urlMatchesDomains(citations[i], clientDomains)) {
+          platformMetrics[platform].clientCitations++;
+          platformMetrics[platform].positionSum += (i + 1);
+          platformMetrics[platform].positionCount++;
+          promptCitedOnThisPlatform = true;
+        }
+      }
+    }
+
+    if (promptCitedOnThisPlatform) {
+      platformMetrics[platform].promptsCited++;
+    }
+  }
+
+  console.log(`  Platform breakdown: Perplexity=${platformMetrics.perplexity.totalPrompts}, ChatGPT=${platformMetrics.chatgpt_search.totalPrompts}`);
+
   for (const comp of allCompetitors) {
     competitorCitationCounts[comp.name] = 0;
     competitorTopicCounts[comp.name] = {};
@@ -376,14 +414,8 @@ async function main() {
       const perRunCompetitorCitations: Record<string, number> = {};
       for (const comp of competitors) perRunCompetitorCitations[comp.name] = 0;
 
-      // Track platform for this result - infer from model name for reliability
-      // (handles cases where platform tag was incorrectly set or missing)
-      const platform = inferPlatformFromModel(result.model);
-      if (platformMetrics[platform]) {
-        platformMetrics[platform].totalPrompts++;
-      }
-
-      let promptCitedOnPlatform = false;
+      // Note: Platform metrics are computed in a separate loop above for all results
+      // Here we only track topic-level and competitor metrics
 
       for (const run of result.runs) {
         const citations = run.response.citations ?? [];
@@ -392,17 +424,6 @@ async function main() {
         // Count total citations
         totalCitations += citations.length;
         topicTotalCitations += citations.length;
-
-        // Track per-platform citations
-        if (platformMetrics[platform]) {
-          platformMetrics[platform].totalCitations += citations.length;
-
-          // Track text analysis per platform
-          if (responseText) {
-            const analysis = analyzeTextMentions(responseText, clientName, competitorNames);
-            platformMetrics[platform].textAnalyses.push(analysis);
-          }
-        }
 
         // Check client citations
         let clientCitedInRun = false;
@@ -416,14 +437,6 @@ async function main() {
             clientCitedInRun = true;
             clientPositionSum += (i + 1);
             clientPositionCount++;
-
-            // Track per-platform
-            if (platformMetrics[platform]) {
-              platformMetrics[platform].clientCitations++;
-              platformMetrics[platform].positionSum += (i + 1);
-              platformMetrics[platform].positionCount++;
-              promptCitedOnPlatform = true;
-            }
           }
 
           // Check competitor citations
@@ -450,11 +463,6 @@ async function main() {
         if (textMentionsClient(responseText, clientName)) {
           parametricMentions++;
         }
-      }
-
-      // Track if this prompt was cited on the platform
-      if (promptCitedOnPlatform && platformMetrics[platform]) {
-        platformMetrics[platform].promptsCited++;
       }
 
       const runs = result.runs.length;
