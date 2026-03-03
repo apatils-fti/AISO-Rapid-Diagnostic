@@ -209,6 +209,16 @@ function textMentionsClient(text: string, clientName: string): boolean {
   return text.toLowerCase().includes(clientName.toLowerCase());
 }
 
+/** Extract response text from either Perplexity or unified PlatformResponse format. */
+function getResponseText(response: any): string {
+  // Try unified PlatformResponse format first (content directly on response)
+  if (typeof response.content === 'string') {
+    return response.content;
+  }
+  // Fall back to Perplexity format (choices[0].message.content)
+  return response.choices?.[0]?.message?.content ?? '';
+}
+
 // ── Main Analysis ──
 
 async function main() {
@@ -250,7 +260,7 @@ async function main() {
 
   for (const result of results) {
     for (const run of result.runs) {
-      const responseText = run.response.choices?.[0]?.message?.content ?? '';
+      const responseText = getResponseText(run.response);
       if (responseText) {
         const analysis = analyzeTextMentions(responseText, clientName, competitorNames);
         allTextAnalyses.push(analysis);
@@ -356,7 +366,7 @@ async function main() {
 
       for (const run of result.runs) {
         const citations = run.response.citations ?? [];
-        const responseText = run.response.choices?.[0]?.message?.content ?? '';
+        const responseText = getResponseText(run.response);
 
         // Count total citations
         totalCitations += citations.length;
@@ -519,7 +529,7 @@ async function main() {
       for (const r of results) {
         for (const run of r.runs) {
           total++;
-          const text = run.response.choices?.[0]?.message?.content ?? '';
+          const text = getResponseText(run.response);
           if (textMentionsClient(text, comp.name)) {
             mentions++;
           }
@@ -708,7 +718,7 @@ async function main() {
         runId: run.runId,
         timestamp: run.timestamp,
         response: {
-          text: run.response.choices?.[0]?.message?.content ?? '',
+          text: getResponseText(run.response),
           citations: run.response.citations ?? [],
           searchResults: run.response.search_results ?? [],
         },
@@ -717,7 +727,7 @@ async function main() {
             (url: string) => urlMatchesDomains(url, clientDomains)
           ),
           clientMentionedInText: textMentionsClient(
-            run.response.choices?.[0]?.message?.content ?? '',
+            getResponseText(run.response),
             clientName
           ),
           competitorsCited: competitors
