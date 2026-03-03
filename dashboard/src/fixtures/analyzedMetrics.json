@@ -24,8 +24,12 @@
         "comingSoon": true
       },
       "chatgpt_search": {
-        "available": false,
-        "comingSoon": true
+        "citationShare": 0.062,
+        "promptsCited": 14,
+        "totalPrompts": 90,
+        "avgCitationPosition": 3.8,
+        "available": true,
+        "brandMentionRate": 0.35
       },
       "claude_search": {
         "available": false,

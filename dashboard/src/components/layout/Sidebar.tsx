@@ -11,6 +11,7 @@ import {
   Download,
   Settings,
   Activity,
+  GitCompare,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { clientConfig } from '@/lib/fixtures';
@@ -36,6 +37,11 @@ const navItems = [
     label: 'Gap Analysis',
     href: '/gap-analysis',
     icon: Layers,
+  },
+  {
+    label: 'Compare Platforms',
+    href: '/compare',
+    icon: GitCompare,
   },
   {
     label: 'Prompt Detail',
