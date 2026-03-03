@@ -78,13 +78,13 @@ function PlatformCard({
           <div className="flex items-center justify-between">
             <span className="text-sm text-[#6B7280]">Prompts Cited</span>
             <span className="text-sm font-medium text-[#E5E7EB]">
-              {promptsCited}/{totalPrompts}
+              {promptsCited ?? 0}/{totalPrompts ?? 0}
             </span>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-sm text-[#6B7280]">Avg. Position</span>
             <span className="text-sm font-medium text-[#E5E7EB]">
-              #{avgPosition?.toFixed(1)}
+              {avgPosition ? `#${avgPosition.toFixed(1)}` : 'N/A'}
             </span>
           </div>
         </div>

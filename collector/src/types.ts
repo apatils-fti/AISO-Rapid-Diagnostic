@@ -1,8 +1,3 @@
-import type { PlatformId, PlatformResponse } from './platforms/types.js';
-
-// Re-export platform types for convenience
-export type { PlatformId, PlatformResponse } from './platforms/types.js';
-
 // ── Prompt Library Types ──
 
 export interface ClientInfo {
@@ -107,7 +102,7 @@ export interface PerplexityResponse {
 export interface RunResult {
   runId: number;
   timestamp: string;
-  response: PlatformResponse;
+  response: PerplexityResponse;
   durationMs: number;
 }
 
@@ -118,7 +113,7 @@ export interface PromptResult {
   topicName: string;
   category: string;
   isotope: string;
-  platform: PlatformId;
+  platform: 'perplexity' | 'chatgpt_search';
   model: string;
   collectionTimestamp: string;
   runs: RunResult[];
@@ -127,7 +122,6 @@ export interface PromptResult {
 export interface CollectionManifest {
   client: ClientInfo;
   competitors: CompetitorInfo[];
-  platform: PlatformId;
   timestamp: string;
   model: string;
   runsPerPrompt: number;
@@ -144,7 +138,6 @@ export interface CollectionManifest {
 export interface CollectOptions {
   promptLibraryPath: string;
   outputDir: string;
-  platform: PlatformId;
   model: string;
   runsPerPrompt: number;
   rpmLimit: number;

@@ -51,7 +51,7 @@ export function ScoreBreakdown() {
     },
     {
       label: 'Prompts Cited',
-      value: `${summary.platformBreakdown.perplexity.promptsCited}/${summary.totalPrompts}`,
+      value: `${summary.platformBreakdown.perplexity?.promptsCited ?? 0}/${summary.totalPrompts}`,
       subValue: 'Direct URL citations',
       icon: Link2,
     },
