@@ -16,7 +16,14 @@
 
 import { join, resolve } from 'node:path';
 import { existsSync } from 'node:fs';
-import { PerplexityClient } from './perplexity.js';
+import {
+  createPlatformClient,
+  getApiKeyForPlatform,
+  DEFAULT_MODELS,
+  DEFAULT_RPM_LIMITS,
+  type PlatformId,
+  type PlatformClient,
+} from './platforms/index.js';
 import {
   loadPromptLibrary,
   ensureDir,
@@ -41,29 +48,30 @@ const DEFAULT_PROMPT_LIBRARY = resolve(
   '../prompts/jcrew-prompt-library.json',
 );
 const DEFAULT_OUTPUT_BASE = resolve(import.meta.dirname ?? '.', '../data/raw-results');
-const DEFAULT_MODEL = 'sonar';
+const DEFAULT_PLATFORM: PlatformId = 'perplexity';
 const DEFAULT_RUNS = 3;
-const DEFAULT_RPM = 50;
-
-/** Determine platform from model name */
-function getPlatformFromModel(model: string): 'perplexity' | 'chatgpt_search' {
-  if (model.includes('gpt')) {
-    return 'chatgpt_search';
-  }
-  return 'perplexity';
-}
 
 // ── CLI Argument Parsing ──────────────────────────────────
 
 function parseArgs(): CollectOptions {
   const args = process.argv.slice(2);
 
+  // Parse platform first to set defaults
+  let platform: PlatformId = DEFAULT_PLATFORM;
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--platform') {
+      platform = args[i + 1] as PlatformId;
+      break;
+    }
+  }
+
   const opts: CollectOptions = {
     promptLibraryPath: DEFAULT_PROMPT_LIBRARY,
     outputDir: '', // set below after timestamp
-    model: DEFAULT_MODEL,
+    platform,
+    model: DEFAULT_MODELS[platform],
     runsPerPrompt: DEFAULT_RUNS,
-    rpmLimit: DEFAULT_RPM,
+    rpmLimit: DEFAULT_RPM_LIMITS[platform],
     dryRun: false,
   };
 
@@ -71,6 +79,11 @@ function parseArgs(): CollectOptions {
     switch (args[i]) {
       case '--dry-run':
         opts.dryRun = true;
+        break;
+      case '--platform':
+        opts.platform = args[++i] as PlatformId;
+        opts.model = DEFAULT_MODELS[opts.platform];
+        opts.rpmLimit = DEFAULT_RPM_LIMITS[opts.platform];
         break;
       case '--model':
         opts.model = args[++i];
@@ -109,11 +122,14 @@ async function main() {
   const opts = parseArgs();
 
   // ── Validate API Key ──
-  const apiKey = process.env.PERPLEXITY_API_KEY;
-  if (!apiKey && !opts.dryRun) {
-    console.error('✘  Missing PERPLEXITY_API_KEY environment variable.');
-    console.error('   Set it:  export PERPLEXITY_API_KEY=pplx-...');
-    process.exit(1);
+  let apiKey: string | undefined;
+  if (!opts.dryRun) {
+    try {
+      apiKey = getApiKeyForPlatform(opts.platform);
+    } catch (err) {
+      console.error(`✘  ${(err as Error).message}`);
+      process.exit(1);
+    }
   }
 
   // ── Load Prompt Library ──
@@ -131,6 +147,7 @@ async function main() {
   console.log('╚══════════════════════════════════════════════╝');
   console.log('');
   console.log(`  Client:       ${library.client.name}`);
+  console.log(`  Platform:     ${opts.platform}`);
   console.log(`  Model:        ${opts.model}`);
   console.log(`  Prompts:      ${allPrompts.length}`);
   console.log(`  Runs/prompt:  ${opts.runsPerPrompt}`);
@@ -145,11 +162,14 @@ async function main() {
 
   // ── Setup ──
   ensureDir(opts.outputDir);
-  const client = opts.dryRun ? null : new PerplexityClient(apiKey!, opts.model, opts.rpmLimit);
+  const client: PlatformClient | null = opts.dryRun
+    ? null
+    : createPlatformClient(opts.platform, apiKey!, opts.model, opts.rpmLimit);
 
   const manifest: CollectionManifest = {
     client: library.client,
     competitors: library.competitors,
+    platform: opts.platform,
     timestamp: new Date().toISOString(),
     model: opts.model,
     runsPerPrompt: opts.runsPerPrompt,
@@ -274,7 +294,7 @@ async function main() {
         topicName: prompt.topicName,
         category: prompt.category,
         isotope: prompt.isotope,
-        platform: getPlatformFromModel(opts.model),
+        platform: opts.platform,
         model: opts.model,
         collectionTimestamp: manifest.timestamp,
         runs,
@@ -292,7 +312,7 @@ async function main() {
         topicName: prompt.topicName,
         category: prompt.category,
         isotope: prompt.isotope,
-        platform: getPlatformFromModel(opts.model),
+        platform: opts.platform,
         model: opts.model,
         collectionTimestamp: manifest.timestamp,
         runs,

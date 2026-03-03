@@ -122,6 +122,7 @@ export interface PromptResult {
 export interface CollectionManifest {
   client: ClientInfo;
   competitors: CompetitorInfo[];
+  platform: 'perplexity' | 'chatgpt_search';
   timestamp: string;
   model: string;
   runsPerPrompt: number;
@@ -138,6 +139,7 @@ export interface CollectionManifest {
 export interface CollectOptions {
   promptLibraryPath: string;
   outputDir: string;
+  platform: 'perplexity' | 'chatgpt_search';
   model: string;
   runsPerPrompt: number;
   rpmLimit: number;
