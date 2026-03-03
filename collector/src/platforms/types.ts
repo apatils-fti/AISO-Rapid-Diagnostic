@@ -70,7 +70,7 @@ export const DEFAULT_MODELS: Record<PlatformId, string> = {
  */
 export const DEFAULT_RPM_LIMITS: Record<PlatformId, number> = {
   perplexity: 50,
-  chatgpt_search: 60,
+  chatgpt_search: 20,
   google_ai_overview: 60,
   claude_search: 60,
 };

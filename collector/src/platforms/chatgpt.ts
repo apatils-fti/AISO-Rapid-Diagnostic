@@ -7,8 +7,8 @@ import type { PlatformClient, PlatformResponse } from './types.js';
 import { RateLimiter, sleep } from '../rate-limiter.js';
 
 const OPENAI_API_URL = 'https://api.openai.com/v1/responses';
-const MAX_RETRIES = 3;
-const RETRY_BACKOFF_MS = [2_000, 5_000, 15_000];
+const MAX_RETRIES = 5;
+const RETRY_BACKOFF_MS = [5_000, 15_000, 30_000, 60_000, 120_000];
 
 interface OpenAIResponsesRequest {
   model: string;
