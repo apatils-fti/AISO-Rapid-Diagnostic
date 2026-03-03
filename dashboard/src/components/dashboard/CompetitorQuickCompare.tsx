@@ -5,19 +5,30 @@ import { COMPETITOR_COLORS } from '@/lib/colors';
 import { cn } from '@/lib/utils';
 
 export function CompetitorQuickCompare() {
-  const competitors = analyzedMetrics.competitorOverview
-    .sort((a, b) => b.overallCitationShare - a.overallCitationShare);
+  const textMetrics = analyzedMetrics.textMetrics?.overall.brandMetrics ?? {};
 
-  const maxShare = Math.max(...competitors.map(c => c.overallCitationShare));
+  // Get mention rate for each competitor, falling back to parametric rate
+  const competitorsWithMentions = analyzedMetrics.competitorOverview.map(c => ({
+    ...c,
+    mentionRate: textMetrics[c.name]?.mentionRate ?? c.parametricMentionRate,
+    firstMentionRate: textMetrics[c.name]?.firstMentionRate ?? 0,
+  }));
+
+  // Sort by mention rate (text-based), not citation share
+  const competitors = competitorsWithMentions
+    .sort((a, b) => b.mentionRate - a.mentionRate);
+
+  const maxShare = Math.max(...competitors.map(c => c.mentionRate), 0.01);
 
   return (
     <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-6">
-      <h3 className="font-heading text-lg font-semibold text-[#E5E7EB] mb-6">
+      <h3 className="font-heading text-lg font-semibold text-[#E5E7EB] mb-2">
         Competitor Benchmark
       </h3>
+      <p className="text-xs text-[#6B7280] mb-6">Sorted by brand mention rate in AI responses</p>
       <div className="space-y-4">
         {competitors.map((competitor) => {
-          const barWidth = (competitor.overallCitationShare / maxShare) * 100;
+          const barWidth = (competitor.mentionRate / maxShare) * 100;
           const color = COMPETITOR_COLORS[competitor.name] || COMPETITOR_COLORS.Other;
 
           return (
@@ -37,7 +48,7 @@ export function CompetitorQuickCompare() {
                   </span>
                 </div>
                 <span className="text-sm font-medium text-[#9CA3AF]">
-                  {(competitor.overallCitationShare * 100).toFixed(1)}%
+                  {(competitor.mentionRate * 100).toFixed(1)}%
                 </span>
               </div>
               <div className="h-3 w-full rounded-full bg-[#22252F] overflow-hidden">
@@ -51,8 +62,8 @@ export function CompetitorQuickCompare() {
                 />
               </div>
               <div className="mt-1 text-xs text-[#6B7280] opacity-0 group-hover:opacity-100 transition-opacity">
-                Avg. position: #{competitor.avgCitationPosition.toFixed(1)} |
-                Parametric: {(competitor.parametricMentionRate * 100).toFixed(0)}%
+                First mention: {(competitor.firstMentionRate * 100).toFixed(0)}% |
+                Citation share: {(competitor.overallCitationShare * 100).toFixed(1)}%
               </div>
             </div>
           );

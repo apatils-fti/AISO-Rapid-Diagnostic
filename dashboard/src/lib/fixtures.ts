@@ -65,3 +65,24 @@ export const ISOTOPE_DESCRIPTIONS: Record<IsotopeType, string> = {
   specific: 'Narrow, detailed queries with multiple requirements',
   conversational: 'Natural, casual phrasing like real user questions'
 };
+
+// Text metrics helpers
+export function getCompetitorTextMetrics(name: string) {
+  return analyzedMetrics.textMetrics?.overall.brandMetrics[name];
+}
+
+export function getTopicTextMetrics(topicId: string) {
+  return analyzedMetrics.textMetrics?.byTopic[topicId];
+}
+
+export function getAllBrandMentionRates() {
+  const brandMetrics = analyzedMetrics.textMetrics?.overall.brandMetrics ?? {};
+  return Object.entries(brandMetrics)
+    .map(([name, metrics]) => ({
+      name,
+      mentionRate: metrics.mentionRate,
+      firstMentionRate: metrics.firstMentionRate,
+      totalMentions: metrics.totalMentions,
+    }))
+    .sort((a, b) => b.mentionRate - a.mentionRate);
+}
