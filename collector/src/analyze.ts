@@ -22,6 +22,7 @@ import type {
   PromptResult,
   CollectionManifest,
   PromptLibrary,
+  PlatformId,
 } from './types.js';
 import {
   analyzeTextMentions,
@@ -208,6 +209,68 @@ function textMentionsClient(text: string, clientName: string): boolean {
   return text.toLowerCase().includes(clientName.toLowerCase());
 }
 
+/** Build platform breakdown from results, supporting multiple platforms. */
+function buildPlatformBreakdown(
+  results: PromptResult[],
+  clientDomains: string[],
+  overallCitationShare: number,
+  clientPromptsCited: number,
+  avgClientPosition: number
+): Record<string, PlatformBreakdown> {
+  // Detect which platforms are in the results
+  const platformsInResults = new Set(results.map(r => r.platform));
+
+  // All known platforms
+  const allPlatforms = ['perplexity', 'chatgpt_search', 'google_ai_overview', 'claude_search'];
+
+  const breakdown: Record<string, PlatformBreakdown> = {};
+
+  for (const platform of allPlatforms) {
+    if (platformsInResults.has(platform as any)) {
+      // Platform has data - compute metrics for this platform
+      const platformResults = results.filter(r => r.platform === platform);
+
+      // Count citations for this platform
+      let platformTotalCitations = 0;
+      let platformClientCitations = 0;
+      let platformPromptsCited = 0;
+      let platformPositionSum = 0;
+      let platformPositionCount = 0;
+
+      for (const result of platformResults) {
+        let promptCited = false;
+        for (const run of result.runs) {
+          const citations = run.response.citations ?? [];
+          platformTotalCitations += citations.length;
+
+          for (let i = 0; i < citations.length; i++) {
+            if (urlMatchesDomains(citations[i], clientDomains)) {
+              platformClientCitations++;
+              promptCited = true;
+              platformPositionSum += (i + 1);
+              platformPositionCount++;
+            }
+          }
+        }
+        if (promptCited) platformPromptsCited++;
+      }
+
+      breakdown[platform] = {
+        available: true,
+        citationShare: platformTotalCitations > 0 ? platformClientCitations / platformTotalCitations : 0,
+        promptsCited: platformPromptsCited,
+        totalPrompts: platformResults.length,
+        avgCitationPosition: platformPositionCount > 0 ? platformPositionSum / platformPositionCount : undefined,
+      };
+    } else {
+      // Platform not in results - mark as coming soon
+      breakdown[platform] = { available: false, comingSoon: true };
+    }
+  }
+
+  return breakdown;
+}
+
 // ── Main Analysis ──
 
 async function main() {
@@ -249,7 +312,7 @@ async function main() {
 
   for (const result of results) {
     for (const run of result.runs) {
-      const responseText = run.response.choices?.[0]?.message?.content ?? '';
+      const responseText = run.response.content ?? '';
       if (responseText) {
         const analysis = analyzeTextMentions(responseText, clientName, competitorNames);
         allTextAnalyses.push(analysis);
@@ -333,7 +396,7 @@ async function main() {
 
       for (const run of result.runs) {
         const citations = run.response.citations ?? [];
-        const responseText = run.response.choices?.[0]?.message?.content ?? '';
+        const responseText = run.response.content ?? '';
 
         // Count total citations
         totalCitations += citations.length;
@@ -472,7 +535,7 @@ async function main() {
       for (const r of results) {
         for (const run of r.runs) {
           total++;
-          const text = run.response.choices?.[0]?.message?.content ?? '';
+          const text = run.response.content ?? '';
           if (textMentionsClient(text, comp.name)) {
             mentions++;
           }
@@ -555,18 +618,7 @@ async function main() {
       topCompetitor: topCompetitor
         ? { name: topCompetitor.name, citationShare: topCompetitor.overallCitationShare }
         : { name: 'N/A', citationShare: 0 },
-      platformBreakdown: {
-        perplexity: {
-          available: true,
-          citationShare: overallCitationShare,
-          promptsCited: clientPromptsCited,
-          totalPrompts: results.length,
-          avgCitationPosition: avgClientPosition || undefined,
-        },
-        google_ai_overview: { available: false, comingSoon: true },
-        chatgpt_search: { available: false, comingSoon: true },
-        claude_search: { available: false, comingSoon: true },
-      },
+      platformBreakdown: buildPlatformBreakdown(results, clientDomains, overallCitationShare, clientPromptsCited, avgClientPosition),
       // NEW: Text-based metrics
       brandMentionRate: overallTextMetrics.brandMentionRate,
       firstMentionRate: overallTextMetrics.firstMentionRate,
@@ -600,14 +652,18 @@ async function main() {
   writeJSON(join(opts.outputDir, 'analyzedMetrics.json'), analyzedMetrics);
 
   // Also write a clientConfig.json
+  const platformsInResults = [...new Set(results.map(r => r.platform))];
+  const allPlatforms = ['perplexity', 'chatgpt_search', 'google_ai_overview', 'claude_search'];
+  const futurePlatforms = allPlatforms.filter(p => !platformsInResults.includes(p as any));
+
   const clientConfig = {
     clientName: library.client.name,
     clientDomains: library.client.domains,
     industry: industryProfile.name,
     competitors: library.competitors.map(c => ({ name: c.name, domains: c.domains })),
     runDate: new Date().toISOString(),
-    platforms: ['perplexity'],
-    futurePlatforms: ['google_ai_overview', 'chatgpt_search', 'claude_search'],
+    platforms: platformsInResults,
+    futurePlatforms,
   };
   writeJSON(join(opts.outputDir, 'clientConfig.json'), clientConfig);
 
@@ -637,16 +693,15 @@ async function main() {
         runId: run.runId,
         timestamp: run.timestamp,
         response: {
-          text: run.response.choices?.[0]?.message?.content ?? '',
+          text: run.response.content ?? '',
           citations: run.response.citations ?? [],
-          searchResults: run.response.search_results ?? [],
         },
         analysis: {
           clientCited: (run.response.citations ?? []).some(
             (url: string) => urlMatchesDomains(url, clientDomains)
           ),
           clientMentionedInText: textMentionsClient(
-            run.response.choices?.[0]?.message?.content ?? '',
+            run.response.content ?? '',
             clientName
           ),
           competitorsCited: competitors

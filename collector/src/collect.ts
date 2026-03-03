@@ -2,21 +2,28 @@
 /**
  * AISO Collection Engine
  *
- * Loops through every prompt in the prompt library, calls Perplexity's
- * Sonar API `runsPerPrompt` times per prompt, rate-limits to stay
+ * Loops through every prompt in the prompt library, calls the selected
+ * AI platform API `runsPerPrompt` times per prompt, rate-limits to stay
  * within the plan's RPM ceiling, and persists each prompt's results
  * as an individual JSON file.
  *
  * Usage:
  *   PERPLEXITY_API_KEY=pplx-... npm run collect
- *   PERPLEXITY_API_KEY=pplx-... npm run collect -- --dry-run
- *   PERPLEXITY_API_KEY=pplx-... npm run collect -- --resume-from business-casual-commercial
- *   PERPLEXITY_API_KEY=pplx-... npm run collect -- --model sonar-pro
+ *   OPENAI_API_KEY=sk-... npm run collect -- --platform chatgpt_search
+ *   npm run collect -- --dry-run
+ *   npm run collect -- --resume-from business-casual-commercial
+ *   npm run collect -- --model sonar-pro
  */
 
 import { join, resolve } from 'node:path';
 import { existsSync } from 'node:fs';
-import { PerplexityClient } from './perplexity.js';
+import {
+  createPlatformClient,
+  getApiKeyForPlatform,
+  DEFAULT_MODELS,
+  DEFAULT_RPM_LIMITS,
+} from './platforms/index.js';
+import type { PlatformId, PlatformResponse } from './platforms/types.js';
 import {
   loadPromptLibrary,
   ensureDir,
@@ -41,21 +48,30 @@ const DEFAULT_PROMPT_LIBRARY = resolve(
   '../prompts/jcrew-prompt-library.json',
 );
 const DEFAULT_OUTPUT_BASE = resolve(import.meta.dirname ?? '.', '../data/raw-results');
-const DEFAULT_MODEL = 'sonar';
+const DEFAULT_PLATFORM: PlatformId = 'perplexity';
 const DEFAULT_RUNS = 3;
-const DEFAULT_RPM = 50;
 
 // ── CLI Argument Parsing ──────────────────────────────────
 
 function parseArgs(): CollectOptions {
   const args = process.argv.slice(2);
 
+  // Parse platform first to set model/rpm defaults
+  let platform: PlatformId = DEFAULT_PLATFORM;
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--platform') {
+      platform = args[i + 1] as PlatformId;
+      break;
+    }
+  }
+
   const opts: CollectOptions = {
     promptLibraryPath: DEFAULT_PROMPT_LIBRARY,
     outputDir: '', // set below after timestamp
-    model: DEFAULT_MODEL,
+    platform,
+    model: DEFAULT_MODELS[platform],
     runsPerPrompt: DEFAULT_RUNS,
-    rpmLimit: DEFAULT_RPM,
+    rpmLimit: DEFAULT_RPM_LIMITS[platform],
     dryRun: false,
   };
 
@@ -63,6 +79,12 @@ function parseArgs(): CollectOptions {
     switch (args[i]) {
       case '--dry-run':
         opts.dryRun = true;
+        break;
+      case '--platform':
+        opts.platform = args[++i] as PlatformId;
+        // Update model/rpm to new platform defaults if not explicitly set later
+        opts.model = DEFAULT_MODELS[opts.platform];
+        opts.rpmLimit = DEFAULT_RPM_LIMITS[opts.platform];
         break;
       case '--model':
         opts.model = args[++i];
@@ -101,11 +123,14 @@ async function main() {
   const opts = parseArgs();
 
   // ── Validate API Key ──
-  const apiKey = process.env.PERPLEXITY_API_KEY;
-  if (!apiKey && !opts.dryRun) {
-    console.error('✘  Missing PERPLEXITY_API_KEY environment variable.');
-    console.error('   Set it:  export PERPLEXITY_API_KEY=pplx-...');
-    process.exit(1);
+  let apiKey: string | undefined;
+  if (!opts.dryRun) {
+    try {
+      apiKey = getApiKeyForPlatform(opts.platform);
+    } catch (err) {
+      console.error(`✘  ${(err as Error).message}`);
+      process.exit(1);
+    }
   }
 
   // ── Load Prompt Library ──
@@ -123,6 +148,7 @@ async function main() {
   console.log('╚══════════════════════════════════════════════╝');
   console.log('');
   console.log(`  Client:       ${library.client.name}`);
+  console.log(`  Platform:     ${opts.platform}`);
   console.log(`  Model:        ${opts.model}`);
   console.log(`  Prompts:      ${allPrompts.length}`);
   console.log(`  Runs/prompt:  ${opts.runsPerPrompt}`);
@@ -137,11 +163,12 @@ async function main() {
 
   // ── Setup ──
   ensureDir(opts.outputDir);
-  const client = opts.dryRun ? null : new PerplexityClient(apiKey!, opts.model, opts.rpmLimit);
+  const client = opts.dryRun ? null : createPlatformClient(opts.platform, apiKey!, opts.model, opts.rpmLimit);
 
   const manifest: CollectionManifest = {
     client: library.client,
     competitors: library.competitors,
+    platform: opts.platform,
     timestamp: new Date().toISOString(),
     model: opts.model,
     runsPerPrompt: opts.runsPerPrompt,
@@ -197,21 +224,18 @@ async function main() {
       if (opts.dryRun) {
         console.log(`    Run ${run}/${opts.runsPerPrompt}: [DRY RUN] — skipped`);
         manifest.completedApiCalls++;
+        const dryRunResponse: PlatformResponse = {
+          platform: opts.platform,
+          model: opts.model,
+          content: '[DRY RUN — no API call made]',
+          citations: [],
+          usage: { promptTokens: 0, completionTokens: 0 },
+          rawResponse: { dryRun: true },
+        };
         runs.push({
           runId: run,
           timestamp: new Date().toISOString(),
-          response: {
-            id: 'dry-run',
-            model: opts.model,
-            created: Date.now(),
-            usage: { prompt_tokens: 0, completion_tokens: 0, total_tokens: 0 },
-            citations: [],
-            choices: [{
-              index: 0,
-              finish_reason: 'stop',
-              message: { role: 'assistant', content: '[DRY RUN — no API call made]' },
-            }],
-          },
+          response: dryRunResponse,
           durationMs: 0,
         });
         continue;
@@ -229,7 +253,7 @@ async function main() {
         });
 
         const citationCount = response.citations?.length ?? 0;
-        const tokens = response.usage?.total_tokens ?? 0;
+        const tokens = (response.usage?.promptTokens ?? 0) + (response.usage?.completionTokens ?? 0);
         console.log(`    Run ${run}/${opts.runsPerPrompt}: ${citationCount} citations, ${tokens} tokens (${formatDuration(durationMs)})`);
 
         manifest.completedApiCalls++;
@@ -239,21 +263,18 @@ async function main() {
         manifest.failedApiCalls++;
 
         // Push a partial run with error info so we know it failed
+        const errorResponse: PlatformResponse = {
+          platform: opts.platform,
+          model: opts.model,
+          content: `ERROR: ${error.message}`,
+          citations: [],
+          usage: { promptTokens: 0, completionTokens: 0 },
+          rawResponse: { error: error.message },
+        };
         runs.push({
           runId: run,
           timestamp: new Date().toISOString(),
-          response: {
-            id: 'error',
-            model: opts.model,
-            created: Date.now(),
-            usage: { prompt_tokens: 0, completion_tokens: 0, total_tokens: 0 },
-            citations: [],
-            choices: [{
-              index: 0,
-              finish_reason: 'error',
-              message: { role: 'assistant', content: `ERROR: ${error.message}` },
-            }],
-          },
+          response: errorResponse,
           durationMs: Date.now() - runStart,
         });
       }
@@ -266,7 +287,7 @@ async function main() {
         topicName: prompt.topicName,
         category: prompt.category,
         isotope: prompt.isotope,
-        platform: 'perplexity',
+        platform: opts.platform,
         model: opts.model,
         collectionTimestamp: manifest.timestamp,
         runs,
@@ -284,7 +305,7 @@ async function main() {
         topicName: prompt.topicName,
         category: prompt.category,
         isotope: prompt.isotope,
-        platform: 'perplexity',
+        platform: opts.platform,
         model: opts.model,
         collectionTimestamp: manifest.timestamp,
         runs,
