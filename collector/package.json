@@ -6,10 +6,12 @@
   "scripts": {
     "collect": "tsx src/collect.ts",
     "analyze": "tsx src/analyze.ts",
-    "dry-run": "tsx src/collect.ts --dry-run"
+    "dry-run": "tsx src/collect.ts --dry-run",
+    "convert": "tsx src/convert-excel.ts"
   },
   "dependencies": {
     "tsx": "^4.19.0",
-    "typescript": "^5.5.0"
+    "typescript": "^5.5.0",
+    "xlsx": "^0.18.5"
   }
 }
