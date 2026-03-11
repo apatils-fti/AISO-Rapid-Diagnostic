@@ -83,6 +83,8 @@ function main() {
 
   // Group by topic
   const topicMap = new Map<string, Topic>();
+  // Track counts per topic+isotope to generate unique IDs
+  const idCounters = new Map<string, number>();
 
   for (const row of rows) {
     if (!row.topic || !row.prompt) {
@@ -103,9 +105,15 @@ function main() {
       });
     }
 
+    // Generate unique ID by adding counter for duplicates
+    const baseId = `${topicId}-${isotope}`;
+    const count = idCounters.get(baseId) ?? 0;
+    idCounters.set(baseId, count + 1);
+    const uniqueId = count === 0 ? baseId : `${baseId}-${count + 1}`;
+
     const topic = topicMap.get(topicId)!;
     topic.prompts.push({
-      id: `${topicId}-${isotope}`,
+      id: uniqueId,
       isotope: isotope,
       text: row.prompt.trim()
     });
