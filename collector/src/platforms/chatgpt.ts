@@ -16,17 +16,38 @@ interface OpenAIResponsesRequest {
   tools: Array<{ type: 'web_search' }>;
 }
 
-interface WebSearchResult {
+interface UrlCitation {
+  type: 'url_citation';
   url: string;
   title?: string;
-  snippet?: string;
+  start_index: number;
+  end_index: number;
 }
 
-interface OutputBlock {
-  type: 'message' | 'web_search_call';
-  content?: string;
-  results?: WebSearchResult[];
+interface OutputTextContent {
+  type: 'output_text';
+  text: string;
+  annotations?: UrlCitation[];
 }
+
+interface MessageBlock {
+  type: 'message';
+  status: string;
+  content: OutputTextContent[];
+  role?: string;
+}
+
+interface WebSearchCallBlock {
+  type: 'web_search_call';
+  status: string;
+  action?: {
+    type: string;
+    query?: string;
+    queries?: string[];
+  };
+}
+
+type OutputBlock = MessageBlock | WebSearchCallBlock;
 
 interface OpenAIResponsesResponse {
   id: string;
@@ -109,23 +130,33 @@ export class ChatGPTClient implements PlatformClient {
 
   /**
    * Convert OpenAI Responses API format to normalized PlatformResponse.
+   * Text is in output[].content[].text (type: output_text)
+   * Citations are in output[].content[].annotations[] (type: url_citation)
    */
   private normalizeResponse(raw: OpenAIResponsesResponse): PlatformResponse {
-    // Extract text content from message blocks
-    const content = raw.output
-      .filter((block): block is OutputBlock & { type: 'message'; content: string } =>
-        block.type === 'message' && typeof block.content === 'string'
-      )
-      .map(block => block.content)
-      .join('\n');
-
-    // Extract citations from web_search_call results
+    const textParts: string[] = [];
     const citations: string[] = [];
+
     for (const block of raw.output) {
-      if (block.type === 'web_search_call' && block.results) {
-        for (const result of block.results) {
-          if (result.url && !citations.includes(result.url)) {
-            citations.push(result.url);
+      if (block.type === 'message' && Array.isArray(block.content)) {
+        for (const contentItem of block.content) {
+          if (contentItem.type === 'output_text') {
+            // Extract text
+            if (contentItem.text) {
+              textParts.push(contentItem.text);
+            }
+            // Extract citations from annotations
+            if (Array.isArray(contentItem.annotations)) {
+              for (const annotation of contentItem.annotations) {
+                if (annotation.type === 'url_citation' && annotation.url) {
+                  // Remove tracking params and dedupe
+                  const cleanUrl = annotation.url.split('?utm_source=')[0];
+                  if (!citations.includes(cleanUrl)) {
+                    citations.push(cleanUrl);
+                  }
+                }
+              }
+            }
           }
         }
       }
@@ -134,7 +165,7 @@ export class ChatGPTClient implements PlatformClient {
     return {
       platform: 'chatgpt_search',
       model: raw.model,
-      content,
+      content: textParts.join('\n'),
       citations,
       usage: raw.usage ? {
         promptTokens: raw.usage.input_tokens,
