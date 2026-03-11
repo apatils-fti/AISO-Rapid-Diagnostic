@@ -1,6 +1,7 @@
-import XLSX from 'xlsx';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+const XLSX = require('xlsx');
 import fs from 'fs';
-import path from 'path';
 
 // JCrew client and competitors (preserved from existing library)
 const CLIENT = {
