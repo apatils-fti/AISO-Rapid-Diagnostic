@@ -1,6 +1,6 @@
-import * as XLSX from 'xlsx';
-import * as fs from 'fs';
-import * as path from 'path';
+import XLSX from 'xlsx';
+import fs from 'fs';
+import path from 'path';
 
 // JCrew client and competitors (preserved from existing library)
 const CLIENT = {
