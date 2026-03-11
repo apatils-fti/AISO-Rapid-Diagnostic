@@ -195,8 +195,8 @@ async function main() {
         console.log(`  ⟳  Resuming from ${prompt.promptId}`);
       } else {
         // Check if result already exists on disk
-        const resultPath = join(opts.outputDir, `${prompt.promptId}.json`);
-        if (existsSync(resultPath)) {
+        const resumeResultPath = join(opts.outputDir, `${prompt.promptId}-${opts.platform}.json`);
+        if (existsSync(resumeResultPath)) {
           manifest.completedApiCalls += opts.runsPerPrompt;
         }
         continue;
@@ -204,7 +204,8 @@ async function main() {
     }
 
     // ── Check if already collected (crash recovery) ──
-    const resultPath = join(opts.outputDir, `${prompt.promptId}.json`);
+    // Include platform in filename to allow multi-platform collection in same directory
+    const resultPath = join(opts.outputDir, `${prompt.promptId}-${opts.platform}.json`);
     const existing = readJSONIfExists<PromptResult>(resultPath);
     if (existing && existing.runs.length >= opts.runsPerPrompt) {
       console.log(`  ✓  ${prompt.promptId} — already collected, skipping`);
