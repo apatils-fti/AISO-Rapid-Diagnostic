@@ -1,15 +1,24 @@
 'use client';
 
-import { ChevronDown, Plus, Calendar } from 'lucide-react';
+import { Suspense } from 'react';
+import { Calendar, Plus, ChevronDown } from 'lucide-react';
+import { ClientSelector, type ClientOption } from './ClientSelector';
 import { clientConfig } from '@/lib/fixtures';
 import { formatDateShort } from '@/lib/utils';
 
 interface HeaderProps {
   title: string;
   description?: string;
+  clients?: ClientOption[];
+  currentClientId?: string;
+  runDate?: string;
 }
 
-export function Header({ title, description }: HeaderProps) {
+export function Header({ title, description, clients, currentClientId, runDate }: HeaderProps) {
+  const displayDate = runDate ?? clientConfig.runDate;
+  const displayClients = clients ?? [{ id: 'default', name: clientConfig.clientName }];
+  const displayClientId = currentClientId ?? 'default';
+
   return (
     <header className="sticky top-0 z-30 border-b border-[#2A2D37] bg-[#0F1117]/95 backdrop-blur supports-[backdrop-filter]:bg-[#0F1117]/80">
       <div className="flex h-16 items-center justify-between px-6">
@@ -28,14 +37,23 @@ export function Header({ title, description }: HeaderProps) {
           {/* Run Date */}
           <div className="flex items-center gap-2 text-sm text-[#9CA3AF]">
             <Calendar className="h-4 w-4" />
-            <span>{formatDateShort(clientConfig.runDate)}</span>
+            <span>{formatDateShort(displayDate)}</span>
           </div>
 
           {/* Client Selector */}
-          <button className="flex items-center gap-2 rounded-lg border border-[#2A2D37] bg-[#1A1D27] px-3 py-2 text-sm font-medium text-[#E5E7EB] hover:bg-[#22252F] transition-colors">
-            <span>{clientConfig.clientName}</span>
-            <ChevronDown className="h-4 w-4 text-[#6B7280]" />
-          </button>
+          <Suspense
+            fallback={
+              <div className="flex items-center gap-2 rounded-lg border border-[#2A2D37] bg-[#1A1D27] px-3 py-2 text-sm font-medium text-[#E5E7EB]">
+                <span>{displayClients[0]?.name ?? '...'}</span>
+                <ChevronDown className="h-4 w-4 text-[#6B7280]" />
+              </div>
+            }
+          >
+            <ClientSelector
+              clients={displayClients}
+              currentClientId={displayClientId}
+            />
+          </Suspense>
 
           {/* New Run Button */}
           <button className="flex items-center gap-2 rounded-lg bg-[#00D4AA] px-4 py-2 text-sm font-medium text-[#0F1117] hover:bg-[#00D4AA]/90 transition-colors">
