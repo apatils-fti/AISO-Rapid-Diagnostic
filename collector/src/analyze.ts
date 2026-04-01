@@ -212,11 +212,62 @@ function textMentionsClient(text: string, clientName: string): boolean {
 /** Extract response text from either Perplexity or unified PlatformResponse format. */
 function getResponseText(response: any): string {
   // Try unified PlatformResponse format first (content directly on response)
-  if (typeof response.content === 'string') {
+  if (typeof response.content === 'string' && response.content.length > 0) {
     return response.content;
   }
   // Fall back to Perplexity format (choices[0].message.content)
-  return response.choices?.[0]?.message?.content ?? '';
+  const perplexityContent = response.choices?.[0]?.message?.content;
+  if (perplexityContent) {
+    return perplexityContent;
+  }
+  // Fall back to ChatGPT rawResponse extraction (for data collected with broken normalizer)
+  if (response.rawResponse?.output) {
+    const textParts: string[] = [];
+    for (const block of response.rawResponse.output) {
+      if (block.type === 'message' && Array.isArray(block.content)) {
+        for (const contentItem of block.content) {
+          if (contentItem.type === 'output_text' && contentItem.text) {
+            textParts.push(contentItem.text);
+          }
+        }
+      }
+    }
+    if (textParts.length > 0) {
+      return textParts.join('\n');
+    }
+  }
+  return '';
+}
+
+/** Extract citations from response, with fallback to rawResponse for ChatGPT data. */
+function getResponseCitations(response: any): string[] {
+  // Try direct citations array first
+  if (Array.isArray(response.citations) && response.citations.length > 0) {
+    return response.citations;
+  }
+  // Fall back to ChatGPT rawResponse extraction (annotations contain url_citation)
+  if (response.rawResponse?.output) {
+    const citations: string[] = [];
+    for (const block of response.rawResponse.output) {
+      if (block.type === 'message' && Array.isArray(block.content)) {
+        for (const contentItem of block.content) {
+          if (contentItem.type === 'output_text' && Array.isArray(contentItem.annotations)) {
+            for (const annotation of contentItem.annotations) {
+              if (annotation.type === 'url_citation' && annotation.url) {
+                // Remove tracking params and dedupe
+                const cleanUrl = annotation.url.split('?utm_source=')[0];
+                if (!citations.includes(cleanUrl)) {
+                  citations.push(cleanUrl);
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    return citations;
+  }
+  return response.citations ?? [];
 }
 
 /** Infer platform from model name (useful when platform tag is missing or incorrect). */
@@ -334,7 +385,7 @@ async function main() {
 
     let promptCitedOnThisPlatform = false;
     for (const run of result.runs) {
-      const citations = run.response.citations ?? [];
+      const citations = getResponseCitations(run.response);
       const responseText = getResponseText(run.response);
 
       platformMetrics[platform].totalCitations += citations.length;
@@ -418,7 +469,7 @@ async function main() {
       // Here we only track topic-level and competitor metrics
 
       for (const run of result.runs) {
-        const citations = run.response.citations ?? [];
+        const citations = getResponseCitations(run.response);
         const responseText = getResponseText(run.response);
 
         // Count total citations
@@ -748,11 +799,11 @@ async function main() {
         timestamp: run.timestamp,
         response: {
           text: getResponseText(run.response),
-          citations: run.response.citations ?? [],
+          citations: getResponseCitations(run.response),
           searchResults: run.response.search_results ?? [],
         },
         analysis: {
-          clientCited: (run.response.citations ?? []).some(
+          clientCited: (getResponseCitations(run.response)).some(
             (url: string) => urlMatchesDomains(url, clientDomains)
           ),
           clientMentionedInText: textMentionsClient(
@@ -761,12 +812,12 @@ async function main() {
           ),
           competitorsCited: competitors
             .filter(c =>
-              (run.response.citations ?? []).some(
+              (getResponseCitations(run.response)).some(
                 (url: string) => urlMatchesDomains(url, c.domains)
               )
             )
             .map(c => c.name),
-          totalCitations: (run.response.citations ?? []).length,
+          totalCitations: (getResponseCitations(run.response)).length,
         },
       }))
     ),
