@@ -4,7 +4,11 @@ import { analyzedMetrics } from '@/lib/fixtures';
 import { cn, slugToTitle } from '@/lib/utils';
 import { Brain, Search, ArrowRight } from 'lucide-react';
 
-export function LayerComparison() {
+interface LayerComparisonProps {
+  serverGapData?: import('@/lib/db').GapRow[];
+}
+
+export function LayerComparison({ serverGapData }: LayerComparisonProps) {
   const topics = analyzedMetrics.topicResults;
 
   // Calculate parametric and RAG scores per topic

@@ -1,13 +1,49 @@
+import { Suspense } from 'react';
 import { PageContainer } from '@/components/layout';
 import { PromptTable } from '@/components/prompts';
+import { getPromptResults, getClients } from '@/lib/db';
 
-export default function PromptsPage() {
+const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
+
+interface PromptsPageProps {
+  searchParams: Promise<{ client?: string; platform?: string; topic?: string; isotope?: string }>;
+}
+
+async function PromptsContent({ clientId, platform, topic, isotope }: {
+  clientId: string; platform?: string; topic?: string; isotope?: string;
+}) {
+  const promptData = await getPromptResults(clientId, platform, topic, isotope);
+
+  return <PromptTable serverData={promptData} />;
+}
+
+export default async function PromptsPage({ searchParams }: PromptsPageProps) {
+  const params = await searchParams;
+  const clientId = params.client || DEFAULT_CLIENT_ID;
+  const clients = await getClients();
+
   return (
     <PageContainer
       title="Prompt Detail"
       description="Complete breakdown of all prompts and responses"
+      clients={clients.map(c => ({ id: c.id, name: c.name }))}
+      currentClientId={clientId}
     >
-      <PromptTable />
+      <Suspense
+        fallback={
+          <div className="space-y-4">
+            <div className="h-10 rounded-lg bg-[#1A1D27] animate-pulse" />
+            <div className="h-96 rounded-lg border border-[#2A2D37] bg-[#1A1D27] animate-pulse" />
+          </div>
+        }
+      >
+        <PromptsContent
+          clientId={clientId}
+          platform={params.platform}
+          topic={params.topic}
+          isotope={params.isotope}
+        />
+      </Suspense>
     </PageContainer>
   );
 }

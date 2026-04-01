@@ -804,3 +804,344 @@ export async function getTopicPlatformStats(
     return { topicId, topicName: topic.name, platforms };
   });
 }
+
+// ---------------------------------------------------------------------------
+// Phase 2: Topic Isotope Stats (for Topics/Heatmap page)
+// ---------------------------------------------------------------------------
+
+export interface IsotopeStats {
+  mentionRate: number;
+  total: number;
+  mentioned: number;
+}
+
+export interface TopicIsotopeRow {
+  topicId: string;
+  topicName: string;
+  category: string;
+  overallMentionRate: number;
+  isotopes: Record<string, IsotopeStats>;
+  competitorRates: Record<string, number>; // competitor name → mention rate
+}
+
+export async function getTopicIsotopeStats(
+  clientId: string,
+  platform?: string
+): Promise<TopicIsotopeRow[]> {
+  const results = await getAllResultsForClient(clientId, platform);
+  if (results.length === 0) return [];
+
+  const map = new Map<string, {
+    name: string;
+    category: string;
+    totalMentioned: number;
+    totalCount: number;
+    isotopes: Map<string, { mentioned: number; total: number }>;
+    competitors: Map<string, number>;
+  }>();
+
+  for (const r of results) {
+    const tid = r.topic_id;
+    if (!map.has(tid)) {
+      map.set(tid, {
+        name: r.topic_name,
+        category: '', // not stored in results, will be empty
+        totalMentioned: 0,
+        totalCount: 0,
+        isotopes: new Map(),
+        competitors: new Map(),
+      });
+    }
+    const entry = map.get(tid)!;
+    entry.totalCount++;
+    if (r.client_mentioned) entry.totalMentioned++;
+
+    // Isotope stats
+    const iso = r.isotope ?? 'unknown';
+    if (!entry.isotopes.has(iso)) entry.isotopes.set(iso, { mentioned: 0, total: 0 });
+    const isoEntry = entry.isotopes.get(iso)!;
+    isoEntry.total++;
+    if (r.client_mentioned) isoEntry.mentioned++;
+
+    // Competitor mentions
+    const cm = r.competitor_mentions ?? {};
+    for (const [name, count] of Object.entries(cm)) {
+      if ((count as number) > 0) {
+        entry.competitors.set(name, (entry.competitors.get(name) ?? 0) + 1);
+      }
+    }
+  }
+
+  return [...map.entries()].map(([topicId, entry]) => {
+    const isotopes: Record<string, IsotopeStats> = {};
+    for (const [iso, stats] of entry.isotopes) {
+      isotopes[iso] = {
+        mentionRate: stats.total > 0 ? stats.mentioned / stats.total : 0,
+        total: stats.total,
+        mentioned: stats.mentioned,
+      };
+    }
+    const competitorRates: Record<string, number> = {};
+    for (const [name, count] of entry.competitors) {
+      competitorRates[name] = entry.totalCount > 0 ? count / entry.totalCount : 0;
+    }
+    return {
+      topicId,
+      topicName: entry.name,
+      category: entry.category,
+      overallMentionRate: entry.totalCount > 0 ? entry.totalMentioned / entry.totalCount : 0,
+      isotopes,
+      competitorRates,
+    };
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Phase 2: Competitor Overview (for Competitors page)
+// ---------------------------------------------------------------------------
+
+export interface CompetitorOverviewRow {
+  name: string;
+  isClient: boolean;
+  mentionRate: number;
+  totalMentions: number;
+  totalResults: number;
+  topTopics: string[];
+  weakTopics: string[];
+}
+
+export async function getCompetitorOverview(
+  clientId: string,
+  platform?: string
+): Promise<CompetitorOverviewRow[]> {
+  const results = await getAllResultsForClient(clientId, platform);
+  if (results.length === 0) return [];
+
+  const total = results.length;
+
+  // Client stats
+  const clientMentioned = results.filter(r => r.client_mentioned).length;
+
+  // Competitor stats from competitor_mentions JSONB
+  const compMap = new Map<string, {
+    mentions: number;
+    topicMentions: Map<string, { mentioned: number; total: number }>;
+  }>();
+
+  for (const r of results) {
+    const cm = r.competitor_mentions ?? {};
+    for (const [name, count] of Object.entries(cm)) {
+      if (!compMap.has(name)) {
+        compMap.set(name, { mentions: 0, topicMentions: new Map() });
+      }
+      const entry = compMap.get(name)!;
+      if ((count as number) > 0) entry.mentions++;
+
+      // Track per-topic for top/weak
+      if (!entry.topicMentions.has(r.topic_id)) {
+        entry.topicMentions.set(r.topic_id, { mentioned: 0, total: 0 });
+      }
+      const tm = entry.topicMentions.get(r.topic_id)!;
+      tm.total++;
+      if ((count as number) > 0) tm.mentioned++;
+    }
+  }
+
+  const rows: CompetitorOverviewRow[] = [];
+
+  // Add client as first entry
+  rows.push({
+    name: 'J.Crew', // Will be dynamic when multi-client
+    isClient: true,
+    mentionRate: total > 0 ? clientMentioned / total : 0,
+    totalMentions: clientMentioned,
+    totalResults: total,
+    topTopics: [],
+    weakTopics: [],
+  });
+
+  // Add competitors
+  for (const [name, stats] of compMap) {
+    const topicRates: { topic: string; rate: number }[] = [];
+    for (const [topicId, tm] of stats.topicMentions) {
+      topicRates.push({ topic: topicId, rate: tm.total > 0 ? tm.mentioned / tm.total : 0 });
+    }
+    topicRates.sort((a, b) => b.rate - a.rate);
+
+    rows.push({
+      name,
+      isClient: false,
+      mentionRate: total > 0 ? stats.mentions / total : 0,
+      totalMentions: stats.mentions,
+      totalResults: total,
+      topTopics: topicRates.slice(0, 3).map(t => t.topic),
+      weakTopics: topicRates.slice(-3).map(t => t.topic),
+    });
+  }
+
+  return rows.sort((a, b) => b.mentionRate - a.mentionRate);
+}
+
+// ---------------------------------------------------------------------------
+// Phase 2: Gap Analysis (for Gap Analysis page)
+// ---------------------------------------------------------------------------
+
+export interface GapRow {
+  topicId: string;
+  topicName: string;
+  clientRate: number;
+  topCompetitor: string;
+  competitorRate: number;
+  gap: number; // competitorRate - clientRate (positive = competitor leads)
+}
+
+export async function getGapAnalysis(
+  clientId: string,
+  platform?: string
+): Promise<GapRow[]> {
+  const results = await getAllResultsForClient(clientId, platform);
+  if (results.length === 0) return [];
+
+  // Group by topic
+  const topicMap = new Map<string, {
+    name: string;
+    clientMentioned: number;
+    total: number;
+    competitors: Map<string, number>;
+  }>();
+
+  for (const r of results) {
+    if (!topicMap.has(r.topic_id)) {
+      topicMap.set(r.topic_id, { name: r.topic_name, clientMentioned: 0, total: 0, competitors: new Map() });
+    }
+    const entry = topicMap.get(r.topic_id)!;
+    entry.total++;
+    if (r.client_mentioned) entry.clientMentioned++;
+
+    const cm = r.competitor_mentions ?? {};
+    for (const [name, count] of Object.entries(cm)) {
+      if ((count as number) > 0) {
+        entry.competitors.set(name, (entry.competitors.get(name) ?? 0) + 1);
+      }
+    }
+  }
+
+  const rows: GapRow[] = [];
+  for (const [topicId, entry] of topicMap) {
+    const clientRate = entry.total > 0 ? entry.clientMentioned / entry.total : 0;
+
+    // Find top competitor for this topic
+    let topComp = '';
+    let topCompRate = 0;
+    for (const [name, count] of entry.competitors) {
+      const rate = entry.total > 0 ? count / entry.total : 0;
+      if (rate > topCompRate) {
+        topCompRate = rate;
+        topComp = name;
+      }
+    }
+
+    rows.push({
+      topicId,
+      topicName: entry.name,
+      clientRate,
+      topCompetitor: topComp || 'N/A',
+      competitorRate: topCompRate,
+      gap: topCompRate - clientRate,
+    });
+  }
+
+  return rows.sort((a, b) => b.gap - a.gap);
+}
+
+// ---------------------------------------------------------------------------
+// Phase 2: Prompt Results (for Prompt Detail page)
+// ---------------------------------------------------------------------------
+
+export interface PromptResultRow {
+  promptId: string;
+  topicId: string;
+  topicName: string;
+  isotope: string;
+  promptText: string;
+  results: Array<{
+    platform: string;
+    responseText: string;
+    clientMentioned: boolean;
+    citations: string[];
+    sentiment: string | null;
+    recommendationStrength: string | null;
+    ctaPresent: boolean;
+    competitorMentions: Record<string, number>;
+  }>;
+}
+
+export async function getPromptResults(
+  clientId: string,
+  platform?: string,
+  topicFilter?: string,
+  isotopeFilter?: string
+): Promise<PromptResultRow[]> {
+  const sb = reader();
+  if (!sb) return [];
+
+  try {
+    // Get run IDs
+    const { data: runs } = await sb.from('runs').select('id').eq('client_id', clientId);
+    if (!runs || runs.length === 0) return [];
+    const runIds = runs.map((r: any) => r.id);
+
+    // Build query
+    let query = sb
+      .from('results')
+      .select('prompt_id, topic_id, topic_name, isotope, response_text, client_mentioned, citations, sentiment, recommendation_strength, cta_present, competitor_mentions, platform')
+      .in('run_id', runIds);
+
+    if (platform && platform !== 'all') query = query.eq('platform', platform);
+    if (topicFilter) query = query.eq('topic_id', topicFilter);
+    if (isotopeFilter) query = query.eq('isotope', isotopeFilter);
+
+    const { data, error } = await query;
+    if (error || !data) return [];
+
+    // Group by prompt_id
+    const promptMap = new Map<string, PromptResultRow>();
+    for (const r of data as any[]) {
+      if (!promptMap.has(r.prompt_id)) {
+        promptMap.set(r.prompt_id, {
+          promptId: r.prompt_id,
+          topicId: r.topic_id,
+          topicName: r.topic_name,
+          isotope: r.isotope ?? 'unknown',
+          promptText: '', // Not stored in results; will need prompts table lookup
+          results: [],
+        });
+      }
+      promptMap.get(r.prompt_id)!.results.push({
+        platform: r.platform,
+        responseText: r.response_text ?? '',
+        clientMentioned: r.client_mentioned ?? false,
+        citations: r.citations ?? [],
+        sentiment: r.sentiment,
+        recommendationStrength: r.recommendation_strength,
+        ctaPresent: r.cta_present ?? false,
+        competitorMentions: r.competitor_mentions ?? {},
+      });
+    }
+
+    // Try to get prompt texts from prompts table
+    const { data: prompts } = await sb
+      .from('prompts')
+      .select('prompt_id, prompt_text')
+      .in('prompt_id', [...promptMap.keys()]);
+
+    if (prompts) {
+      for (const p of prompts as any[]) {
+        const row = promptMap.get(p.prompt_id);
+        if (row) row.promptText = p.prompt_text ?? '';
+      }
+    }
+
+    return [...promptMap.values()];
+  } catch { return []; }
+}

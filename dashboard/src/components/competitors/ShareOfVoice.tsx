@@ -1,21 +1,37 @@
 'use client';
 
-import { analyzedMetrics } from '@/lib/fixtures';
+import { analyzedMetrics, getFilteredBrandMetrics } from '@/lib/fixtures';
 import { COMPETITOR_COLORS } from '@/lib/colors';
 import { cn } from '@/lib/utils';
+import type { CompetitorOverviewRow } from '@/lib/db';
 
-export function ShareOfVoice() {
-  const competitors = analyzedMetrics.competitorOverview
-    .sort((a, b) => b.overallCitationShare - a.overallCitationShare);
+interface ShareOfVoiceProps {
+  mode?: string;
+  selectedPlatforms?: string[];
+  serverData?: CompetitorOverviewRow[];
+}
+
+export function ShareOfVoice({ mode = 'mentions', selectedPlatforms, serverData }: ShareOfVoiceProps) {
+  const { competitorOverview } = analyzedMetrics;
+  const filteredBrandMetrics = getFilteredBrandMetrics(selectedPlatforms);
+
+  // Get share values based on mode
+  const competitors = competitorOverview.map(c => {
+    const mentionRate = filteredBrandMetrics[c.name]?.mentionRate || 0;
+    return {
+      ...c,
+      displayShare: mode === 'citations' ? c.overallCitationShare : mentionRate,
+    };
+  }).sort((a, b) => b.displayShare - a.displayShare);
 
   // Calculate "Other" share
-  const totalTracked = competitors.reduce((sum, c) => sum + c.overallCitationShare, 0);
+  const totalTracked = competitors.reduce((sum, c) => sum + c.displayShare, 0);
   const otherShare = Math.max(0, 1 - totalTracked);
 
   const segments = [
     ...competitors.map(c => ({
       name: c.name,
-      share: c.overallCitationShare,
+      share: c.displayShare,
       color: COMPETITOR_COLORS[c.name] || COMPETITOR_COLORS.Other,
       isClient: c.isClient,
     })),
@@ -29,9 +45,16 @@ export function ShareOfVoice() {
 
   return (
     <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-6">
-      <h3 className="font-heading text-lg font-semibold text-[#E5E7EB] mb-6">
-        Overall Share of Voice
-      </h3>
+      <div className="mb-6">
+        <h3 className="font-heading text-lg font-semibold text-[#E5E7EB] mb-2">
+          {mode === 'citations' ? 'Overall Citation Share' : 'Brand Mention Share'}
+        </h3>
+        <p className="text-sm text-[#9CA3AF]">
+          {mode === 'citations'
+            ? 'Percentage of all URL citations each brand receives across AI responses'
+            : 'How often each brand is mentioned in AI responses across all topics'}
+        </p>
+      </div>
 
       {/* Stacked bar */}
       <div className="h-12 w-full flex rounded-lg overflow-hidden mb-6">

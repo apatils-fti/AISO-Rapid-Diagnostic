@@ -1,20 +1,31 @@
 'use client';
 
-import { analyzedMetrics } from '@/lib/fixtures';
+import { analyzedMetrics, getFilteredBrandMetrics } from '@/lib/fixtures';
 import { COMPETITOR_COLORS } from '@/lib/colors';
 import { cn } from '@/lib/utils';
 
-export function QuadrantChart() {
+interface QuadrantChartProps {
+  selectedPlatforms?: string[];
+  serverGapData?: import('@/lib/db').GapRow[];
+}
+
+export function QuadrantChart({ selectedPlatforms, serverGapData }: QuadrantChartProps) {
   const { competitorOverview, gapAnalysis } = analyzedMetrics;
+  const filteredBrandMetrics = getFilteredBrandMetrics(selectedPlatforms);
 
   // Map competitors to coordinates
-  const points = competitorOverview.map(c => ({
-    name: c.name,
-    x: c.parametricMentionRate * 100, // Parametric presence
-    y: c.overallCitationShare * 100 * 2.5, // RAG citation (scaled for visibility)
-    isClient: c.isClient,
-    color: COMPETITOR_COLORS[c.name] || COMPETITOR_COLORS.Other,
-  }));
+  const points = competitorOverview.map(c => {
+    // Use filtered mention rate for Y-axis
+    const mentionRate = filteredBrandMetrics[c.name]?.mentionRate || 0;
+
+    return {
+      name: c.name,
+      x: c.parametricMentionRate * 100, // Parametric presence (knowledge in training data)
+      y: mentionRate * 100, // Mention presence in responses
+      isClient: c.isClient,
+      color: COMPETITOR_COLORS[c.name] || COMPETITOR_COLORS.Other,
+    };
+  });
 
   // Chart dimensions
   const width = 100;
@@ -24,7 +35,7 @@ export function QuadrantChart() {
   return (
     <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-6">
       <h3 className="font-heading text-lg font-semibold text-[#E5E7EB] mb-6">
-        Parametric vs. RAG Presence
+        Parametric vs. Response Mention Presence
       </h3>
 
       <div className="relative aspect-square max-w-2xl mx-auto">
@@ -71,7 +82,7 @@ export function QuadrantChart() {
 
         {/* Quadrant labels */}
         <div className="absolute top-2 left-2 text-xs text-[#9CA3AF]">
-          Content Discoverable,<br />Brand Unknown
+          Low Training Data,<br />High Mentions
         </div>
         <div className="absolute top-2 right-2 text-xs text-emerald-400 text-right">
           Strong<br />Position
@@ -80,15 +91,15 @@ export function QuadrantChart() {
           Invisible
         </div>
         <div className="absolute bottom-2 right-2 text-xs text-amber-400 text-right">
-          Known Brand,<br />Content Invisible
+          Known in Training,<br />Low Mentions
         </div>
 
         {/* Axis labels */}
         <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 text-xs text-[#6B7280]">
-          Parametric Presence →
+          Parametric Presence (Training Data) →
         </div>
         <div className="absolute -left-6 top-1/2 -translate-y-1/2 -rotate-90 text-xs text-[#6B7280]">
-          RAG Presence →
+          Response Mention Rate →
         </div>
       </div>
 

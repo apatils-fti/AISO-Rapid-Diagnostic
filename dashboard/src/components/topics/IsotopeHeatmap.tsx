@@ -1,14 +1,42 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import { analyzedMetrics, getTopicCategories } from '@/lib/fixtures';
+import { useState, useEffect, useMemo } from 'react';
+import { Link2, MessageSquare } from 'lucide-react';
+import { analyzedMetrics, getTopicCategories, getFilteredTopicBrandMetrics } from '@/lib/fixtures';
+import {
+  getTopicIsotopeStatsMap,
+  getTopicStatsMap,
+  type TopicIsotopeStats,
+} from '@/lib/platform-data';
+import type { TopicIsotopeRow } from '@/lib/db';
 import { FilterBar, FilterDropdown, SearchInput } from '@/components/shared';
 import { IsotopeLegend, IsotopeHeaders } from './IsotopeLegend';
 import { TopicRow } from './TopicRow';
+import { cn } from '@/lib/utils';
 
-export function IsotopeHeatmap() {
+export type HeatmapMode = 'citations' | 'mentions';
+
+interface IsotopeHeatmapProps {
+  selectedPlatforms?: string[];
+  serverTopicData?: TopicIsotopeRow[];
+}
+
+export function IsotopeHeatmap({ selectedPlatforms, serverTopicData }: IsotopeHeatmapProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('all');
+  const [mode, setMode] = useState<HeatmapMode>('citations');
+  const [isotopeStatsMap, setIsotopeStatsMap] = useState<
+    Record<string, Record<string, TopicIsotopeStats>>
+  >({});
+  const [topicStatsMap, setTopicStatsMap] = useState<
+    Record<string, TopicIsotopeStats>
+  >({});
+
+  // Load batch-computed stats (re-fetches when platform selection changes)
+  useEffect(() => {
+    getTopicIsotopeStatsMap(selectedPlatforms).then(setIsotopeStatsMap);
+    getTopicStatsMap(selectedPlatforms).then(setTopicStatsMap);
+  }, [selectedPlatforms]);
 
   const categories = getTopicCategories();
   const categoryOptions = [
@@ -17,12 +45,40 @@ export function IsotopeHeatmap() {
   ];
 
   const filteredTopics = useMemo(() => {
-    return analyzedMetrics.topicResults.filter(topic => {
+    const CLIENT_NAME = 'J.Crew';
+
+    const filtered = analyzedMetrics.topicResults.filter(topic => {
       const matchesSearch = topic.topicName.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesCategory = categoryFilter === 'all' || topic.category === categoryFilter;
       return matchesSearch && matchesCategory;
     });
-  }, [searchQuery, categoryFilter]);
+
+    // Sort by biggest gap/opportunity using platform-filtered metrics
+    return filtered.sort((a, b) => {
+      const aMetrics = getFilteredTopicBrandMetrics(a.topicId, selectedPlatforms);
+      const bMetrics = getFilteredTopicBrandMetrics(b.topicId, selectedPlatforms);
+      const aClientRate = aMetrics[CLIENT_NAME]?.mentionRate ?? 0;
+      const bClientRate = bMetrics[CLIENT_NAME]?.mentionRate ?? 0;
+
+      const aMaxComp = Math.max(
+        0,
+        ...Object.entries(aMetrics)
+          .filter(([name]) => name !== CLIENT_NAME)
+          .map(([, m]) => m.mentionRate)
+      );
+      const bMaxComp = Math.max(
+        0,
+        ...Object.entries(bMetrics)
+          .filter(([name]) => name !== CLIENT_NAME)
+          .map(([, m]) => m.mentionRate)
+      );
+
+      const aGap = aMaxComp - aClientRate;
+      const bGap = bMaxComp - bClientRate;
+
+      return bGap - aGap; // Biggest gap first
+    });
+  }, [searchQuery, categoryFilter, selectedPlatforms]);
 
   // Group topics by category
   const groupedTopics = useMemo(() => {
@@ -42,12 +98,40 @@ export function IsotopeHeatmap() {
       <div className="flex items-start justify-between gap-6">
         <div className="max-w-2xl">
           <p className="text-[#9CA3AF]">
-            This heatmap shows your citation presence across 15 topics and 6 query types (isotopes).
-            Each cell represents how consistently you appear in AI search results for that specific query type.
+            {mode === 'citations'
+              ? 'This heatmap shows your URL citation presence across topics and query types. Each cell shows how often your domain appears in citation lists.'
+              : 'This heatmap shows your brand mention rate across topics and query types. Each cell shows how often your brand is mentioned in response text.'}
             Click on a topic row to see detailed breakdown.
           </p>
         </div>
         <FilterBar>
+          {/* Mode Toggle */}
+          <div className="flex items-center gap-1 rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-1">
+            <button
+              onClick={() => setMode('citations')}
+              className={cn(
+                'flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
+                mode === 'citations'
+                  ? 'bg-[#00D4AA]/10 text-[#00D4AA]'
+                  : 'text-[#9CA3AF] hover:text-[#E5E7EB]'
+              )}
+            >
+              <Link2 className="h-4 w-4" />
+              Citations
+            </button>
+            <button
+              onClick={() => setMode('mentions')}
+              className={cn(
+                'flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
+                mode === 'mentions'
+                  ? 'bg-[#00D4AA]/10 text-[#00D4AA]'
+                  : 'text-[#9CA3AF] hover:text-[#E5E7EB]'
+              )}
+            >
+              <MessageSquare className="h-4 w-4" />
+              Mentions
+            </button>
+          </div>
           <SearchInput
             value={searchQuery}
             onChange={setSearchQuery}
@@ -64,7 +148,7 @@ export function IsotopeHeatmap() {
       </div>
 
       {/* Legend */}
-      <IsotopeLegend />
+      <IsotopeLegend mode={mode} />
 
       {/* Heatmap */}
       <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] overflow-hidden">
@@ -86,7 +170,13 @@ export function IsotopeHeatmap() {
                 </div>
                 <div>
                   {topics.map(topic => (
-                    <TopicRow key={topic.topicId} topic={topic} />
+                    <TopicRow
+                      key={topic.topicId}
+                      topic={topic}
+                      mode={mode}
+                      isotopeStats={isotopeStatsMap[topic.topicId]}
+                      topicStats={topicStatsMap[topic.topicId]}
+                    />
                   ))}
                 </div>
               </div>
@@ -94,7 +184,13 @@ export function IsotopeHeatmap() {
           ) : (
             // Show flat list
             filteredTopics.map(topic => (
-              <TopicRow key={topic.topicId} topic={topic} />
+              <TopicRow
+                key={topic.topicId}
+                topic={topic}
+                mode={mode}
+                isotopeStats={isotopeStatsMap[topic.topicId]}
+                topicStats={topicStatsMap[topic.topicId]}
+              />
             ))
           )}
         </div>
