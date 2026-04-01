@@ -3,32 +3,31 @@ import { Eye, Shield, ShoppingCart, ThumbsUp } from 'lucide-react';
 import { PageContainer } from '@/components/layout';
 import { PillarCard, SentimentBar } from '@/components/metrics';
 import { supabaseService } from '@/lib/supabase';
+import { getClients } from '@/lib/db';
 import {
   getVisibilityScore,
   getTrustScore,
   getAcquisitionScore,
   getRecommendationScore,
+  getWeightsForArchetype,
 } from '@/lib/metrics';
 import type { EnrichedResult } from '@/lib/metrics';
 import { formatPercent } from '@/lib/utils';
 import { MetricsFilter } from './metrics-filter';
 
-const CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
+const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
 
-async function getEnrichedResults(platform: string): Promise<EnrichedResult[]> {
+async function getEnrichedResults(clientId: string, platform: string): Promise<EnrichedResult[]> {
   if (!supabaseService) return [];
 
-  // Get run_ids for this client
   const { data: runs, error: runsError } = await supabaseService
     .from('runs')
     .select('id')
-    .eq('client_id', CLIENT_ID);
+    .eq('client_id', clientId);
 
   if (runsError || !runs || runs.length === 0) return [];
-
   const runIds = runs.map((r: { id: string }) => r.id);
 
-  // Fetch enriched results
   let query = supabaseService
     .from('results')
     .select('*')
@@ -44,13 +43,13 @@ async function getEnrichedResults(platform: string): Promise<EnrichedResult[]> {
   return data as EnrichedResult[];
 }
 
-async function getAvailablePlatforms(): Promise<string[]> {
+async function getAvailablePlatforms(clientId: string): Promise<string[]> {
   if (!supabaseService) return [];
 
   const { data: runs } = await supabaseService
     .from('runs')
     .select('id')
-    .eq('client_id', CLIENT_ID);
+    .eq('client_id', clientId);
 
   if (!runs || runs.length === 0) return [];
 
@@ -65,12 +64,15 @@ async function getAvailablePlatforms(): Promise<string[]> {
 }
 
 interface MetricsPageProps {
-  searchParams: Promise<{ platform?: string }>;
+  searchParams: Promise<{ platform?: string; client?: string }>;
 }
 
-async function MetricsContent({ platform }: { platform: string }) {
-  const results = await getEnrichedResults(platform);
-  const platforms = await getAvailablePlatforms();
+async function MetricsContent({ platform, clientId }: { platform: string; clientId: string }) {
+  const [results, platforms, clients] = await Promise.all([
+    getEnrichedResults(clientId, platform),
+    getAvailablePlatforms(clientId),
+    getClients(),
+  ]);
 
   if (results.length === 0) {
     return (
@@ -84,14 +86,41 @@ async function MetricsContent({ platform }: { platform: string }) {
     );
   }
 
+  // Get archetype for selected client
+  const client = clients.find(c => c.id === clientId);
+  const archetype = client?.archetype;
+  const weights = getWeightsForArchetype(archetype);
+
   const isSinglePlatform = platform !== 'all';
-  const visibility = getVisibilityScore(results, isSinglePlatform);
-  const trust = getTrustScore(results);
-  const acquisition = getAcquisitionScore(results);
-  const recommendation = getRecommendationScore(results);
+  const visibility = getVisibilityScore(results, isSinglePlatform, weights);
+  const trust = getTrustScore(results, weights);
+  const acquisition = getAcquisitionScore(results, weights);
+  const recommendation = getRecommendationScore(results, weights);
 
   const topicCount = new Set(results.map(r => r.topic_name)).size;
   const dominantTopics = Math.round(trust.topicDominanceScore * topicCount);
+
+  // Build formula strings from weights
+  const vw = weights.visibility;
+  const tw = weights.trust;
+  const aw = weights.acquisition;
+  const rw = weights.recommendation;
+
+  const visFormula = archetype
+    ? `Score = ${vw.mentionRate}×Mention + ${vw.shareOfVoice}×SoV + ${vw.firstMentionRate}×FirstMention + ${vw.platformSpread}×Spread\nArchetype: ${archetype}`
+    : `Score = 0.35×Mention + 0.30×SoV + 0.20×FirstMention + 0.15×Spread`;
+
+  const trustFormula = archetype
+    ? `Score = ${tw.citationRate}×Citation + ${tw.sentimentPositive}×Sentiment+ + ${tw.topicDominance}×TopicDom\nArchetype: ${archetype}`
+    : `Score = 0.30×Citation + 0.45×Sentiment+ + 0.25×TopicDom`;
+
+  const acqFormula = archetype
+    ? `Score = ${aw.highIntentMentionRate}×HighIntent + ${aw.conversionQueryMentionRate}×ConvQuery + ${aw.ctaPresenceRate}×CTA\nArchetype: ${archetype}`
+    : `Score = 0.40×HighIntent + 0.35×ConvQuery + 0.25×CTA`;
+
+  const recFormula = archetype
+    ? `Score = ${rw.recommendationRate}×RecRate + ${rw.strongRecommendationRate}×StrongRec + ${rw.decisionCriteriaWinRate}×CompWin\nArchetype: ${archetype}`
+    : `Score = 0.35×RecRate + 0.30×StrongRec + 0.35×CompWin`;
 
   return (
     <>
@@ -102,6 +131,7 @@ async function MetricsContent({ platform }: { platform: string }) {
       <p className="mb-4 text-sm text-[#6B7280]">
         Showing {results.length} enriched results
         {platform !== 'all' ? ` for ${platform}` : ' across all platforms'}
+        {archetype && <span className="ml-2 text-[#00D4AA]">({archetype} weights)</span>}
       </p>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -109,9 +139,11 @@ async function MetricsContent({ platform }: { platform: string }) {
           title="Visibility"
           score={visibility.composite}
           icon={Eye}
+          formula={visFormula}
           subMetrics={[
             { label: 'Mention Rate', value: formatPercent(visibility.mentionRate) },
             { label: 'Share of Voice', value: formatPercent(visibility.shareOfVoice) },
+            { label: 'Citation Rate', value: formatPercent(visibility.citationRate) },
             ...(visibility.platformSpread !== null
               ? [{ label: 'Platform Spread', value: formatPercent(visibility.platformSpread) }]
               : [{ label: 'Platform Spread', value: 'N/A' }]),
@@ -121,6 +153,7 @@ async function MetricsContent({ platform }: { platform: string }) {
           title="Trust"
           score={trust.composite}
           icon={Shield}
+          formula={trustFormula}
           subMetrics={[
             { label: 'Positive Sentiment', value: formatPercent(trust.sentimentBreakdown.positive) },
             { label: 'Hedged', value: formatPercent(trust.sentimentBreakdown.hedged) },
@@ -131,15 +164,21 @@ async function MetricsContent({ platform }: { platform: string }) {
           title="Customer Acquisition"
           score={acquisition.composite}
           icon={ShoppingCart}
+          formula={acqFormula}
           subMetrics={[
             { label: 'High-Intent Rate', value: formatPercent(acquisition.highIntentMentionRate) },
             { label: 'CTA Presence', value: formatPercent(acquisition.ctaPresenceRate) },
+            ...acquisition.isotopeBreakdown.slice(0, 4).map(iso => ({
+              label: `${iso.isotope}`,
+              value: `${formatPercent(iso.mentionRate)} (${iso.mentioned}/${iso.total})`,
+            })),
           ]}
         />
         <PillarCard
           title="Recommendation"
           score={recommendation.composite}
           icon={ThumbsUp}
+          formula={recFormula}
           subMetrics={[
             { label: 'Recommended', value: formatPercent(recommendation.recommendationRate) },
             { label: 'Strong Rec.', value: formatPercent(recommendation.strongRecommendationRate) },
@@ -165,9 +204,17 @@ async function MetricsContent({ platform }: { platform: string }) {
 export default async function MetricsPage({ searchParams }: MetricsPageProps) {
   const params = await searchParams;
   const platform = params.platform || 'all';
+  const clientId = params.client || DEFAULT_CLIENT_ID;
+
+  const clients = await getClients();
 
   return (
-    <PageContainer title="AISO Metrics" description="Four-pillar analysis of AI search presence">
+    <PageContainer
+      title="AISO Metrics"
+      description="Four-pillar analysis of AI search presence"
+      clients={clients.map(c => ({ id: c.id, name: c.name }))}
+      currentClientId={clientId}
+    >
       <Suspense
         fallback={
           <div className="flex items-center justify-center py-20">
@@ -176,7 +223,7 @@ export default async function MetricsPage({ searchParams }: MetricsPageProps) {
           </div>
         }
       >
-        <MetricsContent platform={platform} />
+        <MetricsContent platform={platform} clientId={clientId} />
       </Suspense>
     </PageContainer>
   );

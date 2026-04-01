@@ -8,8 +8,10 @@ import {
   getTrustScore,
   getAcquisitionScore,
   getRecommendationScore,
+  getWeightsForArchetype,
+  ARCHETYPE_WEIGHTS,
 } from '../src/lib/metrics';
-import type { EnrichedResult } from '../src/lib/metrics';
+import type { EnrichedResult, PillarWeights } from '../src/lib/metrics';
 
 // ─── Regex Classifier Tests ──────────────────────────────────
 
@@ -225,5 +227,137 @@ describe('getRecommendationScore', () => {
     ];
     const score = getRecommendationScore(results);
     expect(score.decisionCriteriaWinRate).toBeCloseTo(0.5, 2);
+  });
+});
+
+// ─── Archetype Weights Tests ─────────────────────────────────
+
+describe('getWeightsForArchetype', () => {
+  it('returns default weights for unknown archetype', () => {
+    const weights = getWeightsForArchetype('nonexistent');
+    expect(weights.visibility.mentionRate).toBe(0.35);
+  });
+
+  it('returns default weights when archetype is undefined', () => {
+    const weights = getWeightsForArchetype(undefined);
+    expect(weights.visibility.mentionRate).toBe(0.35);
+  });
+
+  it('returns transactional-commerce weights', () => {
+    const weights = getWeightsForArchetype('transactional-commerce');
+    expect(weights.visibility.mentionRate).toBe(0.40);
+    expect(weights.visibility.shareOfVoice).toBe(0.25);
+  });
+
+  it('returns trust-based-advisory weights', () => {
+    const weights = getWeightsForArchetype('trust-based-advisory');
+    expect(weights.trust.sentimentPositive).toBe(0.35);
+    expect(weights.recommendation.decisionCriteriaWinRate).toBe(0.40);
+  });
+
+  it('all archetype weights sum to 1.0 per pillar', () => {
+    for (const [name, weights] of Object.entries(ARCHETYPE_WEIGHTS)) {
+      for (const [pillar, w] of Object.entries(weights)) {
+        const sum = Object.values(w).reduce((a, b) => a + b, 0);
+        expect(sum).toBeCloseTo(1.0, 2);
+      }
+    }
+  });
+});
+
+describe('archetype weights affect composite scores', () => {
+  it('different archetype weights change trust composite', () => {
+    // Make sub-metrics very different so weight changes matter after rounding
+    // High citation (100%), low sentiment+ (0%), medium dominance (50%)
+    const results = [
+      makeResult({ sentiment: 'neutral', citations: ['http://a.com'], topic_name: 'topic-a', client_mentioned: true }),
+      makeResult({ sentiment: 'neutral', citations: ['http://b.com'], topic_name: 'topic-a', client_mentioned: true }),
+      makeResult({ sentiment: 'neutral', citations: ['http://c.com'], topic_name: 'topic-b', client_mentioned: false }),
+    ];
+    const defaultScore = getTrustScore(results, getWeightsForArchetype(undefined));
+    const mediaScore = getTrustScore(results, getWeightsForArchetype('digital-media'));
+
+    // citationRate=100%, sentimentPositive=0%, topicDominance=50%
+    // default: 0.30*100 + 0.45*0 + 0.25*50 = 30+0+12.5 = 43
+    // media:   0.40*100 + 0.30*0 + 0.30*50 = 40+0+15   = 55
+    expect(mediaScore.composite).toBeGreaterThan(defaultScore.composite);
+  });
+
+  it('trust-based-advisory weights sentiment higher in trust pillar', () => {
+    const results = [
+      makeResult({ sentiment: 'positive', citations: ['http://example.com'] }),
+      makeResult({ sentiment: 'positive', citations: [] }),
+      makeResult({ sentiment: 'neutral', citations: [] }),
+    ];
+    const defaultScore = getTrustScore(results, getWeightsForArchetype(undefined));
+    const advisoryScore = getTrustScore(results, getWeightsForArchetype('trust-based-advisory'));
+
+    // advisory sentimentPositive weight is 0.35 vs default 0.45
+    // advisory citationRate weight is 0.30 vs default 0.30 (same)
+    // advisory topicDominance weight is 0.35 vs default 0.25
+    // scores differ
+    expect(advisoryScore.composite).not.toBe(defaultScore.composite);
+  });
+});
+
+// ─── Isotope Breakdown Tests ─────────────────────────────────
+
+describe('getAcquisitionScore isotope breakdown', () => {
+  it('returns empty breakdown for empty results', () => {
+    const score = getAcquisitionScore([]);
+    expect(score.isotopeBreakdown).toEqual([]);
+  });
+
+  it('computes mention rate per isotope', () => {
+    const results = [
+      makeResult({ isotope: 'commercial', client_mentioned: true, conversion_intent: 'high' }),
+      makeResult({ isotope: 'commercial', client_mentioned: false, conversion_intent: 'high' }),
+      makeResult({ isotope: 'informational', client_mentioned: true, conversion_intent: 'low' }),
+      makeResult({ isotope: 'informational', client_mentioned: true, conversion_intent: 'low' }),
+      makeResult({ isotope: 'informational', client_mentioned: false, conversion_intent: 'low' }),
+    ];
+    const score = getAcquisitionScore(results);
+
+    const commercial = score.isotopeBreakdown.find(i => i.isotope === 'commercial');
+    const informational = score.isotopeBreakdown.find(i => i.isotope === 'informational');
+
+    expect(commercial).toBeDefined();
+    expect(commercial!.mentionRate).toBeCloseTo(0.5, 2);
+    expect(commercial!.total).toBe(2);
+    expect(commercial!.mentioned).toBe(1);
+
+    expect(informational).toBeDefined();
+    expect(informational!.mentionRate).toBeCloseTo(2 / 3, 2);
+    expect(informational!.total).toBe(3);
+    expect(informational!.mentioned).toBe(2);
+  });
+
+  it('sorts isotope breakdown by mention rate descending', () => {
+    const results = [
+      makeResult({ isotope: 'commercial', client_mentioned: false }),
+      makeResult({ isotope: 'specific', client_mentioned: true }),
+    ];
+    const score = getAcquisitionScore(results);
+    expect(score.isotopeBreakdown[0].isotope).toBe('specific');
+    expect(score.isotopeBreakdown[1].isotope).toBe('commercial');
+  });
+});
+
+// ─── Citation Rate in Visibility Tests ───────────────────────
+
+describe('getVisibilityScore citation rate', () => {
+  it('computes citation rate as display metric', () => {
+    const results = [
+      makeResult({ citations: ['http://example.com'] }),
+      makeResult({ citations: [] }),
+      makeResult({ citations: ['http://a.com', 'http://b.com'] }),
+    ];
+    const score = getVisibilityScore(results, true);
+    expect(score.citationRate).toBeCloseTo(2 / 3, 2);
+  });
+
+  it('returns 0 citation rate for empty results', () => {
+    const score = getVisibilityScore([], true);
+    expect(score.citationRate).toBe(0);
   });
 });

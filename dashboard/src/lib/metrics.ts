@@ -22,8 +22,9 @@ export interface VisibilityScore {
   mentionRate: number;
   shareOfVoice: number;
   firstMentionRate: number;
-  platformSpread: number | null; // null when single platform selected
-  platformSpreadPromptCount: number; // prompts with 2+ platforms used for spread calc
+  citationRate: number;
+  platformSpread: number | null;
+  platformSpreadPromptCount: number;
   composite: number;
 }
 
@@ -42,10 +43,18 @@ export interface TrustScore {
   composite: number;
 }
 
+export interface IsotopeBreakdown {
+  isotope: string;
+  mentionRate: number;
+  total: number;
+  mentioned: number;
+}
+
 export interface AcquisitionScore {
   conversionQueryMentionRate: number;
   ctaPresenceRate: number;
   highIntentMentionRate: number;
+  isotopeBreakdown: IsotopeBreakdown[];
   composite: number;
 }
 
@@ -55,6 +64,60 @@ export interface RecommendationScore {
   qualifiedRecommendationRate: number;
   decisionCriteriaWinRate: number;
   composite: number;
+}
+
+// ─── Archetype Weights ───────────────────────────────────────
+
+export interface PillarWeights {
+  visibility: Record<string, number>;
+  trust: Record<string, number>;
+  acquisition: Record<string, number>;
+  recommendation: Record<string, number>;
+}
+
+const DEFAULT_WEIGHTS: PillarWeights = {
+  visibility: { mentionRate: 0.35, shareOfVoice: 0.30, firstMentionRate: 0.20, platformSpread: 0.15 },
+  trust: { citationRate: 0.30, sentimentPositive: 0.45, topicDominance: 0.25 },
+  acquisition: { highIntentMentionRate: 0.40, conversionQueryMentionRate: 0.35, ctaPresenceRate: 0.25 },
+  recommendation: { recommendationRate: 0.35, strongRecommendationRate: 0.30, decisionCriteriaWinRate: 0.35 },
+};
+
+export const ARCHETYPE_WEIGHTS: Record<string, PillarWeights> = {
+  'transactional-commerce': {
+    visibility: { mentionRate: 0.40, shareOfVoice: 0.25, firstMentionRate: 0.15, platformSpread: 0.20 },
+    trust: { citationRate: 0.20, sentimentPositive: 0.40, topicDominance: 0.40 },
+    acquisition: { highIntentMentionRate: 0.45, conversionQueryMentionRate: 0.35, ctaPresenceRate: 0.20 },
+    recommendation: { recommendationRate: 0.35, strongRecommendationRate: 0.30, decisionCriteriaWinRate: 0.35 },
+  },
+  'trust-based-advisory': {
+    visibility: { mentionRate: 0.10, shareOfVoice: 0.25, firstMentionRate: 0.30, platformSpread: 0.35 },
+    trust: { citationRate: 0.30, sentimentPositive: 0.35, topicDominance: 0.35 },
+    acquisition: { highIntentMentionRate: 0.30, conversionQueryMentionRate: 0.30, ctaPresenceRate: 0.40 },
+    recommendation: { recommendationRate: 0.25, strongRecommendationRate: 0.35, decisionCriteriaWinRate: 0.40 },
+  },
+  'b2b': {
+    visibility: { mentionRate: 0.10, shareOfVoice: 0.30, firstMentionRate: 0.25, platformSpread: 0.35 },
+    trust: { citationRate: 0.25, sentimentPositive: 0.30, topicDominance: 0.45 },
+    acquisition: { highIntentMentionRate: 0.35, conversionQueryMentionRate: 0.35, ctaPresenceRate: 0.30 },
+    recommendation: { recommendationRate: 0.35, strongRecommendationRate: 0.30, decisionCriteriaWinRate: 0.35 },
+  },
+  'digital-media': {
+    visibility: { mentionRate: 0.20, shareOfVoice: 0.30, firstMentionRate: 0.10, platformSpread: 0.40 },
+    trust: { citationRate: 0.40, sentimentPositive: 0.30, topicDominance: 0.30 },
+    acquisition: { highIntentMentionRate: 0.40, conversionQueryMentionRate: 0.35, ctaPresenceRate: 0.25 },
+    recommendation: { recommendationRate: 0.35, strongRecommendationRate: 0.30, decisionCriteriaWinRate: 0.35 },
+  },
+  'local-experiences': {
+    visibility: { mentionRate: 0.35, shareOfVoice: 0.15, firstMentionRate: 0.20, platformSpread: 0.30 },
+    trust: { citationRate: 0.20, sentimentPositive: 0.30, topicDominance: 0.50 },
+    acquisition: { highIntentMentionRate: 0.40, conversionQueryMentionRate: 0.35, ctaPresenceRate: 0.25 },
+    recommendation: { recommendationRate: 0.35, strongRecommendationRate: 0.30, decisionCriteriaWinRate: 0.35 },
+  },
+};
+
+export function getWeightsForArchetype(archetype?: string): PillarWeights {
+  if (!archetype) return DEFAULT_WEIGHTS;
+  return ARCHETYPE_WEIGHTS[archetype] ?? DEFAULT_WEIGHTS;
 }
 
 // ─── Regex Classifiers (exported for testing) ────────────────
@@ -93,21 +156,17 @@ export function mapConversionIntent(isotope: string): 'high' | 'medium' | 'low' 
 }
 
 // ─── Pillar Score Computation ────────────────────────────────
-/*
-  Composite formulas (all sub-metrics normalized 0-100 before weighting):
-    Visibility      = 0.35*mentionRate + 0.30*shareOfVoice + 0.20*firstMentionRate + 0.15*platformSpread
-    Trust           = 0.30*citationRate + 0.45*sentimentPositiveRate + 0.25*topicDominanceScore
-    Acquisition     = 0.40*highIntentMentionRate + 0.35*conversionQueryMentionRate + 0.25*ctaPresenceRate
-    Recommendation  = 0.35*recommendationRate + 0.30*strongRecommendationRate + 0.35*decisionCriteriaWinRate
-*/
 
 export function getVisibilityScore(
   results: EnrichedResult[],
-  isSinglePlatform = false
+  isSinglePlatform = false,
+  weights?: PillarWeights
 ): VisibilityScore {
+  const w = (weights ?? DEFAULT_WEIGHTS).visibility;
+
   if (results.length === 0) {
     return {
-      mentionRate: 0, shareOfVoice: 0, firstMentionRate: 0,
+      mentionRate: 0, shareOfVoice: 0, firstMentionRate: 0, citationRate: 0,
       platformSpread: null, platformSpreadPromptCount: 0, composite: 0,
     };
   }
@@ -117,12 +176,15 @@ export function getVisibilityScore(
   const shareOfVoice = mentionRate;
   const firstMentionRate = mentionRate;
 
-  // Platform spread: only meaningful when viewing all platforms
+  // Citation rate (display only, not in composite)
+  const withCitations = results.filter(r => r.citations && r.citations.length > 0);
+  const citationRate = withCitations.length / results.length;
+
+  // Platform spread
   let platformSpread: number | null = null;
   let platformSpreadPromptCount = 0;
 
   if (!isSinglePlatform) {
-    // Group by prompt_id: count total platforms and mentioning platforms
     const promptAllPlatforms = new Map<string, Set<string>>();
     const promptMentionPlatforms = new Map<string, Set<string>>();
     for (const r of results) {
@@ -134,7 +196,6 @@ export function getVisibilityScore(
       }
     }
 
-    // Only include prompts with results from 2+ platforms
     let totalSpread = 0;
     for (const [promptId, allPlatforms] of promptAllPlatforms) {
       if (allPlatforms.size < 2) continue;
@@ -145,26 +206,29 @@ export function getVisibilityScore(
     platformSpread = platformSpreadPromptCount > 0 ? totalSpread / platformSpreadPromptCount : 0;
   }
 
-  // Composite: use platformSpread if available, otherwise redistribute weight
   const spreadValue = platformSpread ?? 0;
   const composite = isSinglePlatform
     ? Math.round(
-        // Without spread: redistribute 0.15 weight across other 3 metrics
-        0.41 * (mentionRate * 100) +
-        0.35 * (shareOfVoice * 100) +
-        0.24 * (firstMentionRate * 100)
+        (w.mentionRate / (1 - w.platformSpread)) * (mentionRate * 100) +
+        (w.shareOfVoice / (1 - w.platformSpread)) * (shareOfVoice * 100) +
+        (w.firstMentionRate / (1 - w.platformSpread)) * (firstMentionRate * 100)
       )
     : Math.round(
-        0.35 * (mentionRate * 100) +
-        0.30 * (shareOfVoice * 100) +
-        0.20 * (firstMentionRate * 100) +
-        0.15 * (spreadValue * 100)
+        w.mentionRate * (mentionRate * 100) +
+        w.shareOfVoice * (shareOfVoice * 100) +
+        w.firstMentionRate * (firstMentionRate * 100) +
+        w.platformSpread * (spreadValue * 100)
       );
 
-  return { mentionRate, shareOfVoice, firstMentionRate, platformSpread, platformSpreadPromptCount, composite };
+  return { mentionRate, shareOfVoice, firstMentionRate, citationRate, platformSpread, platformSpreadPromptCount, composite };
 }
 
-export function getTrustScore(results: EnrichedResult[]): TrustScore {
+export function getTrustScore(
+  results: EnrichedResult[],
+  weights?: PillarWeights
+): TrustScore {
+  const w = (weights ?? DEFAULT_WEIGHTS).trust;
+
   if (results.length === 0) {
     return {
       citationRate: 0,
@@ -203,19 +267,25 @@ export function getTrustScore(results: EnrichedResult[]): TrustScore {
   const topicDominanceScore = topics.length > 0 ? dominantTopics.length / topics.length : 0;
 
   const composite = Math.round(
-    0.30 * (citationRate * 100) +
-    0.45 * (sentimentBreakdown.positive * 100) +
-    0.25 * (topicDominanceScore * 100)
+    w.citationRate * (citationRate * 100) +
+    w.sentimentPositive * (sentimentBreakdown.positive * 100) +
+    w.topicDominance * (topicDominanceScore * 100)
   );
 
   return { citationRate, sentimentBreakdown, topicDominanceScore, composite };
 }
 
-export function getAcquisitionScore(results: EnrichedResult[]): AcquisitionScore {
+export function getAcquisitionScore(
+  results: EnrichedResult[],
+  weights?: PillarWeights
+): AcquisitionScore {
+  const w = (weights ?? DEFAULT_WEIGHTS).acquisition;
+
   if (results.length === 0) {
-    return { conversionQueryMentionRate: 0, ctaPresenceRate: 0, highIntentMentionRate: 0, composite: 0 };
+    return { conversionQueryMentionRate: 0, ctaPresenceRate: 0, highIntentMentionRate: 0, isotopeBreakdown: [], composite: 0 };
   }
 
+  // High-intent
   const highIntent = results.filter(
     r => r.conversion_intent === 'high' || r.isotope === 'commercial' || r.isotope === 'specific'
   );
@@ -223,20 +293,44 @@ export function getAcquisitionScore(results: EnrichedResult[]): AcquisitionScore
   const highIntentMentionRate = highIntent.length > 0 ? highIntentMentioned.length / highIntent.length : 0;
   const conversionQueryMentionRate = highIntentMentionRate;
 
+  // CTA
   const mentionedResults = results.filter(r => r.client_mentioned);
   const withCta = results.filter(r => r.cta_present && r.client_mentioned);
   const ctaPresenceRate = mentionedResults.length > 0 ? withCta.length / mentionedResults.length : 0;
 
+  // Isotope breakdown
+  const isoMap = new Map<string, { mentioned: number; total: number }>();
+  for (const r of results) {
+    const iso = r.isotope || 'unknown';
+    if (!isoMap.has(iso)) isoMap.set(iso, { mentioned: 0, total: 0 });
+    const entry = isoMap.get(iso)!;
+    entry.total++;
+    if (r.client_mentioned) entry.mentioned++;
+  }
+  const isotopeBreakdown: IsotopeBreakdown[] = [...isoMap.entries()]
+    .map(([isotope, stats]) => ({
+      isotope,
+      mentionRate: stats.total > 0 ? stats.mentioned / stats.total : 0,
+      total: stats.total,
+      mentioned: stats.mentioned,
+    }))
+    .sort((a, b) => b.mentionRate - a.mentionRate);
+
   const composite = Math.round(
-    0.40 * (highIntentMentionRate * 100) +
-    0.35 * (conversionQueryMentionRate * 100) +
-    0.25 * (ctaPresenceRate * 100)
+    w.highIntentMentionRate * (highIntentMentionRate * 100) +
+    w.conversionQueryMentionRate * (conversionQueryMentionRate * 100) +
+    w.ctaPresenceRate * (ctaPresenceRate * 100)
   );
 
-  return { conversionQueryMentionRate, ctaPresenceRate, highIntentMentionRate, composite };
+  return { conversionQueryMentionRate, ctaPresenceRate, highIntentMentionRate, isotopeBreakdown, composite };
 }
 
-export function getRecommendationScore(results: EnrichedResult[]): RecommendationScore {
+export function getRecommendationScore(
+  results: EnrichedResult[],
+  weights?: PillarWeights
+): RecommendationScore {
+  const w = (weights ?? DEFAULT_WEIGHTS).recommendation;
+
   if (results.length === 0) {
     return {
       recommendationRate: 0, strongRecommendationRate: 0,
@@ -263,9 +357,9 @@ export function getRecommendationScore(results: EnrichedResult[]): Recommendatio
   const decisionCriteriaWinRate = comparative.length > 0 ? comparativeWins.length / comparative.length : 0;
 
   const composite = Math.round(
-    0.35 * (recommendationRate * 100) +
-    0.30 * (strongRecommendationRate * 100) +
-    0.35 * (decisionCriteriaWinRate * 100)
+    w.recommendationRate * (recommendationRate * 100) +
+    w.strongRecommendationRate * (strongRecommendationRate * 100) +
+    w.decisionCriteriaWinRate * (decisionCriteriaWinRate * 100)
   );
 
   return { recommendationRate, strongRecommendationRate, qualifiedRecommendationRate, decisionCriteriaWinRate, composite };

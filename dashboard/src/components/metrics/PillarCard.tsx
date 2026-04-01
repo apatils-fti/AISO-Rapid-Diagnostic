@@ -1,3 +1,7 @@
+'use client';
+
+import { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { getScoreColor, getScoreTextClass } from '@/lib/colors';
 import { LucideIcon } from 'lucide-react';
@@ -12,10 +16,12 @@ interface PillarCardProps {
   score: number;
   icon: LucideIcon;
   subMetrics: SubMetric[];
+  formula?: string;
   className?: string;
 }
 
-export function PillarCard({ title, score, icon: Icon, subMetrics, className }: PillarCardProps) {
+export function PillarCard({ title, score, icon: Icon, subMetrics, formula, className }: PillarCardProps) {
+  const [formulaOpen, setFormulaOpen] = useState(false);
   const scoreColor = getScoreColor(score);
 
   return (
@@ -49,6 +55,25 @@ export function PillarCard({ title, score, icon: Icon, subMetrics, className }: 
           </div>
         ))}
       </div>
+
+      {formula && (
+        <div className="mt-3 border-t border-[#2A2D37] pt-2">
+          <button
+            onClick={() => setFormulaOpen(!formulaOpen)}
+            className="flex w-full items-center justify-between py-1 text-xs text-[#6B7280] hover:text-[#9CA3AF] transition-colors"
+          >
+            <span>How is this calculated?</span>
+            <ChevronDown className={cn('h-3 w-3 transition-transform', formulaOpen && 'rotate-180')} />
+          </button>
+          {formulaOpen && (
+            <div className="mt-2 rounded bg-[#0F1117] border border-[#2A2D37] px-3 py-2">
+              <p className="text-xs text-[#9CA3AF] font-mono leading-relaxed whitespace-pre-wrap">
+                {formula}
+              </p>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

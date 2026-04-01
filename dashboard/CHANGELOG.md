@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.4.0.0] - 2026-04-01
+
+### Added
+- Archetype-aware composite score weights for 5 archetypes (transactional-commerce, trust-based-advisory, b2b, digital-media, local-experiences)
+- `getWeightsForArchetype()` function and `ARCHETYPE_WEIGHTS` config in metrics.ts
+- Citation rate display on Visibility pillar card (informational, not in composite)
+- Isotope breakdown on Customer Acquisition pillar (mention rate per isotope type)
+- Expandable "How is this calculated?" formula callout on each pillar card
+- 12 new tests: archetype weight lookup, weight sum validation, composite differences, isotope breakdown, citation rate (35 total)
+
+### Changed
+- All 4 score functions (getVisibilityScore, getTrustScore, getAcquisitionScore, getRecommendationScore) accept optional `weights` parameter
+- PillarCard now accepts optional `formula` prop for expandable formula section
+- Metrics page reads client archetype and passes weights to score functions
+- Metrics page shows archetype name in results count line
+
 ## [0.3.0.0] - 2026-04-01
 
 ### Added
