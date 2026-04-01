@@ -158,6 +158,16 @@ async function MetricsContent({ platform, clientId }: { platform: string; client
             { label: 'Positive Sentiment', value: formatPercent(trust.sentimentBreakdown.positive) },
             { label: 'Hedged', value: formatPercent(trust.sentimentBreakdown.hedged) },
             { label: 'Topic Dominance', value: `${dominantTopics}/${topicCount}` },
+            ...(trust.citationSources.totalCitations > 0 ? [
+              { label: 'Owned Sources', value: formatPercent(trust.citationSources.owned) },
+              { label: 'Earned Media', value: formatPercent(
+                trust.citationSources.earned_editorial +
+                trust.citationSources.earned_blog +
+                trust.citationSources.earned_news +
+                trust.citationSources.earned_review
+              ) },
+              { label: 'Community', value: formatPercent(trust.citationSources.community) },
+            ] : []),
           ]}
         />
         <PillarCard

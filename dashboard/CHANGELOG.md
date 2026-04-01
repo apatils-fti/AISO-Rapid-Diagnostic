@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5.0.0] - 2026-04-01
+
+### Added
+- URL citation source classifier (`src/lib/url-classifier.ts`) with ~150 known domain lookup table and heuristic fallback
+- Citation source enrichment script (`scripts/enrich-citation-sources.js`) classifies citation URLs into 10 source types (owned, earned_editorial, earned_blog, earned_news, earned_review, community, retail, competitor, reference, other)
+- VADER sentiment enrichment script (`scripts/enrich-sentiment-vader.js`) replaces Claude API with deterministic rule-based sentiment at $0 cost
+- `CitationSourceBreakdown` type and computation in Trust pillar
+- Trust pillar now shows owned/earned/community source breakdown when classified citations available
+- 25 new URL classifier tests (60 total across 2 test files)
+
+### Changed
+- `EnrichedResult` type now includes `classified_citations` field
+- `TrustScore` interface includes `citationSources: CitationSourceBreakdown`
+- `getTrustScore()` computes citation source distribution from `classified_citations` JSONB
+- `vader-sentiment` npm package added (replaces @anthropic-ai/sdk for sentiment)
+
 ## [0.4.0.0] - 2026-04-01
 
 ### Added

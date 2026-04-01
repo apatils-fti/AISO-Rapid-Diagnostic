@@ -15,6 +15,7 @@ export interface EnrichedResult {
   decision_criteria_winner: boolean;
   conversion_intent: string;
   citations: string[];
+  classified_citations: Array<{ url: string; type: string; domain: string }> | null;
   created_at: string;
 }
 
@@ -36,9 +37,24 @@ export interface SentimentBreakdown {
   not_mentioned: number;
 }
 
+export interface CitationSourceBreakdown {
+  owned: number;
+  earned_editorial: number;
+  earned_blog: number;
+  earned_news: number;
+  earned_review: number;
+  community: number;
+  retail: number;
+  competitor: number;
+  reference: number;
+  other: number;
+  totalCitations: number;
+}
+
 export interface TrustScore {
   citationRate: number;
   sentimentBreakdown: SentimentBreakdown;
+  citationSources: CitationSourceBreakdown;
   topicDominanceScore: number;
   composite: number;
 }
@@ -229,10 +245,17 @@ export function getTrustScore(
 ): TrustScore {
   const w = (weights ?? DEFAULT_WEIGHTS).trust;
 
+  const emptySources: CitationSourceBreakdown = {
+    owned: 0, earned_editorial: 0, earned_blog: 0, earned_news: 0,
+    earned_review: 0, community: 0, retail: 0, competitor: 0,
+    reference: 0, other: 0, totalCitations: 0,
+  };
+
   if (results.length === 0) {
     return {
       citationRate: 0,
       sentimentBreakdown: { positive: 0, neutral: 0, hedged: 0, negative: 0, not_mentioned: 0 },
+      citationSources: emptySources,
       topicDominanceScore: 0,
       composite: 0,
     };
@@ -240,6 +263,32 @@ export function getTrustScore(
 
   const withCitations = results.filter(r => r.citations && r.citations.length > 0);
   const citationRate = withCitations.length / results.length;
+
+  // Citation source breakdown from classified_citations
+  const sourceCounts = { ...emptySources };
+  for (const r of results) {
+    const classified = r.classified_citations ?? [];
+    for (const c of classified) {
+      const t = c.type as keyof Omit<CitationSourceBreakdown, 'totalCitations'>;
+      if (t in sourceCounts) sourceCounts[t]++;
+      sourceCounts.totalCitations++;
+    }
+  }
+  // Normalize to rates
+  const citationSources: CitationSourceBreakdown = { ...sourceCounts };
+  if (sourceCounts.totalCitations > 0) {
+    const total = sourceCounts.totalCitations;
+    citationSources.owned = sourceCounts.owned / total;
+    citationSources.earned_editorial = sourceCounts.earned_editorial / total;
+    citationSources.earned_blog = sourceCounts.earned_blog / total;
+    citationSources.earned_news = sourceCounts.earned_news / total;
+    citationSources.earned_review = sourceCounts.earned_review / total;
+    citationSources.community = sourceCounts.community / total;
+    citationSources.retail = sourceCounts.retail / total;
+    citationSources.competitor = sourceCounts.competitor / total;
+    citationSources.reference = sourceCounts.reference / total;
+    citationSources.other = sourceCounts.other / total;
+  }
 
   const sentimentCounts = { positive: 0, neutral: 0, hedged: 0, negative: 0, not_mentioned: 0 };
   for (const r of results) {
@@ -272,7 +321,7 @@ export function getTrustScore(
     w.topicDominance * (topicDominanceScore * 100)
   );
 
-  return { citationRate, sentimentBreakdown, topicDominanceScore, composite };
+  return { citationRate, sentimentBreakdown, citationSources, topicDominanceScore, composite };
 }
 
 export function getAcquisitionScore(
