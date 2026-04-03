@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.7.0.0] - 2026-04-03
+
+### Changed
+- Overview/Dashboard tab now leads with four AISO pillar cards (Visibility, Trust, Acquisition, Recommendation) merged from the former Metrics tab
+- Metrics tab replaced with redirect to /dashboard (preserves URL params)
+- Removed Metrics nav item from sidebar (7 tabs instead of 8)
+- Dashboard page now fetches enriched results for pillar computation alongside overview stats
+
+### Removed
+- Standalone Metrics page (content merged into Overview)
+- BarChart3 icon import from Sidebar (unused after Metrics removal)
+
 ## [0.6.0.0] - 2026-04-03
 
 ### Added

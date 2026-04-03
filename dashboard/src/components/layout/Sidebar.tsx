@@ -8,7 +8,7 @@ import {
   Users,
   Layers,
   List,
-  BarChart3,
+
   Download,
   Settings,
   Activity,
@@ -56,11 +56,6 @@ const navItems = [
     label: 'Trends',
     href: '/trends',
     icon: TrendingUp,
-  },
-  {
-    label: 'Metrics',
-    href: '/metrics',
-    icon: BarChart3,
   },
 ];
 
