@@ -724,33 +724,64 @@ export async function getOverviewStats(
   const allRates = [mentionRate, ...competitorStats.map(c => c.mentionRate)].sort((a, b) => b - a);
   const rank = allRates.indexOf(mentionRate) + 1;
 
-  // Biggest gap topic
-  const topicMentions = new Map<string, { name: string; mentioned: number; total: number; compBest: number }>();
+  // Biggest gap topic: find where competitors beat client the most
+  const topicData = new Map<string, {
+    name: string;
+    clientMentioned: number;
+    total: number;
+    competitorMentions: Map<string, number>; // competitor name → count of results mentioning them
+  }>();
   for (const r of results) {
     const tid = r.topic_id;
-    if (!topicMentions.has(tid)) {
-      topicMentions.set(tid, { name: r.topic_name, mentioned: 0, total: 0, compBest: 0 });
+    if (!topicData.has(tid)) {
+      topicData.set(tid, { name: r.topic_name, clientMentioned: 0, total: 0, competitorMentions: new Map() });
     }
-    const entry = topicMentions.get(tid)!;
+    const entry = topicData.get(tid)!;
     entry.total++;
-    if (r.client_mentioned) entry.mentioned++;
+    if (r.client_mentioned) entry.clientMentioned++;
     const cm = r.competitor_mentions ?? {};
-    for (const count of Object.values(cm)) {
-      if ((count as number) > 0) entry.compBest = Math.max(entry.compBest, entry.compBest + 1);
+    for (const [compName, count] of Object.entries(cm)) {
+      if ((count as number) > 0) {
+        entry.competitorMentions.set(compName, (entry.competitorMentions.get(compName) ?? 0) + 1);
+      }
     }
   }
 
-  // Find topic with biggest gap (competitor rate - client rate)
+  // Find topic with biggest gap (best competitor rate - client rate)
+  // If no competitor beats client anywhere, find the topic with lowest client rate
   let biggestGapTopic = '';
   let biggestGapDelta = 0;
-  for (const [, topic] of topicMentions) {
-    const clientRate = topic.total > 0 ? topic.mentioned / topic.total : 0;
-    // Approximate competitor rate from competitor_mentions
-    const gap = (1 - clientRate); // simplified: gap = how much room to improve
-    if (gap > biggestGapDelta && clientRate < 0.5) {
+  let lowestClientTopic = '';
+  let lowestClientRate = 1;
+
+  for (const [, topic] of topicData) {
+    if (topic.total === 0) continue;
+    const clientRate = topic.clientMentioned / topic.total;
+
+    // Track lowest client rate as fallback
+    if (clientRate < lowestClientRate) {
+      lowestClientRate = clientRate;
+      lowestClientTopic = topic.name;
+    }
+
+    // Find best competitor rate for this topic
+    let bestCompRate = 0;
+    for (const [, count] of topic.competitorMentions) {
+      const rate = count / topic.total;
+      if (rate > bestCompRate) bestCompRate = rate;
+    }
+
+    const gap = bestCompRate - clientRate;
+    if (gap > biggestGapDelta) {
       biggestGapDelta = gap;
       biggestGapTopic = topic.name;
     }
+  }
+
+  // Fallback: if no competitor leads anywhere, show lowest client topic as opportunity
+  if (!biggestGapTopic && lowestClientTopic) {
+    biggestGapTopic = lowestClientTopic;
+    biggestGapDelta = 1 - lowestClientRate; // room to improve
   }
 
   const platformCount = new Set(results.map(r => r.platform)).size;

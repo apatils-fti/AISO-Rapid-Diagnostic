@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.7.1.0] - 2026-04-03
+
+### Fixed
+- Biggest gap computation in getOverviewStats: was using broken self-increment (`compBest + 1`) and `(1 - clientRate)` instead of actual competitor-vs-client comparison per topic
+- Now properly tracks per-topic per-competitor mention counts and finds the topic where the best competitor leads by the most
+- Fallback: if no competitor beats client on any topic, shows the topic with lowest client mention rate as an opportunity
+- PillarCard icon prop removed to fix Server/Client component boundary error (icons now resolved internally by title)
+- Sample responses now pick one per platform for diversity instead of all from the same platform
+- Formula callouts now show plain English metric definitions instead of composite weight formulas
+
 ## [0.7.0.0] - 2026-04-03
 
 ### Changed

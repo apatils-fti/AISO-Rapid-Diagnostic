@@ -1,10 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { ChevronDown, MessageSquare } from 'lucide-react';
+import { ChevronDown, MessageSquare, Eye, Shield, ShoppingCart, ThumbsUp } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { getScoreColor, getScoreTextClass } from '@/lib/colors';
-import { LucideIcon } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
+
+const PILLAR_ICONS: Record<string, LucideIcon> = {
+  'Visibility': Eye,
+  'Trust': Shield,
+  'Customer Acquisition': ShoppingCart,
+  'Recommendation': ThumbsUp,
+};
 
 interface SubMetric {
   label: string;
@@ -22,7 +29,6 @@ export interface SampleResponse {
 interface PillarCardProps {
   title: string;
   score: number;
-  icon: LucideIcon;
   subMetrics: SubMetric[];
   formula?: string;
   sampleResponses?: SampleResponse[];
@@ -37,10 +43,11 @@ const SENTIMENT_COLORS: Record<string, string> = {
   not_mentioned: 'text-[#6B7280]',
 };
 
-export function PillarCard({ title, score, icon: Icon, subMetrics, formula, sampleResponses, className }: PillarCardProps) {
+export function PillarCard({ title, score, subMetrics, formula, sampleResponses, className }: PillarCardProps) {
   const [formulaOpen, setFormulaOpen] = useState(false);
   const [responsesOpen, setResponsesOpen] = useState(false);
   const [expandedIdx, setExpandedIdx] = useState<number | null>(null);
+  const Icon = PILLAR_ICONS[title] ?? Eye;
   const scoreColor = getScoreColor(score);
 
   return (

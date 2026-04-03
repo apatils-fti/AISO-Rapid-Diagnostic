@@ -1,5 +1,4 @@
 import { Suspense } from 'react';
-import { Eye, Shield, ShoppingCart, ThumbsUp } from 'lucide-react';
 import { PageContainer } from '@/components/layout';
 import {
   CompetitorQuickCompare,
@@ -100,7 +99,7 @@ async function DashboardContent({ clientId, filters }: { clientId: string; filte
   const topicCount = new Set(results.map(r => r.topic_name)).size;
   const dominantTopics = Math.round(trust.topicDominanceScore * topicCount);
 
-  // Sample responses per pillar
+  // Sample responses per pillar — one per platform for diversity
   function toSample(r: EnrichedResult): SampleResponse {
     return {
       promptText: r.prompt_id,
@@ -111,29 +110,52 @@ async function DashboardContent({ clientId, filters }: { clientId: string; filte
     };
   }
 
-  const visibilitySamples = results.filter(r => r.client_mentioned).slice(0, 4).map(toSample);
-  const trustSamples = results.filter(r => r.sentiment === 'positive' || r.sentiment === 'hedged').slice(0, 4).map(toSample);
-  const acquisitionSamples = results.filter(r => r.isotope === 'commercial' || r.isotope === 'specific').slice(0, 4).map(toSample);
-  const recommendationSamples = results.filter(r => r.recommendation_strength === 'strong' || r.recommendation_strength === 'qualified').slice(0, 4).map(toSample);
+  function pickOnePerPlatform(filtered: EnrichedResult[], max = 4): SampleResponse[] {
+    const seen = new Set<string>();
+    const samples: SampleResponse[] = [];
+    for (const r of filtered) {
+      if (seen.has(r.platform)) continue;
+      seen.add(r.platform);
+      samples.push(toSample(r));
+      if (samples.length >= max) break;
+    }
+    // If fewer platforms than max, fill remaining slots
+    if (samples.length < max) {
+      for (const r of filtered) {
+        if (samples.length >= max) break;
+        if (!samples.some(s => s.platform === r.platform && s.promptText === r.prompt_id)) {
+          samples.push(toSample(r));
+        }
+      }
+    }
+    return samples;
+  }
 
-  // Formula strings
-  const vw = weights.visibility;
-  const tw = weights.trust;
-  const aw = weights.acquisition;
-  const rw = weights.recommendation;
+  const visibilitySamples = pickOnePerPlatform(results.filter(r => r.client_mentioned));
+  const trustSamples = pickOnePerPlatform(results.filter(r => r.sentiment === 'positive' || r.sentiment === 'hedged'));
+  const acquisitionSamples = pickOnePerPlatform(results.filter(r => r.isotope === 'commercial' || r.isotope === 'specific'));
+  const recommendationSamples = pickOnePerPlatform(results.filter(r => r.recommendation_strength === 'strong' || r.recommendation_strength === 'qualified'));
 
-  const visFormula = archetype
-    ? `Score = ${vw.mentionRate}×Mention + ${vw.shareOfVoice}×SoV + ${vw.firstMentionRate}×FirstMention + ${vw.platformSpread}×Spread\nArchetype: ${archetype}`
-    : `Score = 0.35×Mention + 0.30×SoV + 0.20×FirstMention + 0.15×Spread`;
-  const trustFormula = archetype
-    ? `Score = ${tw.citationRate}×Citation + ${tw.sentimentPositive}×Sentiment+ + ${tw.topicDominance}×TopicDom\nArchetype: ${archetype}`
-    : `Score = 0.30×Citation + 0.45×Sentiment+ + 0.25×TopicDom`;
-  const acqFormula = archetype
-    ? `Score = ${aw.highIntentMentionRate}×HighIntent + ${aw.conversionQueryMentionRate}×ConvQuery + ${aw.ctaPresenceRate}×CTA\nArchetype: ${archetype}`
-    : `Score = 0.40×HighIntent + 0.35×ConvQuery + 0.25×CTA`;
-  const recFormula = archetype
-    ? `Score = ${rw.recommendationRate}×RecRate + ${rw.strongRecommendationRate}×StrongRec + ${rw.decisionCriteriaWinRate}×CompWin\nArchetype: ${archetype}`
-    : `Score = 0.35×RecRate + 0.30×StrongRec + 0.35×CompWin`;
+  // Formula definitions — plain English metric definitions
+  const visFormula = `Mention Rate = prompts where brand was mentioned / total prompts
+First Mention Rate = prompts where brand was named first / prompts where brand was mentioned
+Share of Voice = brand mentions / all brand mentions in responses
+Citation Rate = responses citing brand domain / total responses
+Platform Spread = avg platforms mentioning brand per prompt / platforms with data`;
+
+  const trustFormula = `Positive Sentiment = responses with positive sentiment / responses where brand was mentioned
+Hedged Sentiment = responses with hedged sentiment / responses where brand was mentioned
+Topic Dominance = topics where brand is most-mentioned / total topics tracked
+Owned Sources = citations from brand domain / total citations
+Earned Media = citations from editorial + blog + news + review sites / total citations`;
+
+  const acqFormula = `High-Intent Rate = brand mentions on commercial + specific prompts / total commercial + specific prompts
+CTA Presence = responses with actionable next step / responses where brand was mentioned
+Isotope rates = brand mentions per isotope type / total prompts of that isotope`;
+
+  const recFormula = `Recommendation Rate = responses with recommendation language / responses where brand was mentioned
+Strong Rec. = responses with "best option", "top choice", etc. / responses where brand was mentioned
+Wins Comparisons = comparative prompts where brand gets final recommendation / total comparative prompts`;
 
   return (
     <div className="space-y-6">
@@ -161,7 +183,7 @@ async function DashboardContent({ clientId, filters }: { clientId: string; filte
             <PillarCard
               title="Visibility"
               score={visibility.composite}
-              icon={Eye}
+    
               formula={visFormula}
               subMetrics={[
                 { label: 'Mention Rate', value: formatPercent(visibility.mentionRate) },
@@ -176,7 +198,7 @@ async function DashboardContent({ clientId, filters }: { clientId: string; filte
             <PillarCard
               title="Trust"
               score={trust.composite}
-              icon={Shield}
+    
               formula={trustFormula}
               subMetrics={[
                 { label: 'Positive Sentiment', value: formatPercent(trust.sentimentBreakdown.positive) },
@@ -198,7 +220,7 @@ async function DashboardContent({ clientId, filters }: { clientId: string; filte
             <PillarCard
               title="Customer Acquisition"
               score={acquisition.composite}
-              icon={ShoppingCart}
+    
               formula={acqFormula}
               subMetrics={[
                 { label: 'High-Intent Rate', value: formatPercent(acquisition.highIntentMentionRate) },
@@ -213,7 +235,7 @@ async function DashboardContent({ clientId, filters }: { clientId: string; filte
             <PillarCard
               title="Recommendation"
               score={recommendation.composite}
-              icon={ThumbsUp}
+    
               formula={recFormula}
               subMetrics={[
                 { label: 'Recommended', value: formatPercent(recommendation.recommendationRate) },
