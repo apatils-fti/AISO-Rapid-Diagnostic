@@ -4,3 +4,5 @@ export { ScoreGauge, LinearScore } from './ScoreGauge';
 export { PlatformIcon, getPlatformLabel, getPlatformColor } from './PlatformIcon';
 export { Tooltip, InfoTooltip } from './Tooltip';
 export { FilterBar, FilterDropdown, SearchInput } from './FilterBar';
+export { PlatformFilter, DEFAULT_PLATFORMS } from './PlatformFilter';
+export { EnrichmentFilters } from './EnrichmentFilters';

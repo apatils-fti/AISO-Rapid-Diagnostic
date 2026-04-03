@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6.0.0] - 2026-04-03
+
+### Added
+- Cross-tab enrichment filters (sentiment, isotope, conversion intent) on all 8 dashboard pages via URL params
+- `QueryFilters` interface in db.ts, all query functions accept sentiment/isotope/conversionIntent filters
+- `EnrichmentFilters` shared component with pill-style filter UI (same pattern as platform filter)
+- Automated client onboarding script (`scripts/onboard-client.js`) chains all pipeline steps with resume support
+- Per-prompt response viewer on Metrics pillar cards (expandable sample responses with sentiment labels)
+- `SampleResponse` type and expandable response list in PillarCard component
+
+### Changed
+- `getAllResultsForClient` signature changed from `(clientId, platform?)` to `(clientId, filters?: QueryFilters)`
+- All downstream query functions (getPlatformComparison, getOverviewStats, getTopicIsotopeStats, getCompetitorOverview, getGapAnalysis, getTopicPlatformStats) accept QueryFilters
+- All 6 Supabase-backed pages read sentiment/isotope/intent from searchParams and pass to queries
+- PillarCard accepts optional `sampleResponses` prop for click-to-expand response previews
+
 ## [0.5.0.0] - 2026-04-01
 
 ### Added

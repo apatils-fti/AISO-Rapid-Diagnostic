@@ -8,22 +8,25 @@ import {
   TopGapsCard,
   ExecutiveSummary,
 } from '@/components/dashboard';
-import { getOverviewStats, getPlatformComparison, getClients } from '@/lib/db';
+import { getOverviewStats, getPlatformComparison, getClients, type QueryFilters } from '@/lib/db';
+import { EnrichmentFilters } from '@/components/shared';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
 
 interface DashboardPageProps {
-  searchParams: Promise<{ client?: string }>;
+  searchParams: Promise<{ client?: string; platform?: string; sentiment?: string; isotope?: string; intent?: string }>;
 }
 
-async function DashboardContent({ clientId }: { clientId: string }) {
+async function DashboardContent({ clientId, filters }: { clientId: string; filters: QueryFilters }) {
   const [overview, platformStats] = await Promise.all([
-    getOverviewStats(clientId),
-    getPlatformComparison(clientId),
+    getOverviewStats(clientId, filters),
+    getPlatformComparison(clientId, filters),
   ]);
 
   return (
     <div className="space-y-6">
+      <EnrichmentFilters />
+
       {/* Executive Summary — server data when available */}
       <ExecutiveSummary overviewData={overview} clientName="J.Crew" />
 
@@ -50,6 +53,12 @@ async function DashboardContent({ clientId }: { clientId: string }) {
 export default async function DashboardPage({ searchParams }: DashboardPageProps) {
   const params = await searchParams;
   const clientId = params.client || DEFAULT_CLIENT_ID;
+  const filters: QueryFilters = {
+    platform: params.platform,
+    sentiment: params.sentiment,
+    isotope: params.isotope,
+    conversionIntent: params.intent,
+  };
 
   const clients = await getClients();
   const clientOptions = clients.map(c => ({ id: c.id, name: c.name }));
@@ -73,7 +82,7 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
           </div>
         }
       >
-        <DashboardContent clientId={clientId} />
+        <DashboardContent clientId={clientId} filters={filters} />
       </Suspense>
     </PageContainer>
   );

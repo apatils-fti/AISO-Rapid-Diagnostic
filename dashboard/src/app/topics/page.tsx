@@ -1,23 +1,35 @@
 import { Suspense } from 'react';
 import { PageContainer } from '@/components/layout';
 import { IsotopeHeatmap } from '@/components/topics';
-import { getTopicIsotopeStats, getClients } from '@/lib/db';
+import { getTopicIsotopeStats, getClients, type QueryFilters } from '@/lib/db';
+import { EnrichmentFilters } from '@/components/shared';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
 
 interface TopicsPageProps {
-  searchParams: Promise<{ client?: string; platform?: string }>;
+  searchParams: Promise<{ client?: string; platform?: string; sentiment?: string; isotope?: string; intent?: string }>;
 }
 
-async function TopicsContent({ clientId, platform }: { clientId: string; platform?: string }) {
-  const topicData = await getTopicIsotopeStats(clientId, platform);
+async function TopicsContent({ clientId, filters }: { clientId: string; filters: QueryFilters }) {
+  const topicData = await getTopicIsotopeStats(clientId, filters);
 
-  return <IsotopeHeatmap serverTopicData={topicData} />;
+  return (
+    <div className="space-y-4">
+      <EnrichmentFilters />
+      <IsotopeHeatmap serverTopicData={topicData} />
+    </div>
+  );
 }
 
 export default async function TopicsPage({ searchParams }: TopicsPageProps) {
   const params = await searchParams;
   const clientId = params.client || DEFAULT_CLIENT_ID;
+  const filters: QueryFilters = {
+    platform: params.platform,
+    sentiment: params.sentiment,
+    isotope: params.isotope,
+    conversionIntent: params.intent,
+  };
   const clients = await getClients();
 
   return (
@@ -35,7 +47,7 @@ export default async function TopicsPage({ searchParams }: TopicsPageProps) {
           </div>
         }
       >
-        <TopicsContent clientId={clientId} platform={params.platform} />
+        <TopicsContent clientId={clientId} filters={filters} />
       </Suspense>
     </PageContainer>
   );

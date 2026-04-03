@@ -2,11 +2,12 @@ import { Suspense } from 'react';
 import { PageContainer } from '@/components/layout';
 import { PromptTable } from '@/components/prompts';
 import { getPromptResults, getClients } from '@/lib/db';
+import { EnrichmentFilters } from '@/components/shared';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
 
 interface PromptsPageProps {
-  searchParams: Promise<{ client?: string; platform?: string; topic?: string; isotope?: string }>;
+  searchParams: Promise<{ client?: string; platform?: string; topic?: string; isotope?: string; sentiment?: string; intent?: string }>;
 }
 
 async function PromptsContent({ clientId, platform, topic, isotope }: {
@@ -14,7 +15,12 @@ async function PromptsContent({ clientId, platform, topic, isotope }: {
 }) {
   const promptData = await getPromptResults(clientId, platform, topic, isotope);
 
-  return <PromptTable serverData={promptData} />;
+  return (
+    <div className="space-y-4">
+      <EnrichmentFilters />
+      <PromptTable serverData={promptData} />
+    </div>
+  );
 }
 
 export default async function PromptsPage({ searchParams }: PromptsPageProps) {

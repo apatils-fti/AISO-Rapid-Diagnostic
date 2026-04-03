@@ -1,18 +1,19 @@
 import { Suspense } from 'react';
 import { PageContainer } from '@/components/layout';
 import { ShareOfVoice, TopicCompetition, CompetitorCard } from '@/components/competitors';
-import { getCompetitorOverview, getTopicIsotopeStats, getClients } from '@/lib/db';
+import { getCompetitorOverview, getTopicIsotopeStats, getClients, type QueryFilters } from '@/lib/db';
+import { EnrichmentFilters } from '@/components/shared';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
 
 interface CompetitorsPageProps {
-  searchParams: Promise<{ client?: string; platform?: string }>;
+  searchParams: Promise<{ client?: string; platform?: string; sentiment?: string; isotope?: string; intent?: string }>;
 }
 
-async function CompetitorsContent({ clientId, platform }: { clientId: string; platform?: string }) {
+async function CompetitorsContent({ clientId, filters }: { clientId: string; filters: QueryFilters }) {
   const [competitors, topicStats] = await Promise.all([
-    getCompetitorOverview(clientId, platform),
-    getTopicIsotopeStats(clientId, platform),
+    getCompetitorOverview(clientId, filters),
+    getTopicIsotopeStats(clientId, filters),
   ]);
 
   if (competitors.length === 0) {
@@ -28,6 +29,7 @@ async function CompetitorsContent({ clientId, platform }: { clientId: string; pl
 
   return (
     <div className="space-y-6">
+      <EnrichmentFilters />
       <ShareOfVoice serverData={competitors} />
       <TopicCompetition serverData={competitors} serverTopicData={topicStats} />
       <div>
@@ -47,6 +49,12 @@ async function CompetitorsContent({ clientId, platform }: { clientId: string; pl
 export default async function CompetitorsPage({ searchParams }: CompetitorsPageProps) {
   const params = await searchParams;
   const clientId = params.client || DEFAULT_CLIENT_ID;
+  const filters: QueryFilters = {
+    platform: params.platform,
+    sentiment: params.sentiment,
+    isotope: params.isotope,
+    conversionIntent: params.intent,
+  };
   const clients = await getClients();
 
   return (
@@ -68,7 +76,7 @@ export default async function CompetitorsPage({ searchParams }: CompetitorsPageP
           </div>
         }
       >
-        <CompetitorsContent clientId={clientId} platform={params.platform} />
+        <CompetitorsContent clientId={clientId} filters={filters} />
       </Suspense>
     </PageContainer>
   );

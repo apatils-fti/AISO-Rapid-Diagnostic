@@ -2,8 +2,10 @@ import { Suspense } from 'react';
 import { Eye, Shield, ShoppingCart, ThumbsUp } from 'lucide-react';
 import { PageContainer } from '@/components/layout';
 import { PillarCard, SentimentBar } from '@/components/metrics';
+import type { SampleResponse } from '@/components/metrics/PillarCard';
 import { supabaseService } from '@/lib/supabase';
-import { getClients } from '@/lib/db';
+import { getClients, type QueryFilters } from '@/lib/db';
+import { EnrichmentFilters } from '@/components/shared';
 import {
   getVisibilityScore,
   getTrustScore,
@@ -17,7 +19,7 @@ import { MetricsFilter } from './metrics-filter';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
 
-async function getEnrichedResults(clientId: string, platform: string): Promise<EnrichedResult[]> {
+async function getEnrichedResults(clientId: string, filters: QueryFilters): Promise<EnrichedResult[]> {
   if (!supabaseService) return [];
 
   const { data: runs, error: runsError } = await supabaseService
@@ -34,9 +36,10 @@ async function getEnrichedResults(clientId: string, platform: string): Promise<E
     .in('run_id', runIds)
     .not('sentiment', 'is', null);
 
-  if (platform && platform !== 'all') {
-    query = query.eq('platform', platform);
-  }
+  if (filters.platform && filters.platform !== 'all') query = query.eq('platform', filters.platform);
+  if (filters.sentiment && filters.sentiment !== 'all') query = query.eq('sentiment', filters.sentiment);
+  if (filters.isotope && filters.isotope !== 'all') query = query.eq('isotope', filters.isotope);
+  if (filters.conversionIntent && filters.conversionIntent !== 'all') query = query.eq('conversion_intent', filters.conversionIntent);
 
   const { data, error } = await query;
   if (error || !data) return [];
@@ -64,12 +67,12 @@ async function getAvailablePlatforms(clientId: string): Promise<string[]> {
 }
 
 interface MetricsPageProps {
-  searchParams: Promise<{ platform?: string; client?: string }>;
+  searchParams: Promise<{ platform?: string; client?: string; sentiment?: string; isotope?: string; intent?: string }>;
 }
 
-async function MetricsContent({ platform, clientId }: { platform: string; clientId: string }) {
+async function MetricsContent({ filters, clientId }: { filters: QueryFilters; clientId: string }) {
   const [results, platforms, clients] = await Promise.all([
-    getEnrichedResults(clientId, platform),
+    getEnrichedResults(clientId, filters),
     getAvailablePlatforms(clientId),
     getClients(),
   ]);
@@ -91,6 +94,7 @@ async function MetricsContent({ platform, clientId }: { platform: string; client
   const archetype = client?.archetype;
   const weights = getWeightsForArchetype(archetype);
 
+  const platform = filters.platform || 'all';
   const isSinglePlatform = platform !== 'all';
   const visibility = getVisibilityScore(results, isSinglePlatform, weights);
   const trust = getTrustScore(results, weights);
@@ -99,6 +103,37 @@ async function MetricsContent({ platform, clientId }: { platform: string; client
 
   const topicCount = new Set(results.map(r => r.topic_name)).size;
   const dominantTopics = Math.round(trust.topicDominanceScore * topicCount);
+
+  // Select sample responses per pillar
+  function toSample(r: EnrichedResult): SampleResponse {
+    return {
+      promptText: r.prompt_id,
+      platform: r.platform,
+      sentiment: r.sentiment || 'neutral',
+      responseText: r.response_text || '',
+      clientMentioned: r.client_mentioned,
+    };
+  }
+
+  const visibilitySamples = results
+    .filter(r => r.client_mentioned)
+    .slice(0, 4)
+    .map(toSample);
+
+  const trustSamples = results
+    .filter(r => r.sentiment === 'positive' || r.sentiment === 'hedged')
+    .slice(0, 4)
+    .map(toSample);
+
+  const acquisitionSamples = results
+    .filter(r => r.isotope === 'commercial' || r.isotope === 'specific')
+    .slice(0, 4)
+    .map(toSample);
+
+  const recommendationSamples = results
+    .filter(r => r.recommendation_strength === 'strong' || r.recommendation_strength === 'qualified')
+    .slice(0, 4)
+    .map(toSample);
 
   // Build formula strings from weights
   const vw = weights.visibility;
@@ -126,6 +161,7 @@ async function MetricsContent({ platform, clientId }: { platform: string; client
     <>
       <div className="mb-6">
         <MetricsFilter platforms={platforms} currentPlatform={platform} />
+        <EnrichmentFilters />
       </div>
 
       <p className="mb-4 text-sm text-[#6B7280]">
@@ -148,6 +184,7 @@ async function MetricsContent({ platform, clientId }: { platform: string; client
               ? [{ label: 'Platform Spread', value: formatPercent(visibility.platformSpread) }]
               : [{ label: 'Platform Spread', value: 'N/A' }]),
           ]}
+          sampleResponses={visibilitySamples}
         />
         <PillarCard
           title="Trust"
@@ -169,6 +206,7 @@ async function MetricsContent({ platform, clientId }: { platform: string; client
               { label: 'Community', value: formatPercent(trust.citationSources.community) },
             ] : []),
           ]}
+          sampleResponses={trustSamples}
         />
         <PillarCard
           title="Customer Acquisition"
@@ -183,6 +221,7 @@ async function MetricsContent({ platform, clientId }: { platform: string; client
               value: `${formatPercent(iso.mentionRate)} (${iso.mentioned}/${iso.total})`,
             })),
           ]}
+          sampleResponses={acquisitionSamples}
         />
         <PillarCard
           title="Recommendation"
@@ -194,6 +233,7 @@ async function MetricsContent({ platform, clientId }: { platform: string; client
             { label: 'Strong Rec.', value: formatPercent(recommendation.strongRecommendationRate) },
             { label: 'Wins Comparisons', value: formatPercent(recommendation.decisionCriteriaWinRate) },
           ]}
+          sampleResponses={recommendationSamples}
         />
       </div>
 
@@ -213,8 +253,13 @@ async function MetricsContent({ platform, clientId }: { platform: string; client
 
 export default async function MetricsPage({ searchParams }: MetricsPageProps) {
   const params = await searchParams;
-  const platform = params.platform || 'all';
   const clientId = params.client || DEFAULT_CLIENT_ID;
+  const filters: QueryFilters = {
+    platform: params.platform,
+    sentiment: params.sentiment,
+    isotope: params.isotope,
+    conversionIntent: params.intent,
+  };
 
   const clients = await getClients();
 
@@ -233,7 +278,7 @@ export default async function MetricsPage({ searchParams }: MetricsPageProps) {
           </div>
         }
       >
-        <MetricsContent platform={platform} clientId={clientId} />
+        <MetricsContent filters={filters} clientId={clientId} />
       </Suspense>
     </PageContainer>
   );

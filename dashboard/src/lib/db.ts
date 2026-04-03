@@ -525,13 +525,21 @@ export interface DbResult {
   created_at: string;
 }
 
+/** Filters that can be applied to any results query */
+export interface QueryFilters {
+  platform?: string;
+  sentiment?: string;
+  isotope?: string;
+  conversionIntent?: string;
+}
+
 /**
  * Fetch all results for a client across all platforms (joined through runs table).
- * Optionally filter by platform.
+ * Supports platform, sentiment, isotope, and conversion intent filters.
  */
 export async function getAllResultsForClient(
   clientId: string,
-  platform?: string
+  filters?: QueryFilters
 ): Promise<DbResult[]> {
   const sb = reader();
   if (!sb) return [];
@@ -551,8 +559,17 @@ export async function getAllResultsForClient(
       .select('*')
       .in('run_id', runIds);
 
-    if (platform && platform !== 'all') {
-      query = query.eq('platform', platform);
+    if (filters?.platform && filters.platform !== 'all') {
+      query = query.eq('platform', filters.platform);
+    }
+    if (filters?.sentiment && filters.sentiment !== 'all') {
+      query = query.eq('sentiment', filters.sentiment);
+    }
+    if (filters?.isotope && filters.isotope !== 'all') {
+      query = query.eq('isotope', filters.isotope);
+    }
+    if (filters?.conversionIntent && filters.conversionIntent !== 'all') {
+      query = query.eq('conversion_intent', filters.conversionIntent);
     }
 
     const { data, error } = await query;
@@ -588,9 +605,10 @@ const PLATFORM_DISPLAY: Record<string, { name: string; color: string }> = {
 };
 
 export async function getPlatformComparison(
-  clientId: string
+  clientId: string,
+  filters?: QueryFilters
 ): Promise<PlatformComparisonStats[]> {
-  const results = await getAllResultsForClient(clientId);
+  const results = await getAllResultsForClient(clientId, filters);
   if (results.length === 0) return [];
 
   // Group by platform
@@ -658,9 +676,9 @@ export interface OverviewStats {
 
 export async function getOverviewStats(
   clientId: string,
-  platform?: string
+  filters?: QueryFilters
 ): Promise<OverviewStats | null> {
-  const results = await getAllResultsForClient(clientId, platform);
+  const results = await getAllResultsForClient(clientId, filters);
   if (results.length === 0) return null;
 
   const total = results.length;
@@ -775,9 +793,10 @@ export interface TopicPlatformStat {
 }
 
 export async function getTopicPlatformStats(
-  clientId: string
+  clientId: string,
+  filters?: QueryFilters
 ): Promise<TopicPlatformStat[]> {
-  const results = await getAllResultsForClient(clientId);
+  const results = await getAllResultsForClient(clientId, filters);
   if (results.length === 0) return [];
 
   // Group by topic + platform
@@ -826,9 +845,9 @@ export interface TopicIsotopeRow {
 
 export async function getTopicIsotopeStats(
   clientId: string,
-  platform?: string
+  filters?: QueryFilters
 ): Promise<TopicIsotopeRow[]> {
-  const results = await getAllResultsForClient(clientId, platform);
+  const results = await getAllResultsForClient(clientId, filters);
   if (results.length === 0) return [];
 
   const map = new Map<string, {
@@ -912,9 +931,9 @@ export interface CompetitorOverviewRow {
 
 export async function getCompetitorOverview(
   clientId: string,
-  platform?: string
+  filters?: QueryFilters
 ): Promise<CompetitorOverviewRow[]> {
-  const results = await getAllResultsForClient(clientId, platform);
+  const results = await getAllResultsForClient(clientId, filters);
   if (results.length === 0) return [];
 
   const total = results.length;
@@ -997,9 +1016,9 @@ export interface GapRow {
 
 export async function getGapAnalysis(
   clientId: string,
-  platform?: string
+  filters?: QueryFilters
 ): Promise<GapRow[]> {
-  const results = await getAllResultsForClient(clientId, platform);
+  const results = await getAllResultsForClient(clientId, filters);
   if (results.length === 0) return [];
 
   // Group by topic

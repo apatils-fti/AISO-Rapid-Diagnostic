@@ -1,16 +1,17 @@
 import { Suspense } from 'react';
 import { PageContainer } from '@/components/layout';
 import { QuadrantChart, LayerComparison, GapBridges, GapInsightCard, TopGapPriorities } from '@/components/gap-analysis';
-import { getGapAnalysis, getClients } from '@/lib/db';
+import { getGapAnalysis, getClients, type QueryFilters } from '@/lib/db';
+import { EnrichmentFilters } from '@/components/shared';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
 
 interface GapAnalysisPageProps {
-  searchParams: Promise<{ client?: string; platform?: string }>;
+  searchParams: Promise<{ client?: string; platform?: string; sentiment?: string; isotope?: string; intent?: string }>;
 }
 
-async function GapContent({ clientId, platform }: { clientId: string; platform?: string }) {
-  const gaps = await getGapAnalysis(clientId, platform);
+async function GapContent({ clientId, filters }: { clientId: string; filters: QueryFilters }) {
+  const gaps = await getGapAnalysis(clientId, filters);
 
   if (gaps.length === 0) {
     return (
@@ -25,6 +26,7 @@ async function GapContent({ clientId, platform }: { clientId: string; platform?:
 
   return (
     <div className="space-y-6">
+      <EnrichmentFilters />
       <TopGapPriorities serverGapData={gaps} />
       <QuadrantChart serverGapData={gaps} />
       <LayerComparison serverGapData={gaps} />
@@ -37,6 +39,12 @@ async function GapContent({ clientId, platform }: { clientId: string; platform?:
 export default async function GapAnalysisPage({ searchParams }: GapAnalysisPageProps) {
   const params = await searchParams;
   const clientId = params.client || DEFAULT_CLIENT_ID;
+  const filters: QueryFilters = {
+    platform: params.platform,
+    sentiment: params.sentiment,
+    isotope: params.isotope,
+    conversionIntent: params.intent,
+  };
   const clients = await getClients();
 
   return (
@@ -55,7 +63,7 @@ export default async function GapAnalysisPage({ searchParams }: GapAnalysisPageP
           </div>
         }
       >
-        <GapContent clientId={clientId} platform={params.platform} />
+        <GapContent clientId={clientId} filters={filters} />
       </Suspense>
     </PageContainer>
   );
