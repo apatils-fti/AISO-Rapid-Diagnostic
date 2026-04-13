@@ -8,6 +8,7 @@ import {
   Users,
   Layers,
   List,
+  BarChart3,
   Download,
   Settings,
   Activity,
@@ -41,6 +42,11 @@ const navItems = [
     label: 'Prompt Detail',
     href: '/prompts',
     icon: List,
+  },
+  {
+    label: 'Metrics',
+    href: '/metrics',
+    icon: BarChart3,
   },
 ];
 

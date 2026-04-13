@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-03-27T21:31:44.048Z",
+  "clientId": "269b6038-bb3b-4c2d-9fcf-b497beebfe35",
+  "brand": "J.Crew",
+  "platform": "perplexity",
+  "totalRows": 1000,
+  "processed": 1000,
+  "failed": 0,
+  "apiCalls": 405,
+  "estimatedCost": "$0.4496",
+  "durationSeconds": 800.1,
+  "errors": []
+}
