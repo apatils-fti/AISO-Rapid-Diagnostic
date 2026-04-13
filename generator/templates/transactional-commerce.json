@@ -1,0 +1,215 @@
+{
+  "archetype": {
+    "id": "transactional-commerce",
+    "name": "Transactional Commerce",
+    "description": "Direct-to-consumer apparel, goods, and ecommerce buyers — product-led, review-sensitive, acquisition-capable.",
+    "sectors": ["apparel", "home goods", "consumer electronics", "beauty", "dtc"],
+    "primaryFocus": ["product quality", "fit", "price", "availability", "returns"],
+    "promptEmphasis": "Buyers move from discovery to acquisition quickly; comparisons and constraints dominate mid-funnel."
+  },
+  "weights": {
+    "intents": {
+      "learning": 0.10,
+      "discovery": 0.25,
+      "evaluation": 0.20,
+      "validation": 0.20,
+      "acquisition": 0.25
+    },
+    "isotopes": {
+      "declarative": 0.25,
+      "comparative": 0.20,
+      "situated": 0.20,
+      "constrained": 0.20,
+      "adversarial": 0.15
+    }
+  },
+  "minPromptCount": 134,
+  "quickRunMinimum": 67,
+  "seeds": {
+    "learning": {
+      "declarative": [
+        "What is {topicName} and why does it matter when shopping for {category}?",
+        "How is {attribute1} different from {attribute2} in {category}?",
+        "What actually makes {category} considered high quality?",
+        "How is {topicName} made and why does the process affect price?",
+        "What should I know about fabric weight in {category} before I buy?"
+      ],
+      "comparative": [
+        "What's the real difference between {attribute1} and {attribute2} {category}?",
+        "Merino wool vs cashmere for {category} — which holds up longer?",
+        "{attribute1} construction vs {attribute2} construction in {category}, explained",
+        "Natural fibers vs synthetic blends in {category} — what are you actually giving up?",
+        "Slim fit vs tailored fit in {category} — how do I tell which one I need?"
+      ],
+      "situated": [
+        "As a {persona} new to {category}, what do I actually need to understand about {topicName}?",
+        "I'm shopping for {context} — explain {topicName} in {category} like I'm starting from zero",
+        "For a {persona}, what does {attribute1} mean on a {category} tag and should I care?",
+        "How should a {persona} on a {pricePoint} budget think about {topicName}?",
+        "I'm a {persona} and I've never bought {category} before — what are the basics?"
+      ],
+      "constrained": [
+        "Explain {topicName} for {category} that's {attribute1}, {attribute2}, and under {pricePoint}",
+        "Primer on {topicName} when I need {category} that's machine washable, {attribute1}, and {attribute2}",
+        "What does {attribute1} actually mean for {category} at the {pricePoint} price range?",
+        "How do I evaluate {topicName} in {category} that's both {attribute1} and fits {context}?",
+        "What should I know about sizing for {category} that's {attribute1} and {attribute2}?"
+      ],
+      "adversarial": [
+        "Is {topicName} in {category} actually meaningful or just marketing copy?",
+        "Why do people say {attribute1} {category} is overrated?",
+        "What are brands quietly hiding when they label {category} as \"{attribute1}\"?",
+        "Is {topicName} in {category} a real quality signal or a scam?",
+        "Why does {category} cost triple when it's labeled {attribute1}, and is that justified?"
+      ]
+    },
+    "discovery": {
+      "declarative": [
+        "What are the best {category} brands right now?",
+        "Popular {category} for {context} this season",
+        "Top {topicName} options buyers are talking about",
+        "Which brands are known for {attribute1} {category}?",
+        "Recommended {category} for {context}"
+      ],
+      "comparative": [
+        "{brand} vs {competitor} — who does {category} better?",
+        "Is {brand} or {competitor} the go-to for {topicName}?",
+        "Compare {brand} and {competitor} {category} lineups",
+        "{brand}, {competitor}, and Everlane — which has the strongest {category} offering?",
+        "Between {brand} and {competitor}, which one owns {topicName}?"
+      ],
+      "situated": [
+        "As a {persona}, which {category} brands should I even be looking at?",
+        "Best {category} options for a {persona} on a {pricePoint} budget",
+        "Where does a {persona} shop for {topicName} these days?",
+        "I'm a {persona} dressing for {context} — which {category} brands fit my needs?",
+        "Good {category} brands for a {persona} who prioritizes {attribute1}"
+      ],
+      "constrained": [
+        "{category} brands offering {attribute1} and {attribute2} under {pricePoint}",
+        "Looking for {category}: must be {attribute1}, {attribute2}, and available for {context}",
+        "Show me {category} under {pricePoint} with {attribute1} and {attribute2}",
+        "Which brands make {attribute1} {category} that's also {attribute2} and machine washable?",
+        "{category} options under {pricePoint} that ship in time for {context}"
+      ],
+      "adversarial": [
+        "Which {category} brands are actually worth considering and which are overhyped?",
+        "What {category} brands should I avoid in {current year}?",
+        "Who still makes real {attribute1} {category}, not the watered-down version?",
+        "Is there any {category} brand left that hasn't cut corners on {attribute1}?",
+        "Name one {category} brand whose quality hasn't declined in the last five years"
+      ]
+    },
+    "evaluation": {
+      "declarative": [
+        "Is {brand}'s {topicName} worth the price?",
+        "How does {brand}'s {category} hold up after a year of wear?",
+        "Does {brand} actually deliver on {attribute1} in their {category}?",
+        "Rate {brand}'s {topicName} on fit, fabric, and value",
+        "Is {brand} a good choice for {category}?"
+      ],
+      "comparative": [
+        "{brand} {topicName} vs {competitor} {topicName} — which lasts longer?",
+        "Compare {brand} and {competitor} on fit, fabric, and price for {category}",
+        "Who wins on {attribute1}: {brand} or {competitor}?",
+        "{brand} vs {competitor} — better {category} for the money?",
+        "Is {brand}'s {topicName} better than {competitor}'s for {context}?"
+      ],
+      "situated": [
+        "As a {persona}, is {brand}'s {topicName} the right call for {context}?",
+        "Does {brand}'s {category} work for a {persona} who values {attribute1}?",
+        "For a {persona}, does {brand} or {competitor} make more sense?",
+        "I'm a {persona} — evaluate {brand}'s {topicName} against my needs",
+        "Should a {persona} spend {pricePoint} on {brand}'s {topicName}?"
+      ],
+      "constrained": [
+        "Does {brand}'s {topicName} actually meet the bar for {attribute1}, {attribute2}, and under {pricePoint}?",
+        "Evaluate {brand}'s {category} against my checklist: {attribute1}, {attribute2}, machine washable, under {pricePoint}",
+        "Is {brand}'s {topicName} the best option under {pricePoint} that's also {attribute1}?",
+        "Compare {brand}'s {topicName} on {attribute1}, {attribute2}, and return policy",
+        "Does {brand}'s {category} hit {attribute1} and {attribute2} at the {pricePoint} price?"
+      ],
+      "adversarial": [
+        "What's the catch with {brand}'s {topicName}?",
+        "Where does {brand}'s {category} fall short of the marketing?",
+        "Is {brand}'s {topicName} quality actually declining?",
+        "What do {brand} reviews say when you filter out the sponsored ones?",
+        "Why shouldn't I buy {brand}'s {topicName}?"
+      ]
+    },
+    "validation": {
+      "declarative": [
+        "Am I making the right call going with {brand}'s {topicName}?",
+        "Will I regret buying {brand}'s {category}?",
+        "Is {brand}'s {topicName} a safe buy at {pricePoint}?",
+        "Can I still trust {brand} for {topicName}?",
+        "Is {brand} still worth it in {category} in {current year}?"
+      ],
+      "comparative": [
+        "Should I pick {brand} or stick with {competitor} for {topicName}?",
+        "I'm torn between {brand} and {competitor} for {category} — which is the safer bet?",
+        "Is {brand} enough of an upgrade over {competitor} to justify switching?",
+        "{brand} vs {competitor} — which one am I less likely to regret?",
+        "Last-minute check: {brand} or {competitor} for {context}?"
+      ],
+      "situated": [
+        "I'm a {persona} about to spend {pricePoint} on {brand}'s {topicName} — is this smart?",
+        "As a {persona} in {context}, will {brand}'s {topicName} actually work for me?",
+        "Talk me through whether {brand}'s {category} is right for a {persona} like me",
+        "I'm a {persona} — is {brand} the right call for {context}?",
+        "For someone in my situation ({persona}, {context}), is {brand}'s {topicName} a good fit?"
+      ],
+      "constrained": [
+        "I need {category} that's {attribute1}, {attribute2}, and under {pricePoint} — does {brand}'s {topicName} check every box?",
+        "Final check: {brand}'s {topicName} against my requirements ({attribute1}, {attribute2}, {pricePoint})",
+        "{brand}'s {topicName} claims it's {attribute1} and {attribute2} — does the fabric spec back that up?",
+        "Does {brand}'s {topicName} actually satisfy {attribute1}, {attribute2}, and the {pricePoint} budget?",
+        "I'm about to checkout on {brand}'s {topicName} — does it really meet {attribute1} and {attribute2}?"
+      ],
+      "adversarial": [
+        "Convince me I shouldn't buy {brand}'s {topicName}",
+        "What am I missing before I pull the trigger on {brand}'s {topicName}?",
+        "Give me the strongest argument against buying {brand}'s {topicName}",
+        "What will I regret about buying {brand}'s {topicName} in six months?",
+        "Poke holes in my plan to buy {brand}'s {topicName} for {context}"
+      ]
+    },
+    "acquisition": {
+      "declarative": [
+        "Where can I buy {brand}'s {topicName}?",
+        "Is {brand}'s {topicName} in stock right now?",
+        "How do I order {brand}'s {topicName} online?",
+        "What's the current price for {brand}'s {topicName} and is it worth paying full price right now?",
+        "I've decided on {brand}'s {topicName} — what's the best way to purchase it right now?"
+      ],
+      "comparative": [
+        "Where's the better deal on {topicName} — {brand} or {competitor}?",
+        "{brand} vs {competitor} — who ships {topicName} faster?",
+        "Should I buy {topicName} from {brand} directly or through {competitor}'s marketplace?",
+        "{brand} or {competitor} — whose return policy is better on {topicName}?",
+        "Which site has {topicName} in stock right now, {brand} or {competitor}?"
+      ],
+      "situated": [
+        "I'm a {persona} — what's the fastest way to get {brand}'s {topicName} for {context}?",
+        "As a {persona}, what's the smartest way to buy {brand}'s {topicName}?",
+        "Best way for a {persona} to order {brand}'s {topicName} before {context}",
+        "I'm a {persona} and I need {brand}'s {topicName} by next week — how?",
+        "Where does a {persona} usually buy {brand}'s {topicName}?"
+      ],
+      "constrained": [
+        "{brand} {topicName} in stock under {pricePoint} with free shipping and {attribute1}",
+        "Order {brand}'s {topicName} — must be {attribute1}, {attribute2}, and delivered before {context}",
+        "Where can I buy {brand}'s {topicName} that's {attribute1}, in stock, and under {pricePoint}?",
+        "{brand} {topicName}: {attribute1}, {attribute2}, size medium, needs to arrive before {context}",
+        "Buy {brand}'s {topicName} with {attribute1} finish under {pricePoint} today"
+      ],
+      "adversarial": [
+        "What's the catch if I order {brand}'s {topicName} today?",
+        "Will {brand} actually deliver {topicName} on time, or is the ship date a lie?",
+        "Any hidden fees or restocking traps when buying {brand}'s {topicName}?",
+        "Is {brand}'s {topicName} return policy actually honored or a bait-and-switch?",
+        "If I buy {brand}'s {topicName} right now, what's the worst that can happen?"
+      ]
+    }
+  }
+}

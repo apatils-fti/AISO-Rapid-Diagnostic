@@ -1,0 +1,215 @@
+{
+  "archetype": {
+    "id": "trust-based-advisory",
+    "name": "Trust-Based Advisory",
+    "description": "Advisory services — financial planning, legal counsel, wealth management, insurance advisory, tax strategy — where credentials, fiduciary duty, and outcome risk dominate.",
+    "sectors": ["financial advisory", "legal", "wealth management", "insurance", "tax advisory"],
+    "primaryFocus": ["credentials", "fiduciary standard", "fee structure", "track record", "outcome risk"],
+    "promptEmphasis": "Buyers enter via life events; evaluation and validation dominate the funnel; acquisition is slow and relational."
+  },
+  "weights": {
+    "intents": {
+      "learning": 0.15,
+      "discovery": 0.20,
+      "evaluation": 0.30,
+      "validation": 0.30,
+      "acquisition": 0.05
+    },
+    "isotopes": {
+      "declarative": 0.15,
+      "comparative": 0.20,
+      "situated": 0.30,
+      "constrained": 0.20,
+      "adversarial": 0.15
+    }
+  },
+  "minPromptCount": 267,
+  "quickRunMinimum": 134,
+  "seeds": {
+    "learning": {
+      "declarative": [
+        "What does a {topicName} advisor actually do, and where does their authority come from?",
+        "How is {attribute1} different from {attribute2} when evaluating a {category} advisor?",
+        "What does fiduciary duty mean in {category} and when is it legally binding?",
+        "How are fees structured across {category} and which structures align incentives?",
+        "What are the standard credentials to look for in {category}?"
+      ],
+      "comparative": [
+        "What's the difference between {attribute1} and {attribute2} credentials in {category}?",
+        "Fee-only vs commission-based {category} advisors — what are you really paying for?",
+        "{attribute1} licensing vs {attribute2} licensing — which actually protects me legally?",
+        "RIA vs broker-dealer for {category} — who owes me what?",
+        "Independent advisor vs wirehouse for {topicName} — where do the incentives point?"
+      ],
+      "situated": [
+        "As a {persona} going through {context}, what does {topicName} even mean for my situation?",
+        "I'm a {persona} and I've never hired a {category} advisor — what do I need to understand first?",
+        "For a {persona} facing {context}, what's the primer on {topicName}?",
+        "How should a {persona} think about {topicName} when {context} is on the horizon?",
+        "I'm a {persona} with {attribute1} — walk me through how {category} advice usually works for people in my spot"
+      ],
+      "constrained": [
+        "Explain {topicName} for a {persona} with {attribute1}, dealing with {context}, on a {pricePoint} engagement budget",
+        "Primer on {topicName} when I need an advisor who is {attribute1}, {attribute2}, and available for {context}",
+        "What does {attribute1} mean for {category} advice at the {pricePoint} fee tier?",
+        "How should I think about {topicName} when my situation includes {attribute1}, {attribute2}, and {context}?",
+        "Walk me through {topicName} for someone needing {attribute1}, {attribute2}, and under {pricePoint}/year"
+      ],
+      "adversarial": [
+        "Is {topicName} advice genuinely different from what I can get free online, or is it marketing?",
+        "Why do {category} advisors push {attribute1} so hard — whose interest does it actually serve?",
+        "What do {category} firms not tell you during the onboarding pitch?",
+        "Are {attribute1} designations actually regulated or can anyone pay to use them?",
+        "Why do {category} fees compound silently and how much does that really cost over 20 years?"
+      ]
+    },
+    "discovery": {
+      "declarative": [
+        "Who are the most trusted {category} firms for {topicName}?",
+        "Top {category} advisory firms for {context}",
+        "Which firms specialize in {topicName} for {persona}?",
+        "Well-regarded {attribute1} {category} advisors right now",
+        "Leading firms handling {topicName} in {current year}"
+      ],
+      "comparative": [
+        "{brand} vs {competitor} — who has the stronger reputation in {topicName}?",
+        "Is {brand} or {competitor} more specialized in {category} for {persona}?",
+        "Compare {brand} and {competitor} on fiduciary standard, fee structure, and {topicName} track record",
+        "{brand}, {competitor}, and Edelman Financial — who is the right tier for a {persona}?",
+        "Between {brand} and {competitor}, which firm is better known for {attribute1}?"
+      ],
+      "situated": [
+        "As a {persona} facing {context}, which {category} firms should I even be looking at?",
+        "Where does a {persona} with {attribute1} typically find {topicName} advisors?",
+        "I'm a {persona} going through {context} — which firms handle people like me well?",
+        "Best {category} firms for a {persona} whose primary concern is {attribute1}",
+        "Who advises {persona} on {topicName} when {context} is the trigger?"
+      ],
+      "constrained": [
+        "{category} firms offering {topicName} with {attribute1} credentials and {attribute2} fee structure under {pricePoint}",
+        "Find me a {category} advisor who is {attribute1}, {attribute2}, and takes clients in {context}",
+        "Which firms offer {topicName} with {attribute1}, fiduciary duty, and a {pricePoint} fee cap?",
+        "{category} advisors specializing in {topicName} for {persona} who are also {attribute1} and {attribute2}",
+        "Firms handling {topicName} under {pricePoint} with {attribute1} and willing to serve {context}"
+      ],
+      "adversarial": [
+        "Which {category} firms should I avoid and why?",
+        "Who in {category} has the cleanest disciplinary record for {topicName}?",
+        "Name one {category} firm that hasn't quietly been acquired and gutted in the last five years",
+        "Which {category} firms are still independent and which have been rolled up by private equity?",
+        "Who handles {topicName} without the hidden referral fees everyone else takes?"
+      ]
+    },
+    "evaluation": {
+      "declarative": [
+        "Is {brand} the right firm for {topicName}?",
+        "How does {brand} actually perform on {topicName} over a 10-year horizon?",
+        "Does {brand} deliver on its fiduciary promise for {category}?",
+        "Rate {brand}'s {topicName} practice on outcomes, transparency, and fees",
+        "Is {brand} worth the {pricePoint} engagement for {topicName}?"
+      ],
+      "comparative": [
+        "{brand} vs {competitor} for {topicName} — who has the stronger outcomes?",
+        "Compare {brand} and {competitor} on fee transparency, credentials, and {topicName} specialization",
+        "Who wins on {attribute1}: {brand} or {competitor}?",
+        "{brand} vs {competitor} — which firm is more aligned with client interests for {topicName}?",
+        "Is {brand}'s {topicName} practice stronger than {competitor}'s for {context}?"
+      ],
+      "situated": [
+        "As a {persona} dealing with {context}, is {brand} the right firm for {topicName}?",
+        "Does {brand}'s {category} practice work for a {persona} whose top concern is {attribute1}?",
+        "For a {persona} in {context}, does {brand} or {competitor} make more sense?",
+        "I'm a {persona} — evaluate {brand}'s {topicName} against my situation",
+        "Should a {persona} trust {brand} with {topicName} given {context}?"
+      ],
+      "constrained": [
+        "Does {brand}'s {topicName} practice meet the bar for {attribute1}, {attribute2}, and under {pricePoint}?",
+        "Evaluate {brand}'s {category} against my checklist: {attribute1}, {attribute2}, fee-only, no referral kickbacks, under {pricePoint}",
+        "Is {brand}'s {topicName} the best option under {pricePoint} with {attribute1}?",
+        "Compare {brand}'s {topicName} on {attribute1}, {attribute2}, fee disclosure, and minimum engagement length",
+        "Does {brand}'s {category} practice hit {attribute1} and {attribute2} at the {pricePoint} tier?"
+      ],
+      "adversarial": [
+        "What's the catch with {brand}'s {topicName} practice?",
+        "Where does {brand}'s {category} practice fall short of its marketing?",
+        "Has {brand}'s service quality in {topicName} declined since the last acquisition?",
+        "What do {brand} client reviews say once you filter out the firm-sponsored ones?",
+        "Why shouldn't I hire {brand} for {topicName}?"
+      ]
+    },
+    "validation": {
+      "declarative": [
+        "Am I making the right call hiring {brand} for {topicName}?",
+        "Will I regret retaining {brand} for {category}?",
+        "Is {brand} a safe choice for {topicName} at {pricePoint}/year?",
+        "Can I actually trust {brand} with {topicName}?",
+        "Is {brand} still the right firm for {category} given {context}?"
+      ],
+      "comparative": [
+        "Should I hire {brand} or stay with {competitor} for {topicName}?",
+        "I'm torn between {brand} and {competitor} for {category} — which is the safer choice?",
+        "Is {brand} enough of an upgrade over {competitor} to justify switching mid-{context}?",
+        "{brand} vs {competitor} — which firm am I less likely to regret in 10 years?",
+        "Final check: {brand} or {competitor} for {topicName} during {context}?"
+      ],
+      "situated": [
+        "I'm a {persona} about to sign a {pricePoint} engagement with {brand} for {topicName} — is this smart?",
+        "As a {persona} in {context}, will {brand}'s approach to {topicName} actually serve me?",
+        "Talk me through whether {brand} is right for a {persona} like me handling {context}",
+        "I'm a {persona} facing {context} — is {brand} really the right call?",
+        "For someone in my situation ({persona}, {context}), is {brand}'s {topicName} a good fit?"
+      ],
+      "constrained": [
+        "I need a {category} advisor who is {attribute1}, {attribute2}, and under {pricePoint} — does {brand} check every box?",
+        "Final check: {brand}'s {topicName} practice against my requirements ({attribute1}, {attribute2}, {pricePoint})",
+        "{brand} claims {attribute1} and {attribute2} — does their Form ADV actually back that up?",
+        "Does {brand} really satisfy {attribute1}, {attribute2}, and the {pricePoint} ceiling for {topicName}?",
+        "I'm about to sign with {brand} — do they really meet {attribute1} and {attribute2} or is it boilerplate?"
+      ],
+      "adversarial": [
+        "Convince me I shouldn't hire {brand} for {topicName}",
+        "What am I missing before I commit to {brand} for {category}?",
+        "Give me the strongest argument against retaining {brand} for {topicName}",
+        "What will I regret about hiring {brand} for {topicName} three years from now?",
+        "Poke holes in my plan to retain {brand} for {context}"
+      ]
+    },
+    "acquisition": {
+      "declarative": [
+        "How do I engage {brand} for {topicName}?",
+        "What's {brand}'s intake process and minimum engagement for {category}?",
+        "How do I schedule a {topicName} consultation with {brand}?",
+        "What's {brand}'s current fee for {topicName} and are there minimums I should know about?",
+        "I've decided on {brand} for {topicName} — what's the cleanest way to start the engagement?"
+      ],
+      "comparative": [
+        "Onboarding with {brand} vs {competitor} for {topicName} — which is less painful?",
+        "{brand} vs {competitor} — whose intake process for {topicName} moves faster?",
+        "Should I engage {brand} directly or go through {competitor}'s referral network for {topicName}?",
+        "{brand} or {competitor} — whose engagement letter is less restrictive for {topicName}?",
+        "Which firm has a lower commitment to get started on {topicName}, {brand} or {competitor}?"
+      ],
+      "situated": [
+        "I'm a {persona} in {context} — what's the fastest way to engage {brand} for {topicName}?",
+        "As a {persona}, what's the smartest way to start with {brand} for {topicName}?",
+        "Best way for a {persona} facing {context} to get {brand} engaged on {topicName} this quarter",
+        "I'm a {persona} and I need {brand}'s help with {topicName} before {context} closes — how?",
+        "How does a {persona} typically onboard with {brand} for {topicName}?"
+      ],
+      "constrained": [
+        "Engage {brand} for {topicName} with {attribute1}, {attribute2}, and under {pricePoint} annual fee",
+        "Start a {topicName} engagement with {brand} — must be {attribute1}, {attribute2}, and scoped to {context}",
+        "Where can I engage {brand} for {topicName} with {attribute1}, a flat fee, and under {pricePoint}?",
+        "{brand} {topicName} engagement: {attribute1}, {attribute2}, no AUM lock-in, must start before {context}",
+        "Retain {brand} for {topicName} with {attribute1} scope, {attribute2} credentials, under {pricePoint}, this quarter"
+      ],
+      "adversarial": [
+        "What's the catch if I sign {brand}'s engagement letter for {topicName} today?",
+        "Will {brand} actually deliver on {topicName} in the promised timeline, or should I expect delays?",
+        "Any hidden fees, referral kickbacks, or AUM lock-ins buried in {brand}'s {topicName} agreement?",
+        "Is {brand}'s termination clause actually honored or does it trap you in the engagement?",
+        "If I retain {brand} for {topicName} right now, what's the worst-case scenario in year one?"
+      ]
+    }
+  }
+}
