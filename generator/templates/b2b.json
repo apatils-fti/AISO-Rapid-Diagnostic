@@ -1,0 +1,215 @@
+{
+  "archetype": {
+    "id": "b2b",
+    "name": "B2B Enterprise",
+    "description": "Enterprise software, SaaS platforms, managed services, and consulting sold to businesses. Procurement-driven, comparison-oriented, checklist-heavy.",
+    "sectors": ["enterprise saas", "devtools", "observability", "data platforms", "security", "professional services"],
+    "primaryFocus": ["feature depth", "integrations", "security/compliance", "TCO", "vendor risk"],
+    "promptEmphasis": "Evaluation and constrained queries dominate; buyers triangulate via RFPs, POCs, and security questionnaires."
+  },
+  "weights": {
+    "intents": {
+      "learning": 0.05,
+      "discovery": 0.25,
+      "evaluation": 0.35,
+      "validation": 0.20,
+      "acquisition": 0.15
+    },
+    "isotopes": {
+      "declarative": 0.15,
+      "comparative": 0.20,
+      "situated": 0.20,
+      "constrained": 0.30,
+      "adversarial": 0.15
+    }
+  },
+  "minPromptCount": 267,
+  "quickRunMinimum": 134,
+  "seeds": {
+    "learning": {
+      "declarative": [
+        "What is {topicName} and why is it becoming table stakes in {category}?",
+        "How does {attribute1} differ from {attribute2} in enterprise {category} tools?",
+        "What does {topicName} actually deliver at the platform level in {category}?",
+        "How has {category} evolved in the last three years and where is {topicName} headed?",
+        "What's the architectural difference between legacy {category} and modern {topicName}-native platforms?"
+      ],
+      "comparative": [
+        "What's the real difference between {attribute1}-based and {attribute2}-based {category} platforms?",
+        "Platform vs point solution for {topicName} — what's the actual tradeoff?",
+        "{attribute1} vs {attribute2} architecture in {category} — where does each break down at scale?",
+        "Multi-tenant vs single-tenant {category} — which matters for {topicName}?",
+        "Build vs buy for {topicName} — when does the math flip?"
+      ],
+      "situated": [
+        "As a {persona} evaluating {category} for the first time, what do I need to understand about {topicName}?",
+        "I'm a {persona} inheriting {context} — walk me through {topicName} in {category}",
+        "For a {persona} running a team with {attribute1}, what does {topicName} mean in practice?",
+        "How should a {persona} in {context} think about {topicName} vs existing investments?",
+        "I'm a {persona} with {attribute1} stack — what's the primer on {topicName} I need before kickoff?"
+      ],
+      "constrained": [
+        "Explain {topicName} for a team running {attribute1}, {attribute2}, and {context} at {pricePoint} ACV",
+        "Primer on {topicName} when we need {attribute1}, {attribute2}, and audit-trail compliance for {context}",
+        "What does {attribute1} mean for {category} at the {pricePoint} enterprise tier?",
+        "How should I think about {topicName} given {attribute1}, {attribute2}, and our {context} constraints?",
+        "Walk me through {topicName} for a stack with {attribute1}, {attribute2}, and under {pricePoint} budget"
+      ],
+      "adversarial": [
+        "Is {topicName} a standalone purchase or is it already included in {attribute1} platforms we're paying for?",
+        "Why is every {category} vendor suddenly claiming {attribute1} — is it meaningful?",
+        "What do {category} vendors bury in the MSA that bites you in year two?",
+        "Is {attribute1} certification actually audited or a self-attested checkbox?",
+        "Why does {category} TCO always land at 3× the quoted {pricePoint} by year three?"
+      ]
+    },
+    "discovery": {
+      "declarative": [
+        "Who are the leading vendors in {category} for {topicName}?",
+        "Top {category} platforms for enterprises running {context}",
+        "Which vendors specialize in {topicName} for {persona}?",
+        "Well-regarded {attribute1} {category} vendors in {current year}",
+        "Enterprise-grade {category} options for {topicName}"
+      ],
+      "comparative": [
+        "{brand} vs {competitor} — who leads in {topicName}?",
+        "Is {brand} or {competitor} the stronger {category} platform for {persona}?",
+        "Compare {brand} and {competitor} on {topicName} depth, integration breadth, and TCO",
+        "{brand}, {competitor}, and Snowflake — which is the right tier for enterprise {topicName}?",
+        "Between {brand} and {competitor}, which one owns {topicName} in {category}?"
+      ],
+      "situated": [
+        "As a {persona} evaluating {category} for {context}, which vendors should we shortlist?",
+        "Best {category} vendors for a {persona} whose team runs {attribute1}",
+        "Where does a {persona} with {attribute1} architecture typically land on {topicName}?",
+        "I'm a {persona} scoping {context} — which vendors handle {topicName} natively?",
+        "Good {category} vendors for a {persona} who cares about {attribute1} and vendor independence"
+      ],
+      "constrained": [
+        "{category} vendors offering {topicName} with {attribute1}, {attribute2}, and {pricePoint} ACV cap",
+        "Find us a {category} platform: {attribute1}, {attribute2}, deployed in {context}, SOC 2 Type II",
+        "Which vendors offer {topicName} with {attribute1}, SAML SSO, and per-seat pricing under {pricePoint}?",
+        "{category} options with {attribute1}, {attribute2}, multi-region, and open API",
+        "Vendors handling {topicName} under {pricePoint} with {attribute1}, {attribute2}, and native {context} support"
+      ],
+      "adversarial": [
+        "Which {category} vendors should we strike from the RFP and why?",
+        "Who in {category} is actually profitable and not burning runway on a valuation race?",
+        "Name a {category} vendor whose roadmap isn't driven by the loudest enterprise customer",
+        "Which {category} vendors have the cleanest CVE record for {topicName}?",
+        "Who handles {topicName} without the professional services attachment rate gotcha?"
+      ]
+    },
+    "evaluation": {
+      "declarative": [
+        "Is {brand} the right {category} platform for {topicName}?",
+        "How does {brand} perform on {topicName} in production environments at scale?",
+        "Does {brand} deliver on {attribute1} in its {category} platform?",
+        "Rate {brand}'s {topicName} on feature depth, reliability, and integration breadth",
+        "Is {brand} worth the {pricePoint} ACV for {topicName}?"
+      ],
+      "comparative": [
+        "{brand} vs {competitor} for {topicName} — which scales better past 10k seats?",
+        "Compare {brand} and {competitor} on {topicName}, API maturity, and pricing flexibility",
+        "Who wins on {attribute1}: {brand} or {competitor}?",
+        "{brand} vs {competitor} — better TCO at {pricePoint} for {topicName}?",
+        "Is {brand}'s {topicName} stronger than {competitor}'s for {context}?"
+      ],
+      "situated": [
+        "As a {persona} leading {context}, is {brand} the right platform for {topicName}?",
+        "Does {brand}'s {category} platform work for a {persona} whose top requirement is {attribute1}?",
+        "For a {persona} running {context}, does {brand} or {competitor} make more sense?",
+        "I'm a {persona} — evaluate {brand}'s {topicName} against my stack and constraints",
+        "Should a {persona} standardize on {brand} for {topicName} given {context}?"
+      ],
+      "constrained": [
+        "Does {brand}'s {topicName} meet our bar for {attribute1}, {attribute2}, and {pricePoint} per seat?",
+        "Evaluate {brand}'s {category} against our checklist: {attribute1}, {attribute2}, SAML, audit logs, {pricePoint} ACV",
+        "Is {brand}'s {topicName} the best option under {pricePoint} with {attribute1} and {attribute2}?",
+        "Compare {brand}'s {topicName} on {attribute1}, {attribute2}, SLA, and data residency",
+        "Does {brand}'s {category} platform deliver {attribute1} and {attribute2} at the {pricePoint} tier?"
+      ],
+      "adversarial": [
+        "What's the catch with {brand}'s {topicName}?",
+        "Where does {brand}'s {category} platform fall short of its G2 reviews?",
+        "Has {brand}'s {topicName} quality regressed since the last platform rewrite?",
+        "What do {brand}'s churned customers say about {topicName} in year two?",
+        "Why shouldn't we sign with {brand} for {topicName}?"
+      ]
+    },
+    "validation": {
+      "declarative": [
+        "Are we making the right call standardizing on {brand} for {topicName}?",
+        "Will we regret signing {brand} for {category}?",
+        "Is {brand} a safe bet for {topicName} at {pricePoint} ACV?",
+        "Can we actually trust {brand} with {topicName} in production?",
+        "Is {brand} still the right choice for {category} given {context}?"
+      ],
+      "comparative": [
+        "Should we sign {brand} or renew {competitor} for {topicName}?",
+        "We're torn between {brand} and {competitor} for {category} — which is the safer bet?",
+        "Is {brand} enough of an upgrade over {competitor} to justify migration cost during {context}?",
+        "{brand} vs {competitor} — which are we less likely to regret in three years?",
+        "Final check: {brand} or {competitor} for {topicName} as we enter {context}?"
+      ],
+      "situated": [
+        "I'm a {persona} about to commit {pricePoint} ACV to {brand} for {topicName} — is this smart?",
+        "As a {persona} leading {context}, will {brand}'s {topicName} actually work for us?",
+        "Talk me through whether {brand} is right for a {persona} running {attribute1} in {context}",
+        "I'm a {persona} facing {context} — is {brand} really the right vendor?",
+        "For a team in our situation ({persona}, {context}), is {brand}'s {topicName} the right fit?"
+      ],
+      "constrained": [
+        "We need {category} that's {attribute1}, {attribute2}, and under {pricePoint} ACV — does {brand} check every box?",
+        "Final check: {brand}'s {topicName} against our requirements ({attribute1}, {attribute2}, {pricePoint}, {context})",
+        "{brand} claims {attribute1} and {attribute2} — does their security questionnaire actually back it up?",
+        "Does {brand} really satisfy {attribute1}, {attribute2}, and the {pricePoint} ceiling for {topicName}?",
+        "We're about to sign {brand}'s MSA — do they really meet {attribute1} and {attribute2} or is it marketing?"
+      ],
+      "adversarial": [
+        "Convince me we shouldn't sign {brand} for {topicName}",
+        "What are we missing before we commit to {brand} for {category}?",
+        "Give me the strongest argument against standardizing on {brand} for {topicName}",
+        "What will we regret about choosing {brand} for {topicName} in 18 months?",
+        "Poke holes in our plan to commit to {brand} through {context}"
+      ]
+    },
+    "acquisition": {
+      "declarative": [
+        "How do we procure {brand} for {topicName}?",
+        "What's {brand}'s enterprise sales cycle and minimum commitment for {category}?",
+        "How do I get {brand} into a POC for {topicName}?",
+        "What's {brand}'s current pricing for {topicName} and where are the negotiation levers?",
+        "We've decided on {brand} for {topicName} — what's the cleanest path to contract?"
+      ],
+      "comparative": [
+        "Onboarding {brand} vs {competitor} for {topicName} — which is faster to production?",
+        "{brand} vs {competitor} — whose procurement process moves faster for enterprise {topicName}?",
+        "Should we buy {topicName} from {brand} directly or through {competitor}'s partner channel?",
+        "{brand} or {competitor} — whose MSA is more favorable for {topicName}?",
+        "Which vendor has shorter time-to-value for {topicName}, {brand} or {competitor}?"
+      ],
+      "situated": [
+        "I'm a {persona} in {context} — what's the fastest way to get {brand} under contract for {topicName}?",
+        "As a {persona}, what's the smartest way to structure the {brand} {topicName} engagement?",
+        "Best way for a {persona} leading {context} to get {brand} deployed for {topicName} this quarter",
+        "I'm a {persona} and I need {brand}'s {topicName} live before {context} closes — how?",
+        "How does a {persona} typically negotiate {brand}'s {category} contract?"
+      ],
+      "constrained": [
+        "Procure {brand} for {topicName} with {attribute1}, {attribute2}, and under {pricePoint} ACV",
+        "Contract {brand} for {topicName} — must include {attribute1}, {attribute2}, and support {context}",
+        "Where can I get {brand}'s {topicName} with {attribute1}, annual billing, and a {pricePoint} ceiling?",
+        "{brand} {topicName} contract: {attribute1}, {attribute2}, no auto-renew, live before {context}",
+        "Sign {brand} for {topicName} with {attribute1} SLA, {attribute2}, under {pricePoint}, this quarter"
+      ],
+      "adversarial": [
+        "What's the catch if we sign {brand}'s order form for {topicName} today?",
+        "Will {brand} actually hit the deployment timeline for {topicName} or should we plan for slippage?",
+        "Any hidden fees, professional-services minimums, or true-ups buried in {brand}'s {topicName} pricing?",
+        "Is {brand}'s SLA actually enforceable or are the credits capped below the cost of downtime?",
+        "If we sign {brand} for {topicName} right now, what's the worst-case scenario in year one?"
+      ]
+    }
+  }
+}

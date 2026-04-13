@@ -1,0 +1,22 @@
+{
+  "name": "@aiso/prompt-generator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "AISO prompt library generator — 5x5 intent x isotope taxonomy",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "generate": "tsx bin/generate.ts"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.6.0"
+  }
+}
