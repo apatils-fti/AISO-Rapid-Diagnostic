@@ -118,7 +118,7 @@ async function classifyPrompt(promptText, attempt = 1) {
 async function fetchUnclassifiedPrompts(limit) {
   let query = supabase
     .from('prompts')
-    .select('id, text')
+    .select('id, prompt_text')
     .is('intent_stage', null);
   if (limit) query = query.limit(limit);
   const { data, error } = await query;
@@ -175,15 +175,15 @@ async function main() {
     const sample = prompts.slice(0, DRY_RUN_SAMPLE_SIZE);
     console.log(`\nDry run: classifying first ${sample.length} prompts, no writes.\n`);
     const classified = await runInBatches(sample, BATCH_SIZE, async (p) => {
-      const result = await classifyPrompt(p.text);
-      return { id: p.id, text: p.text, ...result };
+      const result = await classifyPrompt(p.prompt_text);
+      return { id: p.id, prompt_text: p.prompt_text, ...result };
     });
     for (const c of classified) {
       const label = c.error
         ? `ERROR: ${c.error}`
         : `${c.intent_stage} (${c.confidence})${c.confidence !== 'high' ? ' → would write NULL' : ''}`;
       console.log(`  [${c.id.slice(0, 8)}] ${label}`);
-      console.log(`    ${c.text.slice(0, 100)}${c.text.length > 100 ? '…' : ''}`);
+      console.log(`    ${c.prompt_text.slice(0, 100)}${c.prompt_text.length > 100 ? '…' : ''}`);
     }
     const highCount = classified.filter((c) => c.confidence === 'high').length;
     console.log(`\nSummary: ${highCount}/${classified.length} would be written (high confidence only).`);
@@ -196,7 +196,7 @@ async function main() {
   let processed = 0;
 
   await runInBatches(prompts, BATCH_SIZE, async (p) => {
-    const result = await classifyPrompt(p.text);
+    const result = await classifyPrompt(p.prompt_text);
     processed += 1;
 
     if (result.error) {
