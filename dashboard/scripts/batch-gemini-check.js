@@ -334,11 +334,12 @@ async function main() {
   // Finalize Supabase run
   await finalizeSupabaseRun();
 
-  console.log('\nNext steps:');
-  console.log('  1. Copy results to public: cp gemini-batch-results.json ../public/scripts/');
-  console.log('  2. Navigate to: http://localhost:3000/auto-import-gemini.html');
-  console.log('  3. Click "Import Results" button');
-  console.log('  4. View data at: http://localhost:3000/compare');
+  if (supabase && supabaseRunId) {
+    console.log(`\n✓ Wrote ${successCount} Gemini results to Supabase run ${supabaseRunId}`);
+  } else {
+    console.log('\nNote: Supabase writes skipped (no --client-id/--library-id or env missing).');
+    console.log(`Local results at: ${outputFile}`);
+  }
 }
 
 // Run

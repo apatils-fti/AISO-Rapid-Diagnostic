@@ -334,10 +334,12 @@ async function main() {
   // Finalize Supabase run
   await finalizeSupabaseRun();
 
-  console.log('\nNext steps:');
-  console.log('  1. Copy results to public: cp claude-batch-results.json ../public/scripts/');
-  console.log('  2. Import via HTML page or localStorage');
-  console.log('  3. View data at: http://localhost:3000/compare');
+  if (supabase && supabaseRunId) {
+    console.log(`\n✓ Wrote ${successCount} Claude results to Supabase run ${supabaseRunId}`);
+  } else {
+    console.log('\nNote: Supabase writes skipped (no --client-id/--library-id or env missing).');
+    console.log(`Local results at: ${outputFile}`);
+  }
 }
 
 // Run

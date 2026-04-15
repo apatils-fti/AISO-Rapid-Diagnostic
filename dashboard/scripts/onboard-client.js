@@ -164,17 +164,48 @@ async function main() {
     process.exit(1);
   }
 
+  // Look up the most recent prompt_libraries row for this client.
+  // Batch runners require both --client-id and --library-id to enable
+  // their Supabase write path; without a libraryId they fall back to
+  // local-JSON-only mode, which is useless in CI.
+  if (!state.libraryId) {
+    const { data: lib } = await supabase
+      .from('prompt_libraries')
+      .select('id')
+      .eq('client_id', state.clientId)
+      .order('generated_at', { ascending: false })
+      .limit(1)
+      .single();
+    if (lib?.id) {
+      state.libraryId = lib.id;
+      saveState(state);
+      console.log(`  Found library_id: ${state.libraryId}`);
+    }
+  }
+
+  if (!state.libraryId) {
+    console.error('  ✗  No prompt_libraries row found for this client in Supabase.');
+    console.error('     Generate a library first (drop --skip-generate), or create a');
+    console.error('     placeholder row in the prompt_libraries table by hand.');
+    process.exit(1);
+  }
+
+  // Build the Supabase-context args passed to each batch runner.
+  // Without these, the runners short-circuit Supabase writes on line 39
+  // of their initSupabase() and only write to a local JSON file.
+  const supabaseArgs = ` --client-id ${state.clientId} --library-id ${state.libraryId}`;
+
   // Step 2: Run Claude batch
   runStep(
     'Claude batch collection',
-    `cd "${dashboardDir}" && node scripts/batch-claude-check.js${limitArg}`,
+    `cd "${dashboardDir}" && node scripts/batch-claude-check.js${limitArg}${supabaseArgs}`,
     state
   );
 
   // Step 3: Run Gemini batch
   runStep(
     'Gemini batch collection',
-    `cd "${dashboardDir}" && node scripts/batch-gemini-check.js${limitArg}`,
+    `cd "${dashboardDir}" && node scripts/batch-gemini-check.js${limitArg}${supabaseArgs}`,
     state
   );
 
