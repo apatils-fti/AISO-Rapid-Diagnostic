@@ -40,3 +40,13 @@ dashboard/verify-data.js
 
 # Nested repo landmine — never commit as files
 AISO-Rapid-Diagnostic/
+
+# Stale design docs (historical WIP notes — see git log for context)
+*_REDESIGN.md
+*_ADDED.md
+*_COMPLETE.md
+*_READY_TO_TEST.md
+*_SHIPPING_READINESS.md
+
+# Collector cached output
+collector/snapshots/
