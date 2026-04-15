@@ -39,7 +39,12 @@ jobs:
 
       - name: Install dashboard dependencies
         working-directory: dashboard
-        run: npm ci
+        # Using npm install (not npm ci) because the committed
+        # package-lock.json was generated on Windows and contains
+        # platform-specific optional deps (@emnapi/*) that don't
+        # resolve cleanly on ubuntu-latest under npm ci's strict mode.
+        # npm install tolerates the drift.
+        run: npm install
 
       - name: Start Next.js server (background)
         working-directory: dashboard
