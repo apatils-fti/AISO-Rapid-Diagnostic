@@ -18,12 +18,13 @@ Validate an AISO prompt library file against quality standards.
 - [ ] Every prompt has a valid `isotope`: one of `declarative`, `comparative`, `situated`, `constrained`, `adversarial`
 - [ ] Every prompt has a valid `intent_stage`: one of `learning`, `discovery`, `evaluation`, `validation`, `acquisition`
 
-### Two-axis distribution checks
+### Two-axis distribution checks (flat allocation)
 - [ ] All 5 isotopes present
 - [ ] All 5 intent stages present
-- [ ] No intent share exceeds `(template.weights.intents[intent] + 0.10)`
-- [ ] No isotope share exceeds `(template.weights.isotopes[isotope] + 0.10)`
-- [ ] Every `(intent, isotope)` cell has at least `minPerCell` prompts for the declared tier (2 for `full`, 1 for `quick`, 0 for `exploratory`)
+- [ ] No intent share exceeds **0.22** (flat expected: 0.20)
+- [ ] No isotope share exceeds **0.22** (flat expected: 0.20)
+- [ ] **Flat invariant:** `max(cells) - min(cells) <= 1`. Any larger spread is a bug in allocation or downstream filtering.
+- [ ] No cell count deviates from `ceil(target/25)` by more than 1
 
 ### Quality checks
 - [ ] Comparative prompts mention at least one brand name
@@ -41,15 +42,15 @@ Tier: {full|quick|exploratory}
 
 Total prompts: {count}
 
-Intent distribution (actual / weight / delta):
-  learning     {n}/{pct%}  /  {weight%}  /  {delta}
+Intent distribution (actual / expected 20% / delta from 20%):
+  learning     {n}/{pct%}  /  20.0%  /  {delta}
   discovery    ...
   evaluation   ...
   validation   ...
   acquisition  ...
 
-Isotope distribution (actual / weight / delta):
-  declarative  {n}/{pct%}  /  {weight%}  /  {delta}
+Isotope distribution (actual / expected 20% / delta from 20%):
+  declarative  {n}/{pct%}  /  20.0%  /  {delta}
   comparative  ...
   situated     ...
   constrained  ...
@@ -71,9 +72,9 @@ Failed: {count} checks
 
 ### Coverage bias checks
 
-- [ ] **Two-axis coverage** — No intent or isotope exceeds `(weight + 0.10)`. Every cell has ≥ tier-appropriate `minPerCell`.
+- [ ] **Two-axis coverage** — No intent or isotope share exceeds 0.22. Flat invariant holds (`max(cells) - min(cells) <= 1`).
 - [ ] **Topic concentration** — Flag any topic >15% of total as HIGH. 2–5% as LOW. <2% as CRITICAL.
 - [ ] **Key topic coverage** — Read `topics` from the client config. Flag topics with <5 prompts as UNDER-REPRESENTED, 0 as MISSING.
 - [ ] **Cell coverage per topic** — For topic-heavy runs, verify each topic has prompts spanning at least 3 intent stages.
 
-4. If all checks pass, confirm the library is ready for deployment. If any fail, do not deploy — show the user what's wrong and suggest raising `targetPromptCount`, adjusting weights, or adding topics.
+4. If all checks pass, confirm the library is ready for deployment. If any fail, do not deploy — show the user what's wrong and suggest raising `targetPromptCount` to a multiple of 25 or adding more topics.

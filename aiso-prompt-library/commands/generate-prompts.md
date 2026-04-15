@@ -21,10 +21,10 @@ Generate an AISO prompt library from a client configuration file.
 
 3. If validation fails, show the user what's missing and suggest fixes.
 
-4. Check the tier against the chosen archetype's `minPromptCount` and `quickRunMinimum`:
-   - If `targetPromptCount ≥ minPromptCount`: tier=`full`, production output.
-   - If `quickRunMinimum ≤ targetPromptCount < minPromptCount`: tier=`quick`, output labeled `indicative`.
-   - If `targetPromptCount < quickRunMinimum`: tier=`exploratory`, coverage claims disabled. Warn the user.
+4. Check the tier against the uniform 250/125 thresholds (flat allocation — same for every archetype):
+   - If `targetPromptCount ≥ 250`: tier=`full`, `ceil(target/25)` prompts per cell (10 at 250), production output.
+   - If `125 ≤ targetPromptCount < 250`: tier=`quick`, 5 per cell at 125, output labeled `indicative`.
+   - If `targetPromptCount < 125`: tier=`exploratory`, `ceil(target/25)` per cell, no coverage guarantee. Warn the user.
 
 5. Run the generator:
 
@@ -35,10 +35,10 @@ cd generator && npm run generate -- --config configs/<config-file>.json --out ou
 6. After generation completes, show:
    - **Tier label** (full / quick / exploratory)
    - **Total prompts** after dedup
-   - **Intent distribution** — 5 stages with actual vs weight
-   - **Isotope distribution** — 5 isotopes with actual vs weight
-   - **Cell counts** — 5×5 matrix of prompts per `(intent, isotope)` cell
+   - **Intent distribution** — 5 stages (expected 20% each, flag at > 22%)
+   - **Isotope distribution** — 5 isotopes (expected 20% each, flag at > 22%)
+   - **Cell counts** — 5×5 matrix of prompts per `(intent, isotope)` cell; expected `ceil(target/25)` per cell, max-min within 1 after trim
    - **Coverage bias report** — pass/fail with any errors or warnings
    - **Sample prompts** — 5 prompts drawn from different cells
 
-7. If coverage bias check returns errors, do not deploy. Show the user the errors and suggest raising `targetPromptCount` or adjusting archetype weights.
+7. If coverage bias check returns errors, do not deploy. Show the user the errors and suggest raising `targetPromptCount` to hit an even multiple of 25 (250 for a full run, 125 for a quick run).

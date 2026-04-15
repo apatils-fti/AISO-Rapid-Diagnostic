@@ -68,29 +68,29 @@ Available templates in `generator/templates/`:
 | `digital-media` | Streaming, publications, podcasts | learning + discovery | declarative |
 | `local-experiences` | Restaurants, venues, studios, tours | acquisition | situated + constrained |
 
-Each template defines its own `weights.intents` and `weights.isotopes` that sum to 1.0. The generator uses these weights to determine how many prompts to produce per cell in the 5×5 matrix.
+Each template defines `weights.intents` and `weights.isotopes` (each with 5 values), plus `weights.weightsActive`. **Weights are currently stored but inactive** — allocation is flat regardless of archetype. The weight blocks are preserved for future use; set `weightsActive: true` in a future refactor to re-enable weighted allocation.
 
 ### Step 3: Pick a target prompt count
 
-Three run tiers based on `targetPromptCount` vs the template's floors:
+Allocation is **flat**: every cell in the 5×5 matrix gets exactly `ceil(targetPromptCount / 25)` prompts, with excess trimmed from random cells until the total equals the target. Cells never drop below 1 for targets ≥ 25.
 
-| Tier | Condition | minPerCell | Coverage check | Output label |
+Three run tiers — uniform thresholds across all archetypes:
+
+| Tier | Condition | Distribution | Coverage check | Output label |
 |---|---|---|---|---|
-| `full` | `targetPromptCount ≥ minPromptCount` | 2 | strict (error on violation) | production |
-| `quick` | `quickRunMinimum ≤ targetPromptCount < minPromptCount` | 1 | warn-only | indicative |
-| `exploratory` | `targetPromptCount < quickRunMinimum` | 0 | skipped | exploratory |
+| `full` | `targetPromptCount ≥ 250` | 10 per cell | strict (flat invariant) | production |
+| `quick` | `125 ≤ targetPromptCount < 250` | 5 per cell | warn-only | indicative |
+| `exploratory` | `targetPromptCount < 125` | `ceil(target/25)` per cell | skipped | exploratory |
 
-**Per-archetype floors** (computed as `ceil(2 / (min_intent × min_isotope))`):
+**Flat distribution sizing:**
 
-| Archetype | `minPromptCount` | `quickRunMinimum` |
-|---|---|---|
-| transactional-commerce | 134 | 67 |
-| trust-based-advisory | 267 | 134 |
-| b2b | 267 | 134 |
-| digital-media | 267 | 134 |
-| local-experiences | 267 | 134 |
+| Target | Per cell | Tier | Notes |
+|---|---|---|---|
+| 250 | 10 | full | Recommended for production diagnostics |
+| 125 | 5 | quick | Indicative, not production |
+| < 125 | `ceil(target/25)` | exploratory | No coverage guarantee |
 
-If your target is below the full-tier floor, the output is labeled `indicative` or `exploratory` and downstream consumers should treat it as a directional signal, not a production diagnostic.
+The **flat invariant** — `max(cells) - min(cells) <= 1` — is enforced by the coverage bias check. In the `full` tier it's an error; in `quick` it's a warning; in `exploratory` it's skipped.
 
 ### Step 4: Run the generator
 
@@ -100,12 +100,12 @@ npm run generate -- --config configs/your-client.json --out output/your-client-l
 ```
 
 **Pipeline:**
-1. Zod-validate the archetype template (weights sum to 1.0, all 25 cells populated, minPromptCount consistent with weights).
-2. Tag topics with a primary intent stage using ceiling allocation against `weights.intents`.
-3. Fill the 5×5 cell matrix per archetype using stratified allocation: `count = max(ceil(intent_w × isotope_w × target), minPerCell)`.
+1. Zod-validate the archetype template (all 25 cells populated with ≥3 seeds each, `weights` block present, `weightsActive` defaults to false).
+2. Tag topics with a primary intent stage (round-robin allocation across the 5 stages).
+3. Fill the 5×5 cell matrix flat: `count = ceil(targetPromptCount / 25)` per cell, then randomly trim the surplus until the total equals `targetPromptCount`.
 4. For each cell, draw seeds and fill template variables (`{brand}`, `{competitor}`, `{persona}`, `{topicName}`, `{category}`, `{pricePoint}`, `{context}`, `{attribute1}`, `{attribute2}`, `{current_year}`).
 5. Deduplicate by Jaccard similarity > 0.85.
-6. Run the two-axis coverage bias check.
+6. Run the two-axis coverage bias check (intent share ≤ 0.22, isotope share ≤ 0.22, flat invariant).
 7. Write JSON output.
 
 ## Adding a New Archetype
@@ -130,10 +130,9 @@ Create `generator/templates/{archetype-id}.json` with this shape:
     "isotopes": {
       "declarative": 0.25, "comparative": 0.20, "situated": 0.20,
       "constrained": 0.20, "adversarial": 0.15
-    }
+    },
+    "weightsActive": false
   },
-  "minPromptCount": 134,
-  "quickRunMinimum": 67,
   "seeds": {
     "learning":    { "declarative": [...], "comparative": [...], "situated": [...], "constrained": [...], "adversarial": [...] },
     "discovery":   { ... },
@@ -145,10 +144,8 @@ Create `generator/templates/{archetype-id}.json` with this shape:
 ```
 
 **Requirements:**
-- Both weight blocks must sum to 1.0 (±0.001).
+- Weight blocks are stored but NOT enforced to sum to 1.0. Allocation is flat — weights are preserved for future use behind `weightsActive: false`.
 - All 25 cells (5 intents × 5 isotopes) must be populated with ≥3 seeds each (5 recommended).
-- `minPromptCount` must satisfy `ceil(2 / (min_intent × min_isotope))`.
-- `quickRunMinimum < minPromptCount`.
 - Seeds use only the approved variables: `{brand}`, `{competitor}`, `{persona}`, `{topicName}`, `{category}`, `{pricePoint}`, `{context}`, `{attribute1}`, `{attribute2}`, `{current_year}`.
 
 ## Output Schema
@@ -173,11 +170,12 @@ Each `FlatPrompt`:
 
 After generating, verify:
 
-1. **Tier label** — matches your target vs template floors.
+1. **Tier label** — matches the uniform 250/125 thresholds.
 2. **Total count** — `output.totalPrompts` equals your target (after dedup).
-3. **Two-axis coverage** — no intent or isotope exceeds `(weight + 0.10)`. Every cell ≥ minPerCell for the tier.
-4. **No unfilled placeholders** — every `promptText` has zero `{...}` patterns for core variables.
-5. **Dedup** — Jaccard similarity < 0.85 across all pairs.
-6. **Intent + isotope present** — every prompt has both `isotope` and `intent_stage` set.
+3. **Two-axis coverage** — no intent or isotope share exceeds 0.22 (flat expected: 0.20).
+4. **Flat invariant** — `max(cells) - min(cells) <= 1` across all 25 cells.
+5. **No unfilled placeholders** — every `promptText` has zero `{...}` patterns for core variables.
+6. **Dedup** — Jaccard similarity < 0.85 across all pairs.
+7. **Intent + isotope present** — every prompt has both `isotope` and `intent_stage` set.
 
 Run `/validate-prompts` for the full Tier 4 coverage bias audit.
