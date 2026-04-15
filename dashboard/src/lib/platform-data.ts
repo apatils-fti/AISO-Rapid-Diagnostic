@@ -1,16 +1,19 @@
 /**
  * Unified Platform Data Service
  *
- * Normalizes data from two sources into a single API:
- *   - Perplexity / ChatGPT Search: pre-computed fixture data (analyzedMetrics.json)
- *   - Gemini 2.5 Flash / Claude Sonnet 4.6: raw batch results (public/scripts/*.json)
+ * Reads platform result data from Supabase (runs + results tables) for a
+ * given clientId. The clientId is set once per page via <PlatformDataProvider>
+ * and all exported query functions use the module-level current client.
  *
- * All components should read platform data through this service instead of
- * directly accessing fixtures or localStorage.
+ * Perplexity and ChatGPT Search platform stats still come from the
+ * pre-computed fixture (analyzedMetrics.json) — this legacy split is
+ * preserved intentionally. Gemini, Claude, Google AI Overview stats come
+ * from Supabase via the `results` table.
  */
 
 import { analyzedMetrics, clientConfig, promptLibrary } from './fixtures';
 import { PLATFORM_COLORS } from './colors';
+import { supabaseAnon } from './supabase';
 
 // ---------------------------------------------------------------------------
 // Public types
@@ -92,16 +95,10 @@ const PLATFORM_META: Record<string, { displayName: string; color: string }> = {
   google_ai_overview: { displayName: 'Google AI Overview', color: PLATFORM_COLORS.google_ai_overview },
 };
 
-const BATCH_URLS: Record<string, string> = {
-  perplexity: '/scripts/perplexity-batch-results.json',
-  chatgpt_search: '/scripts/chatgpt-batch-results.json',
-  gemini: '/scripts/gemini-batch-results.json',
-  claude: '/scripts/claude-batch-results.json',
-  google_ai_overview: '/scripts/google-batch-results.json',
-};
+const SUPABASE_PLATFORMS = ['perplexity', 'chatgpt_search', 'gemini', 'claude', 'google_ai_overview'];
 
 // ---------------------------------------------------------------------------
-// Internal types for batch data
+// Internal types
 // ---------------------------------------------------------------------------
 
 interface BatchResult {
@@ -114,17 +111,6 @@ interface BatchResult {
   error?: string;
 }
 
-interface BatchFile {
-  metadata: {
-    generatedAt: string;
-    promptCount: number;
-    requestsUsed: number;
-    successCount: number;
-    errorCount: number;
-  };
-  results: BatchResult[];
-}
-
 interface EnrichedResult extends BatchResult {
   mentionCount: number;
   isFirstMention: boolean;
@@ -133,24 +119,43 @@ interface EnrichedResult extends BatchResult {
 }
 
 // ---------------------------------------------------------------------------
-// Cache
+// Client ID state (set by <PlatformDataProvider>)
+// ---------------------------------------------------------------------------
+
+let _currentClientId: string | null = null;
+
+/**
+ * Set the active Supabase client_id. Call via <PlatformDataProvider clientId={id}/>
+ * placed in the page tree. Idempotent: re-calls with the same id are no-ops.
+ * Switching to a new id invalidates the cache.
+ */
+export function setCurrentClientId(clientId: string | null): void {
+  if (_currentClientId === clientId) return;
+  _currentClientId = clientId;
+  _cache = { batchData: {}, platformStats: null, loaded: false, clientId };
+}
+
+// ---------------------------------------------------------------------------
+// Cache (keyed by clientId for staleness tracking)
 // ---------------------------------------------------------------------------
 
 let _cache: {
   batchData: Record<string, EnrichedResult[]>;
   platformStats: PlatformStats[] | null;
   loaded: boolean;
+  clientId: string | null;
 } = {
   batchData: {},
   platformStats: null,
   loaded: false,
+  clientId: null,
 };
 
 // ---------------------------------------------------------------------------
 // Text analysis helpers
 // ---------------------------------------------------------------------------
 
-const CLIENT_NAME = clientConfig.clientName; // "J.Crew"
+const CLIENT_NAME = clientConfig.clientName;
 const CLIENT_PATTERNS = [
   CLIENT_NAME.toLowerCase(),
   ...clientConfig.clientDomains.map((d) => d.toLowerCase()),
@@ -174,7 +179,6 @@ function isClientFirstMention(text: string): boolean {
   const clientPos = lower.indexOf(CLIENT_NAME.toLowerCase());
   if (clientPos === -1) return false;
 
-  // Check if any competitor appears before the client
   for (const comp of COMPETITOR_NAMES) {
     const compPos = lower.indexOf(comp.toLowerCase());
     if (compPos !== -1 && compPos < clientPos) {
@@ -204,81 +208,118 @@ function enrichResult(result: BatchResult): EnrichedResult {
     isFirstMention: isClientFirstMention(text),
     competitorsMentioned: findCompetitorsMentioned(text),
     clientCited: cited,
-    // clientMentioned: true if brand name appears in text OR client URL in citations
     clientMentioned:
       text.toLowerCase().includes(CLIENT_NAME.toLowerCase()) || cited,
   };
 }
 
 // ---------------------------------------------------------------------------
-// Data loading
+// Supabase data loading
 // ---------------------------------------------------------------------------
 
 /**
- * Normalize a raw result object into a BatchResult.
- * Google AI Overview uses different field names (overviewText, citedSources, hasOverview).
+ * Normalize a Supabase `results` row into a BatchResult.
+ * Drops rows without response text.
  */
-function normalizeBatchResult(raw: Record<string, unknown>): BatchResult | null {
-  const responseText = (raw.responseText ?? raw.overviewText ?? '') as string;
-  const citations = (raw.citations ?? raw.citedSources ?? []) as string[];
+function normalizeSupabaseRow(row: Record<string, unknown>): BatchResult | null {
+  const responseText = (row.response_text ?? '') as string;
+  if (!responseText || typeof responseText !== 'string' || responseText.length === 0) return null;
+
+  const rawCitations = row.citations;
+  const citations: string[] = Array.isArray(rawCitations)
+    ? (rawCitations as unknown[]).filter((c): c is string => typeof c === 'string')
+    : [];
 
   return {
-    promptId: raw.promptId as string,
-    topicId: raw.topicId as string,
+    promptId: (row.prompt_id ?? '') as string,
+    topicId: (row.topic_id ?? '') as string,
     responseText,
-    citations: Array.isArray(citations) ? citations : [],
-    clientMentioned: (raw.clientMentioned ?? false) as boolean,
-    timestamp: (raw.timestamp ?? '') as string,
-    error: raw.error as string | undefined,
+    citations,
+    clientMentioned: Boolean(row.client_mentioned ?? false),
+    timestamp: (row.created_at ?? '') as string,
+    error: row.error as string | undefined,
   };
 }
 
-async function fetchBatchResults(platform: string): Promise<EnrichedResult[]> {
-  const url = BATCH_URLS[platform];
-  if (!url) return [];
+/**
+ * Fetch results for a single platform from Supabase, scoped to a clientId.
+ * Two-step query: first get run ids for (client_id, platform), then get
+ * results for those run ids.
+ */
+async function fetchBatchResultsFromSupabase(
+  platform: string,
+  clientId: string,
+): Promise<EnrichedResult[]> {
+  if (!supabaseAnon) return [];
 
   try {
-    const response = await fetch(url);
-    if (!response.ok) return [];
+    const { data: runs, error: runsError } = await supabaseAnon
+      .from('runs')
+      .select('id')
+      .eq('client_id', clientId)
+      .eq('platform', platform);
 
-    const data = await response.json();
-    const rawResults: Record<string, unknown>[] = data.results;
-    if (!rawResults || !Array.isArray(rawResults)) return [];
+    if (runsError || !runs || runs.length === 0) {
+      if (runsError) console.warn(`[platform-data] runs query failed for ${platform}:`, runsError.message);
+      return [];
+    }
 
-    // Normalize, filter to results with actual response text, then enrich
-    return rawResults
-      .map(normalizeBatchResult)
-      .filter((r): r is BatchResult => r !== null && r.responseText.length > 0)
+    const runIds = (runs as Array<{ id: string }>).map((r) => r.id);
+
+    const { data: results, error: resultsError } = await supabaseAnon
+      .from('results')
+      .select('prompt_id, topic_id, response_text, citations, client_mentioned, created_at')
+      .in('run_id', runIds);
+
+    if (resultsError || !results) {
+      if (resultsError) console.warn(`[platform-data] results query failed for ${platform}:`, resultsError.message);
+      return [];
+    }
+
+    return (results as Array<Record<string, unknown>>)
+      .map(normalizeSupabaseRow)
+      .filter((r): r is BatchResult => r !== null)
       .map(enrichResult);
-  } catch (error) {
-    console.warn(`[platform-data] Failed to load ${platform} batch:`, error);
+  } catch (err) {
+    console.warn(`[platform-data] Supabase fetch failed for ${platform}:`, err);
     return [];
   }
 }
 
+/**
+ * Lazy loader. No-op if clientId is not set (provider hasn't mounted) or if
+ * the cache already matches the current clientId.
+ */
 async function ensureLoaded(): Promise<void> {
-  if (_cache.loaded) return;
+  if (!_currentClientId) return;
+  if (_cache.loaded && _cache.clientId === _currentClientId) return;
 
-  // Fetch batch results for all 5 platforms in parallel
+  const clientId = _currentClientId;
+
   const [perplexityResults, chatgptResults, geminiResults, claudeResults, googleResults] =
     await Promise.all([
-      fetchBatchResults('perplexity'),
-      fetchBatchResults('chatgpt_search'),
-      fetchBatchResults('gemini'),
-      fetchBatchResults('claude'),
-      fetchBatchResults('google_ai_overview'),
+      fetchBatchResultsFromSupabase('perplexity', clientId),
+      fetchBatchResultsFromSupabase('chatgpt_search', clientId),
+      fetchBatchResultsFromSupabase('gemini', clientId),
+      fetchBatchResultsFromSupabase('claude', clientId),
+      fetchBatchResultsFromSupabase('google_ai_overview', clientId),
     ]);
 
-  _cache.batchData.perplexity = perplexityResults;
-  _cache.batchData.chatgpt_search = chatgptResults;
-  _cache.batchData.gemini = geminiResults;
-  _cache.batchData.claude = claudeResults;
-  _cache.batchData.google_ai_overview = googleResults;
-  _cache.loaded = true;
-  _cache.platformStats = null; // Invalidate computed stats
+  _cache = {
+    batchData: {
+      perplexity: perplexityResults,
+      chatgpt_search: chatgptResults,
+      gemini: geminiResults,
+      claude: claudeResults,
+      google_ai_overview: googleResults,
+    },
+    platformStats: null,
+    loaded: true,
+    clientId,
+  };
 
   console.log(
-    `[platform-data] Loaded: Perplexity=${perplexityResults.length}, ChatGPT=${chatgptResults.length}, Gemini=${geminiResults.length}, Claude=${claudeResults.length}, Google=${googleResults.length}`
+    `[platform-data] Loaded from Supabase for clientId=${clientId}: Perplexity=${perplexityResults.length}, ChatGPT=${chatgptResults.length}, Gemini=${geminiResults.length}, Claude=${claudeResults.length}, Google=${googleResults.length}`,
   );
 }
 
@@ -288,7 +329,7 @@ async function ensureLoaded(): Promise<void> {
 
 function computeBatchPlatformStats(
   platform: string,
-  results: EnrichedResult[]
+  results: EnrichedResult[],
 ): PlatformStats {
   const meta = PLATFORM_META[platform];
   const total = results.length;
@@ -314,7 +355,6 @@ function computeBatchPlatformStats(
   const withFirstMention = results.filter((r) => r.isFirstMention).length;
   const totalMentionCount = results.reduce((sum, r) => sum + r.mentionCount, 0);
   const withClientCitation = results.filter((r) => r.clientCited).length;
-  // Citations are available if any result has a non-empty citations array
   const hasCitations = results.some((r) => r.citations.length > 0);
 
   return {
@@ -355,14 +395,11 @@ function computeFixturePlatformStats(platform: string): PlatformStats {
     };
   }
 
-  // Use per-platform brandMentionRate from breakdown, fall back to combined textMetrics
   const brandMentionRate =
     (breakdown as any).brandMentionRate ??
     textMetrics?.brandMentionRate ??
     0;
 
-  // Per-platform firstMentionRate and avgMentionCount aren't broken out in fixtures.
-  // Use the combined values — these are Perplexity + ChatGPT combined.
   const clientMetrics = textMetrics?.brandMetrics[CLIENT_NAME];
   const firstMentionRate = textMetrics?.firstMentionRate ?? 0;
   const avgMentionCount = clientMetrics?.avgMentionCount ?? 0;
@@ -393,8 +430,9 @@ function computeFixturePlatformStats(platform: string): PlatformStats {
 // ---------------------------------------------------------------------------
 
 /**
- * Get stats for all platforms. Fetches batch data on first call.
- * Safe to call from useEffect — async.
+ * Get stats for all platforms. Perplexity and ChatGPT Search come from the
+ * fixture (legacy). Gemini/Claude/Google come from Supabase via the current
+ * clientId set by <PlatformDataProvider>.
  */
 export async function getAllPlatformStats(): Promise<PlatformStats[]> {
   if (typeof window === 'undefined') return [];
@@ -419,18 +457,18 @@ export async function getAllPlatformStats(): Promise<PlatformStats[]> {
  * Get stats for a specific platform.
  */
 export async function getPlatformStats(
-  platform: string
+  platform: string,
 ): Promise<PlatformStats | null> {
   const all = await getAllPlatformStats();
   return all.find((s) => s.platform === platform) ?? null;
 }
 
 /**
- * Get all AI responses for a given prompt across all platforms.
- * Searches batch data for all 4 platforms.
+ * Get all AI responses for a given prompt across all platforms that have
+ * data in Supabase.
  */
 export async function getPromptResponses(
-  promptId: string
+  promptId: string,
 ): Promise<PromptResponse[]> {
   if (typeof window === 'undefined') return [];
 
@@ -461,11 +499,11 @@ export async function getPromptResponses(
 }
 
 /**
- * Get all responses for a topic, grouped by platform.
- * Useful for the multi-platform prompt detail view.
+ * Get all responses for a topic, grouped by platform. Used by the
+ * multi-platform prompt detail view.
  */
 export async function getTopicResponses(
-  topicId: string
+  topicId: string,
 ): Promise<Record<string, PromptResponse[]>> {
   if (typeof window === 'undefined') return {};
 
@@ -496,11 +534,11 @@ export async function getTopicResponses(
 }
 
 /**
- * Get per-topic stats for each platform.
- * Used by TopicComparisonTable to show per-topic breakdown.
+ * Per-topic stats for each platform. Fixture-backed for Perplexity/ChatGPT,
+ * Supabase-backed for Gemini/Claude.
  */
 export async function getTopicPlatformStats(
-  topicId: string
+  topicId: string,
 ): Promise<TopicPlatformStats[]> {
   if (typeof window === 'undefined') return [];
 
@@ -508,15 +546,12 @@ export async function getTopicPlatformStats(
 
   const stats: TopicPlatformStats[] = [];
 
-  // Fixture platforms — use textMetrics.byTopic
   const topicTextMetrics = analyzedMetrics.textMetrics?.byTopic[topicId];
   for (const platform of ['perplexity', 'chatgpt_search'] as const) {
     const meta = PLATFORM_META[platform];
     const breakdown = analyzedMetrics.summary.platformBreakdown[platform];
     if (!breakdown?.available) continue;
 
-    // textMetrics.byTopic has combined stats, not per-platform.
-    // Use the combined brandMentionRate as an approximation.
     stats.push({
       platform,
       displayName: meta.displayName,
@@ -527,11 +562,10 @@ export async function getTopicPlatformStats(
     });
   }
 
-  // Batch platforms — compute from filtered results
   for (const platform of ['gemini', 'claude'] as const) {
     const meta = PLATFORM_META[platform];
     const results = (_cache.batchData[platform] || []).filter(
-      (r) => r.topicId === topicId
+      (r) => r.topicId === topicId,
     );
     const total = results.length;
     const withMention = results.filter((r) => r.clientMentioned).length;
@@ -550,22 +584,19 @@ export async function getTopicPlatformStats(
 }
 
 /**
- * Generate an executive summary sentence from the data.
- * Returns structured data that can be rendered as natural language.
+ * Generate an executive summary from the data.
  */
 export async function getExecutiveSummary(): Promise<ExecutiveSummary> {
   const allStats = await getAllPlatformStats();
   const availableStats = allStats.filter((s) => s.available);
 
-  // Client mention rate across all available platforms (weighted by prompt count)
   const totalPrompts = availableStats.reduce((s, p) => s + p.totalPrompts, 0);
   const totalMentions = availableStats.reduce(
     (s, p) => s + p.promptsWithMention,
-    0
+    0,
   );
   const overallMentionRate = totalPrompts > 0 ? totalMentions / totalPrompts : 0;
 
-  // Competitor ranking
   const brandMetrics = analyzedMetrics.textMetrics?.overall.brandMetrics ?? {};
   const allBrands = Object.entries(brandMetrics)
     .map(([name, m]) => ({ name, rate: m.mentionRate }))
@@ -574,7 +605,6 @@ export async function getExecutiveSummary(): Promise<ExecutiveSummary> {
   const clientRank = allBrands.findIndex((b) => b.name === CLIENT_NAME) + 1;
   const topCompetitor = allBrands.find((b) => b.name !== CLIENT_NAME);
 
-  // Biggest gap topic
   const topicResults = analyzedMetrics.topicResults;
   let biggestGapTopic = '';
   let biggestGapDelta = 0;
@@ -586,7 +616,7 @@ export async function getExecutiveSummary(): Promise<ExecutiveSummary> {
     const clientRate =
       topicMetrics.brandMetrics[CLIENT_NAME]?.mentionRate ?? 0;
     for (const [compName, compMetrics] of Object.entries(
-      topicMetrics.brandMetrics
+      topicMetrics.brandMetrics,
     )) {
       if (compName === CLIENT_NAME) continue;
       const delta = compMetrics.mentionRate - clientRate;
@@ -612,8 +642,7 @@ export async function getExecutiveSummary(): Promise<ExecutiveSummary> {
 }
 
 /**
- * Compute overall brand metrics from all batch data.
- * Returns mention rates, citation rate, share of voice, and per-competitor rates.
+ * Compute overall brand metrics from all Supabase batch data.
  */
 export async function getOverallBrandMetrics(): Promise<OverallBrandMetrics> {
   if (typeof window === 'undefined') {
@@ -651,11 +680,9 @@ export async function getOverallBrandMetrics(): Promise<OverallBrandMetrics> {
   const withFirstMention = allResults.filter((r) => r.isFirstMention).length;
   const withCitation = allResults.filter((r) => r.clientCited).length;
 
-  // Share of voice: client mention count / total brand mention count
   const clientMentionCount = allResults.reduce((s, r) => s + r.mentionCount, 0);
   let totalBrandMentionCount = clientMentionCount;
 
-  // Per-competitor stats
   const competitorRates: OverallBrandMetrics['competitorRates'] = {};
   for (const comp of COMPETITOR_NAMES) {
     const cl = comp.toLowerCase();
@@ -674,11 +701,9 @@ export async function getOverallBrandMetrics(): Promise<OverallBrandMetrics> {
       if (count > 0) {
         compPromptsMentioned++;
         compMentions += count;
-        // Check if this competitor appears before the client
         const compPos = text.indexOf(cl);
         const clientPos = text.indexOf(CLIENT_NAME.toLowerCase());
         if (clientPos === -1 || compPos < clientPos) {
-          // Check if first among ALL brands
           let isFirst = true;
           for (const other of COMPETITOR_NAMES) {
             if (other === comp) continue;
@@ -717,10 +742,9 @@ export async function getOverallBrandMetrics(): Promise<OverallBrandMetrics> {
 
 /**
  * Get all responses for a given platform, keyed by promptId.
- * Used by PromptTable to show per-prompt stats for the selected platform.
  */
 export async function getAllResponsesForPlatform(
-  platform: string
+  platform: string,
 ): Promise<Record<string, PromptResponse>> {
   if (typeof window === 'undefined') return {};
 
@@ -760,7 +784,6 @@ export interface TopicIsotopeStats {
   promptsWithCitation: number;
 }
 
-/** Lazily-built promptId → isotope mapping from the prompt library. */
 let _promptIsotopeMap: Record<string, string> | null = null;
 function getPromptIsotopeMap(): Record<string, string> {
   if (_promptIsotopeMap) return _promptIsotopeMap;
@@ -774,12 +797,10 @@ function getPromptIsotopeMap(): Record<string, string> {
 }
 
 /**
- * Per-topic, per-isotope mention/citation stats computed from batch data.
- * Returns { [topicId]: { [isotope]: TopicIsotopeStats } }.
- * Optionally filter to specific platforms.
+ * Per-topic, per-isotope mention/citation stats.
  */
 export async function getTopicIsotopeStatsMap(
-  platforms?: string[]
+  platforms?: string[],
 ): Promise<Record<string, Record<string, TopicIsotopeStats>>> {
   if (typeof window === 'undefined') return {};
   await ensureLoaded();
@@ -787,7 +808,6 @@ export async function getTopicIsotopeStatsMap(
   const isotopeMap = getPromptIsotopeMap();
   const platformKeys = platforms || Object.keys(_cache.batchData);
 
-  // Accumulate: topicId → isotope → counts
   const accum: Record<
     string,
     Record<string, { mentioned: number; cited: number; total: number }>
@@ -810,7 +830,6 @@ export async function getTopicIsotopeStatsMap(
     }
   }
 
-  // Convert to TopicIsotopeStats
   const result: Record<string, Record<string, TopicIsotopeStats>> = {};
   for (const [topicId, isotopes] of Object.entries(accum)) {
     result[topicId] = {};
@@ -829,11 +848,10 @@ export async function getTopicIsotopeStatsMap(
 }
 
 /**
- * Per-topic (aggregated across all isotopes) mention/citation stats.
- * Returns { [topicId]: TopicIsotopeStats }.
+ * Per-topic aggregated stats across all isotopes.
  */
 export async function getTopicStatsMap(
-  platforms?: string[]
+  platforms?: string[],
 ): Promise<Record<string, TopicIsotopeStats>> {
   if (typeof window === 'undefined') return {};
   await ensureLoaded();
@@ -871,22 +889,22 @@ export async function getTopicStatsMap(
 }
 
 /**
- * Get platform metadata (display name, color) for a platform key.
+ * Get platform metadata (display name, color) for a platform key. Pure.
  */
 export function getPlatformMeta(platform: string) {
   return PLATFORM_META[platform] ?? { displayName: platform, color: '#6B7280' };
 }
 
 /**
- * Get all platform keys in display order.
+ * Get all platform keys in display order. Pure.
  */
 export function getPlatformKeys(): string[] {
   return Object.keys(PLATFORM_META);
 }
 
 /**
- * Clear the cache (for testing or after re-import).
+ * Clear the cache (testing / manual invalidation).
  */
 export function clearCache(): void {
-  _cache = { batchData: {}, platformStats: null, loaded: false };
+  _cache = { batchData: {}, platformStats: null, loaded: false, clientId: _currentClientId };
 }

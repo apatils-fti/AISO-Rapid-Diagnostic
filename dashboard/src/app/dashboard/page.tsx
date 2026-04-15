@@ -19,7 +19,7 @@ import {
 } from '@/lib/metrics';
 import type { EnrichedResult } from '@/lib/metrics';
 import { formatPercent } from '@/lib/utils';
-import { EnrichmentFilters } from '@/components/shared';
+import { EnrichmentFilters, PlatformDataProvider } from '@/components/shared';
 import { MetricsFilter } from '../metrics/metrics-filter';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
@@ -292,6 +292,7 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
       clients={clientOptions}
       currentClientId={clientId}
     >
+      <PlatformDataProvider key={clientId} clientId={clientId}>
       <Suspense
         fallback={
           <div className="space-y-6">
@@ -310,6 +311,7 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
       >
         <DashboardContent clientId={clientId} filters={filters} />
       </Suspense>
+      </PlatformDataProvider>
     </PageContainer>
   );
 }

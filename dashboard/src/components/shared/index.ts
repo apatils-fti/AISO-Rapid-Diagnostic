@@ -6,3 +6,4 @@ export { Tooltip, InfoTooltip } from './Tooltip';
 export { FilterBar, FilterDropdown, SearchInput } from './FilterBar';
 export { PlatformFilter, DEFAULT_PLATFORMS } from './PlatformFilter';
 export { EnrichmentFilters } from './EnrichmentFilters';
+export { PlatformDataProvider } from './PlatformDataProvider';

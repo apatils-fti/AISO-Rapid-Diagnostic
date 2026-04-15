@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import { PageContainer } from '@/components/layout';
 import { PlatformComparison } from '@/components/compare/PlatformComparison';
 import { TopicComparisonTable } from '@/components/compare/TopicComparisonTable';
+import { PlatformDataProvider } from '@/components/shared';
 import { getPlatformComparison, getTopicPlatformStats } from '@/lib/db';
 
 const CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
@@ -37,16 +38,18 @@ export default function ComparePage() {
       title="Platform Comparison"
       description="Compare your brand's visibility across AI search platforms"
     >
-      <Suspense
-        fallback={
-          <div className="flex items-center justify-center py-20">
-            <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#00D4AA] border-t-transparent" />
-            <span className="ml-3 text-[#9CA3AF]">Loading platform data...</span>
-          </div>
-        }
-      >
-        <CompareContent />
-      </Suspense>
+      <PlatformDataProvider clientId={CLIENT_ID}>
+        <Suspense
+          fallback={
+            <div className="flex items-center justify-center py-20">
+              <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#00D4AA] border-t-transparent" />
+              <span className="ml-3 text-[#9CA3AF]">Loading platform data...</span>
+            </div>
+          }
+        >
+          <CompareContent />
+        </Suspense>
+      </PlatformDataProvider>
     </PageContainer>
   );
 }

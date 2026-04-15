@@ -1,7 +1,10 @@
 import { notFound } from 'next/navigation';
 import { PageContainer } from '@/components/layout';
 import { TopicDetail } from '@/components/topics';
+import { PlatformDataProvider } from '@/components/shared';
 import { getTopicById } from '@/lib/fixtures';
+
+const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
 
 interface TopicDetailPageProps {
   params: Promise<{
@@ -22,7 +25,9 @@ export default async function TopicDetailPage({ params }: TopicDetailPageProps) 
       title={topic.topicName}
       description={`Detailed isotope analysis for ${topic.topicName}`}
     >
-      <TopicDetail topic={topic} />
+      <PlatformDataProvider clientId={DEFAULT_CLIENT_ID}>
+        <TopicDetail topic={topic} />
+      </PlatformDataProvider>
     </PageContainer>
   );
 }
