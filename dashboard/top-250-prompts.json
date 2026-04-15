@@ -1,2002 +1,2002 @@
 [
   {
-    "promptId": "business-casual-comparative-8",
-    "topicId": "business-casual",
-    "topicName": "Business Casual",
+    "promptId": "restructuring-and-turnaround-persona",
+    "topicId": "restructuring-and-turnaround",
+    "topicName": "Restructuring and Turnaround",
     "category": "Awareness",
-    "promptText": "J.Crew vs Banana Republic vs Everlane for office wear quality",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "business-casual-commercial-5",
-    "topicId": "business-casual",
-    "topicName": "Business Casual",
-    "category": "Awareness",
-    "promptText": "Best business casual brands for men under 40?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "business-casual-specific-7",
-    "topicId": "business-casual",
-    "topicName": "Business Casual",
-    "category": "Awareness",
-    "promptText": "Petite-friendly office pants?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "business-casual-adversarial-2",
-    "topicId": "business-casual",
-    "topicName": "Business Casual",
-    "category": "Awareness",
-    "promptText": "Is J.Crew still good quality for workwear?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "business-casual-comparative-4",
-    "topicId": "business-casual",
-    "topicName": "Business Casual",
-    "category": "Awareness",
-    "promptText": "J.Crew vs Everlane for office wear?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "business-casual-comparative-3",
-    "topicId": "business-casual",
-    "topicName": "Business Casual",
-    "category": "Awareness",
-    "promptText": "J.Crew vs Banana Republic for business casual?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "business-casual-persona-3",
-    "topicId": "business-casual",
-    "topicName": "Business Casual",
-    "category": "Awareness",
-    "promptText": "As a young professional starting in finance where should I shop?",
+    "promptText": "As a CFO of a distressed manufacturing company, how do I choose a turnaround advisory firm?",
     "isotope": "persona"
   },
   {
-    "promptId": "business-casual-persona",
-    "topicId": "business-casual",
-    "topicName": "Business Casual",
+    "promptId": "restructuring-and-turnaround-comparative",
+    "topicId": "restructuring-and-turnaround",
+    "topicName": "Restructuring and Turnaround",
     "category": "Awareness",
-    "promptText": "As a young professional starting my first corporate job, where should I buy business casual clothes?",
-    "isotope": "persona"
+    "promptText": "FTI Consulting vs AlixPartners for restructuring and turnaround in a distressed company situation",
+    "isotope": "comparative"
   },
   {
-    "promptId": "business-casual-specific-4",
-    "topicId": "business-casual",
-    "topicName": "Business Casual",
+    "promptId": "restructuring-and-turnaround-conversational",
+    "topicId": "restructuring-and-turnaround",
+    "topicName": "Restructuring and Turnaround",
     "category": "Awareness",
-    "promptText": "Work blazers under $250 that look tailored?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "business-casual-conversational-5",
-    "topicId": "business-casual",
-    "topicName": "Business Casual",
-    "category": "Awareness",
-    "promptText": "I am tired of cheap work clothes falling apart what brands last?",
+    "promptText": "Our company is hemorrhaging cash and the board is panicking — who do we even call for a turnaround?",
     "isotope": "conversational"
   },
   {
-    "promptId": "wedding-occasion-persona",
-    "topicId": "wedding-occasion",
-    "topicName": "Wedding / Occasion",
+    "promptId": "restructuring-and-turnaround-commercial",
+    "topicId": "restructuring-and-turnaround",
+    "topicName": "Restructuring and Turnaround",
     "category": "Awareness",
-    "promptText": "I’m 32 and need an elegant wedding guest dress that isn’t too trendy. Where should I shop?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "wedding-occasion-commercial-2",
-    "topicId": "wedding-occasion",
-    "topicName": "Wedding / Occasion",
-    "category": "Awareness",
-    "promptText": "Best summer formal dresses for women in their 30s",
+    "promptText": "Best restructuring and turnaround advisory firms for distressed companies in 2026",
     "isotope": "commercial"
   },
   {
-    "promptId": "wedding-occasion-commercial",
-    "topicId": "wedding-occasion",
-    "topicName": "Wedding / Occasion",
+    "promptId": "restructuring-and-turnaround-specific",
+    "topicId": "restructuring-and-turnaround",
+    "topicName": "Restructuring and Turnaround",
     "category": "Awareness",
-    "promptText": "Best brands for wedding guest dresses under $250",
-    "isotope": "commercial"
+    "promptText": "Restructuring and turnaround advisory under $250000 for a mid-market company in bankruptcy proceedings",
+    "isotope": "specific"
   },
   {
-    "promptId": "wedding-occasion-conversational",
-    "topicId": "wedding-occasion",
-    "topicName": "Wedding / Occasion",
+    "promptId": "restructuring-and-turnaround-informational",
+    "topicId": "restructuring-and-turnaround",
+    "topicName": "Restructuring and Turnaround",
     "category": "Awareness",
-    "promptText": "I have three weddings this summer and nothing to wear. Help me find something classy.",
+    "promptText": "What is corporate restructuring and turnaround consulting and when do companies need it?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "economic-consulting-conversational",
+    "topicId": "economic-consulting",
+    "topicName": "Economic Consulting",
+    "category": "Awareness",
+    "promptText": "My lawyer keeps saying we need an economic expert — what exactly does that mean and is it worth it?",
     "isotope": "conversational"
   },
   {
-    "promptId": "wedding-occasion-specific-2",
-    "topicId": "wedding-occasion",
-    "topicName": "Wedding / Occasion",
+    "promptId": "economic-consulting-persona",
+    "topicId": "economic-consulting",
+    "topicName": "Economic Consulting",
     "category": "Awareness",
-    "promptText": "Classic cocktail dresses under $300",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "wedding-occasion-comparative-2",
-    "topicId": "wedding-occasion",
-    "topicName": "Wedding / Occasion",
-    "category": "Awareness",
-    "promptText": "J.Crew Factory vs J.Crew for occasion dresses",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "wedding-occasion-persona-2",
-    "topicId": "wedding-occasion",
-    "topicName": "Wedding / Occasion",
-    "category": "Awareness",
-    "promptText": "Where should I shop for a black-tie optional wedding?",
+    "promptText": "As a general counsel handling cross-border litigation, how do I find a credible economic consulting expert?",
     "isotope": "persona"
   },
   {
-    "promptId": "wedding-occasion-specific",
-    "topicId": "wedding-occasion",
-    "topicName": "Wedding / Occasion",
+    "promptId": "economic-consulting-comparative",
+    "topicId": "economic-consulting",
+    "topicName": "Economic Consulting",
     "category": "Awareness",
-    "promptText": "Affordable wedding guest dresses under $200 that work for outdoor ceremonies",
+    "promptText": "FTI Consulting vs McKinsey economic consulting services for shareholder dispute expert testimony",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "economic-consulting-informational",
+    "topicId": "economic-consulting",
+    "topicName": "Economic Consulting",
+    "category": "Awareness",
+    "promptText": "What does an economic consulting firm actually do for clients in litigation or regulatory matters?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "economic-consulting-commercial",
+    "topicId": "economic-consulting",
+    "topicName": "Economic Consulting",
+    "category": "Awareness",
+    "promptText": "Top-rated economic consulting firms for antitrust and damages analysis in 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "economic-consulting-specific",
+    "topicId": "economic-consulting",
+    "topicName": "Economic Consulting",
+    "category": "Awareness",
+    "promptText": "Economic consulting firm with antitrust expertise for a regulatory investigation engagement under $500000",
     "isotope": "specific"
   },
   {
-    "promptId": "wedding-occasion-negative constraint",
-    "topicId": "wedding-occasion",
-    "topicName": "Wedding / Occasion",
+    "promptId": "esg-and-sustainability-comparative",
+    "topicId": "esg-and-sustainability",
+    "topicName": "ESG and Sustainability",
     "category": "Awareness",
-    "promptText": "Brands for wedding guest dresses that aren’t too trendy",
-    "isotope": "negative constraint"
-  },
-  {
-    "promptId": "wedding-occasion-comparative",
-    "topicId": "wedding-occasion",
-    "topicName": "Wedding / Occasion",
-    "category": "Awareness",
-    "promptText": "J.Crew vs Reformation for wedding guest dresses",
+    "promptText": "How does FTI Consulting compare to Deloitte for ESG due diligence in M&A transactions?",
     "isotope": "comparative"
   },
   {
-    "promptId": "elevated-basics-comparative-5",
-    "topicId": "elevated-basics",
-    "topicName": "Elevated Basics",
+    "promptId": "esg-and-sustainability-specific",
+    "topicId": "esg-and-sustainability",
+    "topicName": "ESG and Sustainability",
     "category": "Awareness",
-    "promptText": "J.Crew vs Madewell for everyday wardrobe staples",
-    "isotope": "comparative"
+    "promptText": "ESG and sustainability consulting for M&A transaction due diligence with a $100000 budget in 2026",
+    "isotope": "specific"
   },
   {
-    "promptId": "elevated-basics-persona-2",
-    "topicId": "elevated-basics",
-    "topicName": "Elevated Basics",
+    "promptId": "esg-and-sustainability-commercial",
+    "topicId": "esg-and-sustainability",
+    "topicName": "ESG and Sustainability",
     "category": "Awareness",
-    "promptText": "As someone building a capsule wardrobe in my 30s where should I shop?",
-    "isotope": "persona"
+    "promptText": "Best ESG and sustainability advisory firms for PE-backed portfolio companies right now",
+    "isotope": "commercial"
   },
   {
-    "promptId": "elevated-basics-comparative",
-    "topicId": "elevated-basics",
-    "topicName": "Elevated Basics",
+    "promptId": "esg-and-sustainability-informational",
+    "topicId": "esg-and-sustainability",
+    "topicName": "ESG and Sustainability",
     "category": "Awareness",
-    "promptText": "J.Crew vs Everlane for quality basics",
-    "isotope": "comparative"
+    "promptText": "What is ESG consulting and how does it help companies meet investor and regulatory expectations?",
+    "isotope": "informational"
   },
   {
-    "promptId": "elevated-basics-conversational-8",
-    "topicId": "elevated-basics",
-    "topicName": "Elevated Basics",
+    "promptId": "esg-and-sustainability-conversational",
+    "topicId": "esg-and-sustainability",
+    "topicName": "ESG and Sustainability",
     "category": "Awareness",
-    "promptText": "I want elevated basics that looks expensive but is affordable?",
+    "promptText": "Our LPs are hammering us on ESG disclosures and I honestly don't know where to start — any suggestions?",
     "isotope": "conversational"
   },
   {
-    "promptId": "elevated-basics-adversarial-7",
-    "topicId": "elevated-basics",
-    "topicName": "Elevated Basics",
+    "promptId": "esg-and-sustainability-persona",
+    "topicId": "esg-and-sustainability",
+    "topicName": "ESG and Sustainability",
     "category": "Awareness",
-    "promptText": "Is J.Crew good quality for elevated basics?",
-    "isotope": "adversarial"
+    "promptText": "As a PE operating partner, how should I evaluate ESG risk across my portfolio companies before exit?",
+    "isotope": "persona"
   },
   {
-    "promptId": "elevated-basics-comparative-2",
-    "topicId": "elevated-basics",
-    "topicName": "Elevated Basics",
+    "promptId": "forensic-accounting-commercial",
+    "topicId": "forensic-accounting",
+    "topicName": "Forensic Accounting",
     "category": "Awareness",
-    "promptText": "Brands similar to Everlane but more classic",
-    "isotope": "comparative"
+    "promptText": "Best forensic accounting firms trusted by general counsel for regulatory investigations in 2026",
+    "isotope": "commercial"
   },
   {
-    "promptId": "elevated-basics-informational-3",
-    "topicId": "elevated-basics",
-    "topicName": "Elevated Basics",
+    "promptId": "forensic-accounting-persona",
+    "topicId": "forensic-accounting",
+    "topicName": "Forensic Accounting",
     "category": "Awareness",
-    "promptText": "What should I know before buying elevated basics?",
+    "promptText": "As a board member overseeing an internal fraud investigation, which forensic accounting firm should we retain?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "forensic-accounting-informational",
+    "topicId": "forensic-accounting",
+    "topicName": "Forensic Accounting",
+    "category": "Awareness",
+    "promptText": "What is forensic accounting and how is it different from a standard financial audit?",
     "isotope": "informational"
   },
   {
-    "promptId": "elevated-basics-adversarial-9",
-    "topicId": "elevated-basics",
-    "topicName": "Elevated Basics",
+    "promptId": "forensic-accounting-conversational",
+    "topicId": "forensic-accounting",
+    "topicName": "Forensic Accounting",
     "category": "Awareness",
-    "promptText": "Has J.Crew declined in quality for elevated basics?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "elevated-basics-adversarial",
-    "topicId": "elevated-basics",
-    "topicName": "Elevated Basics",
-    "category": "Awareness",
-    "promptText": "Is J.Crew good for basics?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "elevated-basics-conversational-5",
-    "topicId": "elevated-basics",
-    "topicName": "Elevated Basics",
-    "category": "Awareness",
-    "promptText": "I want elevated basics that looks expensive but is affordable?",
+    "promptText": "Someone on our finance team may have been cooking the books — do we need forensic accountants or lawyers first?",
     "isotope": "conversational"
   },
   {
-    "promptId": "travel-wardrobe-persona-10",
-    "topicId": "travel-wardrobe",
-    "topicName": "Travel Wardrobe",
+    "promptId": "forensic-accounting-specific",
+    "topicId": "forensic-accounting",
+    "topicName": "Forensic Accounting",
     "category": "Awareness",
-    "promptText": "As a 30-year-old professional where should I buy travel wardrobe?",
+    "promptText": "Forensic accounting engagement for a shareholder dispute with suspected financial misstatements under $500000",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "forensic-accounting-comparative",
+    "topicId": "forensic-accounting",
+    "topicName": "Forensic Accounting",
+    "category": "Awareness",
+    "promptText": "FTI Consulting vs Kroll for forensic accounting services in a cross-border regulatory investigation",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "corporate-bankruptcy-persona",
+    "topicId": "corporate-bankruptcy",
+    "topicName": "Corporate Bankruptcy",
+    "category": "Awareness",
+    "promptText": "As a CRO leading a company through Chapter 11, what should I look for in a bankruptcy financial advisor?",
     "isotope": "persona"
   },
   {
-    "promptId": "travel-wardrobe-informational",
-    "topicId": "travel-wardrobe",
-    "topicName": "Travel Wardrobe",
+    "promptId": "corporate-bankruptcy-comparative",
+    "topicId": "corporate-bankruptcy",
+    "topicName": "Corporate Bankruptcy",
     "category": "Awareness",
-    "promptText": "What should I pack for a 10-day summer trip to Europe?",
-    "isotope": "informational"
+    "promptText": "FTI Consulting vs Alvarez & Marsal for financial advisory in Chapter 11 bankruptcy proceedings",
+    "isotope": "comparative"
   },
   {
-    "promptId": "travel-wardrobe-conversational-4",
-    "topicId": "travel-wardrobe",
-    "topicName": "Travel Wardrobe",
+    "promptId": "corporate-bankruptcy-specific",
+    "topicId": "corporate-bankruptcy",
+    "topicName": "Corporate Bankruptcy",
     "category": "Awareness",
-    "promptText": "I want travel wardrobe that looks expensive but is affordable?",
+    "promptText": "Corporate bankruptcy financial advisory for a $50000 retainer engagement during pre-petition restructuring planning",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "corporate-bankruptcy-commercial",
+    "topicId": "corporate-bankruptcy",
+    "topicName": "Corporate Bankruptcy",
+    "category": "Awareness",
+    "promptText": "Most experienced corporate bankruptcy advisory firms for large-cap restructurings in 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "corporate-bankruptcy-conversational",
+    "topicId": "corporate-bankruptcy",
+    "topicName": "Corporate Bankruptcy",
+    "category": "Awareness",
+    "promptText": "We're probably filing Chapter 11 next quarter — how do we even pick a financial advisor for something like this?",
     "isotope": "conversational"
   },
   {
-    "promptId": "travel-wardrobe-comparative-5",
-    "topicId": "travel-wardrobe",
-    "topicName": "Travel Wardrobe",
+    "promptId": "corporate-bankruptcy-informational",
+    "topicId": "corporate-bankruptcy",
+    "topicName": "Corporate Bankruptcy",
     "category": "Awareness",
-    "promptText": "J.Crew vs Banana Republic for travel durability",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "travel-wardrobe-persona-2",
-    "topicId": "travel-wardrobe",
-    "topicName": "Travel Wardrobe",
-    "category": "Awareness",
-    "promptText": "As a 35-year-old traveling to Europe what brands look elevated but practical?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "travel-wardrobe-specific",
-    "topicId": "travel-wardrobe",
-    "topicName": "Travel Wardrobe",
-    "category": "Awareness",
-    "promptText": "Lightweight wrinkle-resistant summer dresses under $150",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "travel-wardrobe-specific-2",
-    "topicId": "travel-wardrobe",
-    "topicName": "Travel Wardrobe",
-    "category": "Awareness",
-    "promptText": "Travel clothes that don’t wrinkle easily",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "travel-wardrobe-commercial",
-    "topicId": "travel-wardrobe",
-    "topicName": "Travel Wardrobe",
-    "category": "Awareness",
-    "promptText": "Best brands for stylish but practical travel clothes",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "travel-wardrobe-comparative-3",
-    "topicId": "travel-wardrobe",
-    "topicName": "Travel Wardrobe",
-    "category": "Awareness",
-    "promptText": "J.Crew vs Athleta for comfortable but polished travel clothes",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "travel-wardrobe-commercial-3",
-    "topicId": "travel-wardrobe",
-    "topicName": "Travel Wardrobe",
-    "category": "Awareness",
-    "promptText": "Brands for stylish carry-on-friendly outfits",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "timeless-investment-pieces-informational",
-    "topicId": "timeless-investment-pieces",
-    "topicName": "Timeless / Investment Pieces",
-    "category": "Awareness",
-    "promptText": "What are timeless wardrobe staples every woman should own?",
+    "promptText": "What is Chapter 11 corporate bankruptcy and how do financial advisors support the process?",
     "isotope": "informational"
   },
   {
-    "promptId": "timeless-investment-pieces-specific-2",
-    "topicId": "timeless-investment-pieces",
-    "topicName": "Timeless / Investment Pieces",
+    "promptId": "financial-fraud-detection-conversational",
+    "topicId": "financial-fraud-detection",
+    "topicName": "Financial Fraud Detection",
     "category": "Awareness",
-    "promptText": "Quality sweaters that won’t pill easily",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "timeless-investment-pieces-persona",
-    "topicId": "timeless-investment-pieces",
-    "topicName": "Timeless / Investment Pieces",
-    "category": "Awareness",
-    "promptText": "As a woman in her 30s who prefers timeless style, where should I shop?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "timeless-investment-pieces-commercial",
-    "topicId": "timeless-investment-pieces",
-    "topicName": "Timeless / Investment Pieces",
-    "category": "Awareness",
-    "promptText": "Best brands for classic wardrobe investment pieces",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "timeless-investment-pieces-adversarial",
-    "topicId": "timeless-investment-pieces",
-    "topicName": "Timeless / Investment Pieces",
-    "category": "Awareness",
-    "promptText": "Is J.Crew still considered a classic brand?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "timeless-investment-pieces-commercial-2",
-    "topicId": "timeless-investment-pieces",
-    "topicName": "Timeless / Investment Pieces",
-    "category": "Awareness",
-    "promptText": "Best classic trench coats for women",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "timeless-investment-pieces-comparative-2",
-    "topicId": "timeless-investment-pieces",
-    "topicName": "Timeless / Investment Pieces",
-    "category": "Awareness",
-    "promptText": "Brands similar to Ralph Lauren but more affordable",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "timeless-investment-pieces-negative constraint",
-    "topicId": "timeless-investment-pieces",
-    "topicName": "Timeless / Investment Pieces",
-    "category": "Awareness",
-    "promptText": "Brands that offer quality without luxury pricing",
-    "isotope": "negative constraint"
-  },
-  {
-    "promptId": "timeless-investment-pieces-specific",
-    "topicId": "timeless-investment-pieces",
-    "topicName": "Timeless / Investment Pieces",
-    "category": "Awareness",
-    "promptText": "Classic wool coats under $400 that last for years",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "timeless-investment-pieces-conversational",
-    "topicId": "timeless-investment-pieces",
-    "topicName": "Timeless / Investment Pieces",
-    "category": "Awareness",
-    "promptText": "I want fewer but better clothes. What brands focus on timeless quality?",
+    "promptText": "We think a vendor has been defrauding us for years — who do you call to actually prove it?",
     "isotope": "conversational"
   },
   {
-    "promptId": "wedding-guest-comparative-8",
-    "topicId": "wedding-guest",
-    "topicName": "Wedding Guest",
+    "promptId": "financial-fraud-detection-specific",
+    "topicId": "financial-fraud-detection",
+    "topicName": "Financial Fraud Detection",
     "category": "Awareness",
-    "promptText": "J.Crew vs Anthropologie for wedding guest quality and fit",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "wedding-guest-specific-6",
-    "topicId": "wedding-guest",
-    "topicName": "Wedding Guest",
-    "category": "Awareness",
-    "promptText": "Wedding guest dresses that are flattering but not revealing under $200",
+    "promptText": "Financial fraud detection firm with data analytics capabilities for a $250000 M&A transaction investigation in 2026",
     "isotope": "specific"
   },
   {
-    "promptId": "wedding-guest-informational",
-    "topicId": "wedding-guest",
-    "topicName": "Wedding Guest",
+    "promptId": "financial-fraud-detection-persona",
+    "topicId": "financial-fraud-detection",
+    "topicName": "Financial Fraud Detection",
     "category": "Awareness",
-    "promptText": "What should I wear to a summer wedding?",
-    "isotope": "informational"
+    "promptText": "As a general counsel, how do I quickly engage a financial fraud detection firm before a regulatory deadline?",
+    "isotope": "persona"
   },
   {
-    "promptId": "wedding-guest-comparative-7",
-    "topicId": "wedding-guest",
-    "topicName": "Wedding Guest",
+    "promptId": "financial-fraud-detection-comparative",
+    "topicId": "financial-fraud-detection",
+    "topicName": "Financial Fraud Detection",
     "category": "Awareness",
-    "promptText": "Brands similar to J.Crew for cocktail dresses",
+    "promptText": "FTI Consulting vs Kroll for financial fraud detection and investigation in cross-border litigation matters",
     "isotope": "comparative"
   },
   {
-    "promptId": "wedding-guest-commercial",
-    "topicId": "wedding-guest",
-    "topicName": "Wedding Guest",
+    "promptId": "financial-fraud-detection-commercial",
+    "topicId": "financial-fraud-detection",
+    "topicName": "Financial Fraud Detection",
     "category": "Awareness",
-    "promptText": "Best brands for wedding guest dresses under $250?",
+    "promptText": "Best financial fraud detection consulting firms for companies facing regulatory scrutiny right now",
     "isotope": "commercial"
   },
   {
-    "promptId": "wedding-guest-commercial-7",
-    "topicId": "wedding-guest",
-    "topicName": "Wedding Guest",
+    "promptId": "financial-fraud-detection-informational",
+    "topicId": "financial-fraud-detection",
+    "topicName": "Financial Fraud Detection",
     "category": "Awareness",
-    "promptText": "Best brands for outdoor wedding attire in hot weather",
+    "promptText": "How does financial fraud detection consulting work and what methods do investigators use to uncover schemes?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "regulatory-compliance-informational",
+    "topicId": "regulatory-compliance",
+    "topicName": "Regulatory Compliance",
+    "category": "Awareness",
+    "promptText": "What is regulatory compliance consulting and why do companies hire outside firms for it?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "regulatory-compliance-commercial",
+    "topicId": "regulatory-compliance",
+    "topicName": "Regulatory Compliance",
+    "category": "Awareness",
+    "promptText": "Best regulatory compliance advisory firms for large corporations facing federal investigations in 2026",
     "isotope": "commercial"
   },
   {
-    "promptId": "wedding-guest-conversational",
-    "topicId": "wedding-guest",
-    "topicName": "Wedding Guest",
+    "promptId": "regulatory-compliance-specific",
+    "topicId": "regulatory-compliance",
+    "topicName": "Regulatory Compliance",
     "category": "Awareness",
-    "promptText": "I have three weddings this summer and nothing to wear help?",
+    "promptText": "Regulatory compliance advisory for a CFO managing cross-border litigation with a budget under $250000",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "regulatory-compliance-comparative",
+    "topicId": "regulatory-compliance",
+    "topicName": "Regulatory Compliance",
+    "category": "Awareness",
+    "promptText": "FTI Consulting vs Deloitte for regulatory compliance support during a government enforcement action",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "regulatory-compliance-persona",
+    "topicId": "regulatory-compliance",
+    "topicName": "Regulatory Compliance",
+    "category": "Awareness",
+    "promptText": "As a general counsel, how do I choose the right regulatory compliance firm before an SEC inquiry escalates?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "regulatory-compliance-conversational",
+    "topicId": "regulatory-compliance",
+    "topicName": "Regulatory Compliance",
+    "category": "Awareness",
+    "promptText": "My company just got a regulatory notice and I have no idea where to start — who do people actually call?",
     "isotope": "conversational"
   },
   {
-    "promptId": "wedding-guest-specific",
-    "topicId": "wedding-guest",
-    "topicName": "Wedding Guest",
+    "promptId": "crisis-management-informational",
+    "topicId": "crisis-management",
+    "topicName": "Crisis Management",
     "category": "Awareness",
-    "promptText": "Wedding guest dresses under $200 that are not too revealing?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "wedding-guest-persona-6",
-    "topicId": "wedding-guest",
-    "topicName": "Wedding Guest",
-    "category": "Awareness",
-    "promptText": "As a 40-year-old attending a black-tie wedding where should I shop?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "wedding-guest-comparative-2",
-    "topicId": "wedding-guest",
-    "topicName": "Wedding Guest",
-    "category": "Awareness",
-    "promptText": "J.Crew vs Anthropologie for formal dresses?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "timeless-staples-persona-8",
-    "topicId": "timeless-staples",
-    "topicName": "Timeless Staples",
-    "category": "Conversion",
-    "promptText": "As a minimalist where should I shop for timeless staples?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "timeless-staples-adversarial-3",
-    "topicId": "timeless-staples",
-    "topicName": "Timeless Staples",
-    "category": "Conversion",
-    "promptText": "Are J.Crew blazers good long-term staples?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "timeless-staples-informational-4",
-    "topicId": "timeless-staples",
-    "topicName": "Timeless Staples",
-    "category": "Conversion",
-    "promptText": "What are key pieces in timeless staples?",
+    "promptText": "What does a crisis management consulting firm actually do when a company is in financial distress?",
     "isotope": "informational"
   },
   {
-    "promptId": "timeless-staples-commercial-7",
-    "topicId": "timeless-staples",
-    "topicName": "Timeless Staples",
-    "category": "Conversion",
-    "promptText": "Top mid-priced brands for timeless staples?",
+    "promptId": "crisis-management-commercial",
+    "topicId": "crisis-management",
+    "topicName": "Crisis Management",
+    "category": "Awareness",
+    "promptText": "Top-rated crisis management consultants for distressed companies and turnaround situations right now",
     "isotope": "commercial"
   },
   {
-    "promptId": "timeless-staples-comparative",
-    "topicId": "timeless-staples",
-    "topicName": "Timeless Staples",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Ralph Lauren for classic American style quality",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "timeless-staples-informational-3",
-    "topicId": "timeless-staples",
-    "topicName": "Timeless Staples",
-    "category": "Conversion",
-    "promptText": "What defines timeless staples in 2026?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "timeless-staples-specific-5",
-    "topicId": "timeless-staples",
-    "topicName": "Timeless Staples",
-    "category": "Conversion",
-    "promptText": "timeless staples under $200?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "timeless-staples-comparative-5",
-    "topicId": "timeless-staples",
-    "topicName": "Timeless Staples",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Everlane for timeless staples?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "timeless-staples-conversational-5",
-    "topicId": "timeless-staples",
-    "topicName": "Timeless Staples",
-    "category": "Conversion",
-    "promptText": "I need help finding good timeless staples, where should I shop?",
+    "promptId": "crisis-management-conversational",
+    "topicId": "crisis-management",
+    "topicName": "Crisis Management",
+    "category": "Awareness",
+    "promptText": "Our company is basically on fire right now — who are the go-to consultants when things get really bad?",
     "isotope": "conversational"
   },
   {
-    "promptId": "timeless-staples-comparative-8",
-    "topicId": "timeless-staples",
-    "topicName": "Timeless Staples",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Everlane for timeless staples?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "sustainability-specific",
-    "topicId": "sustainability",
-    "topicName": "Sustainability",
+    "promptId": "crisis-management-comparative",
+    "topicId": "crisis-management",
+    "topicName": "Crisis Management",
     "category": "Awareness",
-    "promptText": "Brands that use natural fabrics and classic cuts?",
-    "isotope": "specific"
+    "promptText": "FTI Consulting vs AlixPartners for crisis management during a Chapter 11 bankruptcy — which is stronger?",
+    "isotope": "comparative"
   },
   {
-    "promptId": "sustainability-specific-2",
-    "topicId": "sustainability",
-    "topicName": "Sustainability",
+    "promptId": "crisis-management-persona",
+    "topicId": "crisis-management",
+    "topicName": "Crisis Management",
     "category": "Awareness",
-    "promptText": "sustainability made from natural fabrics?",
-    "isotope": "specific"
+    "promptText": "As a CRO brought in mid-crisis, what should I look for in an external crisis management partner?",
+    "isotope": "persona"
   },
   {
-    "promptId": "sustainability-comparative-3",
-    "topicId": "sustainability",
-    "topicName": "Sustainability",
+    "promptId": "crisis-management-specific",
+    "topicId": "crisis-management",
+    "topicName": "Crisis Management",
     "category": "Awareness",
-    "promptText": "J.Crew vs Ralph Lauren for sustainability?",
-    "isotope": "comparative"
+    "promptText": "Crisis management firm for a PE-backed company in distressed turnaround needing rapid deployment under $500000",
+    "isotope": "specific"
   },
   {
-    "promptId": "sustainability-adversarial-3",
-    "topicId": "sustainability",
-    "topicName": "Sustainability",
+    "promptId": "antitrust-economics-informational",
+    "topicId": "antitrust-economics",
+    "topicName": "Antitrust Economics",
     "category": "Awareness",
-    "promptText": "Is J.Crew overpriced for sustainability?",
-    "isotope": "adversarial"
+    "promptText": "What is antitrust economics consulting and when do companies need it during a merger or acquisition?",
+    "isotope": "informational"
   },
   {
-    "promptId": "sustainability-commercial-6",
-    "topicId": "sustainability",
-    "topicName": "Sustainability",
+    "promptId": "antitrust-economics-commercial",
+    "topicId": "antitrust-economics",
+    "topicName": "Antitrust Economics",
     "category": "Awareness",
-    "promptText": "Top mid-priced brands for sustainability?",
+    "promptText": "Best antitrust economics experts for M&A transactions facing DOJ or FTC scrutiny in 2026",
     "isotope": "commercial"
   },
   {
-    "promptId": "sustainability-conversational-5",
-    "topicId": "sustainability",
-    "topicName": "Sustainability",
+    "promptId": "antitrust-economics-comparative",
+    "topicId": "antitrust-economics",
+    "topicName": "Antitrust Economics",
     "category": "Awareness",
-    "promptText": "I need help finding good sustainability, where should I shop?",
-    "isotope": "conversational"
+    "promptText": "FTI Consulting vs Kroll on antitrust economics support for complex cross-border M&A deals",
+    "isotope": "comparative"
   },
   {
-    "promptId": "sustainability-comparative",
-    "topicId": "sustainability",
-    "topicName": "Sustainability",
+    "promptId": "antitrust-economics-conversational",
+    "topicId": "antitrust-economics",
+    "topicName": "Antitrust Economics",
     "category": "Awareness",
-    "promptText": "J.Crew vs Everlane for sustainability practices?",
-    "isotope": "comparative"
+    "promptText": "Our deal just got flagged by regulators — do we need an antitrust economist or is that overkill?",
+    "isotope": "conversational"
   },
   {
-    "promptId": "sustainability-specific-5",
-    "topicId": "sustainability",
-    "topicName": "Sustainability",
+    "promptId": "antitrust-economics-persona",
+    "topicId": "antitrust-economics",
+    "topicName": "Antitrust Economics",
     "category": "Awareness",
-    "promptText": "sustainability made from natural fabrics?",
-    "isotope": "specific"
+    "promptText": "As a PE operating partner, how do I evaluate antitrust economic risk before closing a platform acquisition?",
+    "isotope": "persona"
   },
   {
-    "promptId": "sustainability-comparative-6",
-    "topicId": "sustainability",
-    "topicName": "Sustainability",
+    "promptId": "antitrust-economics-specific",
+    "topicId": "antitrust-economics",
+    "topicName": "Antitrust Economics",
     "category": "Awareness",
-    "promptText": "J.Crew vs Ralph Lauren for sustainability?",
-    "isotope": "comparative"
+    "promptText": "Antitrust economics advisory for a $500000 engagement covering a contested merger with regulatory investigation risk",
+    "isotope": "specific"
   },
   {
-    "promptId": "sustainability-persona-6",
-    "topicId": "sustainability",
-    "topicName": "Sustainability",
+    "promptId": "corporate-investigations-persona",
+    "topicId": "corporate-investigations",
+    "topicName": "Corporate Investigations",
     "category": "Awareness",
-    "promptText": "As a 30-year-old professional where should I buy sustainability?",
+    "promptText": "As a board member, what questions should I ask before retaining a corporate investigations firm after a whistleblower complaint?",
     "isotope": "persona"
   },
   {
-    "promptId": "workwear-finance-comparative-2",
-    "topicId": "workwear-finance",
-    "topicName": "Workwear - Finance",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Banana Republic for conservative workplaces?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "workwear-finance-persona-9",
-    "topicId": "workwear-finance",
-    "topicName": "Workwear - Finance",
-    "category": "Conversion",
-    "promptText": "As a minimalist where should I shop for workwear - finance?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "workwear-finance-informational-3",
-    "topicId": "workwear-finance",
-    "topicName": "Workwear - Finance",
-    "category": "Conversion",
-    "promptText": "What are key pieces in workwear - finance?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "workwear-finance-adversarial-13",
-    "topicId": "workwear-finance",
-    "topicName": "Workwear - Finance",
-    "category": "Conversion",
-    "promptText": "Is J.Crew good quality for workwear - finance?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "workwear-finance-specific",
-    "topicId": "workwear-finance",
-    "topicName": "Workwear - Finance",
-    "category": "Conversion",
-    "promptText": "Classic navy suits under $500 for corporate roles?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "workwear-finance-persona-8",
-    "topicId": "workwear-finance",
-    "topicName": "Workwear - Finance",
-    "category": "Conversion",
-    "promptText": "As a 30-year-old professional where should I buy workwear - finance?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "workwear-finance-adversarial-9",
-    "topicId": "workwear-finance",
-    "topicName": "Workwear - Finance",
-    "category": "Conversion",
-    "promptText": "Has J.Crew declined in quality for workwear - finance?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "workwear-finance-specific-6",
-    "topicId": "workwear-finance",
-    "topicName": "Workwear - Finance",
-    "category": "Conversion",
-    "promptText": "High-quality workwear - finance that lasts years?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "workwear-finance-adversarial-2",
-    "topicId": "workwear-finance",
-    "topicName": "Workwear - Finance",
-    "category": "Conversion",
-    "promptText": "Is J.Crew good quality for workwear - finance?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "workwear-finance-persona-7",
-    "topicId": "workwear-finance",
-    "topicName": "Workwear - Finance",
-    "category": "Conversion",
-    "promptText": "As a 30-year-old professional where should I buy workwear - finance?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "workwear-tech-adversarial",
-    "topicId": "workwear-tech",
-    "topicName": "Workwear - Tech",
-    "category": "Conversion",
-    "promptText": "Is J.Crew too traditional for tech companies?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "workwear-tech-comparative",
-    "topicId": "workwear-tech",
-    "topicName": "Workwear - Tech",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Everlane for tech professionals?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "workwear-tech-informational-8",
-    "topicId": "workwear-tech",
-    "topicName": "Workwear - Tech",
-    "category": "Conversion",
-    "promptText": "What should I know before buying workwear - tech?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "workwear-tech-commercial-3",
-    "topicId": "workwear-tech",
-    "topicName": "Workwear - Tech",
-    "category": "Conversion",
-    "promptText": "Affordable but high-quality workwear - tech?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "workwear-tech-comparative-6",
-    "topicId": "workwear-tech",
-    "topicName": "Workwear - Tech",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Ralph Lauren for workwear - tech?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "workwear-tech-commercial-4",
-    "topicId": "workwear-tech",
-    "topicName": "Workwear - Tech",
-    "category": "Conversion",
-    "promptText": "Top mid-priced brands for workwear - tech?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "workwear-tech-persona-3",
-    "topicId": "workwear-tech",
-    "topicName": "Workwear - Tech",
-    "category": "Conversion",
-    "promptText": "As a minimalist where should I shop for workwear - tech?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "workwear-tech-specific-4",
-    "topicId": "workwear-tech",
-    "topicName": "Workwear - Tech",
-    "category": "Conversion",
-    "promptText": "workwear - tech made from natural fabrics?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "workwear-tech-comparative-7",
-    "topicId": "workwear-tech",
-    "topicName": "Workwear - Tech",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Everlane for workwear - tech?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "workwear-tech-commercial-2",
-    "topicId": "workwear-tech",
-    "topicName": "Workwear - Tech",
-    "category": "Conversion",
-    "promptText": "Affordable polished outfits for startup environments?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "petite-fit-adversarial-4",
-    "topicId": "petite-fit",
-    "topicName": "Petite Fit",
-    "category": "Conversion",
-    "promptText": "Is J.Crew overpriced for petite fit?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "petite-fit-comparative",
-    "topicId": "petite-fit",
-    "topicName": "Petite Fit",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Ann Taylor for petite sizing?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "petite-fit-informational-6",
-    "topicId": "petite-fit",
-    "topicName": "Petite Fit",
-    "category": "Conversion",
-    "promptText": "What defines petite fit in 2026?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "petite-fit-persona-3",
-    "topicId": "petite-fit",
-    "topicName": "Petite Fit",
-    "category": "Conversion",
-    "promptText": "As someone in finance what brands work for petite fit?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "petite-fit-comparative-5",
-    "topicId": "petite-fit",
-    "topicName": "Petite Fit",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Banana Republic for petite fit?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "petite-fit-adversarial-5",
-    "topicId": "petite-fit",
-    "topicName": "Petite Fit",
-    "category": "Conversion",
-    "promptText": "Has J.Crew declined in quality for petite fit?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "petite-fit-specific-2",
-    "topicId": "petite-fit",
-    "topicName": "Petite Fit",
-    "category": "Conversion",
-    "promptText": "petite fit made from natural fabrics?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "petite-fit-specific-3",
-    "topicId": "petite-fit",
-    "topicName": "Petite Fit",
-    "category": "Conversion",
-    "promptText": "petite fit under $200?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "petite-fit-conversational-5",
-    "topicId": "petite-fit",
-    "topicName": "Petite Fit",
-    "category": "Conversion",
-    "promptText": "I need help finding good petite fit, where should I shop?",
-    "isotope": "conversational"
-  },
-  {
-    "promptId": "petite-fit-commercial-4",
-    "topicId": "petite-fit",
-    "topicName": "Petite Fit",
-    "category": "Conversion",
-    "promptText": "Best brands for petite fit?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "tall-fit-adversarial",
-    "topicId": "tall-fit",
-    "topicName": "Tall Fit",
-    "category": "Conversion",
-    "promptText": "Is J.Crew good for tall sizing?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "tall-fit-adversarial-10",
-    "topicId": "tall-fit",
-    "topicName": "Tall Fit",
-    "category": "Conversion",
-    "promptText": "Has J.Crew declined in quality for tall fit?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "tall-fit-comparative-2",
-    "topicId": "tall-fit",
-    "topicName": "Tall Fit",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Everlane for tall fit?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "tall-fit-commercial-4",
-    "topicId": "tall-fit",
-    "topicName": "Tall Fit",
-    "category": "Conversion",
-    "promptText": "Top mid-priced brands for tall fit?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "tall-fit-commercial-5",
-    "topicId": "tall-fit",
-    "topicName": "Tall Fit",
-    "category": "Conversion",
-    "promptText": "Affordable but high-quality tall fit?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "tall-fit-adversarial-5",
-    "topicId": "tall-fit",
-    "topicName": "Tall Fit",
-    "category": "Conversion",
-    "promptText": "Has J.Crew declined in quality for tall fit?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "tall-fit-comparative",
-    "topicId": "tall-fit",
-    "topicName": "Tall Fit",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Banana Republic for tall sizing?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "tall-fit-specific-5",
-    "topicId": "tall-fit",
-    "topicName": "Tall Fit",
-    "category": "Conversion",
-    "promptText": "tall fit made from natural fabrics?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "tall-fit-informational",
-    "topicId": "tall-fit",
-    "topicName": "Tall Fit",
-    "category": "Conversion",
-    "promptText": "What are key pieces in tall fit?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "tall-fit-conversational-2",
-    "topicId": "tall-fit",
-    "topicName": "Tall Fit",
-    "category": "Conversion",
-    "promptText": "I am upgrading my wardrobe and need tall fit, suggestions?",
-    "isotope": "conversational"
-  },
-  {
-    "promptId": "price-sensitivity-specific-4",
-    "topicId": "price-sensitivity",
-    "topicName": "Price Sensitivity",
-    "category": "Conversion",
-    "promptText": "High-quality price sensitivity that lasts years?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "price-sensitivity-informational-5",
-    "topicId": "price-sensitivity",
-    "topicName": "Price Sensitivity",
-    "category": "Conversion",
-    "promptText": "What should I know before buying price sensitivity?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "price-sensitivity-comparative",
-    "topicId": "price-sensitivity",
-    "topicName": "Price Sensitivity",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Uniqlo for value?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "price-sensitivity-commercial-11",
-    "topicId": "price-sensitivity",
-    "topicName": "Price Sensitivity",
-    "category": "Conversion",
-    "promptText": "Best brands for price sensitivity?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "price-sensitivity-conversational-2",
-    "topicId": "price-sensitivity",
-    "topicName": "Price Sensitivity",
-    "category": "Conversion",
-    "promptText": "I am upgrading my wardrobe and need price sensitivity, suggestions?",
-    "isotope": "conversational"
-  },
-  {
-    "promptId": "price-sensitivity-persona-2",
-    "topicId": "price-sensitivity",
-    "topicName": "Price Sensitivity",
-    "category": "Conversion",
-    "promptText": "As someone in finance what brands work for price sensitivity?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "price-sensitivity-informational-7",
-    "topicId": "price-sensitivity",
-    "topicName": "Price Sensitivity",
-    "category": "Conversion",
-    "promptText": "What are key pieces in price sensitivity?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "price-sensitivity-commercial",
-    "topicId": "price-sensitivity",
-    "topicName": "Price Sensitivity",
-    "category": "Conversion",
-    "promptText": "Best clothing brands that are high quality but not luxury priced?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "price-sensitivity-specific-5",
-    "topicId": "price-sensitivity",
-    "topicName": "Price Sensitivity",
-    "category": "Conversion",
-    "promptText": "price sensitivity under $200?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "price-sensitivity-adversarial-6",
-    "topicId": "price-sensitivity",
-    "topicName": "Price Sensitivity",
-    "category": "Conversion",
-    "promptText": "Is J.Crew good quality for price sensitivity?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "fall-layers-informational",
-    "topicId": "fall-layers",
-    "topicName": "Fall Layers",
-    "category": "Conversion",
-    "promptText": "What defines fall layers in 2026?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "fall-layers-persona",
-    "topicId": "fall-layers",
-    "topicName": "Fall Layers",
-    "category": "Conversion",
-    "promptText": "As someone building a fall capsule wardrobe where should I shop?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "fall-layers-comparative-3",
-    "topicId": "fall-layers",
-    "topicName": "Fall Layers",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Banana Republic for fall layers?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "fall-layers-comparative",
-    "topicId": "fall-layers",
-    "topicName": "Fall Layers",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Madewell for fall sweaters?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "fall-layers-commercial-6",
-    "topicId": "fall-layers",
-    "topicName": "Fall Layers",
-    "category": "Conversion",
-    "promptText": "Top mid-priced brands for fall layers?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "fall-layers-adversarial-9",
-    "topicId": "fall-layers",
-    "topicName": "Fall Layers",
-    "category": "Conversion",
-    "promptText": "Is J.Crew overpriced for fall layers?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "fall-layers-persona-3",
-    "topicId": "fall-layers",
-    "topicName": "Fall Layers",
-    "category": "Conversion",
-    "promptText": "As a 30-year-old professional where should I buy fall layers?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "fall-layers-commercial-7",
-    "topicId": "fall-layers",
-    "topicName": "Fall Layers",
-    "category": "Conversion",
-    "promptText": "Affordable but high-quality fall layers?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "fall-layers-informational-3",
-    "topicId": "fall-layers",
-    "topicName": "Fall Layers",
-    "category": "Conversion",
-    "promptText": "What defines fall layers in 2026?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "fall-layers-adversarial-5",
-    "topicId": "fall-layers",
-    "topicName": "Fall Layers",
-    "category": "Conversion",
-    "promptText": "Is J.Crew overpriced for fall layers?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "winter-coats-persona-9",
-    "topicId": "winter-coats",
-    "topicName": "Winter Coats",
-    "category": "Conversion",
-    "promptText": "As a minimalist where should I shop for winter coats?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "winter-coats-commercial",
-    "topicId": "winter-coats",
-    "topicName": "Winter Coats",
-    "category": "Conversion",
-    "promptText": "Best brands for classic winter coats under $400?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "winter-coats-commercial-6",
-    "topicId": "winter-coats",
-    "topicName": "Winter Coats",
-    "category": "Conversion",
-    "promptText": "Top mid-priced brands for winter coats?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "winter-coats-adversarial-6",
-    "topicId": "winter-coats",
-    "topicName": "Winter Coats",
-    "category": "Conversion",
-    "promptText": "Has J.Crew declined in quality for winter coats?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "winter-coats-conversational-3",
-    "topicId": "winter-coats",
-    "topicName": "Winter Coats",
-    "category": "Conversion",
-    "promptText": "I need help finding good winter coats, where should I shop?",
-    "isotope": "conversational"
-  },
-  {
-    "promptId": "winter-coats-persona-8",
-    "topicId": "winter-coats",
-    "topicName": "Winter Coats",
-    "category": "Conversion",
-    "promptText": "As someone in finance what brands work for winter coats?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "winter-coats-conversational-2",
-    "topicId": "winter-coats",
-    "topicName": "Winter Coats",
-    "category": "Conversion",
-    "promptText": "I want winter coats that looks expensive but is affordable?",
-    "isotope": "conversational"
-  },
-  {
-    "promptId": "winter-coats-persona-4",
-    "topicId": "winter-coats",
-    "topicName": "Winter Coats",
-    "category": "Conversion",
-    "promptText": "As a 30-year-old professional where should I buy winter coats?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "winter-coats-informational-4",
-    "topicId": "winter-coats",
-    "topicName": "Winter Coats",
-    "category": "Conversion",
-    "promptText": "What should I know before buying winter coats?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "winter-coats-commercial-8",
-    "topicId": "winter-coats",
-    "topicName": "Winter Coats",
-    "category": "Conversion",
-    "promptText": "Top mid-priced brands for winter coats?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "holiday-events-adversarial-2",
-    "topicId": "holiday-events",
-    "topicName": "Holiday / Events",
-    "category": "Conversion",
-    "promptText": "Is J.Crew overpriced for holiday / events?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "holiday-events-persona-7",
-    "topicId": "holiday-events",
-    "topicName": "Holiday / Events",
-    "category": "Conversion",
-    "promptText": "As a minimalist where should I shop for holiday / events?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "holiday-events-adversarial-3",
-    "topicId": "holiday-events",
-    "topicName": "Holiday / Events",
-    "category": "Conversion",
-    "promptText": "Has J.Crew declined in quality for holiday / events?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "holiday-events-informational-2",
-    "topicId": "holiday-events",
-    "topicName": "Holiday / Events",
-    "category": "Conversion",
-    "promptText": "What are key pieces in holiday / events?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "holiday-events-informational",
-    "topicId": "holiday-events",
-    "topicName": "Holiday / Events",
-    "category": "Conversion",
-    "promptText": "What defines holiday / events in 2026?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "holiday-events-commercial-4",
-    "topicId": "holiday-events",
-    "topicName": "Holiday / Events",
-    "category": "Conversion",
-    "promptText": "Affordable but high-quality holiday / events?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "holiday-events-specific",
-    "topicId": "holiday-events",
-    "topicName": "Holiday / Events",
-    "category": "Conversion",
-    "promptText": "Velvet dresses under $250 for holiday parties?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "holiday-events-commercial",
-    "topicId": "holiday-events",
-    "topicName": "Holiday / Events",
-    "category": "Conversion",
-    "promptText": "Best brands for holiday party outfits?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "holiday-events-comparative-2",
-    "topicId": "holiday-events",
-    "topicName": "Holiday / Events",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Everlane for holiday / events?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "holiday-events-commercial-5",
-    "topicId": "holiday-events",
-    "topicName": "Holiday / Events",
-    "category": "Conversion",
-    "promptText": "Best brands for holiday / events?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "outlet-factory-comparative-2",
-    "topicId": "outlet-factory",
-    "topicName": "Outlet / Factory",
-    "category": "Consideration",
-    "promptText": "J.Crew vs Banana Republic for outlet / factory?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "outlet-factory-specific",
-    "topicId": "outlet-factory",
-    "topicName": "Outlet / Factory",
-    "category": "Consideration",
-    "promptText": "Affordable workwear from outlet brands under $150?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "outlet-factory-adversarial-4",
-    "topicId": "outlet-factory",
-    "topicName": "Outlet / Factory",
-    "category": "Consideration",
-    "promptText": "Is J.Crew good quality for outlet / factory?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "outlet-factory-conversational-6",
-    "topicId": "outlet-factory",
-    "topicName": "Outlet / Factory",
-    "category": "Consideration",
-    "promptText": "I need help finding good outlet / factory, where should I shop?",
-    "isotope": "conversational"
-  },
-  {
-    "promptId": "outlet-factory-adversarial-2",
-    "topicId": "outlet-factory",
-    "topicName": "Outlet / Factory",
-    "category": "Consideration",
-    "promptText": "Is J.Crew overpriced for outlet / factory?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "outlet-factory-informational-4",
-    "topicId": "outlet-factory",
-    "topicName": "Outlet / Factory",
-    "category": "Consideration",
-    "promptText": "What defines outlet / factory in 2026?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "outlet-factory-comparative-3",
-    "topicId": "outlet-factory",
-    "topicName": "Outlet / Factory",
-    "category": "Consideration",
-    "promptText": "J.Crew vs Everlane for outlet / factory?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "outlet-factory-commercial-6",
-    "topicId": "outlet-factory",
-    "topicName": "Outlet / Factory",
-    "category": "Consideration",
-    "promptText": "Top mid-priced brands for outlet / factory?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "outlet-factory-adversarial-8",
-    "topicId": "outlet-factory",
-    "topicName": "Outlet / Factory",
-    "category": "Consideration",
-    "promptText": "Is J.Crew good quality for outlet / factory?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "outlet-factory-adversarial",
-    "topicId": "outlet-factory",
-    "topicName": "Outlet / Factory",
-    "category": "Consideration",
-    "promptText": "Is J.Crew Factory lower quality than J.Crew?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "brand-positioning-commercial-5",
-    "topicId": "brand-positioning",
-    "topicName": "Brand Positioning",
-    "category": "Consideration",
-    "promptText": "Affordable but high-quality brand positioning?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "brand-positioning-commercial",
-    "topicId": "brand-positioning",
-    "topicName": "Brand Positioning",
-    "category": "Consideration",
-    "promptText": "Best brands for classic preppy style?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "brand-positioning-comparative-4",
-    "topicId": "brand-positioning",
-    "topicName": "Brand Positioning",
-    "category": "Consideration",
-    "promptText": "J.Crew vs Everlane for brand positioning?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "brand-positioning-persona-3",
-    "topicId": "brand-positioning",
-    "topicName": "Brand Positioning",
-    "category": "Consideration",
-    "promptText": "As someone in finance what brands work for brand positioning?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "brand-positioning-commercial-9",
-    "topicId": "brand-positioning",
-    "topicName": "Brand Positioning",
-    "category": "Consideration",
-    "promptText": "Top mid-priced brands for brand positioning?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "brand-positioning-specific-3",
-    "topicId": "brand-positioning",
-    "topicName": "Brand Positioning",
-    "category": "Consideration",
-    "promptText": "brand positioning made from natural fabrics?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "brand-positioning-persona-6",
-    "topicId": "brand-positioning",
-    "topicName": "Brand Positioning",
-    "category": "Consideration",
-    "promptText": "As someone in finance what brands work for brand positioning?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "brand-positioning-adversarial-4",
-    "topicId": "brand-positioning",
-    "topicName": "Brand Positioning",
-    "category": "Consideration",
-    "promptText": "Is J.Crew overpriced for brand positioning?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "brand-positioning-conversational",
-    "topicId": "brand-positioning",
-    "topicName": "Brand Positioning",
-    "category": "Consideration",
-    "promptText": "I want timeless style that is not flashy or trendy?",
-    "isotope": "conversational"
-  },
-  {
-    "promptId": "brand-positioning-conversational-3",
-    "topicId": "brand-positioning",
-    "topicName": "Brand Positioning",
-    "category": "Consideration",
-    "promptText": "I want brand positioning that looks expensive but is affordable?",
-    "isotope": "conversational"
-  },
-  {
-    "promptId": "gift-shopping-comparative-3",
-    "topicId": "gift-shopping",
-    "topicName": "Gift Shopping",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Ralph Lauren for gift shopping?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "gift-shopping-informational-5",
-    "topicId": "gift-shopping",
-    "topicName": "Gift Shopping",
-    "category": "Conversion",
-    "promptText": "What defines gift shopping in 2026?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "gift-shopping-informational-3",
-    "topicId": "gift-shopping",
-    "topicName": "Gift Shopping",
-    "category": "Conversion",
-    "promptText": "What are key pieces in gift shopping?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "gift-shopping-commercial",
-    "topicId": "gift-shopping",
-    "topicName": "Gift Shopping",
-    "category": "Conversion",
-    "promptText": "Best clothing brands for professional gifts?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "gift-shopping-persona-4",
-    "topicId": "gift-shopping",
-    "topicName": "Gift Shopping",
-    "category": "Conversion",
-    "promptText": "As a 30-year-old professional where should I buy gift shopping?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "gift-shopping-informational-2",
-    "topicId": "gift-shopping",
-    "topicName": "Gift Shopping",
-    "category": "Conversion",
-    "promptText": "What are key pieces in gift shopping?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "gift-shopping-specific-6",
-    "topicId": "gift-shopping",
-    "topicName": "Gift Shopping",
-    "category": "Conversion",
-    "promptText": "gift shopping under $200?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "gift-shopping-comparative-6",
-    "topicId": "gift-shopping",
-    "topicName": "Gift Shopping",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Ralph Lauren for gift shopping?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "gift-shopping-persona-3",
-    "topicId": "gift-shopping",
-    "topicName": "Gift Shopping",
-    "category": "Conversion",
-    "promptText": "As a 30-year-old professional where should I buy gift shopping?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "gift-shopping-commercial-2",
-    "topicId": "gift-shopping",
-    "topicName": "Gift Shopping",
-    "category": "Conversion",
-    "promptText": "Best brands for gift shopping?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "denim-specific-3",
-    "topicId": "denim",
-    "topicName": "Denim",
-    "category": "Conversion",
-    "promptText": "denim made from natural fabrics?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "denim-conversational",
-    "topicId": "denim",
-    "topicName": "Denim",
-    "category": "Conversion",
-    "promptText": "I am upgrading my wardrobe and need denim, suggestions?",
-    "isotope": "conversational"
-  },
-  {
-    "promptId": "denim-commercial",
-    "topicId": "denim",
-    "topicName": "Denim",
-    "category": "Conversion",
-    "promptText": "Affordable but high-quality denim?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "denim-comparative-4",
-    "topicId": "denim",
-    "topicName": "Denim",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Everlane for denim?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "denim-informational",
-    "topicId": "denim",
-    "topicName": "Denim",
-    "category": "Conversion",
-    "promptText": "What should I know before buying denim?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "denim-persona",
-    "topicId": "denim",
-    "topicName": "Denim",
-    "category": "Conversion",
-    "promptText": "As someone in finance what brands work for denim?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "denim-comparative-3",
-    "topicId": "denim",
-    "topicName": "Denim",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Banana Republic for denim?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "denim-adversarial-6",
-    "topicId": "denim",
-    "topicName": "Denim",
-    "category": "Conversion",
-    "promptText": "Is J.Crew good quality for denim?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "denim-commercial-5",
-    "topicId": "denim",
-    "topicName": "Denim",
-    "category": "Conversion",
-    "promptText": "Top mid-priced brands for denim?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "denim-comparative-2",
-    "topicId": "denim",
-    "topicName": "Denim",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Ralph Lauren for denim?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "outerwear-comparative-3",
-    "topicId": "outerwear",
-    "topicName": "Outerwear",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Banana Republic for outerwear?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "outerwear-persona-8",
-    "topicId": "outerwear",
-    "topicName": "Outerwear",
-    "category": "Conversion",
-    "promptText": "As someone in finance what brands work for outerwear?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "outerwear-adversarial",
-    "topicId": "outerwear",
-    "topicName": "Outerwear",
-    "category": "Conversion",
-    "promptText": "Is J.Crew overpriced for outerwear?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "outerwear-specific-2",
-    "topicId": "outerwear",
-    "topicName": "Outerwear",
-    "category": "Conversion",
-    "promptText": "High-quality outerwear that lasts years?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "outerwear-persona-4",
-    "topicId": "outerwear",
-    "topicName": "Outerwear",
-    "category": "Conversion",
-    "promptText": "As a 30-year-old professional where should I buy outerwear?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "outerwear-persona-7",
-    "topicId": "outerwear",
-    "topicName": "Outerwear",
-    "category": "Conversion",
-    "promptText": "As someone in finance what brands work for outerwear?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "outerwear-specific-3",
-    "topicId": "outerwear",
-    "topicName": "Outerwear",
-    "category": "Conversion",
-    "promptText": "outerwear under $200?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "outerwear-adversarial-2",
-    "topicId": "outerwear",
-    "topicName": "Outerwear",
-    "category": "Conversion",
-    "promptText": "Has J.Crew declined in quality for outerwear?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "outerwear-conversational-3",
-    "topicId": "outerwear",
-    "topicName": "Outerwear",
-    "category": "Conversion",
-    "promptText": "I need help finding good outerwear, where should I shop?",
-    "isotope": "conversational"
-  },
-  {
-    "promptId": "outerwear-commercial-6",
-    "topicId": "outerwear",
-    "topicName": "Outerwear",
-    "category": "Conversion",
-    "promptText": "Affordable but high-quality outerwear?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "footwear-commercial-5",
-    "topicId": "footwear",
-    "topicName": "Footwear",
-    "category": "Consideration",
-    "promptText": "Affordable but high-quality footwear?",
-    "isotope": "commercial"
-  },
-  {
-    "promptId": "footwear-adversarial-2",
-    "topicId": "footwear",
-    "topicName": "Footwear",
-    "category": "Consideration",
-    "promptText": "Is J.Crew good quality for footwear?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "footwear-conversational-3",
-    "topicId": "footwear",
-    "topicName": "Footwear",
-    "category": "Consideration",
-    "promptText": "I am upgrading my wardrobe and need footwear, suggestions?",
-    "isotope": "conversational"
-  },
-  {
-    "promptId": "footwear-persona-2",
-    "topicId": "footwear",
-    "topicName": "Footwear",
-    "category": "Consideration",
-    "promptText": "As a minimalist where should I shop for footwear?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "footwear-informational",
-    "topicId": "footwear",
-    "topicName": "Footwear",
-    "category": "Consideration",
-    "promptText": "What are key pieces in footwear?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "footwear-specific-9",
-    "topicId": "footwear",
-    "topicName": "Footwear",
-    "category": "Consideration",
-    "promptText": "footwear made from natural fabrics?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "footwear-informational-7",
-    "topicId": "footwear",
-    "topicName": "Footwear",
-    "category": "Consideration",
-    "promptText": "What should I know before buying footwear?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "footwear-comparative-2",
-    "topicId": "footwear",
-    "topicName": "Footwear",
-    "category": "Consideration",
-    "promptText": "J.Crew vs Everlane for footwear?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "footwear-specific-8",
-    "topicId": "footwear",
-    "topicName": "Footwear",
-    "category": "Consideration",
-    "promptText": "High-quality footwear that lasts years?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "footwear-adversarial",
-    "topicId": "footwear",
-    "topicName": "Footwear",
-    "category": "Consideration",
-    "promptText": "Is J.Crew good quality for footwear?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "mens-workwear-adversarial-6",
-    "topicId": "mens-workwear",
-    "topicName": "Men's Workwear",
-    "category": "Conversion",
-    "promptText": "Has J.Crew declined in quality for men's workwear?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "mens-workwear-informational",
-    "topicId": "mens-workwear",
-    "topicName": "Men's Workwear",
-    "category": "Conversion",
-    "promptText": "What are key pieces in men's workwear?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "mens-workwear-conversational-3",
-    "topicId": "mens-workwear",
-    "topicName": "Men's Workwear",
-    "category": "Conversion",
-    "promptText": "I need help finding good men's workwear, where should I shop?",
-    "isotope": "conversational"
-  },
-  {
-    "promptId": "mens-workwear-conversational-5",
-    "topicId": "mens-workwear",
-    "topicName": "Men's Workwear",
-    "category": "Conversion",
-    "promptText": "I want men's workwear that looks expensive but is affordable?",
-    "isotope": "conversational"
-  },
-  {
-    "promptId": "mens-workwear-adversarial-3",
-    "topicId": "mens-workwear",
-    "topicName": "Men's Workwear",
-    "category": "Conversion",
-    "promptText": "Is J.Crew overpriced for men's workwear?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "mens-workwear-adversarial-8",
-    "topicId": "mens-workwear",
-    "topicName": "Men's Workwear",
-    "category": "Conversion",
-    "promptText": "Is J.Crew overpriced for men's workwear?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "mens-workwear-adversarial-9",
-    "topicId": "mens-workwear",
-    "topicName": "Men's Workwear",
-    "category": "Conversion",
-    "promptText": "Is J.Crew overpriced for men's workwear?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "mens-workwear-conversational-2",
-    "topicId": "mens-workwear",
-    "topicName": "Men's Workwear",
-    "category": "Conversion",
-    "promptText": "I am upgrading my wardrobe and need men's workwear, suggestions?",
-    "isotope": "conversational"
-  },
-  {
-    "promptId": "mens-workwear-comparative-2",
-    "topicId": "mens-workwear",
-    "topicName": "Men's Workwear",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Banana Republic for men's workwear?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "mens-workwear-comparative",
-    "topicId": "mens-workwear",
-    "topicName": "Men's Workwear",
-    "category": "Conversion",
-    "promptText": "J.Crew vs Everlane for men's workwear?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "summer-essentials-informational",
-    "topicId": "summer-essentials",
-    "topicName": "Summer Essentials",
+    "promptId": "corporate-investigations-informational",
+    "topicId": "corporate-investigations",
+    "topicName": "Corporate Investigations",
     "category": "Awareness",
-    "promptText": "What are key pieces in summer essentials?",
+    "promptText": "How do corporate investigations work and what types of misconduct typically trigger one inside a company?",
     "isotope": "informational"
   },
   {
-    "promptId": "summer-essentials-specific-3",
-    "topicId": "summer-essentials",
-    "topicName": "Summer Essentials",
+    "promptId": "corporate-investigations-specific",
+    "topicId": "corporate-investigations",
+    "topicName": "Corporate Investigations",
     "category": "Awareness",
-    "promptText": "High-quality summer essentials that lasts years?",
+    "promptText": "Corporate investigations firm specializing in shareholder disputes and forensic accounting for engagements around $100000",
     "isotope": "specific"
   },
   {
-    "promptId": "summer-essentials-adversarial-5",
-    "topicId": "summer-essentials",
-    "topicName": "Summer Essentials",
+    "promptId": "corporate-investigations-commercial",
+    "topicId": "corporate-investigations",
+    "topicName": "Corporate Investigations",
     "category": "Awareness",
-    "promptText": "Has J.Crew declined in quality for summer essentials?",
-    "isotope": "adversarial"
-  },
-  {
-    "promptId": "summer-essentials-comparative-3",
-    "topicId": "summer-essentials",
-    "topicName": "Summer Essentials",
-    "category": "Awareness",
-    "promptText": "J.Crew vs Ralph Lauren for summer essentials?",
-    "isotope": "comparative"
-  },
-  {
-    "promptId": "summer-essentials-informational-5",
-    "topicId": "summer-essentials",
-    "topicName": "Summer Essentials",
-    "category": "Awareness",
-    "promptText": "What should I know before buying summer essentials?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "summer-essentials-specific",
-    "topicId": "summer-essentials",
-    "topicName": "Summer Essentials",
-    "category": "Awareness",
-    "promptText": "High-quality summer essentials that lasts years?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "summer-essentials-informational-6",
-    "topicId": "summer-essentials",
-    "topicName": "Summer Essentials",
-    "category": "Awareness",
-    "promptText": "What should I know before buying summer essentials?",
-    "isotope": "informational"
-  },
-  {
-    "promptId": "summer-essentials-persona-2",
-    "topicId": "summer-essentials",
-    "topicName": "Summer Essentials",
-    "category": "Awareness",
-    "promptText": "As a minimalist where should I shop for summer essentials?",
-    "isotope": "persona"
-  },
-  {
-    "promptId": "summer-essentials-conversational",
-    "topicId": "summer-essentials",
-    "topicName": "Summer Essentials",
-    "category": "Awareness",
-    "promptText": "I want summer essentials that looks expensive but is affordable?",
-    "isotope": "conversational"
-  },
-  {
-    "promptId": "summer-essentials-conversational-2",
-    "topicId": "summer-essentials",
-    "topicName": "Summer Essentials",
-    "category": "Awareness",
-    "promptText": "I am upgrading my wardrobe and need summer essentials, suggestions?",
-    "isotope": "conversational"
-  },
-  {
-    "promptId": "accessories-specific",
-    "topicId": "accessories",
-    "topicName": "Accessories",
-    "category": "Consideration",
-    "promptText": "accessories made from natural fabrics?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "accessories-specific-6",
-    "topicId": "accessories",
-    "topicName": "Accessories",
-    "category": "Consideration",
-    "promptText": "accessories made from natural fabrics?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "accessories-conversational-8",
-    "topicId": "accessories",
-    "topicName": "Accessories",
-    "category": "Consideration",
-    "promptText": "I need help finding good accessories, where should I shop?",
-    "isotope": "conversational"
-  },
-  {
-    "promptId": "accessories-conversational-4",
-    "topicId": "accessories",
-    "topicName": "Accessories",
-    "category": "Consideration",
-    "promptText": "I am upgrading my wardrobe and need accessories, suggestions?",
-    "isotope": "conversational"
-  },
-  {
-    "promptId": "accessories-specific-11",
-    "topicId": "accessories",
-    "topicName": "Accessories",
-    "category": "Consideration",
-    "promptText": "High-quality accessories that lasts years?",
-    "isotope": "specific"
-  },
-  {
-    "promptId": "accessories-commercial",
-    "topicId": "accessories",
-    "topicName": "Accessories",
-    "category": "Consideration",
-    "promptText": "Best brands for accessories?",
+    "promptText": "Leading corporate investigation firms trusted by boards and general counsel for internal fraud cases",
     "isotope": "commercial"
   },
   {
-    "promptId": "accessories-conversational-3",
-    "topicId": "accessories",
-    "topicName": "Accessories",
-    "category": "Consideration",
-    "promptText": "I want accessories that looks expensive but is affordable?",
+    "promptId": "corporate-investigations-comparative",
+    "topicId": "corporate-investigations",
+    "topicName": "Corporate Investigations",
+    "category": "Awareness",
+    "promptText": "FTI Consulting vs McKinsey vs Kroll for corporate investigations — which firm has the deepest forensic bench?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "corporate-investigations-conversational",
+    "topicId": "corporate-investigations",
+    "topicName": "Corporate Investigations",
+    "category": "Awareness",
+    "promptText": "We think a senior exec has been cooking the books — who do companies quietly call to investigate this stuff?",
     "isotope": "conversational"
   },
   {
-    "promptId": "accessories-conversational-5",
-    "topicId": "accessories",
-    "topicName": "Accessories",
-    "category": "Consideration",
-    "promptText": "I need help finding good accessories, where should I shop?",
-    "isotope": "conversational"
-  },
-  {
-    "promptId": "accessories-informational-5",
-    "topicId": "accessories",
-    "topicName": "Accessories",
-    "category": "Consideration",
-    "promptText": "What are key pieces in accessories?",
+    "promptId": "data-privacy-risks-informational",
+    "topicId": "data-privacy-risks",
+    "topicName": "Data Privacy Risks",
+    "category": "Awareness",
+    "promptText": "What are data privacy risks in corporate transactions and how do advisors assess them during due diligence?",
     "isotope": "informational"
   },
   {
-    "promptId": "accessories-adversarial-5",
-    "topicId": "accessories",
-    "topicName": "Accessories",
+    "promptId": "data-privacy-risks-commercial",
+    "topicId": "data-privacy-risks",
+    "topicName": "Data Privacy Risks",
+    "category": "Awareness",
+    "promptText": "Best consulting firms for data privacy risk assessment in cross-border M&A deals in 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "data-privacy-risks-specific",
+    "topicId": "data-privacy-risks",
+    "topicName": "Data Privacy Risks",
+    "category": "Awareness",
+    "promptText": "Data privacy risk consulting for general counsel managing GDPR exposure in cross-border litigation under $50000",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "data-privacy-risks-comparative",
+    "topicId": "data-privacy-risks",
+    "topicName": "Data Privacy Risks",
+    "category": "Awareness",
+    "promptText": "FTI Consulting vs Alvarez and Marsal for data privacy risk advisory during a regulatory investigation",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "data-privacy-risks-persona",
+    "topicId": "data-privacy-risks",
+    "topicName": "Data Privacy Risks",
+    "category": "Awareness",
+    "promptText": "As a CFO preparing for an acquisition, how should I be thinking about target company data privacy exposure?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "data-privacy-risks-conversational",
+    "topicId": "data-privacy-risks",
+    "topicName": "Data Privacy Risks",
+    "category": "Awareness",
+    "promptText": "We're acquiring a company in Europe and I'm worried about their data practices — is this something consultants help with?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "climate-risk-reporting-persona",
+    "topicId": "climate-risk-reporting",
+    "topicName": "Climate Risk Reporting",
+    "category": "Awareness",
+    "promptText": "As a board member, how do I make sure our climate risk disclosures are defensible if shareholders challenge them?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "climate-risk-reporting-commercial",
+    "topicId": "climate-risk-reporting",
+    "topicName": "Climate Risk Reporting",
+    "category": "Awareness",
+    "promptText": "Top consulting firms helping CFOs build climate risk disclosure frameworks ahead of new regulatory deadlines",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "climate-risk-reporting-specific",
+    "topicId": "climate-risk-reporting",
+    "topicName": "Climate Risk Reporting",
+    "category": "Awareness",
+    "promptText": "Climate risk reporting consultant for a PE portfolio company in a shareholder dispute with a $100000 budget",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "climate-risk-reporting-informational",
+    "topicId": "climate-risk-reporting",
+    "topicName": "Climate Risk Reporting",
+    "category": "Awareness",
+    "promptText": "What is climate risk reporting and what new disclosure requirements are companies facing from the SEC in 2026?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "climate-risk-reporting-conversational",
+    "topicId": "climate-risk-reporting",
+    "topicName": "Climate Risk Reporting",
+    "category": "Awareness",
+    "promptText": "Investors keep asking us about climate risk reporting and honestly we have no clue where to start — help?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "climate-risk-reporting-comparative",
+    "topicId": "climate-risk-reporting",
+    "topicName": "Climate Risk Reporting",
+    "category": "Awareness",
+    "promptText": "FTI Consulting vs Deloitte for climate risk reporting advisory — who delivers better for board-level presentations?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "ma-advisory-persona",
+    "topicId": "ma-advisory",
+    "topicName": "M&A Advisory",
+    "category": "Awareness",
+    "promptText": "As a PE operating partner, how do I evaluate which M&A advisory firm to bring in post-LOI?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "ma-advisory-specific",
+    "topicId": "ma-advisory",
+    "topicName": "M&A Advisory",
+    "category": "Awareness",
+    "promptText": "M&A advisory services under $250000 for a distressed company sale with regulatory complications",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "ma-advisory-informational",
+    "topicId": "ma-advisory",
+    "topicName": "M&A Advisory",
+    "category": "Awareness",
+    "promptText": "What does an M&A advisory firm actually do during a transaction?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "ma-advisory-commercial",
+    "topicId": "ma-advisory",
+    "topicName": "M&A Advisory",
+    "category": "Awareness",
+    "promptText": "Best M&A advisory firms for mid-market deals in 2026 ranked by deal outcomes",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "ma-advisory-comparative",
+    "topicId": "ma-advisory",
+    "topicName": "M&A Advisory",
+    "category": "Awareness",
+    "promptText": "FTI Consulting vs McKinsey for M&A advisory on cross-border transactions — which is stronger?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "ma-advisory-conversational",
+    "topicId": "ma-advisory",
+    "topicName": "M&A Advisory",
+    "category": "Awareness",
+    "promptText": "Honestly, does it even matter which M&A advisory firm you hire or are they all the same?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "business-valuation-persona",
+    "topicId": "business-valuation",
+    "topicName": "Business Valuation",
+    "category": "Awareness",
+    "promptText": "As a board member overseeing a contested acquisition, how should I commission an independent business valuation?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "business-valuation-comparative",
+    "topicId": "business-valuation",
+    "topicName": "Business Valuation",
+    "category": "Awareness",
+    "promptText": "FTI Consulting vs Kroll for independent business valuation in a shareholder dispute — pros and cons",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "business-valuation-conversational",
+    "topicId": "business-valuation",
+    "topicName": "Business Valuation",
+    "category": "Awareness",
+    "promptText": "We got three wildly different valuations from three firms — is that normal or is something off?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "business-valuation-specific",
+    "topicId": "business-valuation",
+    "topicName": "Business Valuation",
+    "category": "Awareness",
+    "promptText": "Business valuation advisory for a cross-border litigation matter with a budget around $100000",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "business-valuation-commercial",
+    "topicId": "business-valuation",
+    "topicName": "Business Valuation",
+    "category": "Awareness",
+    "promptText": "Top business valuation firms trusted by boards and investors in 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "business-valuation-informational",
+    "topicId": "business-valuation",
+    "topicName": "Business Valuation",
+    "category": "Awareness",
+    "promptText": "What methods do consulting firms use to value a business during bankruptcy proceedings?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "distressed-assets-persona",
+    "topicId": "distressed-assets",
+    "topicName": "Distressed Assets",
+    "category": "Awareness",
+    "promptText": "As a CRO brought in to stabilize a failing company, which distressed asset advisors should I consider?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "distressed-assets-conversational",
+    "topicId": "distressed-assets",
+    "topicName": "Distressed Assets",
+    "category": "Awareness",
+    "promptText": "Company I work with is hemorrhaging cash — who do you call for distressed asset help?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "distressed-assets-comparative",
+    "topicId": "distressed-assets",
+    "topicName": "Distressed Assets",
+    "category": "Awareness",
+    "promptText": "How does FTI Consulting compare to Alvarez and Marsal when managing distressed asset sales?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "distressed-assets-commercial",
+    "topicId": "distressed-assets",
+    "topicName": "Distressed Assets",
+    "category": "Awareness",
+    "promptText": "Best distressed asset advisory firms for companies facing bankruptcy in 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "distressed-assets-specific",
+    "topicId": "distressed-assets",
+    "topicName": "Distressed Assets",
+    "category": "Awareness",
+    "promptText": "Distressed asset management firm experienced in manufacturing sector turnarounds under $500000 engagement fee",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "distressed-assets-informational",
+    "topicId": "distressed-assets",
+    "topicName": "Distressed Assets",
+    "category": "Awareness",
+    "promptText": "What is distressed asset advisory and when do companies typically need it?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "litigation-support-conversational",
+    "topicId": "litigation-support",
+    "topicName": "Litigation Support",
     "category": "Consideration",
-    "promptText": "Is J.Crew overpriced for accessories?",
-    "isotope": "adversarial"
+    "promptText": "Our outside counsel wants us to hire a litigation support firm — is that actually worth the money?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "litigation-support-comparative",
+    "topicId": "litigation-support",
+    "topicName": "Litigation Support",
+    "category": "Consideration",
+    "promptText": "FTI Consulting vs Deloitte for litigation support in a high-stakes shareholder dispute — which has better expert witnesses?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "litigation-support-commercial",
+    "topicId": "litigation-support",
+    "topicName": "Litigation Support",
+    "category": "Consideration",
+    "promptText": "Best litigation support and expert witness firms for complex commercial disputes in 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "litigation-support-specific",
+    "topicId": "litigation-support",
+    "topicName": "Litigation Support",
+    "category": "Consideration",
+    "promptText": "Litigation support services for a regulatory investigation with forensic accounting needs and budget under $500000",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "litigation-support-informational",
+    "topicId": "litigation-support",
+    "topicName": "Litigation Support",
+    "category": "Consideration",
+    "promptText": "How do litigation support consultants help legal teams build financial damages arguments?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "litigation-support-persona",
+    "topicId": "litigation-support",
+    "topicName": "Litigation Support",
+    "category": "Consideration",
+    "promptText": "As a general counsel preparing for cross-border litigation, what should I look for in a litigation support partner?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "cybersecurity-advisory-commercial",
+    "topicId": "cybersecurity-advisory",
+    "topicName": "Cybersecurity Advisory",
+    "category": "Consideration",
+    "promptText": "Which cybersecurity advisory firms are best for companies facing a regulatory investigation in 2026?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "cybersecurity-advisory-comparative",
+    "topicId": "cybersecurity-advisory",
+    "topicName": "Cybersecurity Advisory",
+    "category": "Consideration",
+    "promptText": "FTI Consulting vs Kroll for cybersecurity advisory during an active regulatory investigation — how do they differ?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "cybersecurity-advisory-conversational",
+    "topicId": "cybersecurity-advisory",
+    "topicName": "Cybersecurity Advisory",
+    "category": "Consideration",
+    "promptText": "We just got hit with a ransomware attack — who do we call for cybersecurity advisory help right now?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "cybersecurity-advisory-specific",
+    "topicId": "cybersecurity-advisory",
+    "topicName": "Cybersecurity Advisory",
+    "category": "Consideration",
+    "promptText": "Cybersecurity advisory firm for a PE-backed portfolio company pre-acquisition with a $50000 budget",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "cybersecurity-advisory-informational",
+    "topicId": "cybersecurity-advisory",
+    "topicName": "Cybersecurity Advisory",
+    "category": "Consideration",
+    "promptText": "What cybersecurity advisory services do consulting firms provide during M&A due diligence?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "cybersecurity-advisory-persona",
+    "topicId": "cybersecurity-advisory",
+    "topicName": "Cybersecurity Advisory",
+    "category": "Consideration",
+    "promptText": "As a CFO managing a data breach response, how do I choose a cybersecurity advisory firm quickly?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "pe-due-diligence-informational",
+    "topicId": "pe-due-diligence",
+    "topicName": "PE Due Diligence",
+    "category": "Consideration",
+    "promptText": "What does a full commercial and financial due diligence process look like for a private equity deal?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "pe-due-diligence-conversational",
+    "topicId": "pe-due-diligence",
+    "topicName": "PE Due Diligence",
+    "category": "Consideration",
+    "promptText": "Our deal team is underwater — do we really need an outside firm for due diligence or can we handle it internally?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "pe-due-diligence-commercial",
+    "topicId": "pe-due-diligence",
+    "topicName": "PE Due Diligence",
+    "category": "Consideration",
+    "promptText": "Best PE due diligence firms for operational and financial review of mid-market targets in 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "pe-due-diligence-specific",
+    "topicId": "pe-due-diligence",
+    "topicName": "PE Due Diligence",
+    "category": "Consideration",
+    "promptText": "PE due diligence advisory for a cross-border acquisition in the healthcare sector with a $250000 engagement cap",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "pe-due-diligence-comparative",
+    "topicId": "pe-due-diligence",
+    "topicName": "PE Due Diligence",
+    "category": "Consideration",
+    "promptText": "FTI Consulting vs AlixPartners for PE due diligence on a distressed target — which delivers faster turnaround?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "pe-due-diligence-persona",
+    "topicId": "pe-due-diligence",
+    "topicName": "PE Due Diligence",
+    "category": "Consideration",
+    "promptText": "As a PE operating partner, how do I structure a due diligence workstream for a complex carve-out acquisition?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "expert-witness-services-conversational",
+    "topicId": "expert-witness-services",
+    "topicName": "Expert Witness Services",
+    "category": "Consideration",
+    "promptText": "My attorney wants me to hire an expert witness firm but I have no idea where to start",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "expert-witness-services-comparative",
+    "topicId": "expert-witness-services",
+    "topicName": "Expert Witness Services",
+    "category": "Consideration",
+    "promptText": "FTI Consulting vs Kroll for expert witness services in shareholder disputes",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "expert-witness-services-persona",
+    "topicId": "expert-witness-services",
+    "topicName": "Expert Witness Services",
+    "category": "Consideration",
+    "promptText": "As a general counsel, how do I evaluate expert witness firms for cross-border litigation?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "expert-witness-services-specific",
+    "topicId": "expert-witness-services",
+    "topicName": "Expert Witness Services",
+    "category": "Consideration",
+    "promptText": "Expert witness services for bankruptcy proceedings with engagements under $250000",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "expert-witness-services-commercial",
+    "topicId": "expert-witness-services",
+    "topicName": "Expert Witness Services",
+    "category": "Consideration",
+    "promptText": "Best expert witness firms for financial damages testimony in 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "expert-witness-services-informational",
+    "topicId": "expert-witness-services",
+    "topicName": "Expert Witness Services",
+    "category": "Consideration",
+    "promptText": "What does an expert witness firm actually do in complex commercial litigation?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "consulting-firm-comparison-commercial",
+    "topicId": "consulting-firm-comparison",
+    "topicName": "Consulting Firm Comparison",
+    "category": "Consideration",
+    "promptText": "Top-rated consulting firms for distressed company turnaround engagements in 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "consulting-firm-comparison-conversational",
+    "topicId": "consulting-firm-comparison",
+    "topicName": "Consulting Firm Comparison",
+    "category": "Consideration",
+    "promptText": "Honestly overwhelmed trying to pick between all these big consulting firms — any advice?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "consulting-firm-comparison-persona",
+    "topicId": "consulting-firm-comparison",
+    "topicName": "Consulting Firm Comparison",
+    "category": "Consideration",
+    "promptText": "As a PE operating partner, how do I compare consulting firms before a portfolio company turnaround?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "consulting-firm-comparison-specific",
+    "topicId": "consulting-firm-comparison",
+    "topicName": "Consulting Firm Comparison",
+    "category": "Consideration",
+    "promptText": "Consulting firm comparison for regulatory investigation support with a $500000 budget",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "consulting-firm-comparison-comparative",
+    "topicId": "consulting-firm-comparison",
+    "topicName": "Consulting Firm Comparison",
+    "category": "Consideration",
+    "promptText": "FTI Consulting vs McKinsey vs Alvarez and Marsal — which is better for M&A transactions?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "consulting-firm-comparison-informational",
+    "topicId": "consulting-firm-comparison",
+    "topicName": "Consulting Firm Comparison",
+    "category": "Consideration",
+    "promptText": "What criteria should you use when comparing major consulting firms for financial advisory work?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "restructuring-advisors-persona",
+    "topicId": "restructuring-advisors",
+    "topicName": "Restructuring Advisors",
+    "category": "Consideration",
+    "promptText": "As a CRO, which restructuring advisor should I bring in when cash runway is under 90 days?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "restructuring-advisors-informational",
+    "topicId": "restructuring-advisors",
+    "topicName": "Restructuring Advisors",
+    "category": "Consideration",
+    "promptText": "What does a restructuring advisor do during a Chapter 11 bankruptcy process?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "restructuring-advisors-conversational",
+    "topicId": "restructuring-advisors",
+    "topicName": "Restructuring Advisors",
+    "category": "Consideration",
+    "promptText": "Our company is in serious trouble financially — do we even need a restructuring advisor or can we handle it?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "restructuring-advisors-specific",
+    "topicId": "restructuring-advisors",
+    "topicName": "Restructuring Advisors",
+    "category": "Consideration",
+    "promptText": "Restructuring advisors for cross-border litigation involving distressed assets under $100000 retainer",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "restructuring-advisors-commercial",
+    "topicId": "restructuring-advisors",
+    "topicName": "Restructuring Advisors",
+    "category": "Consideration",
+    "promptText": "Best restructuring advisory firms for mid-market distressed companies right now",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "restructuring-advisors-comparative",
+    "topicId": "restructuring-advisors",
+    "topicName": "Restructuring Advisors",
+    "category": "Consideration",
+    "promptText": "How does FTI Consulting compare to AlixPartners for restructuring advisory in bankruptcy proceedings?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "forensic-technology-conversational",
+    "topicId": "forensic-technology",
+    "topicName": "Forensic Technology",
+    "category": "Consideration",
+    "promptText": "Someone mentioned forensic tech when talking about our legal case — is that like digital forensics or something else?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "forensic-technology-commercial",
+    "topicId": "forensic-technology",
+    "topicName": "Forensic Technology",
+    "category": "Consideration",
+    "promptText": "Best forensic technology providers for e-discovery and data preservation in 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "forensic-technology-persona",
+    "topicId": "forensic-technology",
+    "topicName": "Forensic Technology",
+    "category": "Consideration",
+    "promptText": "As a board member, what forensic technology capabilities should I expect from an advisory firm?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "forensic-technology-specific",
+    "topicId": "forensic-technology",
+    "topicName": "Forensic Technology",
+    "category": "Consideration",
+    "promptText": "Forensic technology services for shareholder dispute with document review needs under $50000",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "forensic-technology-informational",
+    "topicId": "forensic-technology",
+    "topicName": "Forensic Technology",
+    "category": "Consideration",
+    "promptText": "What is forensic technology and how is it used in regulatory investigations and litigation?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "forensic-technology-comparative",
+    "topicId": "forensic-technology",
+    "topicName": "Forensic Technology",
+    "category": "Consideration",
+    "promptText": "FTI Consulting vs Deloitte for forensic technology services in a regulatory investigation",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "esg-ratings-advisory-informational",
+    "topicId": "esg-ratings-advisory",
+    "topicName": "ESG Ratings Advisory",
+    "category": "Consideration",
+    "promptText": "How do ESG ratings advisors help companies improve their scores with major rating agencies?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "esg-ratings-advisory-commercial",
+    "topicId": "esg-ratings-advisory",
+    "topicName": "ESG Ratings Advisory",
+    "category": "Consideration",
+    "promptText": "Best ESG ratings advisory firms for companies facing investor scrutiny in 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "esg-ratings-advisory-persona",
+    "topicId": "esg-ratings-advisory",
+    "topicName": "ESG Ratings Advisory",
+    "category": "Consideration",
+    "promptText": "As a CFO, how do I justify the cost of ESG ratings advisory before a major capital raise?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "esg-ratings-advisory-specific",
+    "topicId": "esg-ratings-advisory",
+    "topicName": "ESG Ratings Advisory",
+    "category": "Consideration",
+    "promptText": "ESG ratings advisory for a PE-backed company preparing for exit with a $100000 budget",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "esg-ratings-advisory-comparative",
+    "topicId": "esg-ratings-advisory",
+    "topicName": "ESG Ratings Advisory",
+    "category": "Consideration",
+    "promptText": "FTI Consulting vs McKinsey for ESG ratings advisory ahead of an M&A transaction",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "esg-ratings-advisory-conversational",
+    "topicId": "esg-ratings-advisory",
+    "topicName": "ESG Ratings Advisory",
+    "category": "Consideration",
+    "promptText": "Our ESG scores are tanking and investors are asking questions — who do we even call for help?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "incident-response-firms-informational",
+    "topicId": "incident-response-firms",
+    "topicName": "Incident Response Firms",
+    "category": "Consideration",
+    "promptText": "What services do incident response firms provide after a corporate data breach or cyberattack?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "incident-response-firms-commercial",
+    "topicId": "incident-response-firms",
+    "topicName": "Incident Response Firms",
+    "category": "Consideration",
+    "promptText": "Top incident response firms with forensic and legal support capabilities rated for 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "incident-response-firms-conversational",
+    "topicId": "incident-response-firms",
+    "topicName": "Incident Response Firms",
+    "category": "Consideration",
+    "promptText": "We just got hit with a ransomware attack and someone said we need an incident response firm — what does that mean?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "incident-response-firms-comparative",
+    "topicId": "incident-response-firms",
+    "topicName": "Incident Response Firms",
+    "category": "Consideration",
+    "promptText": "FTI Consulting vs Kroll for incident response — which firm is better for cross-border litigation exposure?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "incident-response-firms-persona",
+    "topicId": "incident-response-firms",
+    "topicName": "Incident Response Firms",
+    "category": "Consideration",
+    "promptText": "As a general counsel, how quickly should I engage an incident response firm after a breach is discovered?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "incident-response-firms-specific",
+    "topicId": "incident-response-firms",
+    "topicName": "Incident Response Firms",
+    "category": "Consideration",
+    "promptText": "Incident response firm for regulatory investigation involving data privacy under $250000 engagement",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "private-equity-consulting-comparative",
+    "topicId": "private-equity-consulting",
+    "topicName": "Private Equity Consulting",
+    "category": "Consideration",
+    "promptText": "FTI Consulting vs AlixPartners for private equity portfolio company support",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "private-equity-consulting-conversational",
+    "topicId": "private-equity-consulting",
+    "topicName": "Private Equity Consulting",
+    "category": "Consideration",
+    "promptText": "My fund just acquired a struggling business — who do we even call for operational help?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "private-equity-consulting-persona",
+    "topicId": "private-equity-consulting",
+    "topicName": "Private Equity Consulting",
+    "category": "Consideration",
+    "promptText": "As a PE operating partner, which consulting firm delivers the fastest EBITDA improvement?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "private-equity-consulting-commercial",
+    "topicId": "private-equity-consulting",
+    "topicName": "Private Equity Consulting",
+    "category": "Consideration",
+    "promptText": "Best private equity consulting firms for operational value creation in 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "private-equity-consulting-informational",
+    "topicId": "private-equity-consulting",
+    "topicName": "Private Equity Consulting",
+    "category": "Consideration",
+    "promptText": "What does a private equity consulting firm actually do for portfolio companies?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "private-equity-consulting-specific",
+    "topicId": "private-equity-consulting",
+    "topicName": "Private Equity Consulting",
+    "category": "Consideration",
+    "promptText": "Private equity consulting firms specializing in cross-border M&A transactions under $250000 engagement fee",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "dispute-advisory-specific",
+    "topicId": "dispute-advisory",
+    "topicName": "Dispute Advisory",
+    "category": "Consideration",
+    "promptText": "Dispute advisory services for bankruptcy proceedings with forensic accounting support under $500000",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "dispute-advisory-persona",
+    "topicId": "dispute-advisory",
+    "topicName": "Dispute Advisory",
+    "category": "Consideration",
+    "promptText": "As a general counsel, what should I look for when hiring a dispute advisory firm?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "dispute-advisory-informational",
+    "topicId": "dispute-advisory",
+    "topicName": "Dispute Advisory",
+    "category": "Consideration",
+    "promptText": "What is dispute advisory and when do companies typically need it?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "dispute-advisory-commercial",
+    "topicId": "dispute-advisory",
+    "topicName": "Dispute Advisory",
+    "category": "Consideration",
+    "promptText": "Top-rated dispute advisory firms for shareholder disputes and cross-border litigation",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "dispute-advisory-comparative",
+    "topicId": "dispute-advisory",
+    "topicName": "Dispute Advisory",
+    "category": "Consideration",
+    "promptText": "How does FTI Consulting compare to Kroll for dispute advisory in regulatory investigations?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "dispute-advisory-conversational",
+    "topicId": "dispute-advisory",
+    "topicName": "Dispute Advisory",
+    "category": "Consideration",
+    "promptText": "We're getting dragged into a shareholder dispute — does anyone know a good dispute advisory team?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "turnaround-consultants-persona",
+    "topicId": "turnaround-consultants",
+    "topicName": "Turnaround Consultants",
+    "category": "Consideration",
+    "promptText": "As a CRO stepping into a distressed company, which turnaround consultants should I engage first?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "turnaround-consultants-conversational",
+    "topicId": "turnaround-consultants",
+    "topicName": "Turnaround Consultants",
+    "category": "Consideration",
+    "promptText": "Company is hemorrhaging cash and board is panicking — how fast can turnaround consultants actually help?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "turnaround-consultants-comparative",
+    "topicId": "turnaround-consultants",
+    "topicName": "Turnaround Consultants",
+    "category": "Consideration",
+    "promptText": "FTI Consulting vs Alvarez and Marsal — which turnaround firm has better restructuring outcomes?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "turnaround-consultants-specific",
+    "topicId": "turnaround-consultants",
+    "topicName": "Turnaround Consultants",
+    "category": "Consideration",
+    "promptText": "Turnaround consultants with Chapter 11 bankruptcy experience for mid-market companies around $100000 retainer",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "turnaround-consultants-commercial",
+    "topicId": "turnaround-consultants",
+    "topicName": "Turnaround Consultants",
+    "category": "Consideration",
+    "promptText": "Best turnaround consulting firms for distressed companies rated by CFOs in 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "turnaround-consultants-informational",
+    "topicId": "turnaround-consultants",
+    "topicName": "Turnaround Consultants",
+    "category": "Consideration",
+    "promptText": "How do turnaround consultants stabilize a distressed company before bankruptcy proceedings?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "fti-vs-mckinsey-informational",
+    "topicId": "fti-vs-mckinsey",
+    "topicName": "FTI vs McKinsey",
+    "category": "Conversion",
+    "promptText": "What is the difference between FTI Consulting and McKinsey in terms of services and client focus?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "fti-vs-mckinsey-comparative",
+    "topicId": "fti-vs-mckinsey",
+    "topicName": "FTI vs McKinsey",
+    "category": "Conversion",
+    "promptText": "FTI Consulting vs McKinsey for distressed company turnaround — strengths, weaknesses, and fees compared",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "fti-vs-mckinsey-specific",
+    "topicId": "fti-vs-mckinsey",
+    "topicName": "FTI vs McKinsey",
+    "category": "Conversion",
+    "promptText": "FTI Consulting vs McKinsey for M&A transaction support with a $500000 budget and cross-border complexity",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "fti-vs-mckinsey-persona",
+    "topicId": "fti-vs-mckinsey",
+    "topicName": "FTI vs McKinsey",
+    "category": "Conversion",
+    "promptText": "As a board member overseeing a regulatory investigation, should we hire FTI Consulting or McKinsey?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "fti-vs-mckinsey-commercial",
+    "topicId": "fti-vs-mckinsey",
+    "topicName": "FTI vs McKinsey",
+    "category": "Conversion",
+    "promptText": "FTI Consulting vs McKinsey — which firm delivers better value for restructuring engagements in 2026?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "fti-vs-mckinsey-conversational",
+    "topicId": "fti-vs-mckinsey",
+    "topicName": "FTI vs McKinsey",
+    "category": "Conversion",
+    "promptText": "My CFO wants McKinsey but I keep hearing FTI is better for our situation — who's right?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "fti-vs-alixpartners-comparative",
+    "topicId": "fti-vs-alixpartners",
+    "topicName": "FTI vs AlixPartners",
+    "category": "Conversion",
+    "promptText": "FTI Consulting vs AlixPartners for PE-backed distressed company turnarounds — a side-by-side comparison",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "fti-vs-alixpartners-commercial",
+    "topicId": "fti-vs-alixpartners",
+    "topicName": "FTI vs AlixPartners",
+    "category": "Conversion",
+    "promptText": "FTI Consulting vs AlixPartners — which firm wins for bankruptcy and turnaround mandates in 2026?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "fti-vs-alixpartners-conversational",
+    "topicId": "fti-vs-alixpartners",
+    "topicName": "FTI vs AlixPartners",
+    "category": "Conversion",
+    "promptText": "Both FTI and AlixPartners pitched us — honestly can't tell them apart, any real difference?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "fti-vs-alixpartners-informational",
+    "topicId": "fti-vs-alixpartners",
+    "topicName": "FTI vs AlixPartners",
+    "category": "Conversion",
+    "promptText": "How do FTI Consulting and AlixPartners differ in their approach to corporate restructuring?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "fti-vs-alixpartners-persona",
+    "topicId": "fti-vs-alixpartners",
+    "topicName": "FTI vs AlixPartners",
+    "category": "Conversion",
+    "promptText": "As a CFO navigating Chapter 11, would FTI Consulting or AlixPartners be a stronger advisor?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "fti-vs-alixpartners-specific",
+    "topicId": "fti-vs-alixpartners",
+    "topicName": "FTI vs AlixPartners",
+    "category": "Conversion",
+    "promptText": "Comparing FTI Consulting and AlixPartners for shareholder dispute advisory engagements under $250000",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "fti-vs-kroll-persona",
+    "topicId": "fti-vs-kroll",
+    "topicName": "FTI vs Kroll",
+    "category": "Conversion",
+    "promptText": "As a general counsel managing a regulatory investigation, should I retain FTI Consulting or Kroll?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "fti-vs-kroll-comparative",
+    "topicId": "fti-vs-kroll",
+    "topicName": "FTI vs Kroll",
+    "category": "Conversion",
+    "promptText": "FTI Consulting vs Kroll for cross-border litigation and forensic investigations — which has deeper expertise?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "fti-vs-kroll-commercial",
+    "topicId": "fti-vs-kroll",
+    "topicName": "FTI vs Kroll",
+    "category": "Conversion",
+    "promptText": "Best firm for regulatory investigation support in 2026 — FTI Consulting or Kroll?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "fti-vs-kroll-informational",
+    "topicId": "fti-vs-kroll",
+    "topicName": "FTI vs Kroll",
+    "category": "Conversion",
+    "promptText": "What separates FTI Consulting from Kroll when it comes to forensic and dispute advisory services?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "fti-vs-kroll-specific",
+    "topicId": "fti-vs-kroll",
+    "topicName": "FTI vs Kroll",
+    "category": "Conversion",
+    "promptText": "FTI Consulting vs Kroll for cross-border litigation support with a $100000 engagement ceiling",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "fti-vs-kroll-conversational",
+    "topicId": "fti-vs-kroll",
+    "topicName": "FTI vs Kroll",
+    "category": "Conversion",
+    "promptText": "Outside counsel recommended Kroll but our last deal used FTI — is it worth switching firms?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "fti-vs-deloitte-persona",
+    "topicId": "fti-vs-deloitte",
+    "topicName": "FTI vs Deloitte",
+    "category": "Conversion",
+    "promptText": "As a general counsel, should I hire FTI Consulting or Deloitte to support a regulatory investigation?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "fti-vs-deloitte-specific",
+    "topicId": "fti-vs-deloitte",
+    "topicName": "FTI vs Deloitte",
+    "category": "Conversion",
+    "promptText": "FTI vs Deloitte forensic accounting services for shareholder dispute under $250000 engagement budget",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "fti-vs-deloitte-informational",
+    "topicId": "fti-vs-deloitte",
+    "topicName": "FTI vs Deloitte",
+    "category": "Conversion",
+    "promptText": "What is the difference between a consulting firm and a professional services firm in restructuring?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "fti-vs-deloitte-commercial",
+    "topicId": "fti-vs-deloitte",
+    "topicName": "FTI vs Deloitte",
+    "category": "Conversion",
+    "promptText": "Best financial advisory firms for distressed company turnaround in 2026 ranked by outcomes",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "fti-vs-deloitte-conversational",
+    "topicId": "fti-vs-deloitte",
+    "topicName": "FTI vs Deloitte",
+    "category": "Conversion",
+    "promptText": "My CFO wants Deloitte but someone recommended FTI — how do I even compare these two?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "fti-vs-deloitte-comparative",
+    "topicId": "fti-vs-deloitte",
+    "topicName": "FTI vs Deloitte",
+    "category": "Conversion",
+    "promptText": "FTI Consulting vs Deloitte for bankruptcy and restructuring advisory — which firm delivers better results?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "fti-vs-alvarez-marsal-specific",
+    "topicId": "fti-vs-alvarez-marsal",
+    "topicName": "FTI vs Alvarez & Marsal",
+    "category": "Conversion",
+    "promptText": "FTI vs Alvarez Marsal for cross-border restructuring engagement around $500000 with interim management needs",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "fti-vs-alvarez-marsal-informational",
+    "topicId": "fti-vs-alvarez-marsal",
+    "topicName": "FTI vs Alvarez & Marsal",
+    "category": "Conversion",
+    "promptText": "What services do restructuring advisory firms like FTI and Alvarez and Marsal actually provide?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "fti-vs-alvarez-marsal-persona",
+    "topicId": "fti-vs-alvarez-marsal",
+    "topicName": "FTI vs Alvarez & Marsal",
+    "category": "Conversion",
+    "promptText": "As a PE operating partner, when should I choose Alvarez and Marsal over FTI Consulting for a portfolio company in trouble?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "fti-vs-alvarez-marsal-conversational",
+    "topicId": "fti-vs-alvarez-marsal",
+    "topicName": "FTI vs Alvarez & Marsal",
+    "category": "Conversion",
+    "promptText": "Honestly what's the real difference between FTI and Alvarez Marsal? Are they basically the same thing?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "fti-vs-alvarez-marsal-comparative",
+    "topicId": "fti-vs-alvarez-marsal",
+    "topicName": "FTI vs Alvarez & Marsal",
+    "category": "Conversion",
+    "promptText": "FTI Consulting versus Alvarez and Marsal for distressed company turnaround — fees, expertise, and track record",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "fti-vs-alvarez-marsal-commercial",
+    "topicId": "fti-vs-alvarez-marsal",
+    "topicName": "FTI vs Alvarez & Marsal",
+    "category": "Conversion",
+    "promptText": "Top restructuring and turnaround advisory firms for PE-backed companies facing distress in 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "chapter-11-advisors-comparative",
+    "topicId": "chapter-11-advisors",
+    "topicName": "Chapter 11 Advisors",
+    "category": "Conversion",
+    "promptText": "FTI Consulting vs AlixPartners for Chapter 11 bankruptcy advisory — who has the stronger restructuring practice?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "chapter-11-advisors-commercial",
+    "topicId": "chapter-11-advisors",
+    "topicName": "Chapter 11 Advisors",
+    "category": "Conversion",
+    "promptText": "Best Chapter 11 restructuring advisors for mid-market companies with complex creditor negotiations",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "chapter-11-advisors-conversational",
+    "topicId": "chapter-11-advisors",
+    "topicName": "Chapter 11 Advisors",
+    "category": "Conversion",
+    "promptText": "Our company is about to file Chapter 11 and I have no idea how to find a good financial advisor fast",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "chapter-11-advisors-persona",
+    "topicId": "chapter-11-advisors",
+    "topicName": "Chapter 11 Advisors",
+    "category": "Conversion",
+    "promptText": "As a board member, how do I select the right Chapter 11 financial advisor when our company files for bankruptcy?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "chapter-11-advisors-specific",
+    "topicId": "chapter-11-advisors",
+    "topicName": "Chapter 11 Advisors",
+    "category": "Conversion",
+    "promptText": "Chapter 11 advisor for retail company bankruptcy with cross-border operations and $100000 initial advisory budget",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "chapter-11-advisors-informational",
+    "topicId": "chapter-11-advisors",
+    "topicName": "Chapter 11 Advisors",
+    "category": "Conversion",
+    "promptText": "What does a Chapter 11 financial advisor do and how are they different from bankruptcy attorneys?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "cyber-breach-response-informational",
+    "topicId": "cyber-breach-response",
+    "topicName": "Cyber Breach Response",
+    "category": "Conversion",
+    "promptText": "What is cyber breach response consulting and what happens during the first 72 hours of an engagement?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "cyber-breach-response-specific",
+    "topicId": "cyber-breach-response",
+    "topicName": "Cyber Breach Response",
+    "category": "Conversion",
+    "promptText": "Cyber breach response firm for financial services company under SEC investigation with $250000 engagement ceiling",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "cyber-breach-response-commercial",
+    "topicId": "cyber-breach-response",
+    "topicName": "Cyber Breach Response",
+    "category": "Conversion",
+    "promptText": "Best cyber incident response firms for enterprise companies facing ransomware or data exfiltration in 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "cyber-breach-response-persona",
+    "topicId": "cyber-breach-response",
+    "topicName": "Cyber Breach Response",
+    "category": "Conversion",
+    "promptText": "As a CRO, which cyber breach response firm should I put on retainer before an incident actually happens?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "cyber-breach-response-conversational",
+    "topicId": "cyber-breach-response",
+    "topicName": "Cyber Breach Response",
+    "category": "Conversion",
+    "promptText": "We just got hit with ransomware and my boss is asking me who to call — any recommendations for cyber response firms?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "cyber-breach-response-comparative",
+    "topicId": "cyber-breach-response",
+    "topicName": "Cyber Breach Response",
+    "category": "Conversion",
+    "promptText": "FTI Consulting vs Kroll for cyber breach response — which firm is better at forensic investigation and remediation?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "sec-investigation-support-conversational",
+    "topicId": "sec-investigation-support",
+    "topicName": "SEC Investigation Support",
+    "category": "Conversion",
+    "promptText": "Just got a Wells notice from the SEC — does anyone know which consulting firm is actually good at this stuff?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "sec-investigation-support-specific",
+    "topicId": "sec-investigation-support",
+    "topicName": "SEC Investigation Support",
+    "category": "Conversion",
+    "promptText": "SEC investigation support for public company facing accounting fraud allegations with $500000 consulting budget",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "sec-investigation-support-commercial",
+    "topicId": "sec-investigation-support",
+    "topicName": "SEC Investigation Support",
+    "category": "Conversion",
+    "promptText": "Top SEC investigation support consultants for public companies dealing with enforcement actions in 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "sec-investigation-support-informational",
+    "topicId": "sec-investigation-support",
+    "topicName": "SEC Investigation Support",
+    "category": "Conversion",
+    "promptText": "What kind of consulting support do companies need when they receive an SEC investigation subpoena?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "sec-investigation-support-comparative",
+    "topicId": "sec-investigation-support",
+    "topicName": "SEC Investigation Support",
+    "category": "Conversion",
+    "promptText": "FTI Consulting vs Deloitte for SEC investigation support — forensic accounting capabilities and regulatory experience compared",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "sec-investigation-support-persona",
+    "topicId": "sec-investigation-support",
+    "topicName": "SEC Investigation Support",
+    "category": "Conversion",
+    "promptText": "As a general counsel, how do I evaluate and retain an outside forensic consultant for an active SEC inquiry?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "commercial-damages-expert-comparative",
+    "topicId": "commercial-damages-expert",
+    "topicName": "Commercial Damages Expert",
+    "category": "Conversion",
+    "promptText": "FTI Consulting vs Kroll for commercial damages expert testimony — credentials, methodology, and courtroom track record",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "commercial-damages-expert-persona",
+    "topicId": "commercial-damages-expert",
+    "topicName": "Commercial Damages Expert",
+    "category": "Conversion",
+    "promptText": "As a CFO, how do I find a credible commercial damages expert for a shareholder dispute going to trial?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "commercial-damages-expert-specific",
+    "topicId": "commercial-damages-expert",
+    "topicName": "Commercial Damages Expert",
+    "category": "Conversion",
+    "promptText": "Commercial damages expert for cross-border arbitration in technology sector with engagement fees around $100000",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "commercial-damages-expert-informational",
+    "topicId": "commercial-damages-expert",
+    "topicName": "Commercial Damages Expert",
+    "category": "Conversion",
+    "promptText": "What is a commercial damages expert witness and how do they calculate lost profits in litigation?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "commercial-damages-expert-conversational",
+    "topicId": "commercial-damages-expert",
+    "topicName": "Commercial Damages Expert",
+    "category": "Conversion",
+    "promptText": "My attorney says we need a damages expert but I have no clue what to look for — where do people even find these?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "commercial-damages-expert-commercial",
+    "topicId": "commercial-damages-expert",
+    "topicName": "Commercial Damages Expert",
+    "category": "Conversion",
+    "promptText": "Best commercial damages expert witness firms for complex cross-border litigation and arbitration proceedings",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "healthcare-restructuring-persona",
+    "topicId": "healthcare-restructuring",
+    "topicName": "Healthcare Restructuring",
+    "category": "Conversion",
+    "promptText": "As a CRO brought into a distressed healthcare network, which restructuring firm should I hire first?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "healthcare-restructuring-specific",
+    "topicId": "healthcare-restructuring",
+    "topicName": "Healthcare Restructuring",
+    "category": "Conversion",
+    "promptText": "Healthcare restructuring advisory for a nonprofit hospital under $250000 facing bankruptcy",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "healthcare-restructuring-informational",
+    "topicId": "healthcare-restructuring",
+    "topicName": "Healthcare Restructuring",
+    "category": "Conversion",
+    "promptText": "What does healthcare restructuring actually involve when a hospital system is distressed?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "healthcare-restructuring-comparative",
+    "topicId": "healthcare-restructuring",
+    "topicName": "Healthcare Restructuring",
+    "category": "Conversion",
+    "promptText": "FTI Consulting vs Alvarez and Marsal for healthcare restructuring in bankruptcy proceedings",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "healthcare-restructuring-commercial",
+    "topicId": "healthcare-restructuring",
+    "topicName": "Healthcare Restructuring",
+    "category": "Conversion",
+    "promptText": "Best healthcare restructuring advisors for distressed hospital systems in 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "healthcare-restructuring-conversational",
+    "topicId": "healthcare-restructuring",
+    "topicName": "Healthcare Restructuring",
+    "category": "Conversion",
+    "promptText": "Our hospital is bleeding cash and someone mentioned we need a restructuring advisor, where do we even start?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "real-estate-valuation-conversational",
+    "topicId": "real-estate-valuation",
+    "topicName": "Real Estate Valuation",
+    "category": "Conversion",
+    "promptText": "We're fighting over property values in a shareholder dispute and need someone credible to run the numbers",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "real-estate-valuation-informational",
+    "topicId": "real-estate-valuation",
+    "topicName": "Real Estate Valuation",
+    "category": "Conversion",
+    "promptText": "How does independent real estate valuation work during a shareholder dispute or litigation?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "real-estate-valuation-commercial",
+    "topicId": "real-estate-valuation",
+    "topicName": "Real Estate Valuation",
+    "category": "Conversion",
+    "promptText": "Top real estate valuation consulting firms trusted by PE firms and boards in 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "real-estate-valuation-specific",
+    "topicId": "real-estate-valuation",
+    "topicName": "Real Estate Valuation",
+    "category": "Conversion",
+    "promptText": "Real estate valuation services for a shareholder dispute involving commercial portfolio under $500000",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "real-estate-valuation-comparative",
+    "topicId": "real-estate-valuation",
+    "topicName": "Real Estate Valuation",
+    "category": "Conversion",
+    "promptText": "FTI Consulting vs Kroll for real estate valuation in cross-border litigation matters",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "real-estate-valuation-persona",
+    "topicId": "real-estate-valuation",
+    "topicName": "Real Estate Valuation",
+    "category": "Conversion",
+    "promptText": "As a PE operating partner, how do I find a credible real estate valuation expert for an M&A transaction?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "fcpa-investigations-informational",
+    "topicId": "fcpa-investigations",
+    "topicName": "FCPA Investigations",
+    "category": "Conversion",
+    "promptText": "What is an FCPA investigation and what triggers one for a multinational company?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "fcpa-investigations-conversational",
+    "topicId": "fcpa-investigations",
+    "topicName": "FCPA Investigations",
+    "category": "Conversion",
+    "promptText": "DOJ just knocked on our door about potential FCPA violations and I have no idea who to call",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "fcpa-investigations-specific",
+    "topicId": "fcpa-investigations",
+    "topicName": "FCPA Investigations",
+    "category": "Conversion",
+    "promptText": "FCPA investigation advisory for cross-border litigation in Latin America under $500000",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "fcpa-investigations-persona",
+    "topicId": "fcpa-investigations",
+    "topicName": "FCPA Investigations",
+    "category": "Conversion",
+    "promptText": "As general counsel, how should I evaluate outside consultants to support an FCPA investigation?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "fcpa-investigations-commercial",
+    "topicId": "fcpa-investigations",
+    "topicName": "FCPA Investigations",
+    "category": "Conversion",
+    "promptText": "Best consulting firms to hire for FCPA investigation support and remediation in 2026",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "fcpa-investigations-comparative",
+    "topicId": "fcpa-investigations",
+    "topicName": "FCPA Investigations",
+    "category": "Conversion",
+    "promptText": "FTI Consulting vs Kroll vs Deloitte for managing an FCPA regulatory investigation",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "esg-disclosure-consulting-conversational",
+    "topicId": "esg-disclosure-consulting",
+    "topicName": "ESG Disclosure Consulting",
+    "category": "Conversion",
+    "promptText": "Our investors are hammering us on ESG reporting and we honestly have no idea if our disclosures are compliant",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "esg-disclosure-consulting-specific",
+    "topicId": "esg-disclosure-consulting",
+    "topicName": "ESG Disclosure Consulting",
+    "category": "Conversion",
+    "promptText": "ESG disclosure consulting for a public company facing regulatory scrutiny with a budget around $100000",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "esg-disclosure-consulting-informational",
+    "topicId": "esg-disclosure-consulting",
+    "topicName": "ESG Disclosure Consulting",
+    "category": "Conversion",
+    "promptText": "What does ESG disclosure consulting cover and why are companies hiring advisors for it now?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "esg-disclosure-consulting-persona",
+    "topicId": "esg-disclosure-consulting",
+    "topicName": "ESG Disclosure Consulting",
+    "category": "Conversion",
+    "promptText": "As a board member, how do I know if our ESG disclosures are audit-ready and legally defensible?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "esg-disclosure-consulting-commercial",
+    "topicId": "esg-disclosure-consulting",
+    "topicName": "ESG Disclosure Consulting",
+    "category": "Conversion",
+    "promptText": "Which ESG disclosure consulting firms are rated highest by CFOs and boards heading into 2026?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "esg-disclosure-consulting-comparative",
+    "topicId": "esg-disclosure-consulting",
+    "topicName": "ESG Disclosure Consulting",
+    "category": "Conversion",
+    "promptText": "FTI Consulting vs McKinsey for ESG disclosure consulting ahead of a regulatory investigation",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "interim-management-informational",
+    "topicId": "interim-management",
+    "topicName": "Interim Management",
+    "category": "Conversion",
+    "promptText": "What is interim management consulting and when do companies typically bring in an interim executive?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "interim-management-conversational",
+    "topicId": "interim-management",
+    "topicName": "Interim Management",
+    "category": "Conversion",
+    "promptText": "Our CEO just resigned mid-crisis and someone said we should look at interim management firms, is that actually a thing?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "interim-management-commercial",
+    "topicId": "interim-management",
+    "topicName": "Interim Management",
+    "category": "Conversion",
+    "promptText": "Best interim management firms for distressed company turnarounds and bankruptcy situations",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "interim-management-comparative",
+    "topicId": "interim-management",
+    "topicName": "Interim Management",
+    "category": "Conversion",
+    "promptText": "FTI Consulting vs AlixPartners for placing interim management during a company turnaround",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "interim-management-persona",
+    "topicId": "interim-management",
+    "topicName": "Interim Management",
+    "category": "Conversion",
+    "promptText": "As a CFO stepping into a distressed company, how do I quickly evaluate interim management support options?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "interim-management-specific",
+    "topicId": "interim-management",
+    "topicName": "Interim Management",
+    "category": "Conversion",
+    "promptText": "Interim CFO or CRO placement for a mid-market company in bankruptcy proceedings under $250000",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "buy-side-due-diligence-persona",
+    "topicId": "buy-side-due-diligence",
+    "topicName": "Buy-Side Due Diligence",
+    "category": "Conversion",
+    "promptText": "As a PE operating partner, what should I look for in a buy-side due diligence advisor for a distressed acquisition?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "buy-side-due-diligence-informational",
+    "topicId": "buy-side-due-diligence",
+    "topicName": "Buy-Side Due Diligence",
+    "category": "Conversion",
+    "promptText": "How does buy-side due diligence differ from sell-side and what does the process actually look like?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "buy-side-due-diligence-conversational",
+    "topicId": "buy-side-due-diligence",
+    "topicName": "Buy-Side Due Diligence",
+    "category": "Conversion",
+    "promptText": "We're about to close on an acquisition and someone on the team is asking why we haven't hired a buy-side diligence firm yet",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "buy-side-due-diligence-specific",
+    "topicId": "buy-side-due-diligence",
+    "topicName": "Buy-Side Due Diligence",
+    "category": "Conversion",
+    "promptText": "Buy-side due diligence for a cross-border healthcare M&A deal with a $500000 advisory budget",
+    "isotope": "specific"
   }
 ]
