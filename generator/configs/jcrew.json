@@ -1,0 +1,36 @@
+{
+  "client": {
+    "name": "J.Crew",
+    "domains": ["jcrew.com", "jcrewfactory.com"],
+    "industry": "fashion-apparel"
+  },
+  "competitors": [
+    { "name": "Banana Republic", "domains": ["bananarepublic.com", "bananarepublicfactory.com"] },
+    { "name": "Everlane", "domains": ["everlane.com"] },
+    { "name": "Gap", "domains": ["gap.com"] },
+    { "name": "Abercrombie & Fitch", "domains": ["abercrombie.com"] },
+    { "name": "Club Monaco", "domains": ["clubmonaco.com"] }
+  ],
+  "archetype": "transactional-commerce",
+  "generation": {
+    "targetPromptCount": 250,
+    "topicsPerCategory": {
+      "Awareness": 15,
+      "Consideration": 12,
+      "Conversion": 18
+    }
+  },
+  "keyTopics": [
+    "Business Casual", "Wedding Guest", "Denim", "Capsule Wardrobe",
+    "Workwear", "Sustainable Fashion", "Office Style", "Basics",
+    "Accessories", "Winter Coats", "Summer Dresses", "Gift Shopping"
+  ],
+  "personas": [
+    "young professional", "working parent", "recent graduate",
+    "remote worker", "finance professional", "college student",
+    "budget-conscious shopper", "fashion-forward millennial"
+  ],
+  "pricePoints": ["50", "100", "150", "200"],
+  "contexts": ["office", "weekend", "date night", "travel", "wedding", "holiday party"],
+  "attributes": ["sustainable", "wrinkle-free", "machine washable", "classic", "slim-fit", "versatile"]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "aiso-prompt-library",
+  "version": "1.0.0",
+  "description": "Generates prompt libraries for the AISO Rapid Diagnostic using archetype templates + Claude API enrichment. Supports 5 archetypes, 6 isotope types, Supabase persistence, and quality validation.",
+  "author": {
+    "name": "AISO Team"
+  },
+  "keywords": ["aiso", "prompts", "ai-search", "diagnostic", "prompt-library"]
+}
