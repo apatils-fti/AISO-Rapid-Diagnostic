@@ -21,10 +21,9 @@
       "situated": 0.20,
       "constrained": 0.20,
       "adversarial": 0.15
-    }
+    },
+    "weightsActive": false
   },
-  "minPromptCount": 134,
-  "quickRunMinimum": 67,
   "seeds": {
     "learning": {
       "declarative": [
