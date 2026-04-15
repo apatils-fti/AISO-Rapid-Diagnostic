@@ -86,3 +86,86 @@ export function getAllBrandMentionRates() {
     }))
     .sort((a, b) => b.mentionRate - a.mentionRate);
 }
+
+/**
+ * Get brand metrics filtered to selected platforms.
+ * Averages mention rates across the selected platforms, weighted by response count.
+ * Falls back to combined overall metrics if per-platform data isn't available.
+ */
+export function getFilteredBrandMetrics(selectedPlatforms?: string[]) {
+  const byPlatform = (analyzedMetrics.textMetrics as any)?.byPlatform;
+  if (!selectedPlatforms || !byPlatform) {
+    return analyzedMetrics.textMetrics?.overall?.brandMetrics ?? {};
+  }
+
+  const merged: Record<string, { mentionRate: number; firstMentionRate: number; avgMentionCount: number; totalMentions: number }> = {};
+  let totalResponses = 0;
+
+  for (const platform of selectedPlatforms) {
+    const platformData = byPlatform[platform];
+    if (!platformData) continue;
+    totalResponses += platformData.totalResponses;
+
+    for (const [brand, metrics] of Object.entries(platformData.brandMetrics as Record<string, any>)) {
+      if (!merged[brand]) {
+        merged[brand] = { mentionRate: 0, firstMentionRate: 0, avgMentionCount: 0, totalMentions: 0 };
+      }
+      // Weight by response count for accurate averaging
+      merged[brand].mentionRate += metrics.mentionRate * platformData.totalResponses;
+      merged[brand].firstMentionRate += metrics.firstMentionRate * platformData.totalResponses;
+      merged[brand].avgMentionCount += metrics.avgMentionCount * platformData.totalResponses;
+      merged[brand].totalMentions += metrics.totalMentions;
+    }
+  }
+
+  // Normalize by total responses
+  if (totalResponses > 0) {
+    for (const brand of Object.keys(merged)) {
+      merged[brand].mentionRate /= totalResponses;
+      merged[brand].firstMentionRate /= totalResponses;
+      merged[brand].avgMentionCount /= totalResponses;
+    }
+  }
+
+  return merged;
+}
+
+/**
+ * Get topic-level brand metrics filtered to selected platforms.
+ */
+export function getFilteredTopicBrandMetrics(topicId: string, selectedPlatforms?: string[]) {
+  const byTopicByPlatform = (analyzedMetrics.textMetrics as any)?.byTopicByPlatform;
+  if (!selectedPlatforms || !byTopicByPlatform?.[topicId]) {
+    return analyzedMetrics.textMetrics?.byTopic?.[topicId]?.brandMetrics ?? {};
+  }
+
+  const topicPlatforms = byTopicByPlatform[topicId];
+  const merged: Record<string, { mentionRate: number; firstMentionRate: number; avgMentionCount: number; totalMentions: number }> = {};
+  let totalResponses = 0;
+
+  for (const platform of selectedPlatforms) {
+    const platformData = topicPlatforms[platform];
+    if (!platformData) continue;
+    totalResponses += platformData.totalResponses;
+
+    for (const [brand, metrics] of Object.entries(platformData.brandMetrics as Record<string, any>)) {
+      if (!merged[brand]) {
+        merged[brand] = { mentionRate: 0, firstMentionRate: 0, avgMentionCount: 0, totalMentions: 0 };
+      }
+      merged[brand].mentionRate += metrics.mentionRate * platformData.totalResponses;
+      merged[brand].firstMentionRate += metrics.firstMentionRate * platformData.totalResponses;
+      merged[brand].avgMentionCount += metrics.avgMentionCount * platformData.totalResponses;
+      merged[brand].totalMentions += metrics.totalMentions;
+    }
+  }
+
+  if (totalResponses > 0) {
+    for (const brand of Object.keys(merged)) {
+      merged[brand].mentionRate /= totalResponses;
+      merged[brand].firstMentionRate /= totalResponses;
+      merged[brand].avgMentionCount /= totalResponses;
+    }
+  }
+
+  return merged;
+}
