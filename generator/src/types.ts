@@ -49,9 +49,8 @@ export interface ArchetypeTemplate {
   weights: {
     intents: IntentWeights;
     isotopes: IsotopeWeights;
+    weightsActive?: boolean;
   };
-  minPromptCount: number;
-  quickRunMinimum: number;
   seeds: SeedMatrix;
 }
 

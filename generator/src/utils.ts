@@ -7,10 +7,10 @@ import {
   type Isotope,
   type RunTier,
 } from './types.js';
-import { minPerCellForTier } from './generate.js';
 
 const DEDUP_JACCARD_THRESHOLD = 0.85;
-const COVERAGE_BIAS_TOLERANCE = 0.10;
+const FLAT_EXPECTED_SHARE = 0.20;      // 1/5 per intent, 1/5 per isotope
+const COVERAGE_BIAS_TOLERANCE = 0.02;  // flag when share exceeds 0.22
 
 export function tokenize(text: string): Set<string> {
   return new Set(
@@ -61,19 +61,19 @@ export interface CoverageBiasReport {
 }
 
 /**
- * Two-axis coverage bias check.
+ * Two-axis coverage bias check — flat allocation version.
  *
  * Rules:
- *  - No intent share exceeds (weight + COVERAGE_BIAS_TOLERANCE).
- *  - No isotope share exceeds (weight + COVERAGE_BIAS_TOLERANCE).
- *  - Every cell has at least minPerCell prompts (tier-dependent).
+ *  - No intent share exceeds 0.22 (flat expected is 0.20).
+ *  - No isotope share exceeds 0.22.
+ *  - Flat invariant: max(cells) - min(cells) <= 1.
  *
- * In `full` tier, cell-floor violations are errors. In `quick` tier, they
- * are warnings. In `exploratory` tier, cell-floor checks are skipped.
+ * In `full` tier, flat-invariant violations are errors. In `quick` tier
+ * they are warnings. In `exploratory` tier the invariant is skipped.
  */
 export function checkCoverageBias(
   prompts: FlatPrompt[],
-  template: ArchetypeTemplate,
+  _template: ArchetypeTemplate,
   tier: RunTier,
 ): CoverageBiasReport {
   const total = prompts.length;
@@ -103,39 +103,38 @@ export function checkCoverageBias(
     return { ok: false, errors, warnings, intentShares, isotopeShares, cellCounts };
   }
 
+  const maxShare = FLAT_EXPECTED_SHARE + COVERAGE_BIAS_TOLERANCE;
+
   for (const intent of INTENT_STAGES) {
     const share = intentCounts[intent] / total;
     intentShares[intent] = share;
-    const max = template.weights.intents[intent] + COVERAGE_BIAS_TOLERANCE;
-    if (share > max) {
+    if (share > maxShare) {
       errors.push(
-        `intent '${intent}' share ${share.toFixed(3)} exceeds weight+${COVERAGE_BIAS_TOLERANCE} (${max.toFixed(3)})`,
+        `intent '${intent}' share ${share.toFixed(3)} exceeds flat threshold ${maxShare.toFixed(3)}`,
       );
     }
   }
   for (const iso of ISOTOPES) {
     const share = isotopeCounts[iso] / total;
     isotopeShares[iso] = share;
-    const max = template.weights.isotopes[iso] + COVERAGE_BIAS_TOLERANCE;
-    if (share > max) {
+    if (share > maxShare) {
       errors.push(
-        `isotope '${iso}' share ${share.toFixed(3)} exceeds weight+${COVERAGE_BIAS_TOLERANCE} (${max.toFixed(3)})`,
+        `isotope '${iso}' share ${share.toFixed(3)} exceeds flat threshold ${maxShare.toFixed(3)}`,
       );
     }
   }
 
-  const minPerCell = minPerCellForTier(tier);
-  if (minPerCell > 0) {
-    for (const intent of INTENT_STAGES) {
-      for (const iso of ISOTOPES) {
-        const key = `${intent}.${iso}`;
-        const count = cellCounts[key] ?? 0;
-        if (count < minPerCell) {
-          const msg = `cell ${key} has ${count} prompt(s), below minPerCell=${minPerCell}`;
-          if (tier === 'full') errors.push(msg);
-          else warnings.push(msg);
-        }
-      }
+  // Flat invariant: every cell count within 1 of every other cell.
+  if (tier !== 'exploratory') {
+    const allCellCounts = INTENT_STAGES.flatMap((intent) =>
+      ISOTOPES.map((iso) => cellCounts[`${intent}.${iso}`] ?? 0),
+    );
+    const minCell = Math.min(...allCellCounts);
+    const maxCell = Math.max(...allCellCounts);
+    if (maxCell - minCell > 1) {
+      const msg = `flat invariant violated: cell counts range from ${minCell} to ${maxCell} (expected max-min <= 1)`;
+      if (tier === 'full') errors.push(msg);
+      else warnings.push(msg);
     }
   }
 

@@ -13,120 +13,68 @@ import {
 import { tagTopicsWithPrimaryIntent } from './expand.js';
 
 /**
- * Pick the run tier given a target prompt count and template floors.
+ * Pick the run tier from targetPromptCount using uniform flat thresholds.
+ * Same thresholds for every archetype — weights are stored in templates
+ * but do not drive allocation.
  *
- *   target >= minPromptCount        → full
- *   target >= quickRunMinimum       → quick
- *   otherwise                       → exploratory
+ *   target >= 250  → full       (10 per cell before trim)
+ *   target >= 125  → quick      (5 per cell before trim)
+ *   otherwise      → exploratory (ceil(target/25) per cell)
  */
-export function pickTier(target: number, template: ArchetypeTemplate): RunTier {
-  if (target >= template.minPromptCount) return 'full';
-  if (target >= template.quickRunMinimum) return 'quick';
+export function pickTier(target: number): RunTier {
+  if (target >= 250) return 'full';
+  if (target >= 125) return 'quick';
   return 'exploratory';
 }
 
-export function minPerCellForTier(tier: RunTier): number {
-  if (tier === 'full') return 2;
-  if (tier === 'quick') return 1;
-  return 0;
-}
-
 /**
- * Ceiling-based stratified allocation.
+ * Flat allocation: every cell in the 5×5 matrix gets exactly ceil(target/25)
+ * prompts, then excess is trimmed from random cells until the total equals
+ * target. Cells never drop below 1 for targets ≥ 25.
  *
- *   count(cell) = max(ceil(intent_w × isotope_w × target), minPerCell)
- *
- * Over-quota cells are trimmed from the largest cell first (never below
- * minPerCell) until the total hits the target. If the sum is still below
- * target after the floor pass, excess is distributed to the largest-weight
- * cells.
+ * Weights are deliberately ignored. The flat invariant is
+ *   max(cells) - min(cells) <= 1
+ * which is enforced downstream by checkCoverageBias.
  */
 export function allocateCells(
-  template: ArchetypeTemplate,
   target: number,
-  tier: RunTier,
 ): Record<IntentStage, Record<Isotope, number>> {
-  const minPerCell = minPerCellForTier(tier);
-  const counts: Record<IntentStage, Record<Isotope, number>> = {} as Record<
-    IntentStage,
-    Record<Isotope, number>
-  >;
-
+  const base = Math.ceil(target / 25);
+  const counts = {} as Record<IntentStage, Record<Isotope, number>>;
   for (const intent of INTENT_STAGES) {
-    const row: Record<Isotope, number> = {} as Record<Isotope, number>;
-    for (const iso of ISOTOPES) {
-      const w = template.weights.intents[intent] * template.weights.isotopes[iso];
-      row[iso] = Math.max(Math.ceil(w * target), minPerCell);
-    }
+    const row = {} as Record<Isotope, number>;
+    for (const iso of ISOTOPES) row[iso] = base;
     counts[intent] = row;
   }
 
-  let total = sumCells(counts);
+  let total = 25 * base;
+  if (total <= target) return counts;
 
-  // Trim over-quota from the largest cells until we hit target.
-  while (total > target) {
-    const largest = findLargestCell(counts, minPerCell);
-    if (!largest) break;
-    counts[largest.intent][largest.iso] -= 1;
-    total -= 1;
+  const cells: Array<[IntentStage, Isotope]> = [];
+  for (const intent of INTENT_STAGES) {
+    for (const iso of ISOTOPES) cells.push([intent, iso]);
+  }
+  // Fisher-Yates shuffle so trim is uniformly random across cells.
+  for (let i = cells.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const tmp = cells[i]!;
+    cells[i] = cells[j]!;
+    cells[j] = tmp;
   }
 
-  // Top up from highest-weight cells if under target.
-  while (total < target) {
-    const highest = findHighestWeightCell(template, counts);
-    if (!highest) break;
-    counts[highest.intent][highest.iso] += 1;
-    total += 1;
+  let cursor = 0;
+  const guard = cells.length * base;
+  while (total > target) {
+    const [intent, iso] = cells[cursor % cells.length]!;
+    if (counts[intent][iso] > 1) {
+      counts[intent][iso] -= 1;
+      total -= 1;
+    }
+    cursor += 1;
+    if (cursor > guard) break;
   }
 
   return counts;
-}
-
-function sumCells(counts: Record<IntentStage, Record<Isotope, number>>): number {
-  let total = 0;
-  for (const intent of INTENT_STAGES) {
-    for (const iso of ISOTOPES) {
-      total += counts[intent][iso];
-    }
-  }
-  return total;
-}
-
-function findLargestCell(
-  counts: Record<IntentStage, Record<Isotope, number>>,
-  floor: number,
-): { intent: IntentStage; iso: Isotope } | null {
-  let best: { intent: IntentStage; iso: Isotope } | null = null;
-  let bestVal = floor;
-  for (const intent of INTENT_STAGES) {
-    for (const iso of ISOTOPES) {
-      const v = counts[intent][iso];
-      if (v > bestVal) {
-        bestVal = v;
-        best = { intent, iso };
-      }
-    }
-  }
-  return best;
-}
-
-function findHighestWeightCell(
-  template: ArchetypeTemplate,
-  counts: Record<IntentStage, Record<Isotope, number>>,
-): { intent: IntentStage; iso: Isotope } | null {
-  let best: { intent: IntentStage; iso: Isotope } | null = null;
-  let bestW = -1;
-  for (const intent of INTENT_STAGES) {
-    for (const iso of ISOTOPES) {
-      const w = template.weights.intents[intent] * template.weights.isotopes[iso];
-      const tieBreaker = counts[intent][iso] / 1000;
-      if (w + tieBreaker > bestW) {
-        bestW = w + tieBreaker;
-        best = { intent, iso };
-      }
-    }
-  }
-  return best;
 }
 
 /**
@@ -150,19 +98,19 @@ export function generate(opts: GenerateOptions): GenerationResult {
     throw new Error('at least one topic is required');
   }
 
-  const tier = pickTier(targetPromptCount, template);
+  const tier = pickTier(targetPromptCount);
   const warnings: string[] = [];
   if (tier === 'exploratory') {
     warnings.push(
-      `targetPromptCount=${targetPromptCount} below quickRunMinimum=${template.quickRunMinimum} — output labeled exploratory, no coverage claim`,
+      `targetPromptCount=${targetPromptCount} below 125 — output labeled exploratory, no coverage claim`,
     );
   } else if (tier === 'quick') {
     warnings.push(
-      `targetPromptCount=${targetPromptCount} below minPromptCount=${template.minPromptCount} — output labeled indicative, rare cells may have only 1 prompt`,
+      `targetPromptCount=${targetPromptCount} below 250 — output labeled indicative`,
     );
   }
 
-  const cellCounts = allocateCells(template, targetPromptCount, tier);
+  const cellCounts = allocateCells(targetPromptCount);
   const tagged = tagTopicsWithPrimaryIntent(topics, template);
 
   const prompts: FlatPrompt[] = [];
