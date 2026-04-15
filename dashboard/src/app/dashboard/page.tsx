@@ -91,7 +91,25 @@ async function DashboardContent({ clientId, filters }: { clientId: string; filte
 
   const platform = filters.platform || 'all';
   const isSinglePlatform = platform !== 'all';
-  const visibility = getVisibilityScore(results, isSinglePlatform, weights);
+
+  // First Mention Rate requires the competitor list from the client's config
+  // row to scan response text for competitor positioning. Config shape
+  // mirrors generator/configs/*.json: { competitors: [{name, domains}], ... }.
+  // If the shape is missing or empty we fall back to hardcoded J.Crew
+  // competitors so the dashboard isn't silently broken on the default client.
+  // TODO: remove the hardcoded fallback once every clients row has a full
+  //       config JSON populated.
+  const clientConfig = (client?.config ?? {}) as { competitors?: Array<{ name: string }> };
+  const competitorNames =
+    clientConfig.competitors?.map(c => c.name).filter(Boolean) ?? [];
+  const brandContext = {
+    clientName: client?.name || 'J.Crew',
+    competitorNames: competitorNames.length > 0
+      ? competitorNames
+      : ['Banana Republic', 'Everlane', 'Madewell', 'Uniqlo', 'Gap'],
+  };
+
+  const visibility = getVisibilityScore(results, isSinglePlatform, weights, brandContext);
   const trust = getTrustScore(results, weights);
   const acquisition = getAcquisitionScore(results, weights);
   const recommendation = getRecommendationScore(results, weights);

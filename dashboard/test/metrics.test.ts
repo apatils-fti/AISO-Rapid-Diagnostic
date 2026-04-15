@@ -80,13 +80,28 @@ describe('detectDecisionCriteriaWinner', () => {
 });
 
 describe('mapConversionIntent', () => {
-  it('maps isotopes to intent levels', () => {
+  it('maps legacy 6-isotope values to intent levels', () => {
+    // Legacy fallback path — these values are still in the Supabase
+    // `results.isotope` column for runs made before the 5×5 refactor.
     expect(mapConversionIntent('commercial')).toBe('high');
     expect(mapConversionIntent('specific')).toBe('high');
     expect(mapConversionIntent('comparative')).toBe('medium');
     expect(mapConversionIntent('persona')).toBe('medium');
     expect(mapConversionIntent('informational')).toBe('low');
     expect(mapConversionIntent('conversational')).toBe('low');
+  });
+
+  it('maps new 5-isotope values to intent levels', () => {
+    expect(mapConversionIntent('declarative')).toBe('high');
+    expect(mapConversionIntent('constrained')).toBe('high');
+    expect(mapConversionIntent('comparative')).toBe('medium');
+    expect(mapConversionIntent('situated')).toBe('medium');
+    expect(mapConversionIntent('adversarial')).toBe('low');
+  });
+
+  it('returns low for unknown isotope strings', () => {
+    expect(mapConversionIntent('nonsense')).toBe('low');
+    expect(mapConversionIntent('')).toBe('low');
   });
 });
 
@@ -139,6 +154,111 @@ describe('getVisibilityScore', () => {
     const score = getVisibilityScore(results);
     // prompt p1: mentioned on 2 of 3 platforms = 0.667
     expect(score.platformSpread).toBeCloseTo(2 / 3, 2);
+  });
+});
+
+describe('getVisibilityScore firstMentionRate (Four-Pillar Framework)', () => {
+  const brandContext = {
+    clientName: 'J.Crew',
+    competitorNames: ['Banana Republic', 'Everlane', 'Madewell'],
+  };
+
+  it('returns 0 when brandContext is missing (no silent data)', () => {
+    const results = [
+      makeResult({ client_mentioned: true, response_text: 'J.Crew is great' }),
+      makeResult({ client_mentioned: true, response_text: 'J.Crew and more' }),
+    ];
+    const score = getVisibilityScore(results);
+    expect(score.firstMentionRate).toBe(0);
+  });
+
+  it('returns 0 when brandContext has empty competitorNames', () => {
+    const results = [
+      makeResult({ client_mentioned: true, response_text: 'J.Crew is great' }),
+    ];
+    const score = getVisibilityScore(results, false, undefined, {
+      clientName: 'J.Crew',
+      competitorNames: [],
+    });
+    expect(score.firstMentionRate).toBe(0);
+  });
+
+  it('returns 1.0 when client appears before every competitor in every mention', () => {
+    const results = [
+      makeResult({
+        client_mentioned: true,
+        response_text: 'J.Crew is the top choice over Banana Republic and Everlane.',
+      }),
+      makeResult({
+        client_mentioned: true,
+        response_text: 'J.Crew leads the pack, followed by Madewell.',
+      }),
+    ];
+    const score = getVisibilityScore(results, false, undefined, brandContext);
+    expect(score.firstMentionRate).toBe(1);
+  });
+
+  it('returns 0 when client appears after a competitor in every mention', () => {
+    const results = [
+      makeResult({
+        client_mentioned: true,
+        response_text: 'Banana Republic beats J.Crew.',
+      }),
+      makeResult({
+        client_mentioned: true,
+        response_text: 'Everlane is better than J.Crew.',
+      }),
+    ];
+    const score = getVisibilityScore(results, false, undefined, brandContext);
+    expect(score.firstMentionRate).toBe(0);
+  });
+
+  it('computes partial firstMentionRate with mixed ordering', () => {
+    const results = [
+      // first mention ✓
+      makeResult({
+        client_mentioned: true,
+        response_text: 'J.Crew is the leader, then Banana Republic.',
+      }),
+      // not first mention ✗
+      makeResult({
+        client_mentioned: true,
+        response_text: 'Banana Republic beats J.Crew.',
+      }),
+    ];
+    const score = getVisibilityScore(results, false, undefined, brandContext);
+    // 1 first mention out of 2 mentioned = 0.5
+    expect(score.firstMentionRate).toBeCloseTo(0.5, 2);
+  });
+
+  it('denominator is mentioned.length, NOT results.length', () => {
+    // 2 mentions out of 4 results, both first → firstMentionRate should be 1.0,
+    // NOT 0.5 (2/4). The Four-Pillar Framework denominator is mentions, not prompts.
+    const results = [
+      makeResult({
+        client_mentioned: true,
+        response_text: 'J.Crew vs Banana Republic — J.Crew wins.',
+      }),
+      makeResult({
+        client_mentioned: true,
+        response_text: 'J.Crew is the best, Everlane is second.',
+      }),
+      makeResult({ client_mentioned: false, response_text: 'Banana Republic only.' }),
+      makeResult({ client_mentioned: false, response_text: 'No brand match here.' }),
+    ];
+    const score = getVisibilityScore(results, false, undefined, brandContext);
+    expect(score.firstMentionRate).toBe(1);
+    expect(score.mentionRate).toBeCloseTo(0.5, 2);
+  });
+
+  it('returns 0 firstMentionRate when no prompts mention the client (avoids NaN)', () => {
+    const results = [
+      makeResult({ client_mentioned: false, response_text: 'Competitors only.' }),
+      makeResult({ client_mentioned: false, response_text: 'Nothing here either.' }),
+    ];
+    const score = getVisibilityScore(results, false, undefined, brandContext);
+    expect(score.firstMentionRate).toBe(0);
+    expect(score.mentionRate).toBe(0);
   });
 });
 
@@ -308,7 +428,33 @@ describe('getAcquisitionScore isotope breakdown', () => {
     expect(score.isotopeBreakdown).toEqual([]);
   });
 
-  it('computes mention rate per isotope', () => {
+  it('computes mention rate per isotope (new taxonomy values)', () => {
+    const results = [
+      makeResult({ isotope: 'constrained', client_mentioned: true, conversion_intent: 'high' }),
+      makeResult({ isotope: 'constrained', client_mentioned: false, conversion_intent: 'high' }),
+      makeResult({ isotope: 'situated', client_mentioned: true, conversion_intent: 'medium' }),
+      makeResult({ isotope: 'situated', client_mentioned: true, conversion_intent: 'medium' }),
+      makeResult({ isotope: 'situated', client_mentioned: false, conversion_intent: 'medium' }),
+    ];
+    const score = getAcquisitionScore(results);
+
+    const constrained = score.isotopeBreakdown.find(i => i.isotope === 'constrained');
+    const situated = score.isotopeBreakdown.find(i => i.isotope === 'situated');
+
+    expect(constrained).toBeDefined();
+    expect(constrained!.mentionRate).toBeCloseTo(0.5, 2);
+    expect(constrained!.total).toBe(2);
+    expect(constrained!.mentioned).toBe(1);
+
+    expect(situated).toBeDefined();
+    expect(situated!.mentionRate).toBeCloseTo(2 / 3, 2);
+    expect(situated!.total).toBe(3);
+    expect(situated!.mentioned).toBe(2);
+  });
+
+  it('collapses legacy old-taxonomy isotopes through the fallback map', () => {
+    // Legacy rows: `commercial` and `informational` both normalize to
+    // `declarative`. All 5 rows should end up in a single declarative bucket.
     const results = [
       makeResult({ isotope: 'commercial', client_mentioned: true, conversion_intent: 'high' }),
       makeResult({ isotope: 'commercial', client_mentioned: false, conversion_intent: 'high' }),
@@ -318,28 +464,28 @@ describe('getAcquisitionScore isotope breakdown', () => {
     ];
     const score = getAcquisitionScore(results);
 
-    const commercial = score.isotopeBreakdown.find(i => i.isotope === 'commercial');
-    const informational = score.isotopeBreakdown.find(i => i.isotope === 'informational');
+    // Commercial and informational both collapse to declarative
+    const declarative = score.isotopeBreakdown.find(i => i.isotope === 'declarative');
+    expect(declarative).toBeDefined();
+    expect(declarative!.total).toBe(5);
+    expect(declarative!.mentioned).toBe(3);
+    expect(declarative!.mentionRate).toBeCloseTo(0.6, 2);
 
-    expect(commercial).toBeDefined();
-    expect(commercial!.mentionRate).toBeCloseTo(0.5, 2);
-    expect(commercial!.total).toBe(2);
-    expect(commercial!.mentioned).toBe(1);
-
-    expect(informational).toBeDefined();
-    expect(informational!.mentionRate).toBeCloseTo(2 / 3, 2);
-    expect(informational!.total).toBe(3);
-    expect(informational!.mentioned).toBe(2);
+    // No bucket uses the old isotope labels
+    expect(score.isotopeBreakdown.find(i => i.isotope === 'commercial')).toBeUndefined();
+    expect(score.isotopeBreakdown.find(i => i.isotope === 'informational')).toBeUndefined();
   });
 
   it('sorts isotope breakdown by mention rate descending', () => {
+    // `commercial` → declarative (0 mentioned), `specific` → constrained (1 mentioned).
+    // Constrained should sort first (higher mention rate).
     const results = [
       makeResult({ isotope: 'commercial', client_mentioned: false }),
       makeResult({ isotope: 'specific', client_mentioned: true }),
     ];
     const score = getAcquisitionScore(results);
-    expect(score.isotopeBreakdown[0].isotope).toBe('specific');
-    expect(score.isotopeBreakdown[1].isotope).toBe('commercial');
+    expect(score.isotopeBreakdown[0].isotope).toBe('constrained');
+    expect(score.isotopeBreakdown[1].isotope).toBe('declarative');
   });
 });
 

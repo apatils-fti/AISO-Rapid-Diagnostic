@@ -165,18 +165,110 @@ export function detectDecisionCriteriaWinner(
   return lastTwo.some(s => brandRegex.test(s));
 }
 
+/**
+ * Legacy 6-isotope → new 5-isotope taxonomy fallback map.
+ *
+ * The Supabase `results.isotope` column still holds old values for runs made
+ * before the 5×5 taxonomy refactor. New generator runs will write the new
+ * values directly; until that data lands, we normalize at read time.
+ *
+ * Many-to-one collapses: `informational` and `commercial` both map to
+ * `declarative`. No isotope maps to multiple new values.
+ */
+const LEGACY_ISOTOPE_MAP: Record<string, string> = {
+  informational: 'declarative',
+  commercial: 'declarative',
+  comparative: 'comparative',
+  persona: 'situated',
+  specific: 'constrained',
+  conversational: 'adversarial',
+};
+
+/**
+ * Display labels for the new 5-isotope taxonomy. Used by the Acquisition
+ * pillar card's "By Isotope" breakdown.
+ */
+export const ISOTOPE_LABELS: Record<string, string> = {
+  declarative: 'Declarative',
+  comparative: 'Comparative',
+  situated: 'Situated',
+  constrained: 'Constrained',
+  adversarial: 'Adversarial',
+};
+
+/**
+ * Normalize a result's isotope to the new 5-value taxonomy.
+ *
+ * Reads only the `isotope` column, not `intent_stage` — intent is a
+ * separate axis (buyer goal) and is NOT interchangeable with isotope
+ * (question style). Intent-based breakdowns are a separate feature.
+ *
+ * - If the row already has a new-taxonomy value, pass through.
+ * - If the row has an old-taxonomy value, map via LEGACY_ISOTOPE_MAP.
+ * - Otherwise, return 'unknown' (caller should drop from aggregations).
+ */
+export function getNormalizedIsotope(r: { isotope: string | null | undefined }): string {
+  const iso = r.isotope || '';
+  if (ISOTOPE_LABELS[iso]) return iso;
+  if (LEGACY_ISOTOPE_MAP[iso]) return LEGACY_ISOTOPE_MAP[iso];
+  return 'unknown';
+}
+
+/**
+ * Determine if the client brand appears in the response text before any
+ * competitor. Returns false if the client isn't mentioned at all.
+ * Case-insensitive substring match.
+ */
+export function isClientFirstMention(
+  text: string,
+  clientName: string,
+  competitorNames: string[],
+): boolean {
+  if (!text || !clientName) return false;
+  const lower = text.toLowerCase();
+  const clientPos = lower.indexOf(clientName.toLowerCase());
+  if (clientPos === -1) return false;
+  for (const comp of competitorNames) {
+    if (!comp) continue;
+    const compPos = lower.indexOf(comp.toLowerCase());
+    if (compPos !== -1 && compPos < clientPos) return false;
+  }
+  return true;
+}
+
 export function mapConversionIntent(isotope: string): 'high' | 'medium' | 'low' {
-  if (isotope === 'commercial' || isotope === 'specific') return 'high';
-  if (isotope === 'comparative' || isotope === 'persona') return 'medium';
+  // Legacy low-intent distinctions that do NOT survive the new-taxonomy
+  // collapse: `informational` and `conversational` both normalize into
+  // the declarative/adversarial buckets, which are "high" and "low"
+  // respectively. But their original intent semantics were both "low"
+  // (just asking, not buying). Preserve the old rating explicitly before
+  // routing through the normalization helper.
+  if (isotope === 'informational' || isotope === 'conversational') return 'low';
+
+  // Everything else normalizes cleanly:
+  //   commercial / specific → constrained / declarative → high
+  //   comparative            → comparative              → medium
+  //   persona                → situated                 → medium
+  //   plus the new-taxonomy values (declarative, constrained, etc.) pass
+  //   through unchanged.
+  const iso = getNormalizedIsotope({ isotope });
+  if (iso === 'constrained' || iso === 'declarative') return 'high';
+  if (iso === 'comparative' || iso === 'situated') return 'medium';
   return 'low';
 }
 
 // ─── Pillar Score Computation ────────────────────────────────
 
+export interface BrandContext {
+  clientName: string;
+  competitorNames: string[];
+}
+
 export function getVisibilityScore(
   results: EnrichedResult[],
   isSinglePlatform = false,
-  weights?: PillarWeights
+  weights?: PillarWeights,
+  brandContext?: BrandContext,
 ): VisibilityScore {
   const w = (weights ?? DEFAULT_WEIGHTS).visibility;
 
@@ -190,7 +282,31 @@ export function getVisibilityScore(
   const mentioned = results.filter(r => r.client_mentioned);
   const mentionRate = mentioned.length / results.length;
   const shareOfVoice = mentionRate;
-  const firstMentionRate = mentionRate;
+
+  // First Mention Rate (Four-Pillar Framework definition):
+  //   of prompts where the brand was mentioned, in how many did it appear
+  //   before any competitor?
+  //
+  // Denominator is `mentioned.length`, NOT `results.length`. The old placeholder
+  // assigned firstMentionRate = mentionRate which is wrong on both axes
+  // (no first-mention detection, wrong denominator).
+  //
+  // Requires a brandContext with clientName and competitorNames. When not
+  // provided or when the competitor list is empty, returns 0 and logs a warning
+  // — we explicitly avoid silent zero-data fallback.
+  let firstMentionRate = 0;
+  if (!brandContext || !brandContext.clientName || brandContext.competitorNames.length === 0) {
+    if (mentioned.length > 0) {
+      console.warn(
+        '[metrics] getVisibilityScore: firstMentionRate set to 0 because brandContext is missing or has no competitors. Pass { clientName, competitorNames } to compute correctly.',
+      );
+    }
+  } else if (mentioned.length > 0) {
+    const firstMentions = mentioned.filter(r =>
+      isClientFirstMention(r.response_text || '', brandContext.clientName, brandContext.competitorNames),
+    );
+    firstMentionRate = firstMentions.length / mentioned.length;
+  }
 
   // Citation rate (display only, not in composite)
   const withCitations = results.filter(r => r.citations && r.citations.length > 0);
@@ -334,10 +450,19 @@ export function getAcquisitionScore(
     return { conversionQueryMentionRate: 0, ctaPresenceRate: 0, highIntentMentionRate: 0, isotopeBreakdown: [], composite: 0 };
   }
 
-  // High-intent
-  const highIntent = results.filter(
-    r => r.conversion_intent === 'high' || r.isotope === 'commercial' || r.isotope === 'specific'
-  );
+  // High-intent. Routed through getNormalizedIsotope so old-taxonomy rows
+  // (isotope: 'commercial' | 'specific') and new-taxonomy rows (isotope:
+  // 'constrained' | 'declarative') both qualify. But we preserve the legacy
+  // low-intent distinctions — `informational` and `conversational` both
+  // collapse into declarative/adversarial in the new map, and were "low"
+  // in the old mapConversionIntent. Excluding them here preserves the
+  // original Acquisition pillar behavior for legacy data.
+  const highIntent = results.filter(r => {
+    if (r.conversion_intent === 'high') return true;
+    if (r.isotope === 'informational' || r.isotope === 'conversational') return false;
+    const iso = getNormalizedIsotope(r);
+    return iso === 'constrained' || iso === 'declarative';
+  });
   const highIntentMentioned = highIntent.filter(r => r.client_mentioned);
   const highIntentMentionRate = highIntent.length > 0 ? highIntentMentioned.length / highIntent.length : 0;
   const conversionQueryMentionRate = highIntentMentionRate;
@@ -347,10 +472,13 @@ export function getAcquisitionScore(
   const withCta = results.filter(r => r.cta_present && r.client_mentioned);
   const ctaPresenceRate = mentionedResults.length > 0 ? withCta.length / mentionedResults.length : 0;
 
-  // Isotope breakdown
+  // Isotope breakdown — grouped by new 5-value taxonomy. Legacy old-taxonomy
+  // rows are mapped via LEGACY_ISOTOPE_MAP inside getNormalizedIsotope. Rows
+  // with an unrecognizable isotope are dropped.
   const isoMap = new Map<string, { mentioned: number; total: number }>();
   for (const r of results) {
-    const iso = r.isotope || 'unknown';
+    const iso = getNormalizedIsotope(r);
+    if (iso === 'unknown') continue;
     if (!isoMap.has(iso)) isoMap.set(iso, { mentioned: 0, total: 0 });
     const entry = isoMap.get(iso)!;
     entry.total++;
@@ -401,7 +529,10 @@ export function getRecommendationScore(
   const qualified = mentionedResults.filter(r => r.recommendation_strength === 'qualified');
   const qualifiedRecommendationRate = qualified.length / total;
 
-  const comparative = results.filter(r => r.isotope === 'comparative');
+  // `comparative` maps to itself in LEGACY_ISOTOPE_MAP but routing through
+  // getNormalizedIsotope keeps the code consistent with the other call sites
+  // and correctly handles any future normalization.
+  const comparative = results.filter(r => getNormalizedIsotope(r) === 'comparative');
   const comparativeWins = comparative.filter(r => r.decision_criteria_winner);
   const decisionCriteriaWinRate = comparative.length > 0 ? comparativeWins.length / comparative.length : 0;
 
