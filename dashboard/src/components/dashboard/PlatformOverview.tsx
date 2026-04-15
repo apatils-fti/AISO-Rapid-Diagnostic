@@ -1,46 +1,36 @@
 'use client';
 
-import { Lock, Sparkles, Search, Bot } from 'lucide-react';
-import { analyzedMetrics, clientConfig } from '@/lib/fixtures';
+import { useState, useEffect } from 'react';
+import { Lock, Sparkles, Bot, Gem, Search } from 'lucide-react';
+import { getAllPlatformStats, type PlatformStats } from '@/lib/platform-data';
+import type { PlatformComparisonStats } from '@/lib/db';
 import { cn } from '@/lib/utils';
 
-interface PlatformCardProps {
-  name: string;
-  icon: typeof Sparkles;
-  color: string;
-  available: boolean;
-  comingSoon?: boolean;
-  citationShare?: number;
-  promptsCited?: number;
-  totalPrompts?: number;
-  avgPosition?: number;
-}
+const PLATFORM_ICONS: Record<string, typeof Sparkles> = {
+  perplexity: Sparkles,
+  chatgpt_search: Bot,
+  gemini: Gem,
+  claude: Bot,
+  google_ai_overview: Search,
+};
 
-function PlatformCard({
-  name,
-  icon: Icon,
-  color,
-  available,
-  comingSoon,
-  citationShare,
-  promptsCited,
-  totalPrompts,
-  avgPosition,
-}: PlatformCardProps) {
+function PlatformCard({ stats }: { stats: PlatformStats }) {
+  const Icon = PLATFORM_ICONS[stats.platform] ?? Bot;
+
   return (
     <div
       className={cn(
         'relative rounded-lg border p-4 transition-all',
-        available
+        stats.available
           ? 'border-[#2A2D37] bg-[#1A1D27] hover:border-[#363944]'
           : 'border-[#2A2D37]/50 bg-[#1A1D27]/50'
       )}
     >
-      {comingSoon && (
+      {!stats.available && (
         <div className="absolute top-2 right-2">
           <span className="inline-flex items-center gap-1 rounded-full bg-[#22252F] px-2 py-0.5 text-xs text-[#6B7280]">
             <Lock className="h-3 w-3" />
-            Coming Soon
+            No Data
           </span>
         </div>
       )}
@@ -49,83 +39,77 @@ function PlatformCard({
         <div
           className={cn(
             'flex items-center justify-center rounded-lg p-2',
-            available ? 'bg-[#22252F]' : 'bg-[#22252F]/50'
+            stats.available ? 'bg-[#22252F]' : 'bg-[#22252F]/50'
           )}
         >
           <Icon
             className="h-6 w-6"
-            style={{ color: available ? color : '#6B7280' }}
+            style={{ color: stats.available ? stats.color : '#6B7280' }}
           />
         </div>
         <span
           className={cn(
             'font-medium',
-            available ? 'text-[#E5E7EB]' : 'text-[#6B7280]'
+            stats.available ? 'text-[#E5E7EB]' : 'text-[#6B7280]'
           )}
         >
-          {name}
+          {stats.displayName}
         </span>
       </div>
 
-      {available ? (
+      {stats.available ? (
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-[#6B7280]">Citation Share</span>
+            <span className="text-sm text-[#6B7280]">Brand Mention Rate</span>
             <span className="text-sm font-medium text-[#00D4AA]">
-              {((citationShare || 0) * 100).toFixed(1)}%
+              {(stats.brandMentionRate * 100).toFixed(1)}%
             </span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-[#6B7280]">Prompts Cited</span>
+            <span className="text-sm text-[#6B7280]">Prompts Mentioned</span>
             <span className="text-sm font-medium text-[#E5E7EB]">
-              {promptsCited}/{totalPrompts}
+              {stats.promptsWithMention}/{stats.totalPrompts}
             </span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-sm text-[#6B7280]">Avg. Position</span>
+            <span className="text-sm text-[#6B7280]">Domain Citations</span>
             <span className="text-sm font-medium text-[#E5E7EB]">
-              #{avgPosition?.toFixed(1)}
+              {stats.citationsAvailable
+                ? `${(stats.citationRate * 100).toFixed(1)}%`
+                : 'N/A'}
             </span>
           </div>
         </div>
       ) : (
         <div className="text-sm text-[#6B7280]">
-          Data collection for this platform is in development.
+          No batch results available for this platform.
         </div>
       )}
     </div>
   );
 }
 
-export function PlatformOverview() {
-  const { platformBreakdown } = analyzedMetrics.summary;
+interface PlatformOverviewProps {
+  selectedPlatforms?: string[];
+  platformData?: PlatformComparisonStats[];
+}
 
-  const platforms = [
-    {
-      key: 'perplexity',
-      name: 'Perplexity',
-      icon: Sparkles,
-      color: '#20B8CD',
-    },
-    {
-      key: 'google_ai_overview',
-      name: 'Google AI Overview',
-      icon: Search,
-      color: '#4285F4',
-    },
-    {
-      key: 'chatgpt_search',
-      name: 'ChatGPT Search',
-      icon: Bot,
-      color: '#10A37F',
-    },
-    {
-      key: 'claude_search',
-      name: 'Claude Search',
-      icon: Bot,
-      color: '#D97706',
-    },
-  ];
+export function PlatformOverview({ selectedPlatforms, platformData }: PlatformOverviewProps) {
+  const [allPlatforms, setAllPlatforms] = useState<PlatformStats[]>([]);
+
+  useEffect(() => {
+    // Use server-provided Supabase data if available
+    if (platformData && platformData.length > 0) {
+      setAllPlatforms(platformData.map(p => ({ ...p, avgMentionCount: 0 })));
+      return;
+    }
+    if (typeof window === 'undefined') return;
+    getAllPlatformStats().then(setAllPlatforms);
+  }, [platformData]);
+
+  const platforms = selectedPlatforms
+    ? allPlatforms.filter((p) => selectedPlatforms.includes(p.platform))
+    : allPlatforms;
 
   return (
     <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-6">
@@ -133,25 +117,15 @@ export function PlatformOverview() {
         Platform Coverage
       </h3>
       <div className="grid grid-cols-2 gap-4">
-        {platforms.map((platform) => {
-          const data = platformBreakdown[platform.key as keyof typeof platformBreakdown];
-          const isAvailable = 'available' in data ? data.available : false;
-
-          return (
-            <PlatformCard
-              key={platform.key}
-              name={platform.name}
-              icon={platform.icon}
-              color={platform.color}
-              available={isAvailable}
-              comingSoon={'comingSoon' in data ? data.comingSoon : false}
-              citationShare={'citationShare' in data ? data.citationShare : undefined}
-              promptsCited={'promptsCited' in data ? data.promptsCited : undefined}
-              totalPrompts={'totalPrompts' in data ? data.totalPrompts : undefined}
-              avgPosition={'avgCitationPosition' in data ? data.avgCitationPosition : undefined}
-            />
-          );
-        })}
+        {allPlatforms.length === 0 ? (
+          <div className="col-span-2 text-sm text-[#6B7280] text-center py-4">
+            Loading platform data...
+          </div>
+        ) : (
+          platforms.map((stats) => (
+            <PlatformCard key={stats.platform} stats={stats} />
+          ))
+        )}
       </div>
     </div>
   );

@@ -1,0 +1,214 @@
+{
+  "archetype": {
+    "id": "local-experiences",
+    "name": "Local Experiences",
+    "description": "Restaurants, bars, gyms, studios, salons, tours, classes, and venues where geography and timing dominate the decision.",
+    "sectors": ["restaurants", "bars", "fitness studios", "salons", "tours", "local events", "classes"],
+    "primaryFocus": ["proximity", "timing", "occasion fit", "reviews", "walk-in vs reservation"],
+    "promptEmphasis": "Acquisition is the strongest intent — buyers are ready to book; situated and constrained queries encode party size and occasion."
+  },
+  "weights": {
+    "intents": {
+      "learning": 0.05,
+      "discovery": 0.25,
+      "evaluation": 0.25,
+      "validation": 0.15,
+      "acquisition": 0.30
+    },
+    "isotopes": {
+      "declarative": 0.20,
+      "comparative": 0.15,
+      "situated": 0.25,
+      "constrained": 0.25,
+      "adversarial": 0.15
+    },
+    "weightsActive": false
+  },
+  "seeds": {
+    "learning": {
+      "declarative": [
+        "What is {topicName} and why is it the thing you do at {category} places?",
+        "How does {attribute1} differ from {attribute2} in {category} venues?",
+        "What should a first-timer know before going to a {category} for {topicName}?",
+        "How does {topicName} usually work at a {category}, step by step?",
+        "What's the etiquette at a {category} for {topicName}?"
+      ],
+      "comparative": [
+        "What's the difference between {attribute1} and {attribute2} {category} spots?",
+        "Walk-in {category} vs reservation-required {category} for {topicName} — which fits {context}?",
+        "Full-service vs counter-service {category} — which is actually better for {topicName}?",
+        "Chef-driven {category} vs neighborhood {category} — what are you paying for?",
+        "Early-seating vs late-seating at {category} for {topicName} — which gives you the better experience?"
+      ],
+      "situated": [
+        "As a {persona} new to the area, what should I understand about {category} before booking {topicName}?",
+        "I'm a {persona} planning {context} — walk me through {topicName} at a {category}",
+        "For a {persona} doing {topicName} for the first time, what do I need to know?",
+        "How should a {persona} think about {topicName} when {context} is the occasion?",
+        "I'm a {persona} and I've never been to a {category} — what's {topicName} actually like?"
+      ],
+      "constrained": [
+        "Explain {topicName} at a {category} for a {persona} with {attribute1}, {attribute2}, and under {pricePoint}/person",
+        "Primer on {topicName} when I need {attribute1}, {attribute2}, and it fits {context}",
+        "What does {attribute1} mean at a {category} in the {pricePoint} per-person range?",
+        "How should I understand {topicName} if I need {attribute1}, {attribute2}, and {context} timing?",
+        "Walk me through {topicName} at a {category} that's {attribute1}, {attribute2}, and under {pricePoint}"
+      ],
+      "adversarial": [
+        "Is {topicName} at a {category} actually worth doing or is it a tourist ritual?",
+        "Why does every {category} in this neighborhood claim {attribute1} — does it mean anything?",
+        "What do {category} venues hide about {topicName} until you're already seated?",
+        "Is the {attribute1} label at {category} spots regulated or just marketing?",
+        "Why does {topicName} at a {category} cost triple on weekends?"
+      ]
+    },
+    "discovery": {
+      "declarative": [
+        "What are the best {category} spots for {topicName}?",
+        "Top {category} venues for {context}",
+        "Where should I go for {topicName} right now?",
+        "Popular {category} places locals actually go",
+        "Recommended {category} for {topicName}"
+      ],
+      "comparative": [
+        "{brand} vs {competitor} — who does {topicName} better?",
+        "Is {brand} or {competitor} the go-to {category} for {persona}?",
+        "Compare {brand} and {competitor} for {topicName} on atmosphere, quality, and price",
+        "{brand}, {competitor}, and the new spot everyone's talking about — which is actually worth it for {context}?",
+        "Between {brand} and {competitor}, which one owns {topicName} in the neighborhood?"
+      ],
+      "situated": [
+        "As a {persona} visiting for {context}, which {category} spots should I actually go to?",
+        "Best {category} places for a {persona} doing {topicName}",
+        "Where do locals (not tourists) go for {topicName} if they're a {persona}?",
+        "I'm a {persona} planning {context} — which {category} venues handle that well?",
+        "Good {category} spots for a {persona} who needs {attribute1}"
+      ],
+      "constrained": [
+        "{category} venues with {attribute1}, {attribute2}, and under {pricePoint}/person for {topicName}",
+        "Find me a {category}: must be {attribute1}, {attribute2}, and available for {context} tonight",
+        "Show me {category} spots for {topicName} that are {attribute1}, walk-in friendly, and under {pricePoint}",
+        "Which {category} places offer {topicName} with {attribute1}, {attribute2}, and reservations for tonight?",
+        "{category} options: {attribute1}, {attribute2}, good for {context}, under {pricePoint}"
+      ],
+      "adversarial": [
+        "Which {category} spots for {topicName} are actually worth it and which are tourist traps?",
+        "What {category} places near me should I avoid right now?",
+        "Which {category} venues still do {topicName} properly and which are coasting on old reviews?",
+        "Name one {category} spot where the quality hasn't dropped since it went viral",
+        "Which {category} places are actually local and which are just styled to look that way?"
+      ]
+    },
+    "evaluation": {
+      "declarative": [
+        "Is {brand} worth going to for {topicName}?",
+        "How is {brand}'s {topicName} actually holding up in {current year}?",
+        "Does {brand} deliver on {attribute1} for {topicName}?",
+        "Rate {brand}'s {topicName} on quality, service, and value",
+        "Is {brand} a good choice for {category} during {context}?"
+      ],
+      "comparative": [
+        "{brand} vs {competitor} for {topicName} — which is actually better?",
+        "Compare {brand} and {competitor} on atmosphere, wait time, and {topicName} quality",
+        "Who wins on {attribute1}: {brand} or {competitor}?",
+        "{brand} vs {competitor} — better {topicName} for {pricePoint} per person?",
+        "Is {brand}'s {topicName} better than {competitor}'s for {context}?"
+      ],
+      "situated": [
+        "As a {persona} planning {context}, is {brand} the right {category} for {topicName}?",
+        "Does {brand}'s {category} work for a {persona} who needs {attribute1}?",
+        "For a {persona} during {context}, does {brand} or {competitor} make more sense?",
+        "I'm a {persona} — evaluate {brand}'s {topicName} against what I actually want out of {context}",
+        "Should a {persona} spend {pricePoint}/person on {brand}'s {topicName}?"
+      ],
+      "constrained": [
+        "Does {brand} meet the bar for {topicName} with {attribute1}, {attribute2}, and under {pricePoint}/person?",
+        "Evaluate {brand} against my checklist for {topicName}: {attribute1}, {attribute2}, walk-in OK, under {pricePoint}",
+        "Is {brand}'s {topicName} the best option under {pricePoint} that's also {attribute1}?",
+        "Compare {brand}'s {topicName} on {attribute1}, {attribute2}, service speed, and noise level",
+        "Does {brand}'s {category} deliver on {attribute1} and {attribute2} at the {pricePoint} tier?"
+      ],
+      "adversarial": [
+        "What's the catch with {brand}'s {topicName}?",
+        "Where does {brand}'s {category} fall short of its Google reviews?",
+        "Has {brand}'s {topicName} quality declined since the ownership change?",
+        "What do {brand} regulars say about {topicName} once the hype died down?",
+        "Why shouldn't I go to {brand} for {topicName}?"
+      ]
+    },
+    "validation": {
+      "declarative": [
+        "Am I making the right call booking {brand} for {topicName}?",
+        "Will I regret going to {brand} for {category}?",
+        "Is {brand} a safe bet for {topicName} at {pricePoint}/person?",
+        "Can I trust {brand} to deliver on {topicName} for {context}?",
+        "Is {brand} still the right {category} for {topicName}?"
+      ],
+      "comparative": [
+        "Should I book {brand} or go with {competitor} for {topicName}?",
+        "I'm torn between {brand} and {competitor} for {category} during {context} — which is the safer bet?",
+        "Is {brand} enough of an upgrade over {competitor} to justify the extra spend for {topicName}?",
+        "{brand} vs {competitor} — which am I less likely to regret for {context}?",
+        "Last-minute check: {brand} or {competitor} for {topicName} this weekend?"
+      ],
+      "situated": [
+        "I'm a {persona} about to spend {pricePoint}/person at {brand} for {topicName} — is this smart?",
+        "As a {persona} planning {context}, will {brand}'s {topicName} actually deliver?",
+        "Talk me through whether {brand} is right for a {persona} doing {topicName} on {context}",
+        "I'm a {persona} — is {brand} really the right call for {context}?",
+        "For someone in my situation ({persona}, {context}), is {brand}'s {topicName} a good fit?"
+      ],
+      "constrained": [
+        "I need {category} that's {attribute1}, {attribute2}, and under {pricePoint}/person — does {brand} check every box for {topicName}?",
+        "Final check: {brand}'s {topicName} against my requirements ({attribute1}, {attribute2}, {pricePoint}, {context})",
+        "{brand}'s {topicName} claims {attribute1} and {attribute2} — do recent visitors actually confirm that?",
+        "Does {brand} really satisfy {attribute1}, {attribute2}, and the {pricePoint} ceiling for {topicName}?",
+        "I'm about to book {brand} for {context} — do they really meet {attribute1} and {attribute2}?"
+      ],
+      "adversarial": [
+        "Convince me I shouldn't book {brand} for {topicName}",
+        "What am I missing before I commit to {brand} for {context}?",
+        "Give me the strongest argument against going to {brand} for {topicName}",
+        "What will I regret about choosing {brand} for {context}?",
+        "Poke holes in my plan to book {brand} for {topicName} on {context}"
+      ]
+    },
+    "acquisition": {
+      "declarative": [
+        "How do I book {brand} for {topicName}?",
+        "Does {brand} take walk-ins for {topicName} or do I need a reservation?",
+        "What's {brand}'s booking process for {topicName}?",
+        "What's {brand}'s current price for {topicName} and is it available for {context}?",
+        "I've decided on {brand} for {topicName} — what's the best way to lock it in right now?"
+      ],
+      "comparative": [
+        "Where's the easier booking for {topicName} — {brand} or {competitor}?",
+        "{brand} vs {competitor} — who has availability for {topicName} tonight?",
+        "Should I book {topicName} directly with {brand} or through {competitor}'s platform?",
+        "{brand} or {competitor} — whose cancellation policy for {topicName} is more forgiving?",
+        "Which venue has {topicName} available for {context}, {brand} or {competitor}?"
+      ],
+      "situated": [
+        "I'm a {persona} — what's the fastest way to book {brand} for {topicName} during {context}?",
+        "As a {persona}, what's the smartest way to get into {brand} for {topicName}?",
+        "Best way for a {persona} to secure {brand}'s {topicName} for {context} this weekend",
+        "I'm a {persona} and I need {brand}'s {topicName} locked in for {context} — how?",
+        "How does a {persona} usually book {brand}'s {topicName}?"
+      ],
+      "constrained": [
+        "Book {brand} for {topicName} with {attribute1}, {attribute2}, and under {pricePoint}/person",
+        "Reserve {brand}'s {topicName} — must be {attribute1}, {attribute2}, and fit {context}",
+        "Where can I book {brand}'s {topicName} with {attribute1}, outdoor seating, and under {pricePoint}?",
+        "{brand} {topicName} booking: {attribute1}, {attribute2}, party of 4, must work for {context}",
+        "Book {brand} for {topicName} with {attribute1}, {attribute2}, under {pricePoint}, this weekend"
+      ],
+      "adversarial": [
+        "What's the catch if I book {brand} for {topicName} today?",
+        "Will {brand} actually honor the reservation for {topicName} or is the waitlist system broken?",
+        "Any hidden fees, service charges, or minimum spends buried in {brand}'s {topicName} booking?",
+        "Is {brand}'s cancellation policy actually enforced or just theater?",
+        "If I book {brand} for {topicName} right now, what's the worst that can happen on the night?"
+      ]
+    }
+  }
+}

@@ -1,13 +1,20 @@
 'use client';
 
+import { Building2, Info } from 'lucide-react';
 import { ScoreGauge } from '@/components/shared';
 import { analyzedMetrics } from '@/lib/fixtures';
 import { getScoreTextClass } from '@/lib/colors';
 import { cn } from '@/lib/utils';
 
 export function VisibilityScore() {
-  const { summary } = analyzedMetrics;
+  const { summary, textMetrics } = analyzedMetrics;
   const score = summary.overallScore;
+
+  // Find top competitor by mention rate
+  const brandMetrics = textMetrics?.overall.brandMetrics ?? {};
+  const topCompetitorByMentions = Object.entries(brandMetrics)
+    .filter(([name]) => !analyzedMetrics.competitorOverview.find(c => c.name === name && c.isClient))
+    .sort(([, a], [, b]) => b.mentionRate - a.mentionRate)[0];
 
   const getScoreInterpretation = (score: number): string => {
     if (score < 25) {
@@ -34,22 +41,38 @@ export function VisibilityScore() {
         className="flex-shrink-0"
       />
       <div className="flex-1">
-        <h3 className={cn('text-2xl font-heading font-bold', getScoreTextClass(score))}>
-          {score < 40 ? 'Below Average' : score < 60 ? 'Moderate' : 'Good'}
-        </h3>
+        <div className="flex items-center gap-3 mb-2">
+          <h3 className={cn('text-2xl font-heading font-bold', getScoreTextClass(score))}>
+            {score < 40 ? 'Below Average' : score < 60 ? 'Moderate' : 'Good'}
+          </h3>
+          {summary.industry && (
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#22252F] border border-[#2A2D37] text-xs text-[#9CA3AF]">
+              <Building2 className="h-3 w-3" />
+              {summary.industry.name}
+            </span>
+          )}
+        </div>
         <p className="mt-2 text-[#9CA3AF] leading-relaxed">
           {getScoreInterpretation(score)}
         </p>
+        {summary.industry?.citationExpectation === 'low' && (
+          <p className="mt-2 text-xs text-[#6B7280] flex items-center gap-1">
+            <Info className="h-3 w-3" />
+            Score weighted for {summary.industry.name.toLowerCase()} (brand mentions matter more than domain citations)
+          </p>
+        )}
         <div className="mt-4 flex items-center gap-2 text-sm">
           <span className="text-[#6B7280]">Top competitor:</span>
           <span className="font-medium text-[#E5E7EB]">
-            {summary.topCompetitor.name}
+            {topCompetitorByMentions ? topCompetitorByMentions[0] : summary.topCompetitor.name}
           </span>
           <span className="text-[#6B7280]">at</span>
-          <span className="font-medium text-red-400">
-            {(summary.topCompetitor.citationShare * 100).toFixed(0)}%
+          <span className="font-medium text-amber-400">
+            {topCompetitorByMentions
+              ? (topCompetitorByMentions[1].mentionRate * 100).toFixed(0)
+              : (summary.topCompetitor.citationShare * 100).toFixed(0)}%
           </span>
-          <span className="text-[#6B7280]">citation share</span>
+          <span className="text-[#6B7280]">mention rate</span>
         </div>
       </div>
     </div>

@@ -1,0 +1,88 @@
+name: Daily Collection
+
+# Runs the AISO collection pipeline nightly against the FTI client config.
+# Depends on a running Next.js dev server for /api/claude and /api/gemini —
+# the server is started in-workflow and killed at the end. This will go
+# away once the API routes are refactored to be callable directly (see
+# TODOS.md: "Refactor API routes to remove localhost dependency").
+
+on:
+  schedule:
+    # 2am UTC every day — off-peak for most LLM APIs
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    # Manual trigger from the Actions tab for testing
+
+jobs:
+  collect:
+    name: Run collection pipeline
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: dashboard/package-lock.json
+
+      - name: Install dashboard dependencies
+        working-directory: dashboard
+        run: npm ci
+
+      - name: Start Next.js server (background)
+        working-directory: dashboard
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          npx next dev > next.log 2>&1 &
+          echo $! > next.pid
+          echo "Waiting for Next.js to come up on port 3000..."
+          for i in $(seq 1 60); do
+            if curl -fsS http://localhost:3000 > /dev/null 2>&1; then
+              echo "Next.js is up (took ${i}s)"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "::error::Next.js did not start within 60 seconds"
+          echo "---- next.log ----"
+          cat next.log || true
+          exit 1
+
+      - name: Run collection pipeline
+        working-directory: dashboard
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          node scripts/onboard-client.js \
+            --config configs/fti.json \
+            --skip-generate
+
+      - name: Stop Next.js server
+        if: always()
+        working-directory: dashboard
+        run: |
+          if [ -f next.pid ]; then
+            kill "$(cat next.pid)" 2>/dev/null || true
+            rm -f next.pid
+          fi
+
+      - name: Upload Next.js log (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: next-server-log
+          path: dashboard/next.log
+          if-no-files-found: ignore
+          retention-days: 7

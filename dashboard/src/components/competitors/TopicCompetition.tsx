@@ -1,20 +1,32 @@
 'use client';
 
-import { analyzedMetrics } from '@/lib/fixtures';
+import { analyzedMetrics, getFilteredTopicBrandMetrics } from '@/lib/fixtures';
 import { COMPETITOR_COLORS } from '@/lib/colors';
 import { cn } from '@/lib/utils';
 import { Crown } from 'lucide-react';
+import type { CompetitorOverviewRow, TopicIsotopeRow } from '@/lib/db';
 
-export function TopicCompetition() {
-  const competitors = analyzedMetrics.competitorOverview;
-  const topics = analyzedMetrics.topicResults;
+interface TopicCompetitionProps {
+  mode?: string;
+  selectedPlatforms?: string[];
+  serverData?: CompetitorOverviewRow[];
+  serverTopicData?: TopicIsotopeRow[];
+}
+
+export function TopicCompetition({ mode = 'mentions', selectedPlatforms, serverData, serverTopicData }: TopicCompetitionProps) {
+  const { competitorOverview: competitors, topicResults: topics } = analyzedMetrics;
 
   return (
     <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] overflow-hidden">
       <div className="border-b border-[#2A2D37] bg-[#22252F] px-6 py-4">
-        <h3 className="font-heading text-lg font-semibold text-[#E5E7EB]">
+        <h3 className="font-heading text-lg font-semibold text-[#E5E7EB] mb-2">
           Topic-Level Competition
         </h3>
+        <p className="text-sm text-[#9CA3AF]">
+          {mode === 'citations'
+            ? 'Citation share per topic - which brands get cited for each topic area'
+            : 'Mention rates per topic - which brands are discussed most in each topic area'}
+        </p>
       </div>
 
       <div className="overflow-x-auto">
@@ -41,11 +53,20 @@ export function TopicCompetition() {
           <tbody className="divide-y divide-[#2A2D37]">
             {topics.map(topic => {
               // Find the shares for each competitor
-              const shares = competitors.map(c => ({
-                name: c.name,
-                share: c.topicShares[topic.topicId] || 0,
-                isClient: c.isClient,
-              }));
+              const filteredTopicMetrics = getFilteredTopicBrandMetrics(topic.topicId, selectedPlatforms);
+              const shares = competitors.map(c => {
+                let share = 0;
+                if (mode === 'citations') {
+                  share = c.topicShares[topic.topicId] || 0;
+                } else {
+                  share = filteredTopicMetrics[c.name]?.mentionRate || 0;
+                }
+                return {
+                  name: c.name,
+                  share,
+                  isClient: c.isClient,
+                };
+              });
 
               // Find the leader
               const leader = shares.reduce((max, s) => s.share > max.share ? s : max, shares[0]);

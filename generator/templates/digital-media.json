@@ -1,0 +1,214 @@
+{
+  "archetype": {
+    "id": "digital-media",
+    "name": "Digital Media",
+    "description": "Streaming services, publications, newsletters, podcasts, courses, and creator-led content businesses. Curiosity-driven, attention-constrained.",
+    "sectors": ["streaming", "publications", "podcasts", "newsletters", "online courses", "creator economy"],
+    "primaryFocus": ["content quality", "cadence", "back-catalog", "ad experience", "cancel friction"],
+    "promptEmphasis": "Learning and discovery dominate; buyers rarely enter with purchase intent — they follow interest."
+  },
+  "weights": {
+    "intents": {
+      "learning": 0.35,
+      "discovery": 0.30,
+      "evaluation": 0.20,
+      "validation": 0.10,
+      "acquisition": 0.05
+    },
+    "isotopes": {
+      "declarative": 0.30,
+      "comparative": 0.20,
+      "situated": 0.20,
+      "constrained": 0.15,
+      "adversarial": 0.15
+    },
+    "weightsActive": false
+  },
+  "seeds": {
+    "learning": {
+      "declarative": [
+        "What is {topicName} and why is it popular in {category} right now?",
+        "What's the backstory behind {brand}'s rise in {category}?",
+        "How did {topicName} reshape the {category} space?",
+        "What does {attribute1} actually mean when a {category} subscription advertises it?",
+        "How are {category} platforms different from traditional media in how they produce content?"
+      ],
+      "comparative": [
+        "What's the difference between {attribute1} and {attribute2} subscriptions in {category}?",
+        "Ad-supported vs ad-free {category} services — what are you really paying for?",
+        "Podcast networks vs indie creators in {category} — where is the quality actually higher?",
+        "Weekly cadence vs daily cadence {category} newsletters — which one does readers more good?",
+        "Editorial {category} vs algorithm-driven {category} — which produces better recommendations?"
+      ],
+      "situated": [
+        "As a {persona}, what should I know about {topicName} before I commit the time?",
+        "I'm a {persona} getting into {category} for the first time — where does {topicName} fit?",
+        "For a {persona} consuming {category} during {context}, what does {topicName} offer?",
+        "How should a {persona} who only has 20 minutes a day think about {topicName}?",
+        "I'm a {persona} and I've never followed {category} — what does {brand} actually cover?"
+      ],
+      "constrained": [
+        "Explain {topicName} in {category} for someone with {attribute1}, {attribute2}, and {pricePoint}/month budget",
+        "Primer on {topicName} when I want {attribute1}, {attribute2}, and content suitable for {context}",
+        "What does {attribute1} mean for a {category} subscription at the {pricePoint} tier?",
+        "How do I understand {topicName} if I need {attribute1}, {attribute2}, and offline access for {context}?",
+        "Walk me through {topicName} for someone looking for {attribute1}, under {pricePoint}, consumable in {context}"
+      ],
+      "adversarial": [
+        "Is {topicName} original reporting in {category} or aggregated content with a fresh headline?",
+        "Why does every {category} podcast suddenly sound identical — is it the same three production houses?",
+        "What do {category} platforms obscure about how their recommendation algorithm actually picks content?",
+        "Is {brand}'s {topicName} AI-generated and dressed up, or is there a human editor at the wheel?",
+        "Why do {category} subscriptions keep raising prices while reducing the back-catalog?"
+      ]
+    },
+    "discovery": {
+      "declarative": [
+        "What are the best {category} subscriptions right now?",
+        "Top {topicName} options for {context}",
+        "Which {category} platforms have the strongest back-catalog in {topicName}?",
+        "Popular {category} creators worth following in {current year}",
+        "Recommended {category} for {context}"
+      ],
+      "comparative": [
+        "{brand} vs {competitor} — who has the deeper {category} library?",
+        "Is {brand} or {competitor} stronger in {topicName}?",
+        "Compare {brand} and {competitor} on {category} depth, exclusives, and production quality",
+        "{brand}, {competitor}, and The Atlantic — which is the strongest for {topicName}?",
+        "Between {brand} and {competitor}, which one actually owns {topicName}?"
+      ],
+      "situated": [
+        "As a {persona}, which {category} subscriptions should I actually bother with?",
+        "Best {category} platforms for a {persona} consuming during {context}",
+        "Where does a {persona} discover new {topicName} these days?",
+        "I'm a {persona} with 30 minutes of daily attention for {category} — which platforms fit?",
+        "Good {category} options for a {persona} who cares about {attribute1} and production quality"
+      ],
+      "constrained": [
+        "{category} subscriptions offering {attribute1}, {attribute2}, and under {pricePoint}/month",
+        "Looking for {category}: must be {attribute1}, {attribute2}, and consumable during {context}",
+        "Show me {category} platforms under {pricePoint} with {attribute1}, {attribute2}, and offline download",
+        "Which services offer {topicName} with {attribute1}, no ads, and family sharing under {pricePoint}?",
+        "{category} options: {attribute1}, {attribute2}, weekly cadence, and under {pricePoint}"
+      ],
+      "adversarial": [
+        "Which {category} subscriptions are actually worth paying for and which are just hype?",
+        "What {category} platforms should I cancel right now?",
+        "Who in {category} is still investing in original reporting and who's coasting?",
+        "Name one {category} outlet whose editorial standards haven't slipped in the last three years",
+        "Which {category} platform won't try to nickel-and-dime me with upgrade prompts?"
+      ]
+    },
+    "evaluation": {
+      "declarative": [
+        "Is {brand}'s {topicName} worth the {pricePoint}?",
+        "How does {brand}'s {category} quality hold up compared to the launch year?",
+        "Does {brand} actually deliver on {attribute1} in its {topicName} programming?",
+        "Rate {brand}'s {topicName} on depth, consistency, and production quality",
+        "Is {brand} a good choice for {category} in {current year}?"
+      ],
+      "comparative": [
+        "{brand} {topicName} vs {competitor} {topicName} — which is the better use of my time?",
+        "Compare {brand} and {competitor} on {category} depth, exclusives, and update cadence",
+        "Who wins on {attribute1}: {brand} or {competitor}?",
+        "{brand} vs {competitor} — better value at {pricePoint}/month for {category}?",
+        "Is {brand}'s {topicName} stronger than {competitor}'s for {context}?"
+      ],
+      "situated": [
+        "As a {persona}, is {brand}'s {topicName} worth my limited {category} attention?",
+        "Does {brand}'s {category} library work for a {persona} who values {attribute1}?",
+        "For a {persona} consuming during {context}, does {brand} or {competitor} make more sense?",
+        "I'm a {persona} — evaluate {brand}'s {topicName} against how I actually consume {category}",
+        "Should a {persona} pay {pricePoint}/month for {brand}'s {topicName}?"
+      ],
+      "constrained": [
+        "Does {brand}'s {topicName} meet the bar for {attribute1}, {attribute2}, and under {pricePoint}/month?",
+        "Evaluate {brand}'s {category} against my checklist: {attribute1}, {attribute2}, offline, no ads, under {pricePoint}",
+        "Is {brand}'s {topicName} the best option under {pricePoint} with {attribute1}?",
+        "Compare {brand}'s {topicName} on {attribute1}, {attribute2}, update frequency, and cancel policy",
+        "Does {brand}'s {category} hit {attribute1} and {attribute2} at the {pricePoint} tier?"
+      ],
+      "adversarial": [
+        "What's the catch with {brand}'s {topicName} subscription?",
+        "Where does {brand}'s {category} coverage fall short of the marketing?",
+        "Has {brand}'s {topicName} quality declined since the ownership change?",
+        "What do {brand} subscribers say about {topicName} after the honeymoon month?",
+        "Why shouldn't I subscribe to {brand} for {topicName}?"
+      ]
+    },
+    "validation": {
+      "declarative": [
+        "Am I making the right call subscribing to {brand} for {topicName}?",
+        "Will I regret paying {pricePoint}/month for {brand}'s {category}?",
+        "Is {brand}'s {topicName} a safe commitment for the next year?",
+        "Can I trust {brand} to keep {topicName} at its current quality?",
+        "Is {brand} still worth subscribing to for {category}?"
+      ],
+      "comparative": [
+        "Should I subscribe to {brand} or stick with {competitor} for {topicName}?",
+        "I'm torn between {brand} and {competitor} for {category} — which gives me more of what I actually consume?",
+        "Is {brand} enough of an upgrade over {competitor} to justify switching?",
+        "{brand} vs {competitor} — which am I less likely to cancel in three months?",
+        "Last-minute check: {brand} or {competitor} for {topicName} during {context}?"
+      ],
+      "situated": [
+        "I'm a {persona} about to commit {pricePoint}/month to {brand} for {topicName} — is this smart?",
+        "As a {persona} consuming during {context}, will {brand}'s {topicName} actually fit my life?",
+        "Talk me through whether {brand} is right for a {persona} like me",
+        "I'm a {persona} — is {brand} the right call for {context}?",
+        "For someone in my situation ({persona}, {context}), is {brand}'s {topicName} a good fit?"
+      ],
+      "constrained": [
+        "I want {category} that's {attribute1}, {attribute2}, and under {pricePoint}/month — does {brand}'s {topicName} check every box?",
+        "Final check: {brand}'s {topicName} against my requirements ({attribute1}, {attribute2}, {pricePoint})",
+        "{brand}'s {topicName} claims to be {attribute1} and {attribute2} — does the actual experience hold up?",
+        "Does {brand}'s {topicName} really satisfy {attribute1}, {attribute2}, and the {pricePoint} ceiling?",
+        "I'm about to hit subscribe on {brand}'s {topicName} — does it really meet {attribute1} and {attribute2}?"
+      ],
+      "adversarial": [
+        "Convince me I shouldn't subscribe to {brand} for {topicName}",
+        "What am I missing before I commit to {brand} for {category}?",
+        "Give me the strongest argument against paying for {brand}'s {topicName}",
+        "What will I regret about subscribing to {brand} six months from now?",
+        "Poke holes in my plan to subscribe to {brand} for {context}"
+      ]
+    },
+    "acquisition": {
+      "declarative": [
+        "Where do I sign up for {brand}'s {topicName}?",
+        "Is {brand}'s {topicName} available in my region right now?",
+        "How do I start a {brand} subscription for {topicName}?",
+        "What's {brand}'s current price for {topicName} and is there a trial?",
+        "I've decided on {brand}'s {topicName} — what's the best way to subscribe right now?"
+      ],
+      "comparative": [
+        "Where's the better deal on {topicName} — {brand} directly or {competitor}'s bundle?",
+        "{brand} vs {competitor} — whose free trial for {topicName} is actually meaningful?",
+        "Should I subscribe to {topicName} through {brand} or as part of {competitor}'s package?",
+        "{brand} or {competitor} — whose cancellation process for {topicName} is cleaner?",
+        "Which service has {topicName} available now, {brand} or {competitor}?"
+      ],
+      "situated": [
+        "I'm a {persona} — what's the fastest way to start {brand}'s {topicName} for {context}?",
+        "As a {persona}, what's the smartest way to subscribe to {brand} for {topicName}?",
+        "Best way for a {persona} to start with {brand}'s {topicName} before {context}",
+        "I'm a {persona} and I want {brand}'s {topicName} live by this weekend — how?",
+        "Where does a {persona} typically sign up for {brand}'s {topicName}?"
+      ],
+      "constrained": [
+        "Subscribe to {brand}'s {topicName} with {attribute1}, {attribute2}, under {pricePoint}/month",
+        "Start {brand}'s {topicName} — must include {attribute1}, {attribute2}, and offline access for {context}",
+        "Where can I subscribe to {brand}'s {topicName} with {attribute1}, family sharing, and under {pricePoint}?",
+        "{brand} {topicName} signup: {attribute1}, {attribute2}, no auto-renew, ready for {context}",
+        "Subscribe to {brand}'s {topicName} with {attribute1} quality, {attribute2}, under {pricePoint}, today"
+      ],
+      "adversarial": [
+        "What's the catch if I subscribe to {brand}'s {topicName} today?",
+        "Will {brand} actually honor the advertised {pricePoint} or bump it at renewal?",
+        "Any hidden fees, device limits, or regional restrictions in {brand}'s {topicName} signup?",
+        "Is {brand}'s cancel flow actually one-click or does it require calling customer service?",
+        "If I subscribe to {brand}'s {topicName} right now, how hard will it be to cancel in 30 days?"
+      ]
+    }
+  }
+}

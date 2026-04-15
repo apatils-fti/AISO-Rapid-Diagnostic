@@ -8,10 +8,15 @@ import {
   Users,
   Layers,
   List,
+
   Download,
   Settings,
   Activity,
+  GitCompare,
+  Camera,
+  TrendingUp,
 } from 'lucide-react';
+import { FARA_CONFIG } from '@/lib/fara-config';
 import { cn } from '@/lib/utils';
 import { clientConfig } from '@/lib/fixtures';
 import { formatDateShort } from '@/lib/utils';
@@ -38,9 +43,19 @@ const navItems = [
     icon: Layers,
   },
   {
+    label: 'Compare Platforms',
+    href: '/compare',
+    icon: GitCompare,
+  },
+  {
     label: 'Prompt Detail',
     href: '/prompts',
     icon: List,
+  },
+  {
+    label: 'Trends',
+    href: '/trends',
+    icon: TrendingUp,
   },
 ];
 
@@ -92,6 +107,27 @@ export function Sidebar() {
               </Link>
             );
           })}
+
+          {/* Fara Visual Checks - Feature Flagged */}
+          {FARA_CONFIG.ENABLED && (
+            <Link
+              href="/prompts-fara"
+              className={cn(
+                'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                pathname === '/prompts-fara'
+                  ? 'bg-[#00D4AA]/10 text-[#00D4AA]'
+                  : 'text-[#9CA3AF] hover:bg-[#1A1D27] hover:text-[#E5E7EB]'
+              )}
+            >
+              <Camera className="h-5 w-5" />
+              <span className="flex items-center gap-2">
+                Visual Checks
+                <span className="text-xs px-1.5 py-0.5 rounded bg-[#F59E0B]/10 text-[#F59E0B]">
+                  Beta
+                </span>
+              </span>
+            </Link>
+          )}
         </nav>
 
         {/* Bottom Actions */}

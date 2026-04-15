@@ -3,7 +3,11 @@
 import { Lightbulb, CheckCircle2 } from 'lucide-react';
 import { analyzedMetrics } from '@/lib/fixtures';
 
-export function GapInsightCard() {
+interface GapInsightCardProps {
+  serverGapData?: import('@/lib/db').GapRow[];
+}
+
+export function GapInsightCard({ serverGapData }: GapInsightCardProps) {
   const { gapAnalysis } = analyzedMetrics;
 
   const quadrantLabels: Record<string, { label: string; color: string }> = {

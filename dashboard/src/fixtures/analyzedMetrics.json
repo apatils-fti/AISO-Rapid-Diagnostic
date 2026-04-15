@@ -24,13 +24,26 @@
         "comingSoon": true
       },
       "chatgpt_search": {
-        "available": false,
-        "comingSoon": true
+        "citationShare": 0.062,
+        "promptsCited": 14,
+        "totalPrompts": 90,
+        "avgCitationPosition": 3.8,
+        "available": true,
+        "brandMentionRate": 0.35
       },
       "claude_search": {
         "available": false,
         "comingSoon": true
       }
+    },
+    "brandMentionRate": 0.42,
+    "firstMentionRate": 0.18,
+    "avgMentionPosition": 2.4,
+    "shareOfVoice": 0.15,
+    "industry": {
+      "id": "saas-software",
+      "name": "SaaS & Software",
+      "citationExpectation": "high"
     }
   },
   "topicResults": [
@@ -1215,5 +1228,49 @@
       "Build case studies for enterprise deployments to gain credibility in that segment",
       "Partner with agile/scrum thought leaders to increase visibility in methodology conversations"
     ]
+  },
+  "textMetrics": {
+    "overall": {
+      "brandMentionRate": 0.42,
+      "firstMentionRate": 0.18,
+      "avgMentionPosition": 2.4,
+      "shareOfVoice": 0.15,
+      "totalResponses": 270,
+      "responsesWithMention": 113,
+      "responsesWithFirstMention": 49,
+      "brandMetrics": {
+        "TechFlow": {
+          "mentionRate": 0.42,
+          "avgMentionCount": 1.8,
+          "firstMentionRate": 0.18,
+          "totalMentions": 203
+        },
+        "Asana": {
+          "mentionRate": 0.78,
+          "avgMentionCount": 2.3,
+          "firstMentionRate": 0.35,
+          "totalMentions": 487
+        },
+        "Monday.com": {
+          "mentionRate": 0.72,
+          "avgMentionCount": 2.1,
+          "firstMentionRate": 0.22,
+          "totalMentions": 408
+        },
+        "ClickUp": {
+          "mentionRate": 0.58,
+          "avgMentionCount": 1.6,
+          "firstMentionRate": 0.12,
+          "totalMentions": 250
+        },
+        "Notion": {
+          "mentionRate": 0.65,
+          "avgMentionCount": 1.9,
+          "firstMentionRate": 0.13,
+          "totalMentions": 333
+        }
+      }
+    },
+    "byTopic": {}
   }
 }
