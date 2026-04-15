@@ -49,6 +49,7 @@ async function initSupabase() {
       client_id: cliArgs.clientId,
       library_id: cliArgs.libraryId,
       platform: 'gemini',
+      run_date: new Date().toISOString().split('T')[0],
       prompt_count: 0,
       mention_count: 0,
       mention_rate: 0,

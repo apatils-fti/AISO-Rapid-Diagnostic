@@ -4,3 +4,4 @@ export { CompetitorQuickCompare } from './CompetitorQuickCompare';
 export { PlatformOverview } from './PlatformOverview';
 export { TopGapsCard } from './TopGapsCard';
 export { ExecutiveSummary } from './ExecutiveSummary';
+export { WeeklySummary } from './WeeklySummary';

@@ -532,11 +532,13 @@ export interface QueryFilters {
   sentiment?: string;
   isotope?: string;
   conversionIntent?: string;
+  date_from?: string;   // 'YYYY-MM-DD' inclusive lower bound on runs.run_date
+  date_to?: string;     // 'YYYY-MM-DD' inclusive upper bound on runs.run_date
 }
 
 /**
  * Fetch all results for a client across all platforms (joined through runs table).
- * Supports platform, sentiment, isotope, and conversion intent filters.
+ * Supports platform, sentiment, isotope, conversion intent, and run_date range filters.
  */
 export async function getAllResultsForClient(
   clientId: string,
@@ -546,11 +548,14 @@ export async function getAllResultsForClient(
   if (!sb) return [];
 
   try {
-    // Get run IDs for this client
-    const { data: runs, error: runsErr } = await sb
+    // Get run IDs for this client, scoped by date range if provided.
+    let runsQuery = sb
       .from('runs')
       .select('id')
       .eq('client_id', clientId);
+    if (filters?.date_from) runsQuery = runsQuery.gte('run_date', filters.date_from);
+    if (filters?.date_to) runsQuery = runsQuery.lte('run_date', filters.date_to);
+    const { data: runs, error: runsErr } = await runsQuery;
 
     if (runsErr || !runs || runs.length === 0) return [];
     const runIds = runs.map((r: any) => r.id);
@@ -1210,4 +1215,233 @@ export async function getPromptResults(
 
     return [...promptMap.values()];
   } catch { return []; }
+}
+
+// ---------------------------------------------------------------------------
+// Daily / Weekly Aggregation (for Trends page + Weekly Summary card)
+// ---------------------------------------------------------------------------
+
+/**
+ * Return the distinct run_date values for this client, sorted newest first.
+ * Used to populate the Custom date filter dropdown — only dates that have
+ * data are selectable.
+ */
+export async function getAvailableRunDates(clientId: string): Promise<string[]> {
+  const sb = reader();
+  if (!sb) return [];
+
+  try {
+    const { data, error } = await sb
+      .from('runs')
+      .select('run_date')
+      .eq('client_id', clientId)
+      .not('run_date', 'is', null)
+      .order('run_date', { ascending: false });
+
+    if (error || !data) return [];
+    const unique = [...new Set((data as Array<{ run_date: string }>).map((r) => r.run_date))];
+    return unique;
+  } catch { return []; }
+}
+
+export interface DailyTrendPoint {
+  date: string;
+  platforms: Record<string, { mention_rate: number; result_count: number }>;
+  composite_mention_rate: number;
+}
+
+/**
+ * Daily trend data for the Trends page. For each distinct run_date in
+ * [date_from, date_to] (or the last N days if no range given), returns
+ * per-platform mention rate and a composite weighted average.
+ *
+ * Reads aggregated mention_rate and prompt_count from the runs table
+ * directly (populated by batch runner finalizeSupabaseRun), so this is
+ * one cheap round-trip with no per-result scan.
+ */
+export async function getDailyTrends(
+  clientId: string,
+  filters?: { date_from?: string; date_to?: string; days?: number },
+): Promise<DailyTrendPoint[]> {
+  const sb = reader();
+  if (!sb) return [];
+
+  try {
+    let query = sb
+      .from('runs')
+      .select('run_date, platform, mention_rate, prompt_count')
+      .eq('client_id', clientId)
+      .not('run_date', 'is', null);
+
+    if (filters?.date_from) query = query.gte('run_date', filters.date_from);
+    if (filters?.date_to) query = query.lte('run_date', filters.date_to);
+    if (!filters?.date_from && !filters?.date_to) {
+      const days = filters?.days ?? 7;
+      const cutoff = new Date(Date.now() - days * 24 * 60 * 60 * 1000)
+        .toISOString()
+        .split('T')[0];
+      query = query.gte('run_date', cutoff);
+    }
+
+    const { data, error } = await query.order('run_date', { ascending: true });
+    if (error || !data) return [];
+
+    type Row = { run_date: string; platform: string; mention_rate: number; prompt_count: number };
+    const byDate = new Map<string, DailyTrendPoint>();
+
+    for (const row of data as Row[]) {
+      if (!byDate.has(row.run_date)) {
+        byDate.set(row.run_date, {
+          date: row.run_date,
+          platforms: {},
+          composite_mention_rate: 0,
+        });
+      }
+      const point = byDate.get(row.run_date)!;
+      point.platforms[row.platform] = {
+        mention_rate: row.mention_rate ?? 0,
+        result_count: row.prompt_count ?? 0,
+      };
+    }
+
+    // Composite = prompt-weighted average across platforms for the day.
+    for (const point of byDate.values()) {
+      let totalPrompts = 0;
+      let totalMentions = 0;
+      for (const p of Object.values(point.platforms)) {
+        totalPrompts += p.result_count;
+        totalMentions += p.mention_rate * p.result_count;
+      }
+      point.composite_mention_rate = totalPrompts > 0 ? totalMentions / totalPrompts : 0;
+    }
+
+    return [...byDate.values()];
+  } catch { return []; }
+}
+
+export interface WeeklySummary {
+  startDate: string;
+  endDate: string;
+  daysOfData: number;
+  startMentionRate: number;
+  endMentionRate: number;
+  deltaMentionRate: number;
+  bestPlatform: { platform: string; mention_rate: number } | null;
+  mostImprovedTopic: {
+    topicId: string;
+    topicName: string;
+    startRate: number;
+    endRate: number;
+    delta: number;
+  } | null;
+}
+
+/**
+ * Compute a weekly summary card for the Overview page.
+ *
+ * Aggregates start-of-week vs end-of-week mention rates, picks the
+ * best-performing platform at end-of-week, and identifies the topic with
+ * the biggest week-over-week mention rate improvement.
+ *
+ * Returns null when fewer than 2 distinct dates exist — can't compute
+ * a delta from a single day. The dashboard page gates WeeklySummary card
+ * rendering on this null check.
+ */
+export async function getWeeklySummary(clientId: string): Promise<WeeklySummary | null> {
+  const sb = reader();
+  if (!sb) return null;
+
+  try {
+    const dates = await getAvailableRunDates(clientId);
+    if (dates.length < 2) return null;
+
+    const recent = dates.slice(0, 7);
+    const endDate = recent[0]!;
+    const startDate = recent[recent.length - 1]!;
+
+    const { data: runs, error: runsErr } = await sb
+      .from('runs')
+      .select('id, run_date, platform, mention_rate, prompt_count')
+      .eq('client_id', clientId)
+      .in('run_date', [startDate, endDate]);
+    if (runsErr || !runs || runs.length === 0) return null;
+
+    type Row = { id: string; run_date: string; platform: string; mention_rate: number; prompt_count: number };
+    const typed = runs as Row[];
+
+    const weightedRate = (rows: Row[]): number => {
+      let totalPrompts = 0;
+      let totalMentions = 0;
+      for (const r of rows) {
+        totalPrompts += r.prompt_count ?? 0;
+        totalMentions += (r.mention_rate ?? 0) * (r.prompt_count ?? 0);
+      }
+      return totalPrompts > 0 ? totalMentions / totalPrompts : 0;
+    };
+
+    const startRuns = typed.filter((r) => r.run_date === startDate);
+    const endRuns = typed.filter((r) => r.run_date === endDate);
+    const startMentionRate = weightedRate(startRuns);
+    const endMentionRate = weightedRate(endRuns);
+
+    let bestPlatform: WeeklySummary['bestPlatform'] = null;
+    for (const r of endRuns) {
+      if (!bestPlatform || r.mention_rate > bestPlatform.mention_rate) {
+        bestPlatform = { platform: r.platform, mention_rate: r.mention_rate };
+      }
+    }
+
+    const startRunIds = startRuns.map((r) => r.id);
+    const endRunIds = endRuns.map((r) => r.id);
+    const allRunIds = [...startRunIds, ...endRunIds];
+
+    const { data: results, error: resultsErr } = await sb
+      .from('results')
+      .select('run_id, topic_id, topic_name, client_mentioned')
+      .in('run_id', allRunIds);
+
+    let mostImprovedTopic: WeeklySummary['mostImprovedTopic'] = null;
+    if (!resultsErr && results) {
+      type ResultRow = { run_id: string; topic_id: string; topic_name: string; client_mentioned: boolean };
+      const startRunIdSet = new Set(startRunIds);
+      const endRunIdSet = new Set(endRunIds);
+
+      const topicStats = new Map<string, { name: string; startHits: number; startTotal: number; endHits: number; endTotal: number }>();
+      for (const r of results as ResultRow[]) {
+        const existing = topicStats.get(r.topic_id) ?? { name: r.topic_name, startHits: 0, startTotal: 0, endHits: 0, endTotal: 0 };
+        if (startRunIdSet.has(r.run_id)) {
+          existing.startTotal += 1;
+          if (r.client_mentioned) existing.startHits += 1;
+        }
+        if (endRunIdSet.has(r.run_id)) {
+          existing.endTotal += 1;
+          if (r.client_mentioned) existing.endHits += 1;
+        }
+        topicStats.set(r.topic_id, existing);
+      }
+
+      let bestDelta = -Infinity;
+      for (const [topicId, s] of topicStats.entries()) {
+        if (s.startTotal === 0 || s.endTotal === 0) continue;
+        const startRate = s.startHits / s.startTotal;
+        const endRate = s.endHits / s.endTotal;
+        const delta = endRate - startRate;
+        if (delta > bestDelta) {
+          bestDelta = delta;
+          mostImprovedTopic = { topicId, topicName: s.name, startRate, endRate, delta };
+        }
+      }
+    }
+
+    return {
+      startDate,
+      endDate,
+      daysOfData: recent.length,
+      startMentionRate,
+      endMentionRate,
+      deltaMentionRate: endMentionRate - startMentionRate,
+      bestPlatform,
+      mostImprovedTopic,
+    };
+  } catch { return null; }
 }

@@ -46,7 +46,13 @@ interface TopicDelta {
 // Component
 // ---------------------------------------------------------------------------
 
-export function TrendsView() {
+interface TrendsViewProps {
+  clientId: string;
+  dateFrom?: string;
+  dateTo?: string;
+}
+
+export function TrendsView({ clientId, dateFrom, dateTo }: TrendsViewProps) {
   const [runs, setRuns] = useState<Run[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -56,7 +62,9 @@ export function TrendsView() {
   const [topicDeltas, setTopicDeltas] = useState<TopicDelta[]>([]);
   const [loadingDeltas, setLoadingDeltas] = useState(false);
 
-  // Load runs from Supabase
+  // Load runs from Supabase, scoped to the current client and optional
+  // date range. The client_id filter fixes a multi-client mixing bug
+  // where the previous query pulled every client's data together.
   useEffect(() => {
     async function load() {
       if (!supabaseAnon) {
@@ -66,10 +74,15 @@ export function TrendsView() {
       }
 
       try {
-        const { data, error: err } = await supabaseAnon
+        let query = supabaseAnon
           .from('runs')
           .select('*')
-          .order('run_date', { ascending: true });
+          .eq('client_id', clientId)
+          .not('run_date', 'is', null);
+        if (dateFrom) query = query.gte('run_date', dateFrom);
+        if (dateTo) query = query.lte('run_date', dateTo);
+
+        const { data, error: err } = await query.order('run_date', { ascending: true });
 
         if (err) throw new Error(err.message);
         setRuns(data ?? []);
@@ -80,7 +93,7 @@ export function TrendsView() {
       }
     }
     load();
-  }, []);
+  }, [clientId, dateFrom, dateTo]);
 
   // Unique platforms with data
   const platforms = useMemo(() => {

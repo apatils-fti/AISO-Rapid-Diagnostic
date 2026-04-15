@@ -5,10 +5,18 @@ import {
   PlatformOverview,
   TopGapsCard,
   ExecutiveSummary,
+  WeeklySummary,
 } from '@/components/dashboard';
 import { PillarCard, SentimentBar } from '@/components/metrics';
 import type { SampleResponse } from '@/components/metrics/PillarCard';
-import { getOverviewStats, getPlatformComparison, getClients, type QueryFilters } from '@/lib/db';
+import {
+  getOverviewStats,
+  getPlatformComparison,
+  getClients,
+  getAvailableRunDates,
+  getWeeklySummary,
+  type QueryFilters,
+} from '@/lib/db';
 import { supabaseService } from '@/lib/supabase';
 import {
   getVisibilityScore,
@@ -19,22 +27,34 @@ import {
 } from '@/lib/metrics';
 import type { EnrichedResult } from '@/lib/metrics';
 import { formatPercent } from '@/lib/utils';
-import { EnrichmentFilters, PlatformDataProvider } from '@/components/shared';
+import { EnrichmentFilters, PlatformDataProvider, DateRangeFilter } from '@/components/shared';
 import { MetricsFilter } from '../metrics/metrics-filter';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
 
 interface DashboardPageProps {
-  searchParams: Promise<{ client?: string; platform?: string; sentiment?: string; isotope?: string; intent?: string }>;
+  searchParams: Promise<{
+    client?: string;
+    platform?: string;
+    sentiment?: string;
+    isotope?: string;
+    intent?: string;
+    date_from?: string;
+    date_to?: string;
+  }>;
 }
 
 async function getEnrichedResults(clientId: string, filters: QueryFilters): Promise<EnrichedResult[]> {
   if (!supabaseService) return [];
 
-  const { data: runs, error: runsError } = await supabaseService
+  // Get run IDs for this client, scoped by date range if provided.
+  let runsQuery = supabaseService
     .from('runs')
     .select('id')
     .eq('client_id', clientId);
+  if (filters.date_from) runsQuery = runsQuery.gte('run_date', filters.date_from);
+  if (filters.date_to) runsQuery = runsQuery.lte('run_date', filters.date_to);
+  const { data: runs, error: runsError } = await runsQuery;
 
   if (runsError || !runs || runs.length === 0) return [];
   const runIds = runs.map((r: { id: string }) => r.id);
@@ -76,12 +96,14 @@ async function getAvailablePlatforms(clientId: string): Promise<string[]> {
 }
 
 async function DashboardContent({ clientId, filters }: { clientId: string; filters: QueryFilters }) {
-  const [overview, platformStats, results, platforms, clients] = await Promise.all([
+  const [overview, platformStats, results, platforms, clients, availableDates, weeklySummary] = await Promise.all([
     getOverviewStats(clientId, filters),
     getPlatformComparison(clientId, filters),
     getEnrichedResults(clientId, filters),
     getAvailablePlatforms(clientId),
     getClients(),
+    getAvailableRunDates(clientId),
+    getWeeklySummary(clientId),
   ]);
 
   // Archetype weights
@@ -181,10 +203,21 @@ Wins Comparisons = comparative prompts where brand gets final recommendation / t
       <div className="space-y-3">
         <MetricsFilter platforms={platforms} currentPlatform={platform} />
         <EnrichmentFilters />
+        <DateRangeFilter
+          availableDates={availableDates}
+          currentFrom={filters.date_from}
+          currentTo={filters.date_to}
+        />
       </div>
 
       {/* Executive Summary */}
       <ExecutiveSummary overviewData={overview} clientName={client?.name || 'J.Crew'} />
+
+      {/* Weekly Summary — only rendered when ≥2 distinct run_dates exist
+          (server-side gate via getWeeklySummary returning null) */}
+      {weeklySummary && availableDates.length >= 3 && (
+        <WeeklySummary data={weeklySummary} />
+      )}
 
       {results.length > 0 && (
         <p className="text-sm text-[#6B7280]">
@@ -298,6 +331,8 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
     sentiment: params.sentiment,
     isotope: params.isotope,
     conversionIntent: params.intent,
+    date_from: params.date_from,
+    date_to: params.date_to,
   };
 
   const clients = await getClients();
