@@ -1,0 +1,2002 @@
+[
+  {
+    "promptId": "business-casual-comparative-8",
+    "topicId": "business-casual",
+    "topicName": "Business Casual",
+    "category": "Awareness",
+    "promptText": "J.Crew vs Banana Republic vs Everlane for office wear quality",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "business-casual-commercial-5",
+    "topicId": "business-casual",
+    "topicName": "Business Casual",
+    "category": "Awareness",
+    "promptText": "Best business casual brands for men under 40?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "business-casual-specific-7",
+    "topicId": "business-casual",
+    "topicName": "Business Casual",
+    "category": "Awareness",
+    "promptText": "Petite-friendly office pants?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "business-casual-adversarial-2",
+    "topicId": "business-casual",
+    "topicName": "Business Casual",
+    "category": "Awareness",
+    "promptText": "Is J.Crew still good quality for workwear?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "business-casual-comparative-4",
+    "topicId": "business-casual",
+    "topicName": "Business Casual",
+    "category": "Awareness",
+    "promptText": "J.Crew vs Everlane for office wear?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "business-casual-comparative-3",
+    "topicId": "business-casual",
+    "topicName": "Business Casual",
+    "category": "Awareness",
+    "promptText": "J.Crew vs Banana Republic for business casual?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "business-casual-persona-3",
+    "topicId": "business-casual",
+    "topicName": "Business Casual",
+    "category": "Awareness",
+    "promptText": "As a young professional starting in finance where should I shop?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "business-casual-persona",
+    "topicId": "business-casual",
+    "topicName": "Business Casual",
+    "category": "Awareness",
+    "promptText": "As a young professional starting my first corporate job, where should I buy business casual clothes?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "business-casual-specific-4",
+    "topicId": "business-casual",
+    "topicName": "Business Casual",
+    "category": "Awareness",
+    "promptText": "Work blazers under $250 that look tailored?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "business-casual-conversational-5",
+    "topicId": "business-casual",
+    "topicName": "Business Casual",
+    "category": "Awareness",
+    "promptText": "I am tired of cheap work clothes falling apart what brands last?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "wedding-occasion-persona",
+    "topicId": "wedding-occasion",
+    "topicName": "Wedding / Occasion",
+    "category": "Awareness",
+    "promptText": "I’m 32 and need an elegant wedding guest dress that isn’t too trendy. Where should I shop?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "wedding-occasion-commercial-2",
+    "topicId": "wedding-occasion",
+    "topicName": "Wedding / Occasion",
+    "category": "Awareness",
+    "promptText": "Best summer formal dresses for women in their 30s",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "wedding-occasion-commercial",
+    "topicId": "wedding-occasion",
+    "topicName": "Wedding / Occasion",
+    "category": "Awareness",
+    "promptText": "Best brands for wedding guest dresses under $250",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "wedding-occasion-conversational",
+    "topicId": "wedding-occasion",
+    "topicName": "Wedding / Occasion",
+    "category": "Awareness",
+    "promptText": "I have three weddings this summer and nothing to wear. Help me find something classy.",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "wedding-occasion-specific-2",
+    "topicId": "wedding-occasion",
+    "topicName": "Wedding / Occasion",
+    "category": "Awareness",
+    "promptText": "Classic cocktail dresses under $300",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "wedding-occasion-comparative-2",
+    "topicId": "wedding-occasion",
+    "topicName": "Wedding / Occasion",
+    "category": "Awareness",
+    "promptText": "J.Crew Factory vs J.Crew for occasion dresses",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "wedding-occasion-persona-2",
+    "topicId": "wedding-occasion",
+    "topicName": "Wedding / Occasion",
+    "category": "Awareness",
+    "promptText": "Where should I shop for a black-tie optional wedding?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "wedding-occasion-specific",
+    "topicId": "wedding-occasion",
+    "topicName": "Wedding / Occasion",
+    "category": "Awareness",
+    "promptText": "Affordable wedding guest dresses under $200 that work for outdoor ceremonies",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "wedding-occasion-negative constraint",
+    "topicId": "wedding-occasion",
+    "topicName": "Wedding / Occasion",
+    "category": "Awareness",
+    "promptText": "Brands for wedding guest dresses that aren’t too trendy",
+    "isotope": "negative constraint"
+  },
+  {
+    "promptId": "wedding-occasion-comparative",
+    "topicId": "wedding-occasion",
+    "topicName": "Wedding / Occasion",
+    "category": "Awareness",
+    "promptText": "J.Crew vs Reformation for wedding guest dresses",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "elevated-basics-comparative-5",
+    "topicId": "elevated-basics",
+    "topicName": "Elevated Basics",
+    "category": "Awareness",
+    "promptText": "J.Crew vs Madewell for everyday wardrobe staples",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "elevated-basics-persona-2",
+    "topicId": "elevated-basics",
+    "topicName": "Elevated Basics",
+    "category": "Awareness",
+    "promptText": "As someone building a capsule wardrobe in my 30s where should I shop?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "elevated-basics-comparative",
+    "topicId": "elevated-basics",
+    "topicName": "Elevated Basics",
+    "category": "Awareness",
+    "promptText": "J.Crew vs Everlane for quality basics",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "elevated-basics-conversational-8",
+    "topicId": "elevated-basics",
+    "topicName": "Elevated Basics",
+    "category": "Awareness",
+    "promptText": "I want elevated basics that looks expensive but is affordable?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "elevated-basics-adversarial-7",
+    "topicId": "elevated-basics",
+    "topicName": "Elevated Basics",
+    "category": "Awareness",
+    "promptText": "Is J.Crew good quality for elevated basics?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "elevated-basics-comparative-2",
+    "topicId": "elevated-basics",
+    "topicName": "Elevated Basics",
+    "category": "Awareness",
+    "promptText": "Brands similar to Everlane but more classic",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "elevated-basics-informational-3",
+    "topicId": "elevated-basics",
+    "topicName": "Elevated Basics",
+    "category": "Awareness",
+    "promptText": "What should I know before buying elevated basics?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "elevated-basics-adversarial-9",
+    "topicId": "elevated-basics",
+    "topicName": "Elevated Basics",
+    "category": "Awareness",
+    "promptText": "Has J.Crew declined in quality for elevated basics?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "elevated-basics-adversarial",
+    "topicId": "elevated-basics",
+    "topicName": "Elevated Basics",
+    "category": "Awareness",
+    "promptText": "Is J.Crew good for basics?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "elevated-basics-conversational-5",
+    "topicId": "elevated-basics",
+    "topicName": "Elevated Basics",
+    "category": "Awareness",
+    "promptText": "I want elevated basics that looks expensive but is affordable?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "travel-wardrobe-persona-10",
+    "topicId": "travel-wardrobe",
+    "topicName": "Travel Wardrobe",
+    "category": "Awareness",
+    "promptText": "As a 30-year-old professional where should I buy travel wardrobe?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "travel-wardrobe-informational",
+    "topicId": "travel-wardrobe",
+    "topicName": "Travel Wardrobe",
+    "category": "Awareness",
+    "promptText": "What should I pack for a 10-day summer trip to Europe?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "travel-wardrobe-conversational-4",
+    "topicId": "travel-wardrobe",
+    "topicName": "Travel Wardrobe",
+    "category": "Awareness",
+    "promptText": "I want travel wardrobe that looks expensive but is affordable?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "travel-wardrobe-comparative-5",
+    "topicId": "travel-wardrobe",
+    "topicName": "Travel Wardrobe",
+    "category": "Awareness",
+    "promptText": "J.Crew vs Banana Republic for travel durability",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "travel-wardrobe-persona-2",
+    "topicId": "travel-wardrobe",
+    "topicName": "Travel Wardrobe",
+    "category": "Awareness",
+    "promptText": "As a 35-year-old traveling to Europe what brands look elevated but practical?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "travel-wardrobe-specific",
+    "topicId": "travel-wardrobe",
+    "topicName": "Travel Wardrobe",
+    "category": "Awareness",
+    "promptText": "Lightweight wrinkle-resistant summer dresses under $150",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "travel-wardrobe-specific-2",
+    "topicId": "travel-wardrobe",
+    "topicName": "Travel Wardrobe",
+    "category": "Awareness",
+    "promptText": "Travel clothes that don’t wrinkle easily",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "travel-wardrobe-commercial",
+    "topicId": "travel-wardrobe",
+    "topicName": "Travel Wardrobe",
+    "category": "Awareness",
+    "promptText": "Best brands for stylish but practical travel clothes",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "travel-wardrobe-comparative-3",
+    "topicId": "travel-wardrobe",
+    "topicName": "Travel Wardrobe",
+    "category": "Awareness",
+    "promptText": "J.Crew vs Athleta for comfortable but polished travel clothes",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "travel-wardrobe-commercial-3",
+    "topicId": "travel-wardrobe",
+    "topicName": "Travel Wardrobe",
+    "category": "Awareness",
+    "promptText": "Brands for stylish carry-on-friendly outfits",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "timeless-investment-pieces-informational",
+    "topicId": "timeless-investment-pieces",
+    "topicName": "Timeless / Investment Pieces",
+    "category": "Awareness",
+    "promptText": "What are timeless wardrobe staples every woman should own?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "timeless-investment-pieces-specific-2",
+    "topicId": "timeless-investment-pieces",
+    "topicName": "Timeless / Investment Pieces",
+    "category": "Awareness",
+    "promptText": "Quality sweaters that won’t pill easily",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "timeless-investment-pieces-persona",
+    "topicId": "timeless-investment-pieces",
+    "topicName": "Timeless / Investment Pieces",
+    "category": "Awareness",
+    "promptText": "As a woman in her 30s who prefers timeless style, where should I shop?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "timeless-investment-pieces-commercial",
+    "topicId": "timeless-investment-pieces",
+    "topicName": "Timeless / Investment Pieces",
+    "category": "Awareness",
+    "promptText": "Best brands for classic wardrobe investment pieces",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "timeless-investment-pieces-adversarial",
+    "topicId": "timeless-investment-pieces",
+    "topicName": "Timeless / Investment Pieces",
+    "category": "Awareness",
+    "promptText": "Is J.Crew still considered a classic brand?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "timeless-investment-pieces-commercial-2",
+    "topicId": "timeless-investment-pieces",
+    "topicName": "Timeless / Investment Pieces",
+    "category": "Awareness",
+    "promptText": "Best classic trench coats for women",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "timeless-investment-pieces-comparative-2",
+    "topicId": "timeless-investment-pieces",
+    "topicName": "Timeless / Investment Pieces",
+    "category": "Awareness",
+    "promptText": "Brands similar to Ralph Lauren but more affordable",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "timeless-investment-pieces-negative constraint",
+    "topicId": "timeless-investment-pieces",
+    "topicName": "Timeless / Investment Pieces",
+    "category": "Awareness",
+    "promptText": "Brands that offer quality without luxury pricing",
+    "isotope": "negative constraint"
+  },
+  {
+    "promptId": "timeless-investment-pieces-specific",
+    "topicId": "timeless-investment-pieces",
+    "topicName": "Timeless / Investment Pieces",
+    "category": "Awareness",
+    "promptText": "Classic wool coats under $400 that last for years",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "timeless-investment-pieces-conversational",
+    "topicId": "timeless-investment-pieces",
+    "topicName": "Timeless / Investment Pieces",
+    "category": "Awareness",
+    "promptText": "I want fewer but better clothes. What brands focus on timeless quality?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "wedding-guest-comparative-8",
+    "topicId": "wedding-guest",
+    "topicName": "Wedding Guest",
+    "category": "Awareness",
+    "promptText": "J.Crew vs Anthropologie for wedding guest quality and fit",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "wedding-guest-specific-6",
+    "topicId": "wedding-guest",
+    "topicName": "Wedding Guest",
+    "category": "Awareness",
+    "promptText": "Wedding guest dresses that are flattering but not revealing under $200",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "wedding-guest-informational",
+    "topicId": "wedding-guest",
+    "topicName": "Wedding Guest",
+    "category": "Awareness",
+    "promptText": "What should I wear to a summer wedding?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "wedding-guest-comparative-7",
+    "topicId": "wedding-guest",
+    "topicName": "Wedding Guest",
+    "category": "Awareness",
+    "promptText": "Brands similar to J.Crew for cocktail dresses",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "wedding-guest-commercial",
+    "topicId": "wedding-guest",
+    "topicName": "Wedding Guest",
+    "category": "Awareness",
+    "promptText": "Best brands for wedding guest dresses under $250?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "wedding-guest-commercial-7",
+    "topicId": "wedding-guest",
+    "topicName": "Wedding Guest",
+    "category": "Awareness",
+    "promptText": "Best brands for outdoor wedding attire in hot weather",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "wedding-guest-conversational",
+    "topicId": "wedding-guest",
+    "topicName": "Wedding Guest",
+    "category": "Awareness",
+    "promptText": "I have three weddings this summer and nothing to wear help?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "wedding-guest-specific",
+    "topicId": "wedding-guest",
+    "topicName": "Wedding Guest",
+    "category": "Awareness",
+    "promptText": "Wedding guest dresses under $200 that are not too revealing?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "wedding-guest-persona-6",
+    "topicId": "wedding-guest",
+    "topicName": "Wedding Guest",
+    "category": "Awareness",
+    "promptText": "As a 40-year-old attending a black-tie wedding where should I shop?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "wedding-guest-comparative-2",
+    "topicId": "wedding-guest",
+    "topicName": "Wedding Guest",
+    "category": "Awareness",
+    "promptText": "J.Crew vs Anthropologie for formal dresses?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "timeless-staples-persona-8",
+    "topicId": "timeless-staples",
+    "topicName": "Timeless Staples",
+    "category": "Conversion",
+    "promptText": "As a minimalist where should I shop for timeless staples?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "timeless-staples-adversarial-3",
+    "topicId": "timeless-staples",
+    "topicName": "Timeless Staples",
+    "category": "Conversion",
+    "promptText": "Are J.Crew blazers good long-term staples?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "timeless-staples-informational-4",
+    "topicId": "timeless-staples",
+    "topicName": "Timeless Staples",
+    "category": "Conversion",
+    "promptText": "What are key pieces in timeless staples?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "timeless-staples-commercial-7",
+    "topicId": "timeless-staples",
+    "topicName": "Timeless Staples",
+    "category": "Conversion",
+    "promptText": "Top mid-priced brands for timeless staples?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "timeless-staples-comparative",
+    "topicId": "timeless-staples",
+    "topicName": "Timeless Staples",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Ralph Lauren for classic American style quality",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "timeless-staples-informational-3",
+    "topicId": "timeless-staples",
+    "topicName": "Timeless Staples",
+    "category": "Conversion",
+    "promptText": "What defines timeless staples in 2026?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "timeless-staples-specific-5",
+    "topicId": "timeless-staples",
+    "topicName": "Timeless Staples",
+    "category": "Conversion",
+    "promptText": "timeless staples under $200?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "timeless-staples-comparative-5",
+    "topicId": "timeless-staples",
+    "topicName": "Timeless Staples",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Everlane for timeless staples?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "timeless-staples-conversational-5",
+    "topicId": "timeless-staples",
+    "topicName": "Timeless Staples",
+    "category": "Conversion",
+    "promptText": "I need help finding good timeless staples, where should I shop?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "timeless-staples-comparative-8",
+    "topicId": "timeless-staples",
+    "topicName": "Timeless Staples",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Everlane for timeless staples?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "sustainability-specific",
+    "topicId": "sustainability",
+    "topicName": "Sustainability",
+    "category": "Awareness",
+    "promptText": "Brands that use natural fabrics and classic cuts?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "sustainability-specific-2",
+    "topicId": "sustainability",
+    "topicName": "Sustainability",
+    "category": "Awareness",
+    "promptText": "sustainability made from natural fabrics?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "sustainability-comparative-3",
+    "topicId": "sustainability",
+    "topicName": "Sustainability",
+    "category": "Awareness",
+    "promptText": "J.Crew vs Ralph Lauren for sustainability?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "sustainability-adversarial-3",
+    "topicId": "sustainability",
+    "topicName": "Sustainability",
+    "category": "Awareness",
+    "promptText": "Is J.Crew overpriced for sustainability?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "sustainability-commercial-6",
+    "topicId": "sustainability",
+    "topicName": "Sustainability",
+    "category": "Awareness",
+    "promptText": "Top mid-priced brands for sustainability?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "sustainability-conversational-5",
+    "topicId": "sustainability",
+    "topicName": "Sustainability",
+    "category": "Awareness",
+    "promptText": "I need help finding good sustainability, where should I shop?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "sustainability-comparative",
+    "topicId": "sustainability",
+    "topicName": "Sustainability",
+    "category": "Awareness",
+    "promptText": "J.Crew vs Everlane for sustainability practices?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "sustainability-specific-5",
+    "topicId": "sustainability",
+    "topicName": "Sustainability",
+    "category": "Awareness",
+    "promptText": "sustainability made from natural fabrics?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "sustainability-comparative-6",
+    "topicId": "sustainability",
+    "topicName": "Sustainability",
+    "category": "Awareness",
+    "promptText": "J.Crew vs Ralph Lauren for sustainability?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "sustainability-persona-6",
+    "topicId": "sustainability",
+    "topicName": "Sustainability",
+    "category": "Awareness",
+    "promptText": "As a 30-year-old professional where should I buy sustainability?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "workwear-finance-comparative-2",
+    "topicId": "workwear-finance",
+    "topicName": "Workwear - Finance",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Banana Republic for conservative workplaces?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "workwear-finance-persona-9",
+    "topicId": "workwear-finance",
+    "topicName": "Workwear - Finance",
+    "category": "Conversion",
+    "promptText": "As a minimalist where should I shop for workwear - finance?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "workwear-finance-informational-3",
+    "topicId": "workwear-finance",
+    "topicName": "Workwear - Finance",
+    "category": "Conversion",
+    "promptText": "What are key pieces in workwear - finance?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "workwear-finance-adversarial-13",
+    "topicId": "workwear-finance",
+    "topicName": "Workwear - Finance",
+    "category": "Conversion",
+    "promptText": "Is J.Crew good quality for workwear - finance?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "workwear-finance-specific",
+    "topicId": "workwear-finance",
+    "topicName": "Workwear - Finance",
+    "category": "Conversion",
+    "promptText": "Classic navy suits under $500 for corporate roles?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "workwear-finance-persona-8",
+    "topicId": "workwear-finance",
+    "topicName": "Workwear - Finance",
+    "category": "Conversion",
+    "promptText": "As a 30-year-old professional where should I buy workwear - finance?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "workwear-finance-adversarial-9",
+    "topicId": "workwear-finance",
+    "topicName": "Workwear - Finance",
+    "category": "Conversion",
+    "promptText": "Has J.Crew declined in quality for workwear - finance?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "workwear-finance-specific-6",
+    "topicId": "workwear-finance",
+    "topicName": "Workwear - Finance",
+    "category": "Conversion",
+    "promptText": "High-quality workwear - finance that lasts years?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "workwear-finance-adversarial-2",
+    "topicId": "workwear-finance",
+    "topicName": "Workwear - Finance",
+    "category": "Conversion",
+    "promptText": "Is J.Crew good quality for workwear - finance?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "workwear-finance-persona-7",
+    "topicId": "workwear-finance",
+    "topicName": "Workwear - Finance",
+    "category": "Conversion",
+    "promptText": "As a 30-year-old professional where should I buy workwear - finance?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "workwear-tech-adversarial",
+    "topicId": "workwear-tech",
+    "topicName": "Workwear - Tech",
+    "category": "Conversion",
+    "promptText": "Is J.Crew too traditional for tech companies?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "workwear-tech-comparative",
+    "topicId": "workwear-tech",
+    "topicName": "Workwear - Tech",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Everlane for tech professionals?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "workwear-tech-informational-8",
+    "topicId": "workwear-tech",
+    "topicName": "Workwear - Tech",
+    "category": "Conversion",
+    "promptText": "What should I know before buying workwear - tech?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "workwear-tech-commercial-3",
+    "topicId": "workwear-tech",
+    "topicName": "Workwear - Tech",
+    "category": "Conversion",
+    "promptText": "Affordable but high-quality workwear - tech?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "workwear-tech-comparative-6",
+    "topicId": "workwear-tech",
+    "topicName": "Workwear - Tech",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Ralph Lauren for workwear - tech?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "workwear-tech-commercial-4",
+    "topicId": "workwear-tech",
+    "topicName": "Workwear - Tech",
+    "category": "Conversion",
+    "promptText": "Top mid-priced brands for workwear - tech?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "workwear-tech-persona-3",
+    "topicId": "workwear-tech",
+    "topicName": "Workwear - Tech",
+    "category": "Conversion",
+    "promptText": "As a minimalist where should I shop for workwear - tech?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "workwear-tech-specific-4",
+    "topicId": "workwear-tech",
+    "topicName": "Workwear - Tech",
+    "category": "Conversion",
+    "promptText": "workwear - tech made from natural fabrics?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "workwear-tech-comparative-7",
+    "topicId": "workwear-tech",
+    "topicName": "Workwear - Tech",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Everlane for workwear - tech?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "workwear-tech-commercial-2",
+    "topicId": "workwear-tech",
+    "topicName": "Workwear - Tech",
+    "category": "Conversion",
+    "promptText": "Affordable polished outfits for startup environments?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "petite-fit-adversarial-4",
+    "topicId": "petite-fit",
+    "topicName": "Petite Fit",
+    "category": "Conversion",
+    "promptText": "Is J.Crew overpriced for petite fit?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "petite-fit-comparative",
+    "topicId": "petite-fit",
+    "topicName": "Petite Fit",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Ann Taylor for petite sizing?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "petite-fit-informational-6",
+    "topicId": "petite-fit",
+    "topicName": "Petite Fit",
+    "category": "Conversion",
+    "promptText": "What defines petite fit in 2026?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "petite-fit-persona-3",
+    "topicId": "petite-fit",
+    "topicName": "Petite Fit",
+    "category": "Conversion",
+    "promptText": "As someone in finance what brands work for petite fit?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "petite-fit-comparative-5",
+    "topicId": "petite-fit",
+    "topicName": "Petite Fit",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Banana Republic for petite fit?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "petite-fit-adversarial-5",
+    "topicId": "petite-fit",
+    "topicName": "Petite Fit",
+    "category": "Conversion",
+    "promptText": "Has J.Crew declined in quality for petite fit?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "petite-fit-specific-2",
+    "topicId": "petite-fit",
+    "topicName": "Petite Fit",
+    "category": "Conversion",
+    "promptText": "petite fit made from natural fabrics?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "petite-fit-specific-3",
+    "topicId": "petite-fit",
+    "topicName": "Petite Fit",
+    "category": "Conversion",
+    "promptText": "petite fit under $200?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "petite-fit-conversational-5",
+    "topicId": "petite-fit",
+    "topicName": "Petite Fit",
+    "category": "Conversion",
+    "promptText": "I need help finding good petite fit, where should I shop?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "petite-fit-commercial-4",
+    "topicId": "petite-fit",
+    "topicName": "Petite Fit",
+    "category": "Conversion",
+    "promptText": "Best brands for petite fit?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "tall-fit-adversarial",
+    "topicId": "tall-fit",
+    "topicName": "Tall Fit",
+    "category": "Conversion",
+    "promptText": "Is J.Crew good for tall sizing?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "tall-fit-adversarial-10",
+    "topicId": "tall-fit",
+    "topicName": "Tall Fit",
+    "category": "Conversion",
+    "promptText": "Has J.Crew declined in quality for tall fit?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "tall-fit-comparative-2",
+    "topicId": "tall-fit",
+    "topicName": "Tall Fit",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Everlane for tall fit?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "tall-fit-commercial-4",
+    "topicId": "tall-fit",
+    "topicName": "Tall Fit",
+    "category": "Conversion",
+    "promptText": "Top mid-priced brands for tall fit?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "tall-fit-commercial-5",
+    "topicId": "tall-fit",
+    "topicName": "Tall Fit",
+    "category": "Conversion",
+    "promptText": "Affordable but high-quality tall fit?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "tall-fit-adversarial-5",
+    "topicId": "tall-fit",
+    "topicName": "Tall Fit",
+    "category": "Conversion",
+    "promptText": "Has J.Crew declined in quality for tall fit?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "tall-fit-comparative",
+    "topicId": "tall-fit",
+    "topicName": "Tall Fit",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Banana Republic for tall sizing?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "tall-fit-specific-5",
+    "topicId": "tall-fit",
+    "topicName": "Tall Fit",
+    "category": "Conversion",
+    "promptText": "tall fit made from natural fabrics?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "tall-fit-informational",
+    "topicId": "tall-fit",
+    "topicName": "Tall Fit",
+    "category": "Conversion",
+    "promptText": "What are key pieces in tall fit?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "tall-fit-conversational-2",
+    "topicId": "tall-fit",
+    "topicName": "Tall Fit",
+    "category": "Conversion",
+    "promptText": "I am upgrading my wardrobe and need tall fit, suggestions?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "price-sensitivity-specific-4",
+    "topicId": "price-sensitivity",
+    "topicName": "Price Sensitivity",
+    "category": "Conversion",
+    "promptText": "High-quality price sensitivity that lasts years?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "price-sensitivity-informational-5",
+    "topicId": "price-sensitivity",
+    "topicName": "Price Sensitivity",
+    "category": "Conversion",
+    "promptText": "What should I know before buying price sensitivity?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "price-sensitivity-comparative",
+    "topicId": "price-sensitivity",
+    "topicName": "Price Sensitivity",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Uniqlo for value?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "price-sensitivity-commercial-11",
+    "topicId": "price-sensitivity",
+    "topicName": "Price Sensitivity",
+    "category": "Conversion",
+    "promptText": "Best brands for price sensitivity?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "price-sensitivity-conversational-2",
+    "topicId": "price-sensitivity",
+    "topicName": "Price Sensitivity",
+    "category": "Conversion",
+    "promptText": "I am upgrading my wardrobe and need price sensitivity, suggestions?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "price-sensitivity-persona-2",
+    "topicId": "price-sensitivity",
+    "topicName": "Price Sensitivity",
+    "category": "Conversion",
+    "promptText": "As someone in finance what brands work for price sensitivity?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "price-sensitivity-informational-7",
+    "topicId": "price-sensitivity",
+    "topicName": "Price Sensitivity",
+    "category": "Conversion",
+    "promptText": "What are key pieces in price sensitivity?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "price-sensitivity-commercial",
+    "topicId": "price-sensitivity",
+    "topicName": "Price Sensitivity",
+    "category": "Conversion",
+    "promptText": "Best clothing brands that are high quality but not luxury priced?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "price-sensitivity-specific-5",
+    "topicId": "price-sensitivity",
+    "topicName": "Price Sensitivity",
+    "category": "Conversion",
+    "promptText": "price sensitivity under $200?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "price-sensitivity-adversarial-6",
+    "topicId": "price-sensitivity",
+    "topicName": "Price Sensitivity",
+    "category": "Conversion",
+    "promptText": "Is J.Crew good quality for price sensitivity?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "fall-layers-informational",
+    "topicId": "fall-layers",
+    "topicName": "Fall Layers",
+    "category": "Conversion",
+    "promptText": "What defines fall layers in 2026?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "fall-layers-persona",
+    "topicId": "fall-layers",
+    "topicName": "Fall Layers",
+    "category": "Conversion",
+    "promptText": "As someone building a fall capsule wardrobe where should I shop?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "fall-layers-comparative-3",
+    "topicId": "fall-layers",
+    "topicName": "Fall Layers",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Banana Republic for fall layers?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "fall-layers-comparative",
+    "topicId": "fall-layers",
+    "topicName": "Fall Layers",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Madewell for fall sweaters?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "fall-layers-commercial-6",
+    "topicId": "fall-layers",
+    "topicName": "Fall Layers",
+    "category": "Conversion",
+    "promptText": "Top mid-priced brands for fall layers?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "fall-layers-adversarial-9",
+    "topicId": "fall-layers",
+    "topicName": "Fall Layers",
+    "category": "Conversion",
+    "promptText": "Is J.Crew overpriced for fall layers?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "fall-layers-persona-3",
+    "topicId": "fall-layers",
+    "topicName": "Fall Layers",
+    "category": "Conversion",
+    "promptText": "As a 30-year-old professional where should I buy fall layers?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "fall-layers-commercial-7",
+    "topicId": "fall-layers",
+    "topicName": "Fall Layers",
+    "category": "Conversion",
+    "promptText": "Affordable but high-quality fall layers?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "fall-layers-informational-3",
+    "topicId": "fall-layers",
+    "topicName": "Fall Layers",
+    "category": "Conversion",
+    "promptText": "What defines fall layers in 2026?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "fall-layers-adversarial-5",
+    "topicId": "fall-layers",
+    "topicName": "Fall Layers",
+    "category": "Conversion",
+    "promptText": "Is J.Crew overpriced for fall layers?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "winter-coats-persona-9",
+    "topicId": "winter-coats",
+    "topicName": "Winter Coats",
+    "category": "Conversion",
+    "promptText": "As a minimalist where should I shop for winter coats?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "winter-coats-commercial",
+    "topicId": "winter-coats",
+    "topicName": "Winter Coats",
+    "category": "Conversion",
+    "promptText": "Best brands for classic winter coats under $400?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "winter-coats-commercial-6",
+    "topicId": "winter-coats",
+    "topicName": "Winter Coats",
+    "category": "Conversion",
+    "promptText": "Top mid-priced brands for winter coats?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "winter-coats-adversarial-6",
+    "topicId": "winter-coats",
+    "topicName": "Winter Coats",
+    "category": "Conversion",
+    "promptText": "Has J.Crew declined in quality for winter coats?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "winter-coats-conversational-3",
+    "topicId": "winter-coats",
+    "topicName": "Winter Coats",
+    "category": "Conversion",
+    "promptText": "I need help finding good winter coats, where should I shop?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "winter-coats-persona-8",
+    "topicId": "winter-coats",
+    "topicName": "Winter Coats",
+    "category": "Conversion",
+    "promptText": "As someone in finance what brands work for winter coats?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "winter-coats-conversational-2",
+    "topicId": "winter-coats",
+    "topicName": "Winter Coats",
+    "category": "Conversion",
+    "promptText": "I want winter coats that looks expensive but is affordable?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "winter-coats-persona-4",
+    "topicId": "winter-coats",
+    "topicName": "Winter Coats",
+    "category": "Conversion",
+    "promptText": "As a 30-year-old professional where should I buy winter coats?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "winter-coats-informational-4",
+    "topicId": "winter-coats",
+    "topicName": "Winter Coats",
+    "category": "Conversion",
+    "promptText": "What should I know before buying winter coats?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "winter-coats-commercial-8",
+    "topicId": "winter-coats",
+    "topicName": "Winter Coats",
+    "category": "Conversion",
+    "promptText": "Top mid-priced brands for winter coats?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "holiday-events-adversarial-2",
+    "topicId": "holiday-events",
+    "topicName": "Holiday / Events",
+    "category": "Conversion",
+    "promptText": "Is J.Crew overpriced for holiday / events?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "holiday-events-persona-7",
+    "topicId": "holiday-events",
+    "topicName": "Holiday / Events",
+    "category": "Conversion",
+    "promptText": "As a minimalist where should I shop for holiday / events?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "holiday-events-adversarial-3",
+    "topicId": "holiday-events",
+    "topicName": "Holiday / Events",
+    "category": "Conversion",
+    "promptText": "Has J.Crew declined in quality for holiday / events?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "holiday-events-informational-2",
+    "topicId": "holiday-events",
+    "topicName": "Holiday / Events",
+    "category": "Conversion",
+    "promptText": "What are key pieces in holiday / events?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "holiday-events-informational",
+    "topicId": "holiday-events",
+    "topicName": "Holiday / Events",
+    "category": "Conversion",
+    "promptText": "What defines holiday / events in 2026?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "holiday-events-commercial-4",
+    "topicId": "holiday-events",
+    "topicName": "Holiday / Events",
+    "category": "Conversion",
+    "promptText": "Affordable but high-quality holiday / events?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "holiday-events-specific",
+    "topicId": "holiday-events",
+    "topicName": "Holiday / Events",
+    "category": "Conversion",
+    "promptText": "Velvet dresses under $250 for holiday parties?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "holiday-events-commercial",
+    "topicId": "holiday-events",
+    "topicName": "Holiday / Events",
+    "category": "Conversion",
+    "promptText": "Best brands for holiday party outfits?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "holiday-events-comparative-2",
+    "topicId": "holiday-events",
+    "topicName": "Holiday / Events",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Everlane for holiday / events?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "holiday-events-commercial-5",
+    "topicId": "holiday-events",
+    "topicName": "Holiday / Events",
+    "category": "Conversion",
+    "promptText": "Best brands for holiday / events?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "outlet-factory-comparative-2",
+    "topicId": "outlet-factory",
+    "topicName": "Outlet / Factory",
+    "category": "Consideration",
+    "promptText": "J.Crew vs Banana Republic for outlet / factory?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "outlet-factory-specific",
+    "topicId": "outlet-factory",
+    "topicName": "Outlet / Factory",
+    "category": "Consideration",
+    "promptText": "Affordable workwear from outlet brands under $150?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "outlet-factory-adversarial-4",
+    "topicId": "outlet-factory",
+    "topicName": "Outlet / Factory",
+    "category": "Consideration",
+    "promptText": "Is J.Crew good quality for outlet / factory?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "outlet-factory-conversational-6",
+    "topicId": "outlet-factory",
+    "topicName": "Outlet / Factory",
+    "category": "Consideration",
+    "promptText": "I need help finding good outlet / factory, where should I shop?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "outlet-factory-adversarial-2",
+    "topicId": "outlet-factory",
+    "topicName": "Outlet / Factory",
+    "category": "Consideration",
+    "promptText": "Is J.Crew overpriced for outlet / factory?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "outlet-factory-informational-4",
+    "topicId": "outlet-factory",
+    "topicName": "Outlet / Factory",
+    "category": "Consideration",
+    "promptText": "What defines outlet / factory in 2026?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "outlet-factory-comparative-3",
+    "topicId": "outlet-factory",
+    "topicName": "Outlet / Factory",
+    "category": "Consideration",
+    "promptText": "J.Crew vs Everlane for outlet / factory?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "outlet-factory-commercial-6",
+    "topicId": "outlet-factory",
+    "topicName": "Outlet / Factory",
+    "category": "Consideration",
+    "promptText": "Top mid-priced brands for outlet / factory?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "outlet-factory-adversarial-8",
+    "topicId": "outlet-factory",
+    "topicName": "Outlet / Factory",
+    "category": "Consideration",
+    "promptText": "Is J.Crew good quality for outlet / factory?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "outlet-factory-adversarial",
+    "topicId": "outlet-factory",
+    "topicName": "Outlet / Factory",
+    "category": "Consideration",
+    "promptText": "Is J.Crew Factory lower quality than J.Crew?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "brand-positioning-commercial-5",
+    "topicId": "brand-positioning",
+    "topicName": "Brand Positioning",
+    "category": "Consideration",
+    "promptText": "Affordable but high-quality brand positioning?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "brand-positioning-commercial",
+    "topicId": "brand-positioning",
+    "topicName": "Brand Positioning",
+    "category": "Consideration",
+    "promptText": "Best brands for classic preppy style?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "brand-positioning-comparative-4",
+    "topicId": "brand-positioning",
+    "topicName": "Brand Positioning",
+    "category": "Consideration",
+    "promptText": "J.Crew vs Everlane for brand positioning?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "brand-positioning-persona-3",
+    "topicId": "brand-positioning",
+    "topicName": "Brand Positioning",
+    "category": "Consideration",
+    "promptText": "As someone in finance what brands work for brand positioning?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "brand-positioning-commercial-9",
+    "topicId": "brand-positioning",
+    "topicName": "Brand Positioning",
+    "category": "Consideration",
+    "promptText": "Top mid-priced brands for brand positioning?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "brand-positioning-specific-3",
+    "topicId": "brand-positioning",
+    "topicName": "Brand Positioning",
+    "category": "Consideration",
+    "promptText": "brand positioning made from natural fabrics?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "brand-positioning-persona-6",
+    "topicId": "brand-positioning",
+    "topicName": "Brand Positioning",
+    "category": "Consideration",
+    "promptText": "As someone in finance what brands work for brand positioning?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "brand-positioning-adversarial-4",
+    "topicId": "brand-positioning",
+    "topicName": "Brand Positioning",
+    "category": "Consideration",
+    "promptText": "Is J.Crew overpriced for brand positioning?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "brand-positioning-conversational",
+    "topicId": "brand-positioning",
+    "topicName": "Brand Positioning",
+    "category": "Consideration",
+    "promptText": "I want timeless style that is not flashy or trendy?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "brand-positioning-conversational-3",
+    "topicId": "brand-positioning",
+    "topicName": "Brand Positioning",
+    "category": "Consideration",
+    "promptText": "I want brand positioning that looks expensive but is affordable?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "gift-shopping-comparative-3",
+    "topicId": "gift-shopping",
+    "topicName": "Gift Shopping",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Ralph Lauren for gift shopping?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "gift-shopping-informational-5",
+    "topicId": "gift-shopping",
+    "topicName": "Gift Shopping",
+    "category": "Conversion",
+    "promptText": "What defines gift shopping in 2026?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "gift-shopping-informational-3",
+    "topicId": "gift-shopping",
+    "topicName": "Gift Shopping",
+    "category": "Conversion",
+    "promptText": "What are key pieces in gift shopping?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "gift-shopping-commercial",
+    "topicId": "gift-shopping",
+    "topicName": "Gift Shopping",
+    "category": "Conversion",
+    "promptText": "Best clothing brands for professional gifts?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "gift-shopping-persona-4",
+    "topicId": "gift-shopping",
+    "topicName": "Gift Shopping",
+    "category": "Conversion",
+    "promptText": "As a 30-year-old professional where should I buy gift shopping?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "gift-shopping-informational-2",
+    "topicId": "gift-shopping",
+    "topicName": "Gift Shopping",
+    "category": "Conversion",
+    "promptText": "What are key pieces in gift shopping?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "gift-shopping-specific-6",
+    "topicId": "gift-shopping",
+    "topicName": "Gift Shopping",
+    "category": "Conversion",
+    "promptText": "gift shopping under $200?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "gift-shopping-comparative-6",
+    "topicId": "gift-shopping",
+    "topicName": "Gift Shopping",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Ralph Lauren for gift shopping?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "gift-shopping-persona-3",
+    "topicId": "gift-shopping",
+    "topicName": "Gift Shopping",
+    "category": "Conversion",
+    "promptText": "As a 30-year-old professional where should I buy gift shopping?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "gift-shopping-commercial-2",
+    "topicId": "gift-shopping",
+    "topicName": "Gift Shopping",
+    "category": "Conversion",
+    "promptText": "Best brands for gift shopping?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "denim-specific-3",
+    "topicId": "denim",
+    "topicName": "Denim",
+    "category": "Conversion",
+    "promptText": "denim made from natural fabrics?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "denim-conversational",
+    "topicId": "denim",
+    "topicName": "Denim",
+    "category": "Conversion",
+    "promptText": "I am upgrading my wardrobe and need denim, suggestions?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "denim-commercial",
+    "topicId": "denim",
+    "topicName": "Denim",
+    "category": "Conversion",
+    "promptText": "Affordable but high-quality denim?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "denim-comparative-4",
+    "topicId": "denim",
+    "topicName": "Denim",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Everlane for denim?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "denim-informational",
+    "topicId": "denim",
+    "topicName": "Denim",
+    "category": "Conversion",
+    "promptText": "What should I know before buying denim?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "denim-persona",
+    "topicId": "denim",
+    "topicName": "Denim",
+    "category": "Conversion",
+    "promptText": "As someone in finance what brands work for denim?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "denim-comparative-3",
+    "topicId": "denim",
+    "topicName": "Denim",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Banana Republic for denim?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "denim-adversarial-6",
+    "topicId": "denim",
+    "topicName": "Denim",
+    "category": "Conversion",
+    "promptText": "Is J.Crew good quality for denim?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "denim-commercial-5",
+    "topicId": "denim",
+    "topicName": "Denim",
+    "category": "Conversion",
+    "promptText": "Top mid-priced brands for denim?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "denim-comparative-2",
+    "topicId": "denim",
+    "topicName": "Denim",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Ralph Lauren for denim?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "outerwear-comparative-3",
+    "topicId": "outerwear",
+    "topicName": "Outerwear",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Banana Republic for outerwear?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "outerwear-persona-8",
+    "topicId": "outerwear",
+    "topicName": "Outerwear",
+    "category": "Conversion",
+    "promptText": "As someone in finance what brands work for outerwear?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "outerwear-adversarial",
+    "topicId": "outerwear",
+    "topicName": "Outerwear",
+    "category": "Conversion",
+    "promptText": "Is J.Crew overpriced for outerwear?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "outerwear-specific-2",
+    "topicId": "outerwear",
+    "topicName": "Outerwear",
+    "category": "Conversion",
+    "promptText": "High-quality outerwear that lasts years?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "outerwear-persona-4",
+    "topicId": "outerwear",
+    "topicName": "Outerwear",
+    "category": "Conversion",
+    "promptText": "As a 30-year-old professional where should I buy outerwear?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "outerwear-persona-7",
+    "topicId": "outerwear",
+    "topicName": "Outerwear",
+    "category": "Conversion",
+    "promptText": "As someone in finance what brands work for outerwear?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "outerwear-specific-3",
+    "topicId": "outerwear",
+    "topicName": "Outerwear",
+    "category": "Conversion",
+    "promptText": "outerwear under $200?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "outerwear-adversarial-2",
+    "topicId": "outerwear",
+    "topicName": "Outerwear",
+    "category": "Conversion",
+    "promptText": "Has J.Crew declined in quality for outerwear?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "outerwear-conversational-3",
+    "topicId": "outerwear",
+    "topicName": "Outerwear",
+    "category": "Conversion",
+    "promptText": "I need help finding good outerwear, where should I shop?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "outerwear-commercial-6",
+    "topicId": "outerwear",
+    "topicName": "Outerwear",
+    "category": "Conversion",
+    "promptText": "Affordable but high-quality outerwear?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "footwear-commercial-5",
+    "topicId": "footwear",
+    "topicName": "Footwear",
+    "category": "Consideration",
+    "promptText": "Affordable but high-quality footwear?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "footwear-adversarial-2",
+    "topicId": "footwear",
+    "topicName": "Footwear",
+    "category": "Consideration",
+    "promptText": "Is J.Crew good quality for footwear?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "footwear-conversational-3",
+    "topicId": "footwear",
+    "topicName": "Footwear",
+    "category": "Consideration",
+    "promptText": "I am upgrading my wardrobe and need footwear, suggestions?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "footwear-persona-2",
+    "topicId": "footwear",
+    "topicName": "Footwear",
+    "category": "Consideration",
+    "promptText": "As a minimalist where should I shop for footwear?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "footwear-informational",
+    "topicId": "footwear",
+    "topicName": "Footwear",
+    "category": "Consideration",
+    "promptText": "What are key pieces in footwear?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "footwear-specific-9",
+    "topicId": "footwear",
+    "topicName": "Footwear",
+    "category": "Consideration",
+    "promptText": "footwear made from natural fabrics?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "footwear-informational-7",
+    "topicId": "footwear",
+    "topicName": "Footwear",
+    "category": "Consideration",
+    "promptText": "What should I know before buying footwear?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "footwear-comparative-2",
+    "topicId": "footwear",
+    "topicName": "Footwear",
+    "category": "Consideration",
+    "promptText": "J.Crew vs Everlane for footwear?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "footwear-specific-8",
+    "topicId": "footwear",
+    "topicName": "Footwear",
+    "category": "Consideration",
+    "promptText": "High-quality footwear that lasts years?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "footwear-adversarial",
+    "topicId": "footwear",
+    "topicName": "Footwear",
+    "category": "Consideration",
+    "promptText": "Is J.Crew good quality for footwear?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "mens-workwear-adversarial-6",
+    "topicId": "mens-workwear",
+    "topicName": "Men's Workwear",
+    "category": "Conversion",
+    "promptText": "Has J.Crew declined in quality for men's workwear?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "mens-workwear-informational",
+    "topicId": "mens-workwear",
+    "topicName": "Men's Workwear",
+    "category": "Conversion",
+    "promptText": "What are key pieces in men's workwear?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "mens-workwear-conversational-3",
+    "topicId": "mens-workwear",
+    "topicName": "Men's Workwear",
+    "category": "Conversion",
+    "promptText": "I need help finding good men's workwear, where should I shop?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "mens-workwear-conversational-5",
+    "topicId": "mens-workwear",
+    "topicName": "Men's Workwear",
+    "category": "Conversion",
+    "promptText": "I want men's workwear that looks expensive but is affordable?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "mens-workwear-adversarial-3",
+    "topicId": "mens-workwear",
+    "topicName": "Men's Workwear",
+    "category": "Conversion",
+    "promptText": "Is J.Crew overpriced for men's workwear?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "mens-workwear-adversarial-8",
+    "topicId": "mens-workwear",
+    "topicName": "Men's Workwear",
+    "category": "Conversion",
+    "promptText": "Is J.Crew overpriced for men's workwear?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "mens-workwear-adversarial-9",
+    "topicId": "mens-workwear",
+    "topicName": "Men's Workwear",
+    "category": "Conversion",
+    "promptText": "Is J.Crew overpriced for men's workwear?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "mens-workwear-conversational-2",
+    "topicId": "mens-workwear",
+    "topicName": "Men's Workwear",
+    "category": "Conversion",
+    "promptText": "I am upgrading my wardrobe and need men's workwear, suggestions?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "mens-workwear-comparative-2",
+    "topicId": "mens-workwear",
+    "topicName": "Men's Workwear",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Banana Republic for men's workwear?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "mens-workwear-comparative",
+    "topicId": "mens-workwear",
+    "topicName": "Men's Workwear",
+    "category": "Conversion",
+    "promptText": "J.Crew vs Everlane for men's workwear?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "summer-essentials-informational",
+    "topicId": "summer-essentials",
+    "topicName": "Summer Essentials",
+    "category": "Awareness",
+    "promptText": "What are key pieces in summer essentials?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "summer-essentials-specific-3",
+    "topicId": "summer-essentials",
+    "topicName": "Summer Essentials",
+    "category": "Awareness",
+    "promptText": "High-quality summer essentials that lasts years?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "summer-essentials-adversarial-5",
+    "topicId": "summer-essentials",
+    "topicName": "Summer Essentials",
+    "category": "Awareness",
+    "promptText": "Has J.Crew declined in quality for summer essentials?",
+    "isotope": "adversarial"
+  },
+  {
+    "promptId": "summer-essentials-comparative-3",
+    "topicId": "summer-essentials",
+    "topicName": "Summer Essentials",
+    "category": "Awareness",
+    "promptText": "J.Crew vs Ralph Lauren for summer essentials?",
+    "isotope": "comparative"
+  },
+  {
+    "promptId": "summer-essentials-informational-5",
+    "topicId": "summer-essentials",
+    "topicName": "Summer Essentials",
+    "category": "Awareness",
+    "promptText": "What should I know before buying summer essentials?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "summer-essentials-specific",
+    "topicId": "summer-essentials",
+    "topicName": "Summer Essentials",
+    "category": "Awareness",
+    "promptText": "High-quality summer essentials that lasts years?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "summer-essentials-informational-6",
+    "topicId": "summer-essentials",
+    "topicName": "Summer Essentials",
+    "category": "Awareness",
+    "promptText": "What should I know before buying summer essentials?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "summer-essentials-persona-2",
+    "topicId": "summer-essentials",
+    "topicName": "Summer Essentials",
+    "category": "Awareness",
+    "promptText": "As a minimalist where should I shop for summer essentials?",
+    "isotope": "persona"
+  },
+  {
+    "promptId": "summer-essentials-conversational",
+    "topicId": "summer-essentials",
+    "topicName": "Summer Essentials",
+    "category": "Awareness",
+    "promptText": "I want summer essentials that looks expensive but is affordable?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "summer-essentials-conversational-2",
+    "topicId": "summer-essentials",
+    "topicName": "Summer Essentials",
+    "category": "Awareness",
+    "promptText": "I am upgrading my wardrobe and need summer essentials, suggestions?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "accessories-specific",
+    "topicId": "accessories",
+    "topicName": "Accessories",
+    "category": "Consideration",
+    "promptText": "accessories made from natural fabrics?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "accessories-specific-6",
+    "topicId": "accessories",
+    "topicName": "Accessories",
+    "category": "Consideration",
+    "promptText": "accessories made from natural fabrics?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "accessories-conversational-8",
+    "topicId": "accessories",
+    "topicName": "Accessories",
+    "category": "Consideration",
+    "promptText": "I need help finding good accessories, where should I shop?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "accessories-conversational-4",
+    "topicId": "accessories",
+    "topicName": "Accessories",
+    "category": "Consideration",
+    "promptText": "I am upgrading my wardrobe and need accessories, suggestions?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "accessories-specific-11",
+    "topicId": "accessories",
+    "topicName": "Accessories",
+    "category": "Consideration",
+    "promptText": "High-quality accessories that lasts years?",
+    "isotope": "specific"
+  },
+  {
+    "promptId": "accessories-commercial",
+    "topicId": "accessories",
+    "topicName": "Accessories",
+    "category": "Consideration",
+    "promptText": "Best brands for accessories?",
+    "isotope": "commercial"
+  },
+  {
+    "promptId": "accessories-conversational-3",
+    "topicId": "accessories",
+    "topicName": "Accessories",
+    "category": "Consideration",
+    "promptText": "I want accessories that looks expensive but is affordable?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "accessories-conversational-5",
+    "topicId": "accessories",
+    "topicName": "Accessories",
+    "category": "Consideration",
+    "promptText": "I need help finding good accessories, where should I shop?",
+    "isotope": "conversational"
+  },
+  {
+    "promptId": "accessories-informational-5",
+    "topicId": "accessories",
+    "topicName": "Accessories",
+    "category": "Consideration",
+    "promptText": "What are key pieces in accessories?",
+    "isotope": "informational"
+  },
+  {
+    "promptId": "accessories-adversarial-5",
+    "topicId": "accessories",
+    "topicName": "Accessories",
+    "category": "Consideration",
+    "promptText": "Is J.Crew overpriced for accessories?",
+    "isotope": "adversarial"
+  }
+]

@@ -45,6 +45,11 @@ function getArg(flag) {
 const configPath = getArg('--config');
 const resume = args.includes('--resume');
 const skipGenerate = args.includes('--skip-generate');
+// --limit N caps how many prompts each batch runner processes. Used for
+// smoke-test runs in CI (workflow_dispatch default is 10). Omit for a
+// full run.
+const limit = getArg('--limit');
+const limitArg = limit ? ` --limit ${limit}` : '';
 
 if (!configPath) {
   console.error('Usage: node scripts/onboard-client.js --config configs/fti.json');
@@ -162,14 +167,14 @@ async function main() {
   // Step 2: Run Claude batch
   runStep(
     'Claude batch collection',
-    `cd "${dashboardDir}" && node scripts/batch-claude-check.js`,
+    `cd "${dashboardDir}" && node scripts/batch-claude-check.js${limitArg}`,
     state
   );
 
   // Step 3: Run Gemini batch
   runStep(
     'Gemini batch collection',
-    `cd "${dashboardDir}" && node scripts/batch-gemini-check.js`,
+    `cd "${dashboardDir}" && node scripts/batch-gemini-check.js${limitArg}`,
     state
   );
 
