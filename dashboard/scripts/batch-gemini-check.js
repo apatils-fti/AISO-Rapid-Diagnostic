@@ -17,12 +17,14 @@ function parseArgs() {
     output: './gemini-batch-results.json',
     clientId: null,
     libraryId: null,
+    limit: null,
   };
   for (let i = 0; i < args.length; i++) {
     if (args[i] === '--prompts' && args[i + 1]) parsed.prompts = args[++i];
     if (args[i] === '--output' && args[i + 1]) parsed.output = args[++i];
     if (args[i] === '--client-id' && args[i + 1]) parsed.clientId = args[++i];
     if (args[i] === '--library-id' && args[i + 1]) parsed.libraryId = args[++i];
+    if (args[i] === '--limit' && args[i + 1]) parsed.limit = parseInt(args[++i], 10);
   }
   return parsed;
 }
@@ -108,8 +110,15 @@ const cliArgs = parseArgs();
 const GEMINI_ENDPOINT = 'http://localhost:3000/api/gemini'; // Use API route for rate limiting
 const DELAY_MS = 7500; // 7.5 seconds between requests (slightly over 7s for safety)
 
-// Load 250 prompts (same sample as Google AI Overviews)
-const top250Prompts = JSON.parse(fs.readFileSync(cliArgs.prompts, 'utf8'));
+// Load prompts (same sample as Google AI Overviews).
+// Apply --limit if given, so CI smoke tests can run a small subset.
+const allPrompts = JSON.parse(fs.readFileSync(cliArgs.prompts, 'utf8'));
+const top250Prompts = cliArgs.limit && cliArgs.limit > 0
+  ? allPrompts.slice(0, cliArgs.limit)
+  : allPrompts;
+if (cliArgs.limit) {
+  console.log(`  Limit applied: ${top250Prompts.length}/${allPrompts.length} prompts`);
+}
 
 // Results storage
 const results = [];

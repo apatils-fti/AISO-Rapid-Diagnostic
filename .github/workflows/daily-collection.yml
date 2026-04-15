@@ -11,7 +11,14 @@ on:
     # 2am UTC every day — off-peak for most LLM APIs
     - cron: '0 2 * * *'
   workflow_dispatch:
-    # Manual trigger from the Actions tab for testing
+    # Manual trigger from the Actions tab for testing.
+    # Default is a 10-prompt smoke test so manual runs don't spend
+    # money on a full 250-prompt collection unless explicitly asked.
+    inputs:
+      prompt_limit:
+        description: 'Max prompts per platform (0 = full run)'
+        required: false
+        default: '10'
 
 jobs:
   collect:
@@ -65,9 +72,18 @@ jobs:
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
+          # Scheduled runs use a small default (10) to cap spend; override
+          # via workflow_dispatch input. A value of 0 means "no limit".
+          LIMIT="${{ github.event.inputs.prompt_limit }}"
+          LIMIT="${LIMIT:-10}"
+          LIMIT_ARG=""
+          if [ "$LIMIT" != "0" ]; then
+            LIMIT_ARG="--limit $LIMIT"
+          fi
+          echo "Running with limit: ${LIMIT:-unlimited}"
           node scripts/onboard-client.js \
             --config configs/fti.json \
-            --skip-generate
+            --skip-generate $LIMIT_ARG
 
       - name: Stop Next.js server
         if: always()
