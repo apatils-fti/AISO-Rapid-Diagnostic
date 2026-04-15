@@ -28,7 +28,13 @@ import { execSync } from 'child_process';
 import { existsSync, readFileSync, writeFileSync } from 'fs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-config({ path: resolve(__dirname, '..', '.env.local') });
+// Load .env.local if present (local dev). In CI the file is absent and
+// secrets arrive via process.env directly — dotenv is a no-op when the
+// file is missing, but we guard explicitly so the intent is obvious.
+const envPath = resolve(__dirname, '..', '.env.local');
+if (existsSync(envPath)) {
+  config({ path: envPath });
+}
 
 // ─── CLI args ────────────────────────────────────────────────
 const args = process.argv.slice(2);

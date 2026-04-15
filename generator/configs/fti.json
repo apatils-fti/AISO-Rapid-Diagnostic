@@ -1,0 +1,62 @@
+{
+  "client": {
+    "name": "FTI Consulting",
+    "domains": ["fticonsulting.com"],
+    "industry": "management-consulting"
+  },
+  "competitors": [
+    { "name": "McKinsey", "domains": ["mckinsey.com"] },
+    { "name": "Deloitte", "domains": ["deloitte.com"] },
+    { "name": "AlixPartners", "domains": ["alixpartners.com"] },
+    { "name": "Kroll", "domains": ["kroll.com"] },
+    { "name": "Alvarez & Marsal", "domains": ["alvarezandmarsal.com"] },
+    { "name": "Accenture", "domains": ["accenture.com"] },
+    { "name": "PwC", "domains": ["pwc.com"] }
+  ],
+  "archetype": "trust-based-advisory",
+  "generation": {
+    "targetPromptCount": 250,
+    "topicsPerCategory": {
+      "Awareness": 18,
+      "Consideration": 15,
+      "Conversion": 22
+    }
+  },
+  "keyTopics": [
+    "Restructuring and Turnaround",
+    "Litigation Support",
+    "Economic Consulting",
+    "Cybersecurity Advisory",
+    "ESG and Sustainability",
+    "Forensic Accounting",
+    "PE Due Diligence",
+    "Technology Transformation",
+    "Data & Analytics Consulting",
+    "Digital Transformation",
+    "Corporate Finance Advisory"
+  ],
+  "personas": [
+    "CFO",
+    "general counsel",
+    "PE operating partner",
+    "board member",
+    "CRO"
+  ],
+  "pricePoints": ["50000", "100000", "250000", "500000"],
+  "contexts": [
+    "distressed company turnaround",
+    "M&A transaction",
+    "regulatory investigation",
+    "bankruptcy proceedings",
+    "shareholder dispute",
+    "cross-border litigation"
+  ],
+  "attributes": [
+    "Big Four alternative",
+    "expert witness capable",
+    "global reach",
+    "industry-specialized",
+    "court-tested",
+    "data-driven"
+  ]
+}
