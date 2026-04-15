@@ -49,19 +49,14 @@ describe('seeds: structural sanity across all archetypes', () => {
       }
     });
 
-    it(`${name}: weights sum to 1.0`, () => {
+    it(`${name}: weights stored with weightsActive=false`, () => {
+      // Weights no longer drive allocation; they are preserved for future
+      // use. Schema doesn't enforce sums any more, but we still sanity-check
+      // that all 10 weight values exist so no field was accidentally dropped.
       const t = load(name);
-      const iSum = Object.values(t.weights.intents).reduce((a, b) => a + b, 0);
-      const isoSum = Object.values(t.weights.isotopes).reduce((a, b) => a + b, 0);
-      expect(Math.abs(iSum - 1)).toBeLessThan(0.001);
-      expect(Math.abs(isoSum - 1)).toBeLessThan(0.001);
-    });
-
-    it(`${name}: minPromptCount and quickRunMinimum present and consistent`, () => {
-      const t = load(name);
-      expect(t.minPromptCount).toBeGreaterThan(0);
-      expect(t.quickRunMinimum).toBeGreaterThan(0);
-      expect(t.quickRunMinimum).toBeLessThan(t.minPromptCount);
+      expect(Object.keys(t.weights.intents).length).toBe(5);
+      expect(Object.keys(t.weights.isotopes).length).toBe(5);
+      expect(t.weights.weightsActive).toBe(false);
     });
   }
 });

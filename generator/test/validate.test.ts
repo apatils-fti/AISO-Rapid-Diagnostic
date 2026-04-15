@@ -35,31 +35,43 @@ describe('validate: real archetype templates', () => {
   }
 });
 
-describe('validate: weight sum enforcement', () => {
-  it('rejects intent weights summing to 0.99', () => {
+describe('validate: weightsActive field', () => {
+  it('weightsActive=false passes', () => {
     const raw = loadTemplate('transactional-commerce');
-    raw.weights.intents.learning = 0.09; // was 0.10
+    raw.weights.weightsActive = false;
     const r = safeParseTemplate(raw);
-    expect(r.success).toBe(false);
-    if (!r.success) {
-      expect(r.error.issues.some((i) => i.message.includes('intent weights must sum'))).toBe(true);
-    }
+    expect(r.success).toBe(true);
   });
 
-  it('rejects isotope weights summing to 1.02', () => {
+  it('weightsActive=true passes (weights stored, just inactive)', () => {
     const raw = loadTemplate('transactional-commerce');
-    raw.weights.isotopes.declarative = 0.27; // was 0.25
+    raw.weights.weightsActive = true;
     const r = safeParseTemplate(raw);
-    expect(r.success).toBe(false);
-    if (!r.success) {
-      expect(r.error.issues.some((i) => i.message.includes('isotope weights must sum'))).toBe(true);
-    }
+    expect(r.success).toBe(true);
   });
 
-  it('accepts intent weights within 0.001 tolerance', () => {
+  it('omitted weightsActive defaults to false', () => {
     const raw = loadTemplate('transactional-commerce');
-    raw.weights.intents.learning = 0.1005;
-    raw.weights.intents.discovery = 0.2495;
+    delete raw.weights.weightsActive;
+    const r = safeParseTemplate(raw);
+    expect(r.success).toBe(true);
+    if (r.success) {
+      expect(r.data.weights.weightsActive).toBe(false);
+    }
+  });
+});
+
+describe('validate: weight values are no longer constrained by sum', () => {
+  it('accepts intent weights that do not sum to 1.0 (weights are inactive)', () => {
+    const raw = loadTemplate('transactional-commerce');
+    raw.weights.intents.learning = 0.99; // wildly wrong sum
+    const r = safeParseTemplate(raw);
+    expect(r.success).toBe(true);
+  });
+
+  it('accepts isotope weights that do not sum to 1.0', () => {
+    const raw = loadTemplate('transactional-commerce');
+    raw.weights.isotopes.declarative = 0.01;
     const r = safeParseTemplate(raw);
     expect(r.success).toBe(true);
   });
@@ -81,25 +93,29 @@ describe('validate: seed floor', () => {
   });
 });
 
-describe('validate: minPromptCount sanity', () => {
-  it('rejects minPromptCount below the computed floor', () => {
-    const raw = loadTemplate('trust-based-advisory');
-    raw.minPromptCount = 50; // nowhere near 267
-    const r = safeParseTemplate(raw);
-    expect(r.success).toBe(false);
-    if (!r.success) {
-      expect(r.error.issues.some((i) => i.message.includes('below computed floor'))).toBe(true);
+describe('validate: minPromptCount/quickRunMinimum removed from schema', () => {
+  it('templates no longer carry minPromptCount', () => {
+    for (const name of ARCHETYPES) {
+      const raw = loadTemplate(name);
+      expect(raw.minPromptCount, `${name}`).toBeUndefined();
     }
   });
 
-  it('rejects quickRunMinimum >= minPromptCount', () => {
+  it('templates no longer carry quickRunMinimum', () => {
+    for (const name of ARCHETYPES) {
+      const raw = loadTemplate(name);
+      expect(raw.quickRunMinimum, `${name}`).toBeUndefined();
+    }
+  });
+
+  it('extra minPromptCount field is silently dropped by strip()', () => {
+    // Zod strips unknown keys by default, so a rogue field doesn't break parsing.
     const raw = loadTemplate('transactional-commerce');
-    raw.quickRunMinimum = 200;
-    raw.minPromptCount = 200;
+    raw.minPromptCount = 999;
     const r = safeParseTemplate(raw);
-    expect(r.success).toBe(false);
-    if (!r.success) {
-      expect(r.error.issues.some((i) => i.message.includes('strictly less than'))).toBe(true);
+    expect(r.success).toBe(true);
+    if (r.success) {
+      expect((r.data as any).minPromptCount).toBeUndefined();
     }
   });
 });
