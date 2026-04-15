@@ -5,13 +5,15 @@ settings at **Settings → Secrets and variables → Actions → New repository 
 
 ## Currently used by `daily-collection.yml`
 
-These four secrets are required for the nightly collection workflow. Missing any of
-them will cause the workflow to fail loudly.
+These six secrets are required for the nightly collection workflow. Missing
+any of them will cause the workflow to fail loudly.
 
 | Secret | Required | Where to get it |
 |---|---|---|
 | `ANTHROPIC_API_KEY` | yes | [console.anthropic.com → API Keys](https://console.anthropic.com/settings/keys). Used by `dashboard/src/app/api/claude/route.ts` when the batch runner POSTs to `/api/claude`. |
 | `GEMINI_API_KEY` | yes | [aistudio.google.com → Get API key](https://aistudio.google.com/app/apikey). Used by `dashboard/src/app/api/gemini/route.ts`. |
+| `PERPLEXITY_API_KEY` | yes | [perplexity.ai → API Settings](https://www.perplexity.ai/settings/api). Used by `dashboard/scripts/batch-perplexity-check.js` which calls Perplexity's `/chat/completions` endpoint directly (no localhost route). Free-tier accounts work; runner uses 3500ms delay between requests. |
+| `OPENAI_API_KEY` | yes | [platform.openai.com → API keys](https://platform.openai.com/api-keys). Used by `dashboard/scripts/batch-chatgpt-check.js` which calls OpenAI's `/v1/chat/completions` endpoint directly (no localhost route). Runner uses `gpt-4o-mini` for cost efficiency (~$0.30/month vs ~$9/month with `gpt-4o`). |
 | `NEXT_PUBLIC_SUPABASE_URL` | yes | Supabase project → Settings → API → Project URL. `onboard-client.js` uses it to look up the `clients` row and verify run results. |
 | `SUPABASE_SERVICE_ROLE_KEY` | yes | Supabase project → Settings → API → `service_role` key. Server-side write access; never expose this client-side. |
 
@@ -22,11 +24,9 @@ reference them yet. They exist to unblock future sprints — see `TODOS.md`.
 
 | Secret | Intended use |
 |---|---|
-| `PERPLEXITY_API_KEY` | Reserved for the Perplexity batch runner (P2 TODO). The Perplexity collection path is not in the pipeline yet. |
-| `OPENAI_API_KEY` | Reserved for the OpenAI/ChatGPT batch runner (P2 TODO). The OpenAI collection path is not in the pipeline yet. |
 | `SERPAPI_KEY` | Reserved for Google AI Overviews via SerpAPI. `batch-google-check.js` exists but is not chained into `onboard-client.js`. P2 TODO. |
 
-When those sprints land, add the corresponding keys to the workflow `env:` block
+When that sprint lands, add the corresponding key to the workflow `env:` block
 and update the "Currently used" table above.
 
 ## How the workflow uses these

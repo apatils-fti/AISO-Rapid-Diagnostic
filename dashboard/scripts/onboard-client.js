@@ -209,7 +209,21 @@ async function main() {
     state
   );
 
-  // Step 4: Enrich sentiment (VADER)
+  // Step 4: Run Perplexity batch (direct API call, no localhost dependency)
+  runStep(
+    'Perplexity batch collection',
+    `cd "${dashboardDir}" && node scripts/batch-perplexity-check.js${limitArg}${supabaseArgs}`,
+    state
+  );
+
+  // Step 5: Run ChatGPT batch (direct API call, no localhost dependency)
+  runStep(
+    'ChatGPT batch collection',
+    `cd "${dashboardDir}" && node scripts/batch-chatgpt-check.js${limitArg}${supabaseArgs}`,
+    state
+  );
+
+  // Step 6: Enrich sentiment (VADER)
   runStep(
     'VADER sentiment enrichment',
     `cd "${dashboardDir}" && node scripts/enrich-sentiment-vader.js`,
