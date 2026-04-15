@@ -2,30 +2,58 @@
 
 import { InfoTooltip } from '@/components/shared';
 import { ISOTOPE_TYPES, ISOTOPE_LABELS, ISOTOPE_DESCRIPTIONS } from '@/lib/fixtures';
+import type { HeatmapMode } from './IsotopeHeatmap';
 
-export function IsotopeLegend() {
+interface IsotopeLegendProps {
+  mode: HeatmapMode;
+}
+
+export function IsotopeLegend({ mode }: IsotopeLegendProps) {
   return (
     <div className="flex items-center gap-8 rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-4">
       <div className="flex items-center gap-2">
         <span className="text-sm text-[#6B7280]">Legend:</span>
       </div>
       <div className="flex items-center gap-6">
-        <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded bg-emerald-500/50" />
-          <span className="text-xs text-[#9CA3AF]">Consistently cited (67%+)</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded bg-lime-500/50" />
-          <span className="text-xs text-[#9CA3AF]">Sometimes cited (33-66%)</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded bg-amber-500/50" />
-          <span className="text-xs text-[#9CA3AF]">Rarely cited (&lt;33%)</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="h-3 w-3 rounded bg-red-500/50" />
-          <span className="text-xs text-[#9CA3AF]">Never cited</span>
-        </div>
+        {mode === 'citations' ? (
+          <>
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded bg-emerald-500/50" />
+              <span className="text-xs text-[#9CA3AF]">Consistently cited (67%+)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded bg-lime-500/50" />
+              <span className="text-xs text-[#9CA3AF]">Sometimes cited (33-66%)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded bg-amber-500/50" />
+              <span className="text-xs text-[#9CA3AF]">Rarely cited (&lt;33%)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded bg-red-500/50" />
+              <span className="text-xs text-[#9CA3AF]">Never cited</span>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded bg-emerald-500/50" />
+              <span className="text-xs text-[#9CA3AF]">High mentions (67%+)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded bg-lime-500/50" />
+              <span className="text-xs text-[#9CA3AF]">Moderate mentions (33-66%)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded bg-amber-500/50" />
+              <span className="text-xs text-[#9CA3AF]">Low mentions (&lt;33%)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded bg-red-500/50" />
+              <span className="text-xs text-[#9CA3AF]">Not mentioned</span>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

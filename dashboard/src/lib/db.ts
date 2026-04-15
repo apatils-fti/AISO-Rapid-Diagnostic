@@ -6,6 +6,7 @@
  */
 
 import { supabaseAnon, supabaseService } from './supabase';
+import { slugToTitle } from './utils';
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -691,25 +692,29 @@ export async function getOverviewStats(
   const citationRate = withCitations.length / total;
 
   // Competitor stats from competitor_mentions JSONB
-  const competitorTotals = new Map<string, { mentions: number; first: number; total: number }>();
-  for (const r of results) {
-    const cm = r.competitor_mentions ?? {};
+  // competitor_mentions stores raw mention counts: {"Banana Republic": 1, "Everlane": 0, "Gap": 1}
+  // count > 0 means the competitor was mentioned in that response
+  const enrichedResults = results.filter(r => r.competitor_mentions && Object.keys(r.competitor_mentions).length > 0);
+  const enrichedTotal = enrichedResults.length || 1; // avoid division by zero
+  const competitorTotals = new Map<string, { mentions: number; total: number }>();
+  for (const r of enrichedResults) {
+    const cm = r.competitor_mentions!;
     for (const [name, count] of Object.entries(cm)) {
-      if (!competitorTotals.has(name)) competitorTotals.set(name, { mentions: 0, first: 0, total: 0 });
+      if (!competitorTotals.has(name)) competitorTotals.set(name, { mentions: 0, total: 0 });
       const entry = competitorTotals.get(name)!;
       entry.total++;
       if ((count as number) > 0) entry.mentions++;
     }
   }
-  // Backfill total for competitors not mentioned in a result
+  // Use enriched result count as denominator (not all results, since un-enriched rows have no competitor data)
   for (const entry of competitorTotals.values()) {
-    entry.total = total;
+    entry.total = enrichedTotal;
   }
 
   const competitorStats: CompetitorStat[] = [...competitorTotals.entries()]
     .map(([name, stats]) => ({
       name,
-      mentionRate: stats.mentions / stats.total,
+      mentionRate: stats.total > 0 ? stats.mentions / stats.total : 0,
       firstMentionRate: 0, // Not tracked per-competitor
     }))
     .sort((a, b) => b.mentionRate - a.mentionRate);
@@ -725,24 +730,29 @@ export async function getOverviewStats(
   const rank = allRates.indexOf(mentionRate) + 1;
 
   // Biggest gap topic: find where competitors beat client the most
+  // Only use enriched results (those with competitor_mentions data) for competitor rates
   const topicData = new Map<string, {
     name: string;
     clientMentioned: number;
     total: number;
-    competitorMentions: Map<string, number>; // competitor name → count of results mentioning them
+    competitorMentions: Map<string, number>; // competitor name → count of enriched results mentioning them
+    enrichedTotal: number; // results with competitor_mentions data for this topic
   }>();
   for (const r of results) {
     const tid = r.topic_id;
     if (!topicData.has(tid)) {
-      topicData.set(tid, { name: r.topic_name, clientMentioned: 0, total: 0, competitorMentions: new Map() });
+      topicData.set(tid, { name: r.topic_name, clientMentioned: 0, total: 0, competitorMentions: new Map(), enrichedTotal: 0 });
     }
     const entry = topicData.get(tid)!;
     entry.total++;
     if (r.client_mentioned) entry.clientMentioned++;
-    const cm = r.competitor_mentions ?? {};
-    for (const [compName, count] of Object.entries(cm)) {
-      if ((count as number) > 0) {
-        entry.competitorMentions.set(compName, (entry.competitorMentions.get(compName) ?? 0) + 1);
+    const cm = r.competitor_mentions;
+    if (cm && Object.keys(cm).length > 0) {
+      entry.enrichedTotal++;
+      for (const [compName, count] of Object.entries(cm)) {
+        if ((count as number) > 0) {
+          entry.competitorMentions.set(compName, (entry.competitorMentions.get(compName) ?? 0) + 1);
+        }
       }
     }
   }
@@ -764,10 +774,11 @@ export async function getOverviewStats(
       lowestClientTopic = topic.name;
     }
 
-    // Find best competitor rate for this topic
+    // Find best competitor rate for this topic (using enriched result count as denominator)
     let bestCompRate = 0;
+    const compDenom = topic.enrichedTotal || topic.total; // fallback to total if no enriched data
     for (const [, count] of topic.competitorMentions) {
-      const rate = count / topic.total;
+      const rate = count / compDenom;
       if (rate > bestCompRate) bestCompRate = rate;
     }
 
@@ -834,10 +845,15 @@ export async function getTopicPlatformStats(
   const map = new Map<string, { name: string; platforms: Map<string, { mentioned: number; total: number }> }>();
 
   for (const r of results) {
+    if (!r.topic_id) continue;
     if (!map.has(r.topic_id)) {
-      map.set(r.topic_id, { name: r.topic_name, platforms: new Map() });
+      map.set(r.topic_id, { name: r.topic_name || '', platforms: new Map() });
     }
     const topic = map.get(r.topic_id)!;
+    // Prefer a non-empty topic_name from any result in this group
+    if (!topic.name && r.topic_name) {
+      topic.name = r.topic_name;
+    }
     if (!topic.platforms.has(r.platform)) {
       topic.platforms.set(r.platform, { mentioned: 0, total: 0 });
     }
@@ -851,7 +867,7 @@ export async function getTopicPlatformStats(
     for (const [platform, stats] of topic.platforms) {
       platforms[platform] = stats.total > 0 ? stats.mentioned / stats.total : 0;
     }
-    return { topicId, topicName: topic.name, platforms };
+    return { topicId, topicName: topic.name || slugToTitle(topicId), platforms };
   });
 }
 

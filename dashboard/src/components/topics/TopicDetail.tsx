@@ -1,19 +1,33 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, ExternalLink } from 'lucide-react';
-import { ScoreGauge, Badge, StatusBadge } from '@/components/shared';
-import { ISOTOPE_TYPES, ISOTOPE_LABELS, ISOTOPE_DESCRIPTIONS, getPromptsForTopic } from '@/lib/fixtures';
+import { ArrowLeft, ExternalLink, Link2, MessageSquare } from 'lucide-react';
+import { ScoreGauge, Badge, StatusBadge, LinearScore } from '@/components/shared';
+import { ISOTOPE_TYPES, ISOTOPE_LABELS, ISOTOPE_DESCRIPTIONS, getPromptsForTopic, analyzedMetrics } from '@/lib/fixtures';
 import { COMPETITOR_COLORS, getHeatmapBgClass, getHeatmapTextClass, getPositionColor } from '@/lib/colors';
+import { PlatformResponseViewer } from './PlatformResponseViewer';
 import { cn } from '@/lib/utils';
 import type { TopicResult, IsotopeType } from '@/lib/types';
+
+export type TopicDetailMode = 'citations' | 'mentions';
 
 interface TopicDetailProps {
   topic: TopicResult;
 }
 
 export function TopicDetail({ topic }: TopicDetailProps) {
+  const [mode, setMode] = useState<TopicDetailMode>('mentions');
   const prompts = getPromptsForTopic(topic.topicId);
+
+  // Get mention metrics for this topic
+  const topicMentionMetrics = analyzedMetrics.textMetrics?.byTopic?.[topic.topicId];
+
+  // Calculate mention-based robustness
+  const mentionRobustness = (topicMentionMetrics?.brandMetrics?.['J.Crew']?.mentionRate || 0) * 100;
+  const displayRobustness = mode === 'citations'
+    ? Math.round(topic.robustnessScore * 100)
+    : Math.round(mentionRobustness);
 
   return (
     <div className="space-y-6">
@@ -26,31 +40,176 @@ export function TopicDetail({ topic }: TopicDetailProps) {
         Back to Topic Landscape
       </Link>
 
-      {/* Header */}
+      {/* Header with Toggle */}
       <div className="flex items-start justify-between">
-        <div>
+        <div className="flex-1">
           <h1 className="font-heading text-2xl font-bold text-[#E5E7EB]">
             {topic.topicName}
           </h1>
-          <div className="mt-1 flex items-center gap-2">
+          <div className="mt-2 flex items-center gap-3">
             <Badge variant="outline">{topic.category}</Badge>
             <span className="text-sm text-[#6B7280]">
-              Robustness: {Math.round(topic.robustnessScore * 100)}%
+              {mode === 'citations' ? 'Citation' : 'Mention'} Robustness: {displayRobustness}%
             </span>
           </div>
         </div>
-        <ScoreGauge
-          score={topic.overallScore}
-          size="lg"
-          label="Topic Score"
-        />
+
+        {/* Mode Toggle */}
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1 rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-1">
+            <button
+              onClick={() => setMode('citations')}
+              className={cn(
+                'flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
+                mode === 'citations'
+                  ? 'bg-[#00D4AA]/10 text-[#00D4AA]'
+                  : 'text-[#9CA3AF] hover:text-[#E5E7EB]'
+              )}
+            >
+              <Link2 className="h-4 w-4" />
+              Citations
+            </button>
+            <button
+              onClick={() => setMode('mentions')}
+              className={cn(
+                'flex items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium transition-colors',
+                mode === 'mentions'
+                  ? 'bg-[#00D4AA]/10 text-[#00D4AA]'
+                  : 'text-[#9CA3AF] hover:text-[#E5E7EB]'
+              )}
+            >
+              <MessageSquare className="h-4 w-4" />
+              Mentions
+            </button>
+          </div>
+          <ScoreGauge
+            score={topic.overallScore}
+            size="lg"
+            label="Topic Score"
+          />
+        </div>
       </div>
 
-      {/* Isotope Breakdown */}
-      <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-6">
-        <h2 className="font-heading text-lg font-semibold text-[#E5E7EB] mb-6">
-          Isotope Breakdown
-        </h2>
+      {/* Mention Performance (Mentions Mode) */}
+      {mode === 'mentions' && topicMentionMetrics && (
+        <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-6">
+          <h2 className="font-heading text-lg font-semibold text-[#E5E7EB] mb-6">
+            Brand Performance for {topic.topicName}
+          </h2>
+          <div className="grid grid-cols-2 gap-6">
+            {/* J.Crew Metrics */}
+            <div className="space-y-4">
+              <div>
+                <h3 className="text-sm font-medium text-[#00D4AA] mb-3">J.Crew (You)</h3>
+                <div className="space-y-3">
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm text-[#6B7280]">Mention Rate</span>
+                      <span className="text-sm font-medium text-[#E5E7EB]">
+                        {(topicMentionMetrics.brandMetrics['J.Crew'].mentionRate * 100).toFixed(1)}%
+                      </span>
+                    </div>
+                    <LinearScore
+                      score={topicMentionMetrics.brandMetrics['J.Crew'].mentionRate * 100}
+                      size="sm"
+                      showValue={false}
+                    />
+                    <p className="text-xs text-[#6B7280] mt-1">
+                      Mentioned in {Math.round(topicMentionMetrics.brandMetrics['J.Crew'].mentionRate * 100)}% of responses
+                    </p>
+                  </div>
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm text-[#6B7280]">First Mention Rate</span>
+                      <span className="text-sm font-medium text-[#E5E7EB]">
+                        {(topicMentionMetrics.brandMetrics['J.Crew'].firstMentionRate * 100).toFixed(1)}%
+                      </span>
+                    </div>
+                    <LinearScore
+                      score={topicMentionMetrics.brandMetrics['J.Crew'].firstMentionRate * 100}
+                      size="sm"
+                      showValue={false}
+                    />
+                    <p className="text-xs text-[#6B7280] mt-1">
+                      Mentioned first in responses
+                    </p>
+                  </div>
+                  <div>
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm text-[#6B7280]">Avg Mentions Per Response</span>
+                      <span className="text-sm font-medium text-[#E5E7EB]">
+                        {topicMentionMetrics.brandMetrics['J.Crew'].avgMentionCount.toFixed(1)}x
+                      </span>
+                    </div>
+                    <LinearScore
+                      score={Math.min(topicMentionMetrics.brandMetrics['J.Crew'].avgMentionCount * 20, 100)}
+                      size="sm"
+                      showValue={false}
+                    />
+                  </div>
+                  <div className="pt-3 border-t border-[#2A2D37]">
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-[#6B7280]">Total Mentions</span>
+                      <span className="text-lg font-bold text-[#00D4AA]">
+                        {topicMentionMetrics.brandMetrics['J.Crew'].totalMentions.toLocaleString()}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Topic-Level Stats */}
+            <div className="space-y-4">
+              <div>
+                <h3 className="text-sm font-medium text-[#E5E7EB] mb-3">Topic Statistics</h3>
+                <div className="space-y-3">
+                  <div className="rounded bg-[#22252F] p-3">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm text-[#6B7280]">Share of Voice</span>
+                      <span className="text-lg font-bold text-[#E5E7EB]">
+                        {(topicMentionMetrics.shareOfVoice * 100).toFixed(1)}%
+                      </span>
+                    </div>
+                    <p className="text-xs text-[#6B7280]">
+                      J.Crew's share of all brand mentions in this topic
+                    </p>
+                  </div>
+                  <div className="rounded bg-[#22252F] p-3">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm text-[#6B7280]">Avg Mention Position</span>
+                      <span className="text-lg font-bold text-[#E5E7EB]">
+                        #{topicMentionMetrics.avgMentionPosition.toFixed(1)}
+                      </span>
+                    </div>
+                    <p className="text-xs text-[#6B7280]">
+                      Average position when mentioned in responses
+                    </p>
+                  </div>
+                  <div className="rounded bg-[#22252F] p-3">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="text-sm text-[#6B7280]">Total Responses</span>
+                      <span className="text-lg font-bold text-[#E5E7EB]">
+                        {topicMentionMetrics.totalResponses.toLocaleString()}
+                      </span>
+                    </div>
+                    <p className="text-xs text-[#6B7280]">
+                      {topicMentionMetrics.responsesWithMention} contained brand mentions
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Isotope Breakdown (Citations Mode) */}
+      {mode === 'citations' && (
+        <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-6">
+          <h2 className="font-heading text-lg font-semibold text-[#E5E7EB] mb-6">
+            Isotope Breakdown
+          </h2>
         <div className="space-y-4">
           {ISOTOPE_TYPES.map((isotope) => {
             const result = topic.isotopeResults[isotope];
@@ -144,14 +303,22 @@ export function TopicDetail({ topic }: TopicDetailProps) {
             );
           })}
         </div>
-      </div>
+        </div>
+      )}
+
+      {/* Multi-Platform AI Responses */}
+      <PlatformResponseViewer topicId={topic.topicId} />
 
       {/* Competitive Overview for this topic */}
       <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-6">
         <h2 className="font-heading text-lg font-semibold text-[#E5E7EB] mb-4">
-          Topic Competitive Overview
+          {mode === 'citations' ? 'Topic Competitive Overview (Citations)' : 'Competitor Mention Comparison'}
         </h2>
-        <TopicCompetitorChart topic={topic} />
+        {mode === 'citations' ? (
+          <TopicCompetitorChart topic={topic} />
+        ) : (
+          <TopicMentionComparisonChart topicId={topic.topicId} />
+        )}
       </div>
     </div>
   );
@@ -195,6 +362,88 @@ function TopicCompetitorChart({ topic }: { topic: TopicResult }) {
                 className="h-full rounded-full transition-all duration-500"
                 style={{ width: `${barWidth}%`, backgroundColor: color }}
               />
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function TopicMentionComparisonChart({ topicId }: { topicId: string }) {
+  const topicMetrics = analyzedMetrics.textMetrics?.byTopic?.[topicId];
+
+  if (!topicMetrics) {
+    return (
+      <p className="text-sm text-[#6B7280]">No mention data available for this topic.</p>
+    );
+  }
+
+  // Sort competitors by mention rate
+  const sortedCompetitors = Object.entries(topicMetrics.brandMetrics)
+    .sort(([, a], [, b]) => b.mentionRate - a.mentionRate);
+
+  const maxMentionRate = Math.max(...Object.values(topicMetrics.brandMetrics).map(m => m.mentionRate));
+
+  return (
+    <div className="space-y-4">
+      {sortedCompetitors.map(([competitor, metrics]) => {
+        const barWidth = (metrics.mentionRate / maxMentionRate) * 100;
+        const color = COMPETITOR_COLORS[competitor] || '#6B7280';
+        const isClient = competitor === 'J.Crew';
+
+        return (
+          <div
+            key={competitor}
+            className={cn(
+              'rounded-lg border p-4',
+              isClient ? 'border-[#00D4AA]/30 bg-[#00D4AA]/5' : 'border-[#2A2D37] bg-[#22252F]'
+            )}
+          >
+            <div className="flex items-center justify-between mb-3">
+              <div className="flex items-center gap-3">
+                <div
+                  className="h-3 w-3 rounded-full"
+                  style={{ backgroundColor: color }}
+                />
+                <span className={cn(
+                  'text-sm font-medium',
+                  isClient ? 'text-[#00D4AA]' : 'text-[#E5E7EB]'
+                )}>
+                  {competitor}
+                  {isClient && ' (You)'}
+                </span>
+              </div>
+              <div className="flex items-center gap-4">
+                <div className="text-right">
+                  <div className="text-xs text-[#6B7280]">Mention Rate</div>
+                  <div className="text-sm font-medium text-[#E5E7EB]">
+                    {(metrics.mentionRate * 100).toFixed(1)}%
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="text-xs text-[#6B7280]">Total Mentions</div>
+                  <div className="text-sm font-medium text-[#E5E7EB]">
+                    {metrics.totalMentions.toLocaleString()}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="h-2 w-full rounded-full bg-[#1A1D27]">
+              <div
+                className="h-full rounded-full transition-all duration-500"
+                style={{ width: `${barWidth}%`, backgroundColor: color }}
+              />
+            </div>
+            <div className="mt-2 grid grid-cols-2 gap-4 text-xs">
+              <div>
+                <span className="text-[#6B7280]">First Mention Rate: </span>
+                <span className="text-[#E5E7EB]">{(metrics.firstMentionRate * 100).toFixed(1)}%</span>
+              </div>
+              <div>
+                <span className="text-[#6B7280]">Avg Count: </span>
+                <span className="text-[#E5E7EB]">{metrics.avgMentionCount.toFixed(1)}x</span>
+              </div>
             </div>
           </div>
         );

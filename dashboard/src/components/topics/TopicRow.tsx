@@ -7,13 +7,21 @@ import { HeatmapCell } from './HeatmapCell';
 import { LinearScore } from '@/components/shared';
 import { ISOTOPE_TYPES } from '@/lib/fixtures';
 import type { TopicResult } from '@/lib/types';
+import type { HeatmapMode } from './IsotopeHeatmap';
+import type { TopicIsotopeStats } from '@/lib/platform-data';
 
 interface TopicRowProps {
   topic: TopicResult;
+  mode: HeatmapMode;
+  isotopeStats?: Record<string, TopicIsotopeStats>;
+  topicStats?: TopicIsotopeStats;
 }
 
-export function TopicRow({ topic }: TopicRowProps) {
-  const robustnessPercent = Math.round(topic.robustnessScore * 100);
+export function TopicRow({ topic, mode, isotopeStats, topicStats }: TopicRowProps) {
+  // Robustness = topic-level rate from batch data
+  const robustnessPercent = topicStats
+    ? Math.round((mode === 'citations' ? topicStats.citationRate : topicStats.mentionRate) * 100)
+    : Math.round(topic.robustnessScore * 100);
 
   return (
     <Link
@@ -35,6 +43,9 @@ export function TopicRow({ topic }: TopicRowProps) {
             <HeatmapCell
               result={topic.isotopeResults[isotope]}
               isotope={isotope}
+              topicId={topic.topicId}
+              mode={mode}
+              batchStats={isotopeStats?.[isotope]}
             />
           </div>
         ))}

@@ -288,22 +288,24 @@ export function TopicComparisonTable({ selectedPlatforms, topicData, platformDat
                 key={comparison.topicId}
                 className="border-b border-[#2A2D37] hover:bg-[#22252F]/50 transition-colors"
               >
-                <td className="p-4">
-                  <div>
+                <td className="p-4 align-middle">
+                  <div className="flex items-center">
                     <span className="text-sm font-medium text-[#E5E7EB]">
                       {comparison.topicName}
                     </span>
-                    <span className="ml-2 text-xs text-[#6B7280] bg-[#22252F] px-2 py-0.5 rounded">
-                      {comparison.category}
-                    </span>
+                    {comparison.category && (
+                      <span className="ml-2 text-xs text-[#6B7280] bg-[#22252F] px-2 py-0.5 rounded">
+                        {comparison.category}
+                      </span>
+                    )}
                   </div>
                 </td>
                 {visibleColumns.map((col) => (
-                  <td key={col.key} className="p-4">
+                  <td key={col.key} className="p-4 align-middle">
                     <ScoreBar score={comparison[col.rateKey] as number} color={col.color} />
                   </td>
                 ))}
-                <td className="p-4">
+                <td className="p-4 align-middle">
                   <DeltaCell value={comparison.delta} />
                 </td>
               </tr>

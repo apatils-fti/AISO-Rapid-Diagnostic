@@ -3,3 +3,4 @@ export { ScoreBreakdown } from './ScoreBreakdown';
 export { CompetitorQuickCompare } from './CompetitorQuickCompare';
 export { PlatformOverview } from './PlatformOverview';
 export { TopGapsCard } from './TopGapsCard';
+export { ExecutiveSummary } from './ExecutiveSummary';

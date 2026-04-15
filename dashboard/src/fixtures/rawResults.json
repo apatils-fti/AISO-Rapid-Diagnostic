@@ -1,311 +1,1212 @@
 {
   "results": [
     {
-      "promptId": "task-mgmt-commercial",
-      "platform": "perplexity",
-      "model": "sonar",
+      "promptId": "accessories-adversarial-2",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
       "runId": 1,
-      "timestamp": "2026-02-03T14:32:15Z",
+      "timestamp": "2026-03-11T18:51:04.347Z",
       "response": {
-        "text": "The best task management software for teams in 2026 includes several standout options that cater to different team sizes and workflows.\n\n**Top Picks:**\n\n1. **Asana** - Best for enterprise teams needing robust project tracking with timeline views, workload management, and extensive integrations. Pricing starts at $10.99/user/month.\n\n2. **Monday.com** - Excellent for visual project management with customizable workflows and automation. Great for marketing and creative teams. Starts at $9/user/month.\n\n3. **ClickUp** - Best value with a generous free tier and comprehensive feature set including docs, whiteboards, and time tracking. Paid plans from $7/user/month.\n\n4. **Notion** - Ideal for teams wanting an all-in-one workspace combining notes, wikis, and task management. Free for individuals, $8/user/month for teams.\n\nEach tool offers unique strengths depending on your team's needs for collaboration, automation, and reporting capabilities.",
-        "citations": [
-          "https://www.pcmag.com/picks/the-best-project-management-software",
-          "https://asana.com/resources/task-management",
-          "https://monday.com/blog/project-management/task-management/",
-          "https://clickup.com/blog/task-management-software/",
-          "https://www.forbes.com/advisor/business/software/best-task-management-software/"
-        ],
-        "searchResults": [
-          {
-            "title": "The Best Project Management Software for 2026 - PCMag",
-            "url": "https://www.pcmag.com/picks/the-best-project-management-software",
-            "snippet": "We test and rate the top project management apps to help you pick the right one for your team."
-          },
-          {
-            "title": "Task Management: What It Is & How to Master It - Asana",
-            "url": "https://asana.com/resources/task-management",
-            "snippet": "Learn what task management is and how to use task management software to organize your work effectively."
-          }
-        ]
+        "text": "Whether J.Crew is overpriced for accessories can depend on several factors, including personal budget, value perception, and comparison with other brands. Here are some points to consider:\n\n1. **Quality**: J.Crew is known for its quality materials and craftsmanship. If you value durability and design, the prices might reflect this quality.\n\n2. **Design and Brand**: The brand image and unique designs can justify higher prices for some people. If you appreciate J.Crew's style, you might find the cost reasonable.\n\n3. **Market Comparison**: Compare J.Crew's prices to similar brands. They may align more closely with other mid-to-high range retailers like Banana Republic or Madewell.\n\n4. **Sales and Discounts**: J.Crew often has sales, promotions, or outlet options, which can make their accessories more affordable.\n\nUltimately, whether it's overpriced is subjective and depends on individual preferences and budget.",
+        "citations": [],
+        "searchResults": []
       },
       "analysis": {
         "clientCited": false,
-        "clientMentionedInText": false,
-        "competitorsCited": ["Asana", "Monday.com", "ClickUp", "Notion"],
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-2",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 2,
+      "timestamp": "2026-03-11T18:51:07.975Z",
+      "response": {
+        "text": "Whether J.Crew is overpriced for accessories can be subjective and depends on various factors:\n\n1. **Quality:** J.Crew is known for offering good quality products. The materials and craftsmanship might justify higher prices for some customers.\n\n2. **Brand Value:** As a recognized brand, J.Crew may charge higher prices due to its brand reputation and customer base.\n\n3. **Comparison:** Prices might be considered high compared to budget brands, but reasonable compared to other premium retailers.\n\n4. **Sales and Offers:** J.Crew frequently offers sales and discounts, which can make their accessories more affordable.\n\nUltimately, whether J.Crew is overpriced depends on personal value perception, budget, and how much one values brand and quality.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-2",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 3,
+      "timestamp": "2026-03-11T18:51:12.967Z",
+      "response": {
+        "text": "Whether J.Crew is overpriced for accessories depends on a variety of factors such as personal budget, quality, style preference, and market comparisons. J.Crew is generally considered a mid-range brand, and their pricing often reflects a balance between quality and brand reputation. Some customers might find their accessories fairly priced for the quality and design, while others might seek more affordable alternatives. \n\nIf you want a detailed comparison or the latest opinions, I can check recent reviews or price comparisons for you.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-2",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 1,
+      "timestamp": "2026-03-11T07:15:18.409Z",
+      "response": {
+        "text": "**No, J.Crew accessories are not overpriced, particularly at their Factory outlet where original prices of $14.50–$98 are frequently discounted 40–59% to $5–$49.50, offering strong value for mid-tier quality items like belts, socks, scarves, and jewelry.[1][2][3][7]**\n\nThese prices position J.Crew as accessible rather than premium, with men's classic dress belts dropping from $69.50 to $39.50 (43% off) and women's clustered heart necklaces from $59.50 to $24.50 (59% off).[1][2] Socks often retail at $5–$8.50 after discounts from $14.50, while beanies and scarves range from $17.50–$39.50 off $59.50 originals.[1][2] Mainline J.Crew (jcrew.com) features similar promotions like 30–40% off sitewide sales, though specific accessory prices aren't detailed here.[5][6]\n\nFor context, J.Crew targets **elevated everyday style** with durable materials like leather belts and wool-blend scarves, praised in fashion coverage as trendy and long-lasting for 2026 wardrobes (e.g., tassel necklaces, cashmere wraps).[4] Compared to luxury brands (e.g., Gucci belts at $500+), J.Crew is budget-friendly; versus fast fashion like H&M ($10–30 undiscounted), it offers better perceived quality at similar or lower sale prices.\n\nFrequent sales (extra 15–20% off $100+), free shipping for rewards members, and in-store pickup enhance affordability.[5][7] If seeking full-price value without sales, higher-end options like cashmere items may feel steeper, but current listings emphasize deals.[4]",
+        "citations": [
+          "https://factory.jcrew.com/plp/mens/categories/accessories",
+          "https://factory.jcrew.com/plp/womens/features/new-arrivals?sub-categories=women-na-accessories",
+          "https://factory.jcrew.com/plp/womens/categories/accessories",
+          "https://www.whowhatwear.com/fashion/shopping/elegant-jcrew-fashion-2026",
+          "https://www.jcrew.com",
+          "https://www.jcrew.com/sale",
+          "https://factory.jcrew.com/sale"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": true,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 7
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-2",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 2,
+      "timestamp": "2026-03-11T07:15:23.281Z",
+      "response": {
+        "text": "**No, J.Crew is not overpriced for accessories, especially at J.Crew Factory where items frequently sell at 40-60% off original prices, making them competitively priced for mid-range quality.** [1][2][3]\n\n### Pricing Examples from J.Crew Factory (Current Sales)\nJ.Crew Factory offers accessories at steep discounts compared to original \"comparable values,\" positioning them as affordable options:\n\n**Men's Accessories:**\n- Classic dress belt: Original $69.50, sale $39.50 (43% off).[1]\n- Leather braided belt: Original $69.50, sale $39.50 (43% off).[1]\n- Classic dress socks: Original $14.50, sale $5.00–$8.50.[1]\n- Solid socks: Original $14.50, sale $8.50 (41% off).[1]\n\n**Women's Accessories:**\n- Knot stud earrings: Original $39.50, sale $19.50 (51% off).[2]\n- Clustered heart charms necklace: Original $59.50, sale $24.50 (59% off).[2]\n- Wool-blend ribbed beanie: Original $59.50, sale $34.50 (42% off).[2]\n- Mini velvet chain handbag: Original $98, sale $49.50 (49% off).[2]\n\nThese prices align with mid-tier brands, where belts and bags often range $30–$100 on sale, and socks/earrings $5–$20. Regular J.Crew sales (e.g., extra 30% off with codes) further reduce costs.[6][7]\n\n### Value Context\n- **Quality and Style:** J.Crew accessories emphasize classic, versatile designs (e.g., leather belts, wool scarves) suitable for everyday or professional use, often highlighted in trend roundups.[4]\n- **Frequent Promotions:** Discounts are standard, with codes like \"NEWDROP\" for extra 20% off $125+ or \"EXTRA\" for sale items, making full-price purchases rare.[1][6]\n- **Comparisons:** Similar items at competitors (e.g., Uniqlo socks ~$10, Banana Republic belts ~$50–$80) overlap, but J.Crew's sales often undercut them. Mainline J.Crew (jcrew.com) has higher base prices but mirrors Factory deals during promotions.[5][8]\n\nPurchase during sales or at Factory stores for the best value; full-price may feel premium for basic items.",
+        "citations": [
+          "https://factory.jcrew.com/plp/mens/categories/accessories",
+          "https://factory.jcrew.com/plp/womens/features/new-arrivals?sub-categories=women-na-accessories",
+          "https://factory.jcrew.com/plp/womens/categories/accessories",
+          "https://www.whowhatwear.com/fashion/shopping/chic-jcrew-sale-finds-january-2026",
+          "https://www.jcrew.com",
+          "https://www.jcrew.com/sale",
+          "https://factory.jcrew.com/sale",
+          "https://www.jcrew.com/womens"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": true,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 8
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-2",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 3,
+      "timestamp": "2026-03-11T07:15:28.812Z",
+      "response": {
+        "text": "**No, J.Crew is not overpriced for accessories, particularly at J.Crew Factory where items frequently sell at 40-59% off original prices, making them competitively affordable.**[1][2][3]\n\n### Pricing Examples from J.Crew Factory (Current Sales)\nJ.Crew Factory offers deep discounts on accessories, often positioning \"comparable values\" (original prices) far above sale prices:\n\n**Men's Accessories:**\n- Classic dress belt: Original $69.50, sale $39.50 (43% off)[1]\n- Leather braided belt: Original $69.50, sale $39.50 (43% off)[1]\n- Wide leather belt: Original $59.50, sale $35.50 (40% off)[1]\n- Classic dress socks: Original $14.50, sale $5.00–$8.50[1]\n\n**Women's Accessories:**\n- Knot stud earrings: Original $39.50, sale $19.50 (51% off)[2]\n- Clustered heart charms necklace: Original $59.50, sale $24.50 (59% off)[2]\n- Wool-blend ribbed scarf: Original $69.50, sale $39.50 (43% off)[2]\n- Mini velvet chain handbag: Original $98, sale $49.50 (49% off)[2]\n\nThese sales are ongoing, with additional perks like extra 20% off $125+ using code NEWDROP.[1][2] Mainline J.Crew (jcrew.com) also runs sitewide promotions, such as 30% off, though specific accessory prices aren't detailed here.[5][6]\n\n### Value Context\n- **Comparable to mid-tier brands:** Original prices ($30–$100) align with brands like Banana Republic or Gap, but frequent markdowns drop them to budget levels (e.g., socks under $10, belts under $40).[1][2]\n- **Quality perception:** J.Crew accessories emphasize classic styles (leather belts, wool scarves, crystal earrings), often highlighted as \"instant outfit upgrades.\"[3]\n- **Frequent deals:** Factory site clearance and codes make purchases timely value buys, unlike full-price retail elsewhere.[7]\n\nIf buying at full original prices without sales, some might view them as higher-end for basics, but current promotions make J.Crew a strong value option.[1][2][3]",
+        "citations": [
+          "https://factory.jcrew.com/plp/mens/categories/accessories",
+          "https://factory.jcrew.com/plp/womens/features/new-arrivals?sub-categories=women-na-accessories",
+          "https://factory.jcrew.com/plp/womens/categories/accessories",
+          "https://www.whowhatwear.com/fashion/shopping/chic-jcrew-sale-finds-january-2026",
+          "https://www.jcrew.com",
+          "https://www.jcrew.com/sale",
+          "https://factory.jcrew.com/sale",
+          "https://factory.jcrew.com/sale/women"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": true,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 8
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-3",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 1,
+      "timestamp": "2026-03-11T18:51:45.070Z",
+      "response": {
+        "text": "J.Crew is generally known for offering good quality accessories with a classic and preppy style. Their products are often praised for their durability and design, though quality can vary depending on the item. Customers typically appreciate the materials used and the attention to detail in their accessories. However, as with any brand, it's a good idea to check reviews for specific items you're interested in.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-3",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 2,
+      "timestamp": "2026-03-11T18:51:47.022Z",
+      "response": {
+        "text": "J.Crew is generally known for offering good quality accessories. Their products often strike a balance between style and durability, with many customers appreciating the design and materials used. However, individual experiences can vary, and it's a good idea to read specific reviews for the accessory you're interested in to ensure it meets your expectations.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-3",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 3,
+      "timestamp": "2026-03-11T18:51:49.004Z",
+      "response": {
+        "text": "J.Crew is generally known for offering good quality accessories. They focus on classic, timeless styles and often use quality materials. Customers frequently praise their design and durability. However, it's a good idea to read reviews for specific items, as quality can vary from product to product.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-3",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 1,
+      "timestamp": "2026-03-11T07:16:14.042Z",
+      "response": {
+        "text": "J.Crew accessories are generally considered good quality and offer strong value, particularly when compared to their regular J.Crew line prices[2][4].\n\n**What works well:** J.Crew accessories—including scarves, sunglasses, belts, and bags—are frequently recommended as worthwhile purchases[4]. Customers praise them as a way to \"get a J.Crew look without the J.Crew price tag,\" especially when shopping J.Crew Factory[4]. The accessories are described as \"classic and cute,\" and belts specifically feature quality materials like rich leather with brass-finish hardware[2].\n\n**Important sizing note:** Multiple J.Crew belt styles are designed to be worn at the waist, and the brand recommends ordering a size up if you plan to wear them lower[2].\n\n**Comparison to clothing:** The accessories line appears to be a stronger choice than many J.Crew clothing items. While J.Crew clothing in general is noted as \"good quality,\" it can be expensive and suffers from inconsistent fits and quality control issues[3]. In contrast, accessories avoid many of these problems—they don't have fit variations and tend to be more durable since they're simpler items.\n\nOverall, J.Crew accessories represent a practical way to incorporate the brand's aesthetic into your wardrobe at a more reasonable price point than their core clothing offerings.",
+        "citations": [
+          "https://www.themodestman.com/jcrew-factory-review/",
+          "https://www.reviewjcrew.com/?cat=3",
+          "https://theadultman.com/fashion-and-style/j-crew-vs-j-crew-factory/",
+          "https://pumpsandpushups.com/what-to-buy-and-skip-at-j-crew-factory-oh-hey-girl-link-up/",
+          "https://thingtesting.com/brands/j-crew"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
         "totalCitations": 5
       }
     },
     {
-      "promptId": "task-mgmt-informational",
+      "promptId": "accessories-adversarial-3",
       "platform": "perplexity",
       "model": "sonar",
-      "runId": 1,
-      "timestamp": "2026-02-03T14:32:45Z",
+      "runId": 2,
+      "timestamp": "2026-03-11T07:16:18.640Z",
       "response": {
-        "text": "Task management software is a digital tool designed to help individuals and teams organize, track, and complete work efficiently.\n\n**How It Works:**\n\nTask management software operates on several core principles:\n\n1. **Task Creation** - Users create tasks with titles, descriptions, due dates, and assignees\n2. **Organization** - Tasks are organized into projects, lists, or boards (like Kanban)\n3. **Prioritization** - Features like labels, tags, and priority levels help focus on what matters\n4. **Collaboration** - Team members can comment, share files, and update progress\n5. **Tracking** - Dashboards and reports show progress and bottlenecks\n\n**Key Features:**\n- Kanban boards for visual workflow management\n- Gantt charts for timeline planning\n- Time tracking for productivity insights\n- Integrations with tools like Slack, Google Workspace, and GitHub\n\nTools like Asana, TechFlow, and Monday.com have popularized these approaches, making them accessible to teams of all sizes. The software reduces email overload and keeps everyone aligned on priorities.",
+        "text": "**J.Crew offers generally good quality accessories, particularly in leather items like belts, shoes, and bags, though quality can vary by product and is often praised more at their Factory line for value.**[1][2][3]\n\n### Positive Feedback on Accessories\n- **Leather goods and belts**: Reviewers highlight \"rich leather\" belts with stud fastenings and hardware like Old English brass-finish zinc, designed for durability and versatility when sized up for waist wear.[2] Washed leather and slim glossy pins are also noted for quality construction.[2]\n- **Shoes**: Ballet flats feature \"great quality\" leather that fits well, while Factory shoes (size 5+) are \"well made, classic, and cute\" at a modest price.[1][3] Basket bags like the Sedona are elevated, functional, and predicted to be fan favorites.[1]\n- **Other items**: Jewelry alternatives with light-catching studs, scarves, sunnies, and bags deliver a premium J.Crew look, especially on sale or at Factory stores.[2][3]\n\n### Potential Drawbacks\n- Some shoes, like fisherman loafers, have leather straps that aren't as soft, potentially causing friction with extended wear.[1]\n- While accessories fare better than clothing like blouses or sweaters (which pill or wear out quickly), overall J.Crew items are seen as good quality but pricey.[3][4]\n\nFactory accessories stand out for balancing quality and affordability compared to mainline products.[3] Customer experiences emphasize checking sizing advice and sales for best value.[1][2]",
         "citations": [
-          "https://asana.com/resources/task-management",
-          "https://techflow.com/guide/task-management-basics",
-          "https://www.atlassian.com/work-management/project-management/task-management",
-          "https://monday.com/blog/project-management/what-is-task-management/"
+          "https://www.whowhatwear.com/jcrew-review",
+          "https://www.reviewjcrew.com/?cat=3",
+          "https://pumpsandpushups.com/what-to-buy-and-skip-at-j-crew-factory-oh-hey-girl-link-up/",
+          "https://thingtesting.com/brands/j-crew"
         ],
-        "searchResults": [
-          {
-            "title": "Task Management: What It Is & How to Master It - Asana",
-            "url": "https://asana.com/resources/task-management",
-            "snippet": "Learn what task management is and how to use task management software to organize your work effectively."
-          },
-          {
-            "title": "Task Management Basics - TechFlow",
-            "url": "https://techflow.com/guide/task-management-basics",
-            "snippet": "A comprehensive guide to task management principles and best practices for modern teams."
-          }
-        ]
-      },
-      "analysis": {
-        "clientCited": true,
-        "clientMentionedInText": true,
-        "competitorsCited": ["Asana", "Monday.com"],
-        "totalCitations": 4
-      }
-    },
-    {
-      "promptId": "pricing-commercial",
-      "platform": "perplexity",
-      "model": "sonar",
-      "runId": 1,
-      "timestamp": "2026-02-03T14:35:22Z",
-      "response": {
-        "text": "Looking for affordable project management software in 2026? Here are the best free and budget-friendly options:\n\n**Free Options:**\n\n1. **ClickUp Free** - Unlimited tasks, members, and 100MB storage. Best free tier available.\n2. **Notion Free** - Unlimited pages for individuals, great for personal project management.\n3. **Trello Free** - Up to 10 boards with basic automation.\n\n**Best Value Paid Options:**\n\n1. **TechFlow** ($8/user/month) - Exceptional value with unlimited projects, time tracking, and 50+ integrations included. No feature gating on lower tiers.\n\n2. **ClickUp Unlimited** ($7/user/month) - Everything in free plus unlimited storage and integrations.\n\n3. **Asana Premium** ($10.99/user/month) - Timeline view and advanced search, but many features require Business tier.\n\n4. **Monday.com Basic** ($9/seat/month, 3 seat minimum) - Good for small teams but limited automation.\n\n**Best for Bootstrapped Startups:** TechFlow and ClickUp offer the most features at the lowest price points. Both include time tracking and robust integrations that competitors charge extra for.",
-        "citations": [
-          "https://techflow.com/pricing",
-          "https://clickup.com/pricing",
-          "https://www.g2.com/categories/project-management/free",
-          "https://www.capterra.com/project-management-software/free/"
-        ],
-        "searchResults": [
-          {
-            "title": "Pricing - TechFlow",
-            "url": "https://techflow.com/pricing",
-            "snippet": "Simple, transparent pricing. $8/user/month for everything you need. No hidden fees."
-          },
-          {
-            "title": "ClickUp Pricing - Free & Paid Plans",
-            "url": "https://clickup.com/pricing",
-            "snippet": "Start free, then upgrade as you grow. Plans from $7/user/month."
-          }
-        ]
-      },
-      "analysis": {
-        "clientCited": true,
-        "clientMentionedInText": true,
-        "competitorsCited": ["ClickUp", "Notion", "Asana", "Monday.com"],
-        "totalCitations": 4
-      }
-    },
-    {
-      "promptId": "integrations-specific",
-      "platform": "perplexity",
-      "model": "sonar",
-      "runId": 1,
-      "timestamp": "2026-02-03T14:38:10Z",
-      "response": {
-        "text": "For project management with Slack, GitHub, Google Workspace, and Salesforce integrations, here are your best options:\n\n**Top Recommendation: TechFlow**\n\nTechFlow offers native integrations with all four platforms you mentioned:\n- **Slack**: Two-way sync, create tasks from messages, notifications\n- **GitHub**: Link commits to tasks, automatic status updates\n- **Google Workspace**: Calendar sync, Drive attachments, Gmail integration\n- **Salesforce**: Sync deals to projects, customer context in tasks\n\nAll integrations included in all plans, no premium tier required.\n\n**Alternatives:**\n\n1. **Asana** - Strong integrations but GitHub requires third-party connector. Salesforce integration on Business tier only.\n\n2. **Monday.com** - Good Google Workspace integration. Salesforce requires enterprise plan.\n\n3. **ClickUp** - Excellent GitHub integration. Google and Slack native. Salesforce via Zapier.\n\nTechFlow stands out for including all enterprise integrations without tier restrictions, making it ideal for teams with complex tech stacks.",
-        "citations": [
-          "https://techflow.com/integrations",
-          "https://docs.techflow.com/integrations/salesforce",
-          "https://asana.com/apps",
-          "https://clickup.com/integrations"
-        ],
-        "searchResults": [
-          {
-            "title": "Integrations - TechFlow",
-            "url": "https://techflow.com/integrations",
-            "snippet": "Connect TechFlow with 200+ tools your team already uses. Native Slack, GitHub, Google, and Salesforce integrations."
-          }
-        ]
-      },
-      "analysis": {
-        "clientCited": true,
-        "clientMentionedInText": true,
-        "competitorsCited": ["Asana", "Monday.com", "ClickUp"],
-        "totalCitations": 4
-      }
-    },
-    {
-      "promptId": "enterprise-commercial",
-      "platform": "perplexity",
-      "model": "sonar",
-      "runId": 1,
-      "timestamp": "2026-02-03T14:40:55Z",
-      "response": {
-        "text": "For Fortune 500 companies seeking enterprise project management software, these solutions lead the market in 2026:\n\n**Top Enterprise Solutions:**\n\n1. **Asana Enterprise** - Trusted by 80% of Fortune 100 companies. Offers admin controls, SAML SSO, custom branding, advanced security with SOC 2 Type II compliance, and dedicated customer success managers.\n\n2. **Monday.com Enterprise** - Strong in marketing and creative workflows with enterprise-grade security. HIPAA compliance available. Multi-level permissions and audit logs.\n\n3. **Workfront (Adobe)** - Purpose-built for enterprise work management. Deep integration with Adobe Creative Cloud. Resource management and strategic planning capabilities.\n\n4. **Planview** - Portfolio management focus with financial tracking and strategic alignment features. Best for PMOs managing large project portfolios.\n\n**Key Enterprise Requirements Met:**\n- SSO/SAML integration\n- SOC 2 Type II certification\n- Custom security policies\n- Dedicated support\n- SLA guarantees\n- Data residency options\n\nAsana and Monday.com dominate the enterprise PMM space due to their combination of user-friendly interfaces and enterprise security requirements.",
-        "citations": [
-          "https://asana.com/enterprise",
-          "https://monday.com/enterprise",
-          "https://www.workfront.com/enterprise",
-          "https://www.g2.com/categories/project-management/enterprise",
-          "https://www.gartner.com/reviews/market/project-portfolio-management"
-        ],
-        "searchResults": [
-          {
-            "title": "Asana Enterprise - Built for Large Organizations",
-            "url": "https://asana.com/enterprise",
-            "snippet": "Enterprise-grade security, admin controls, and dedicated support for organizations scaling their work management."
-          }
-        ]
+        "searchResults": []
       },
       "analysis": {
         "clientCited": false,
-        "clientMentionedInText": false,
-        "competitorsCited": ["Asana", "Monday.com"],
-        "totalCitations": 5
-      }
-    },
-    {
-      "promptId": "agile-scrum-comparative",
-      "platform": "perplexity",
-      "model": "sonar",
-      "runId": 1,
-      "timestamp": "2026-02-03T14:43:30Z",
-      "response": {
-        "text": "Comparing Jira vs Linear vs Shortcut for agile development teams in 2026:\n\n**Jira by Atlassian**\n- **Best for**: Large enterprises with complex workflows\n- **Pros**: Highly customizable, extensive reporting, massive integration ecosystem\n- **Cons**: Steep learning curve, can feel bloated, expensive at scale\n- **Pricing**: Free up to 10 users, then $7.75/user/month\n\n**Linear**\n- **Best for**: Fast-moving startups and engineering teams\n- **Pros**: Blazing fast UI, keyboard-first design, beautiful UX, opinionated workflows\n- **Cons**: Less customizable, fewer integrations, limited reporting\n- **Pricing**: Free for small teams, $8/user/month for teams\n\n**Shortcut (formerly Clubhouse)**\n- **Best for**: Mid-size engineering teams wanting balance\n- **Pros**: Clean interface, good API, reasonable pricing, Stories and Epics model\n- **Cons**: Less polished than Linear, smaller community\n- **Pricing**: Free for small teams, $8.50/user/month\n\n**Recommendation**: Linear for speed and UX, Jira for enterprise customization, Shortcut for balanced middle ground.",
-        "citations": [
-          "https://linear.app/features",
-          "https://www.atlassian.com/software/jira/features",
-          "https://shortcut.com/product",
-          "https://stackshare.io/stackups/jira-vs-linear-vs-shortcut"
-        ],
-        "searchResults": [
-          {
-            "title": "Linear - Plan & Build Products",
-            "url": "https://linear.app/features",
-            "snippet": "Linear is a purpose-built tool for modern software teams. Issue tracking, sprint planning, and product roadmaps."
-          }
-        ]
-      },
-      "analysis": {
-        "clientCited": false,
-        "clientMentionedInText": false,
+        "clientMentionedInText": true,
         "competitorsCited": [],
         "totalCitations": 4
       }
     },
     {
-      "promptId": "small-business-persona",
+      "promptId": "accessories-adversarial-3",
       "platform": "perplexity",
       "model": "sonar",
-      "runId": 1,
-      "timestamp": "2026-02-03T14:46:18Z",
+      "runId": 3,
+      "timestamp": "2026-03-11T07:16:22.428Z",
       "response": {
-        "text": "As a small business owner juggling multiple responsibilities, you need a project management tool that's simple yet powerful. Here are my top recommendations:\n\n**Best Overall: TechFlow**\n\nTechFlow is designed specifically for small businesses who don't want complexity. The learning curve is minimal—most teams are productive within an hour. At $8/user/month with no seat minimums, it's budget-friendly for growing teams.\n\nKey features for small business:\n- Simple task boards that anyone can use\n- Built-in time tracking (no extra software needed)\n- Client portal for external visibility\n- Invoicing integrations\n\n**Alternatives:**\n\n1. **Notion** - Best if you want docs + tasks in one place. More flexible but requires more setup.\n\n2. **Trello** - Simplest option if you just need Kanban boards. Gets limiting as you grow.\n\n3. **Basecamp** - Flat $299/month for unlimited users. Good for larger small businesses.\n\n**Avoid:** Asana and Monday.com can feel overwhelming for small teams and cost more once you need essential features on higher tiers.\n\nStart with TechFlow or Notion's free tier and upgrade when ready.",
+        "text": "**J.Crew accessories are generally considered good quality for the price, especially at J.Crew Factory, with positive feedback on items like belts, scarves, bags, and sunglasses that offer classic style and durability.** [1][3]\n\nCustomer reviews highlight leather belts as \"rich\" and well-crafted with details like stud fastenings, Old English brass-finish hardware, and recommendations for sizing, suggesting thoughtful design for everyday wear.[1] At J.Crew Factory, accessories such as scarves, belts, bags, and sunnies are recommended for delivering a premium J.Crew look at a lower cost, praised as \"well made, classic and cute\" compared to higher-end options.[3]\n\nBroader J.Crew quality perceptions support this: one reviewer notes overall clothing as \"good quality if a little expensive,\" with a durable winter jacket example, while Factory shoes (an accessory category) fit well and feel fabulous for the price.[3][4] However, some clothing items like blouses and sweaters face criticism for poor longevity (pilling, not washing well), though accessories avoid similar complaints in available feedback.[3]\n\nLimitations: Search results lack long-term wear tests specifically for J.Crew (non-Factory) accessories and include minimal negative comments, so experiences may vary by item and care. For premium alternatives, reviewers suggest brands like Alex Mill for consistent, high-construction feel.[2]",
         "citations": [
-          "https://techflow.com/small-business",
-          "https://notion.so/product",
-          "https://basecamp.com/pricing",
-          "https://www.forbes.com/advisor/business/software/best-project-management-for-small-business/"
+          "https://www.reviewjcrew.com/?cat=3",
+          "https://www.youtube.com/watch?v=QUq8Ubjn63M",
+          "https://pumpsandpushups.com/what-to-buy-and-skip-at-j-crew-factory-oh-hey-girl-link-up/",
+          "https://thingtesting.com/brands/j-crew"
         ],
-        "searchResults": [
-          {
-            "title": "TechFlow for Small Business",
-            "url": "https://techflow.com/small-business",
-            "snippet": "Project management that grows with your business. Simple pricing, powerful features, zero complexity."
-          }
-        ]
+        "searchResults": []
       },
       "analysis": {
-        "clientCited": true,
+        "clientCited": false,
         "clientMentionedInText": true,
-        "competitorsCited": ["Notion", "Asana", "Monday.com"],
+        "competitorsCited": [],
         "totalCitations": 4
       }
     },
     {
-      "promptId": "time-tracking-specific",
+      "promptId": "accessories-adversarial-4",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 1,
+      "timestamp": "2026-03-11T18:57:17.292Z",
+      "response": {
+        "text": "Whether J.Crew is considered overpriced for accessories depends on several factors, including personal budget, perceived quality, and brand preference. J.Crew is known for offering stylish and well-made products, which can come at a higher price point compared to some fast fashion brands. However, compared to luxury brands, J.Crew might be seen as more affordable.\n\nSome things to consider:\n\n1. **Quality vs. Price**: J.Crew generally offers good quality, which can justify the higher prices for some consumers.\n2. **Sales and Discounts**: J.Crew often has sales and promotions, which can make their accessories more affordable.\n3. **Brand Value**: Paying for the brand name and style is part of the cost; for those who value this, the price might be justified.\n4. **Comparison Shopping**: Comparing similar items from different retailers can provide a better sense of value.\n\nUltimately, whether J.Crew is overpriced is subjective and varies from person to person.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-4",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 2,
+      "timestamp": "2026-03-11T18:57:23.344Z",
+      "response": {
+        "text": "Whether J.Crew is considered overpriced for accessories can depend on several factors, including:\n\n1. **Quality**: J.Crew is known for offering good quality materials and craftsmanship, which can justify higher prices for some consumers.\n\n2. **Brand Perception**: J.Crew markets itself as a premium brand, and part of what you're paying for is the brand itself.\n\n3. **Comparative Pricing**: Comparing J.Crew’s accessory prices with similar brands can help determine if they are overpriced. Brands in the same market segment might have similar pricing.\n\n4. **Customer Reviews**: User reviews can provide insights into whether customers find the accessories to be worth the price.\n\n5. **Sales and Discounts**: J.Crew often has sales and discounts, which can affect how consumers view their pricing.\n\nUltimately, whether something is overpriced is subjective and depends on individual priorities and budget.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-4",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 3,
+      "timestamp": "2026-03-11T18:57:28.013Z",
+      "response": {
+        "text": "Whether J.Crew is overpriced for accessories can depend on various factors, including individual budget, personal preference, and the quality-to-price ratio. Here are some key points to consider:\n\n1. **Quality**: J.Crew is known for offering good quality products. If the materials and craftsmanship are high, the price might be justified.\n\n2. **Design**: J.Crew offers trendy and classic designs. If you're valuing a particular style, you might find the price worth it.\n\n3. **Brand Perception**: As a mid-to-high-end brand, J.Crew can be seen as more expensive compared to fast fashion, but often not as pricey as luxury brands.\n\n4. **Sales and Discounts**: J.Crew frequently has sales and promotions, which can make their accessories more affordable.\n\n5. **Comparisons**: Compare J.Crew's accessories with similar items from other brands to determine if the pricing aligns with the market.\n\nUltimately, whether J.Crew is overpriced is subjective and varies based on what you're looking for in terms of quality and style.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-4",
       "platform": "perplexity",
       "model": "sonar",
       "runId": 1,
-      "timestamp": "2026-02-03T14:49:05Z",
+      "timestamp": "2026-03-11T07:21:48.923Z",
       "response": {
-        "text": "For time tracking with automatic timers, invoicing integration, and project budgets, here are the best options:\n\n**Built-in Project Management + Time Tracking:**\n\n1. **TechFlow** - Native time tracking with automatic timers, project budgets with alerts, and direct QuickBooks/Xero integration for invoicing. All included in base price.\n\n2. **ClickUp** - Time tracking on all plans, budget tracking on paid plans, invoicing via integrations (no native).\n\n**Dedicated Time Tracking Tools:**\n\n1. **Harvest** - Gold standard for time tracking + invoicing. Automatic timers, budget tracking, native invoicing. $10.80/user/month.\n\n2. **Toggl Track** - Best pure time tracker. Automatic timers excellent. Integrates with accounting tools. From $9/user/month.\n\n3. **Clockify** - Generous free tier. Budget tracking on paid plans. Invoice via integrations.\n\n**Recommendation:**\n\nIf you want one tool: TechFlow combines project management with robust time/billing features.\n\nIf you need specialized invoicing: Harvest is the most complete time-to-invoice solution.\n\nFor budget-conscious teams: Clockify free tier plus separate invoicing software.",
+        "text": "**No, J.Crew accessories are not overpriced, particularly at their Factory outlet where items frequently sell at 40-63% off original prices, making them competitively priced against similar mid-tier brands.** [1][2][3]\n\n### Pricing Examples from J.Crew Factory\nJ.Crew Factory offers deep discounts on accessories, often labeled with \"comparable value\" (original retail prices) versus sale prices:\n- **Belts**: Classic dress belt ($69.50 original → $39.50, 43% off); leather braided belt ($79.50 → $47.50, 40% off); oval-buckle woven belt ($79.50 → $29.50, 63% off).[1][2]\n- **Bags and hats**: Packable straw tote ($128 → $76.50, 40% off); straw bucket hat ($79.50 → $29.50, 63% off).[2]\n- **Socks and scarves**: Trouser socks or bootie socks ($19.50 → $8-$9.50, 51-59% off); silky scarf ($49.50 → $19.50, 61% off).[1][2]\nAdditional promotions include extra 20% off $125+ orders.[1][3]\n\n### Mainline J.Crew Context\nFull-price items on jcrew.com align with mid-range positioning (e.g., cashmere wraps or tassel necklaces highlighted as premium yet trendy), but sales like 30-40% off sitewide are common, and Factory prices undercut these further.[4][5][6] This structure positions J.Crew as accessible for quality leather, straw, and knit accessories compared to luxury brands (e.g., $200+ belts elsewhere) while exceeding fast-fashion options in durability.[3][4]\n\n### Value Assessment\nFrequent sales and \"best seller/top rated\" status suggest strong perceived value, with items like belts and socks offering longevity at discounted rates under $50.[1][2] For trendier pieces (e.g., 2026 tassel necklaces), cost-per-wear remains low due to sales.[4] If buying full-price, compare to outlets for better deals.",
         "citations": [
-          "https://techflow.com/features/time-tracking",
-          "https://www.getharvest.com/features",
-          "https://toggl.com/track/features/",
-          "https://clockify.me/features"
+          "https://factory.jcrew.com/plp/mens/categories/accessories",
+          "https://factory.jcrew.com/plp/womens/categories/accessories",
+          "https://factory.jcrew.com",
+          "https://www.whowhatwear.com/fashion/shopping/elegant-jcrew-fashion-2026",
+          "https://www.jcrew.com",
+          "https://www.jcrew.com/sale",
+          "https://factory.jcrew.com/sale"
         ],
-        "searchResults": [
-          {
-            "title": "Time Tracking - TechFlow",
-            "url": "https://techflow.com/features/time-tracking",
-            "snippet": "Track time with automatic timers, set project budgets, and generate invoices. Everything you need for billable work."
-          }
-        ]
+        "searchResults": []
       },
       "analysis": {
         "clientCited": true,
         "clientMentionedInText": true,
-        "competitorsCited": ["ClickUp"],
-        "totalCitations": 4
+        "competitorsCited": [],
+        "totalCitations": 7
       }
     },
     {
-      "promptId": "remote-teams-conversational",
+      "promptId": "accessories-adversarial-4",
       "platform": "perplexity",
       "model": "sonar",
-      "runId": 1,
-      "timestamp": "2026-02-03T14:52:40Z",
+      "runId": 2,
+      "timestamp": "2026-03-11T07:21:52.951Z",
       "response": {
-        "text": "I totally understand the remote coordination struggle! Here are tools that really help with async work across time zones:\n\n**For Async Communication + Tasks:**\n\n1. **Notion** - Combine your docs, wikis, and tasks in one place. Great async because everything is written down and searchable.\n\n2. **TechFlow** - Has async updates built-in (record quick video/audio updates) and timezone-aware due dates. Your morning standup becomes a recorded update your EU team sees when they wake up.\n\n**For Async Standups:**\n- **Geekbot** - Slack bot for written standups\n- **Loom** - Quick video updates instead of meetings\n\n**For Clear Handoffs:**\n- **Linear** - Great for dev teams, clear ownership\n- **Asana** - Task handoff workflows\n\n**My Recommendation:**\n\nStart with Notion or TechFlow as your central hub. Add Loom for rich async updates. The key is making \"write it down\" your default instead of \"let's hop on a call.\"\n\nThe best remote teams I've seen obsess over documentation and clear ownership. The tool matters less than the culture of over-communicating in writing.",
+        "text": "**No, J.Crew accessories are not overpriced, especially at their Factory outlet where original prices of $19.50–$128 are frequently discounted 40–63% to sale prices like $8–$76.50, offering strong value for trendy, quality items such as belts, earrings, bags, and socks.[1][2][3]**\n\nMainline J.Crew positions accessories as premium \"elevated essentials\" with longevity, like tassel necklaces and cashmere wraps, aligning with 2026 trends in elegant, versatile pieces rather than fast fashion disposables.[4][5] Factory listings emphasize \"comparable value\" originals (e.g., woven belts at $79.50 reduced to $29.50, pearl earrings from $45 to $19.50), with additional promotions like extra 20% off $125+ making them competitive against mid-tier brands.[1][2][3]\n\n### Price Comparison Examples (Factory Sales)\n| Item | Original Price | Sale Price | Discount |\n|------|----------------|------------|----------|\n| Woven leather belt[1] | $79.50 | $29.50 | 63% off |\n| Straw tote bag[1][3] | $118 | $69.50 | 41% off |\n| Classic dress belt[2] | $69.50 | $39.50 | 43% off |\n| Pearl drop hoop earrings[1] | $45 | $19.50 | 57% off |\n| Socks (various)[1][2][3] | $19.50 | $8–$15.99 | 51–59% off |\n\nThese discounts are standard, with sitewide sales up to 30–50% and rewards programs adding free shipping/perks, so full-price purchases are rare and often avoidable.[5][6][7] Customer favorites (belts, socks) and new arrivals maintain perceived quality without luxury markups.[1][2][3]",
         "citations": [
-          "https://notion.so/remote-work",
-          "https://techflow.com/remote-teams",
-          "https://www.loom.com/use-cases/async-meetings",
-          "https://www.remote.com/blog/async-communication-tools"
+          "https://factory.jcrew.com/plp/womens/features/new-arrivals?sub-categories=women-na-accessories",
+          "https://factory.jcrew.com/plp/mens/categories/accessories",
+          "https://factory.jcrew.com/plp/womens/categories/accessories",
+          "https://www.whowhatwear.com/fashion/shopping/elegant-jcrew-fashion-2026",
+          "https://www.jcrew.com",
+          "https://www.jcrew.com/sale",
+          "https://factory.jcrew.com/sale",
+          "https://factory.jcrew.com/sale/women"
         ],
-        "searchResults": [
-          {
-            "title": "Remote Work with Notion",
-            "url": "https://notion.so/remote-work",
-            "snippet": "Build a connected workspace for your remote team with docs, wikis, and projects."
-          }
-        ]
+        "searchResults": []
       },
       "analysis": {
         "clientCited": true,
         "clientMentionedInText": true,
-        "competitorsCited": ["Notion", "Asana"],
-        "totalCitations": 4
+        "competitorsCited": [],
+        "totalCitations": 8
       }
     },
     {
-      "promptId": "portfolio-management-commercial",
+      "promptId": "accessories-adversarial-4",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 3,
+      "timestamp": "2026-03-11T07:21:58.147Z",
+      "response": {
+        "text": "**No, J.Crew accessories are not overpriced, especially at J.Crew Factory where original prices of $19.50–$128 are frequently discounted 40–63% to $8–$76.50.**[1][2][3]\n\nThese deep discounts make items like woven belts (original $79.50, sale $29.50), straw totes (original $118–$128, sale $69.50–$76.50), pearl earrings (original $45, sale $19.50), and socks (original $19.50, sale $8–$9.50) competitively priced against similar mass-market brands.[1][2][3] On the main J.Crew site, full-price accessories align with mid-tier positioning (e.g., recent sales offered 25–30% off select items), but Factory consistently undercuts with \"comparable value\" pricing and extra promotions like 20% off $125+.[1][2][3][4][5]\n\n| Category | Example Original Price | Sale Price | Discount | Source |\n|----------|-----------------------|------------|----------|--------|\n| Belts | $69.50–$79.50 | $29.50–$47.50 | 40–63% | [1][2][3] |\n| Bags/Totes | $98–$128 | $56.50–$76.50 | 40–42% | [1][3] |\n| Earrings/Necklaces | $39.50–$49.50 | $19.50–$24.50 | 51–57% | [1][3] |\n| Socks | $19.50 | $8–$9.50 | 51–59% | [1][2][3] |\n| Bracelets | $59.50 | $29.50 | 50% | [1] |\n\nJ.Crew's strategy emphasizes frequent sales (e.g., 30% off sitewide, extra 15–20% on totals), positioning accessories as accessible rather than premium.[4][5][6][7] Quality is solid for the discounted range—leather belts and beaded jewelry use comparable materials to brands like Banana Republic or Zara at similar sale prices—but lacks luxury durability.[1][2][3] If buying full-price outside sales, they may feel higher-end relative to fast fashion, though rewards programs (free shipping, points) add value.[5]",
+        "citations": [
+          "https://factory.jcrew.com/plp/womens/features/new-arrivals?sub-categories=women-na-accessories",
+          "https://factory.jcrew.com/plp/mens/categories/accessories",
+          "https://factory.jcrew.com/plp/womens/categories/accessories",
+          "https://www.whowhatwear.com/fashion/shopping/chic-jcrew-sale-finds-january-2026",
+          "https://www.jcrew.com",
+          "https://www.jcrew.com/sale",
+          "https://factory.jcrew.com/sale",
+          "https://factory.jcrew.com/sale/women"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": true,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 8
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-5",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 1,
+      "timestamp": "2026-03-11T18:57:32.468Z",
+      "response": {
+        "text": "The perception of whether J.Crew is overpriced for accessories depends on several factors:\n\n1. **Quality**: J.Crew is known for offering high-quality materials and craftsmanship. Many customers find their accessories to be well-made, justifying a higher price point.\n\n2. **Style**: J.Crew often offers classic, versatile designs which can appeal to individuals willing to pay a premium for timeless pieces.\n\n3. **Market Comparisons**: Compared to fast fashion retailers, J.Crew may seem pricier. However, when compared to other mid-range or luxury brands, their prices might be more competitive.\n\n4. **Sales and Promotions**: J.Crew frequently offers sales and discounts, which can make their accessories more affordable.\n\n5. **Customer Perception**: Personal budget and fashion priorities greatly influence whether a person views their prices as overpriced.\n\nUltimately, it's subjective and depends on what you value in accessories.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-5",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 2,
+      "timestamp": "2026-03-11T18:57:36.112Z",
+      "response": {
+        "text": "Whether J.Crew is considered overpriced for accessories can depend on several factors, including personal budget, value perception, and comparison to similar brands. Here are a few points to consider:\n\n1. **Quality**: J.Crew is often noted for its quality materials and craftsmanship. Some consumers might find the price justified by the durability and design.\n\n2. **Brand Positioning**: J.Crew is a mid-range to premium brand, so its prices reflect its positioning in the market.\n\n3. **Comparison with Competitors**: Checking prices of similar accessories from competitors can help determine if J.Crew is overpriced. Brands like Banana Republic or Madewell might offer comparable pricing.\n\n4. **Sales and Discounts**: J.Crew frequently offers sales and promotions, which can make their accessories more affordable.\n\nUltimately, whether it's overpriced is subjective and depends on individual priorities regarding style, quality, and budget.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-5",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 3,
+      "timestamp": "2026-03-11T18:57:41.321Z",
+      "response": {
+        "text": "Whether J.Crew is considered overpriced for accessories can be subjective and depends on several factors:\n\n1. **Quality**: J.Crew is known for offering quality materials and craftsmanship, which can justify higher prices.\n\n2. **Brand Perception**: As a well-established brand, some customers are willing to pay a premium for the brand name and its associated status.\n\n3. **Market Comparison**: Compared to similar brands, J.Crew's pricing might be on par or slightly higher. Comparing it to luxury brands, it might be considered reasonably priced, while compared to fast fashion, it might seem expensive.\n\n4. **Sales and Promotions**: J.Crew often has sales events, making their accessories more affordable at certain times.\n\n5. **Consumer Priorities**: Personal preferences and budget will significantly influence whether the prices are perceived as too high.\n\nChecking specific items and comparing them to offerings from competitors can give a clearer picture of their value.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-5",
       "platform": "perplexity",
       "model": "sonar",
       "runId": 1,
-      "timestamp": "2026-02-03T14:55:20Z",
+      "timestamp": "2026-03-11T07:22:02.339Z",
       "response": {
-        "text": "For PMO directors seeking the best project portfolio management software in 2026:\n\n**Enterprise PPM Leaders:**\n\n1. **Planview** - The most comprehensive PPM solution with strategic portfolio management, resource optimization, and financial tracking. Best for large enterprises with mature PMOs. Custom pricing.\n\n2. **Smartsheet** - Flexible platform with strong portfolio dashboards and resource management. Good balance of power and usability. From $32/user/month for Business.\n\n3. **Wrike** - Strong work management with growing PPM capabilities. Resource management and cross-project dependencies. From $24.80/user/month.\n\n**Modern Alternatives:**\n\n4. **Asana Portfolios** - Beautiful portfolio views, strategic goal alignment. Part of Business plan ($24.99/user/month).\n\n5. **Monday.com Work OS** - Customizable portfolio dashboards. Strong for operational PMOs. Enterprise pricing for full PPM features.\n\n**Evaluation Criteria:**\n- Cross-project visibility\n- Resource capacity planning\n- Budget tracking and forecasting\n- Strategic alignment tools\n- Executive dashboards\n- What-if scenario planning\n\nPlanview leads for traditional enterprise PPM. Asana/Monday.com better for modern, collaborative approaches.",
+        "text": "**No, J.Crew is not overpriced for accessories, particularly at its Factory outlet where items frequently sell at 40-63% off original prices, making them competitively priced against similar mid-tier brands.** [1][2][3]\n\n### Pricing Examples from J.Crew Factory (Current Sales)\nJ.Crew Factory offers deep discounts on accessories like belts, jewelry, bags, and socks, with \"comparable values\" (original prices) marked down significantly:\n\n| Category | Item Example | Original Price | Sale Price | Discount |\n|----------|--------------|----------------|------------|----------|\n| Women's Belts | Woven leather belt | $79.50 | $29.50 | 63% off [1][3] |\n| Women's Bags | Straw tote bag | $118 | $69.50 | 41% off [1][3] |\n| Women's Jewelry | Pearl drop hoop earrings | $45 | $19.50 | 57% off [1] |\n| Men's Belts | Classic dress belt | $69.50 | $39.50 | 43% off [2] |\n| Men's Socks | Golf ball and tee socks | $19.50 | $9.50 | 51% off [2] |\n| Women's Bracelets | Tiny gold stretch bracelets (pack of 4) | $59.50 | $29.50 | 50% off [1] |\n\nThese prices position J.Crew accessories as affordable for everyday or trendy pieces, comparable to brands like Banana Republic or Gap on sale, though mainline J.Crew (jcrew.com) tends toward higher full prices without specified accessory details here.[5][8]\n\nFactory sales are ongoing (e.g., extra discounts with codes like NEWDROP), and items like socks often drop below $10, enhancing value for impulse buys.[1][2][3][7] Mainline sales also feature sitewide deals, such as 30% off.[6] Customer favorites (e.g., best sellers, top-rated) dominate these discounted sections, suggesting strong perceived quality-to-price ratio.[1][2][3]",
         "citations": [
-          "https://www.planview.com/resources/guide/ppm-101/",
-          "https://www.smartsheet.com/portfolio-management",
-          "https://www.wrike.com/project-management-guide/portfolio-management/",
-          "https://asana.com/uses/portfolio-management",
-          "https://www.gartner.com/reviews/market/project-portfolio-management"
+          "https://factory.jcrew.com/plp/womens/features/new-arrivals?sub-categories=women-na-accessories",
+          "https://factory.jcrew.com/plp/mens/categories/accessories",
+          "https://factory.jcrew.com/plp/womens/categories/accessories",
+          "https://www.whowhatwear.com/fashion/shopping/chic-jcrew-sale-finds-january-2026",
+          "https://www.jcrew.com",
+          "https://www.jcrew.com/sale",
+          "https://factory.jcrew.com/sale",
+          "https://www.jcrew.com/womens"
         ],
-        "searchResults": [
-          {
-            "title": "PPM 101 - Project Portfolio Management Guide | Planview",
-            "url": "https://www.planview.com/resources/guide/ppm-101/",
-            "snippet": "Learn the fundamentals of project portfolio management and how to implement PPM in your organization."
-          }
-        ]
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": true,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 8
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-5",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 2,
+      "timestamp": "2026-03-11T07:22:06.461Z",
+      "response": {
+        "text": "**No, J.Crew accessories are not overpriced, especially at J.Crew Factory where original prices of $19.50–$128 often drop 40–63% to sale prices like $8–$76.50, making them competitively affordable for mid-tier quality items like belts, earrings, socks, and bags.[1][2][3]**\n\nJ.Crew Factory listings show deep discounts on popular accessories:\n- **Belts**: Woven leather or slim stretch models originally $79.50 now $29.50 (63% off); classic dress belts $69.50 to $39.50 (43% off).[1][2][3]\n- **Earrings and jewelry**: Knot studs $39.50 to $19.50 (51% off); pearl drop hoops $45 to $19.50 (57% off); beaded bracelets packs $59.50 to $29.50 (50% off).[1][3]\n- **Bags and hats**: Straw totes $118–$128 to $69.50–$76.50 (40–41% off); straw bucket hats $79.50 to $29.50 (63% off).[1][3]\n- **Socks and scarves**: Ankle socks $19.50 to $8–$15.99; silky scarves $49.50 to $19.50 (61% off).[1][2][3]\n\nThese prices align with **mid-range fashion retail** (e.g., comparable to Gap or Old Navy premium lines but with better styling), and frequent sales like \"40% off everything\" or extra discounts on $100+ purchases enhance value.[3] Mainline J.Crew (jcrew.com) offers similar items at full price but with ongoing promotions, such as 30% off sitewide or rewards programs yielding 5–7.5% back.[5][6] Customer favorites like best-sellers and top-rated items indicate strong perceived quality relative to cost.[1][2][3]",
+        "citations": [
+          "https://factory.jcrew.com/plp/womens/features/new-arrivals?sub-categories=women-na-accessories",
+          "https://factory.jcrew.com/plp/mens/categories/accessories",
+          "https://factory.jcrew.com/plp/womens/categories/accessories",
+          "https://www.whowhatwear.com/fashion/shopping/chic-jcrew-sale-finds-january-2026",
+          "https://www.jcrew.com",
+          "https://www.jcrew.com/sale",
+          "https://factory.jcrew.com/sale",
+          "https://www.jcrew.com/womens"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": true,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 8
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-5",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 3,
+      "timestamp": "2026-03-11T07:22:10.404Z",
+      "response": {
+        "text": "**No, J.Crew is not overpriced for accessories, especially at J.Crew Factory where original prices of $19.50–$128 are frequently discounted 40–63% to sale prices of $8–$76.50, making items like belts, earrings, socks, and totes competitively affordable.**[1][2][3]\n\nJ.Crew Factory listings show deep discounts as standard: woven leather belts drop from $79.50 to $29.50 (63% off), pearl drop hoop earrings from $45 to $19.50 (57% off), and straw tote bags from $118 to $69.50 (41% off).[1][3] Men's accessories follow suit, with leather belts reduced from $69.50–$79.50 to $39.50–$47.50 (40–43% off) and socks from $19.50 to $9.50 (51% off).[2] Mainline J.Crew offers additional sitewide promotions like 30% off everything (48 hours only) and rewards programs for free shipping or cashback, further lowering effective costs.[5][7]\n\nThese prices align with mid-tier fashion retail for quality materials like leather, pearls, and woven straw, often comparable to or below brands like Banana Republic or Gap on sale. Fashion coverage highlights J.Crew accessories (e.g., suede bags, statement belts) as desirable new arrivals without noting premium pricing.[4][6] Factory sales reflect \"comparable value\" originals, suggesting perceived worth matches or exceeds cost during promotions, which are frequent.[1][2][3][8]",
+        "citations": [
+          "https://factory.jcrew.com/plp/womens/features/new-arrivals?sub-categories=women-na-accessories",
+          "https://factory.jcrew.com/plp/mens/categories/accessories",
+          "https://factory.jcrew.com/plp/womens/categories/accessories",
+          "https://www.whowhatwear.com/fashion/shopping/j-crew-new-arrivals-february-2026",
+          "https://www.jcrew.com",
+          "https://www.marieclaire.com/fashion/winter-fashion/jcrew-january-2026-new-collection/",
+          "https://www.jcrew.com/sale",
+          "https://factory.jcrew.com/sale"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": true,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 8
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-6",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 1,
+      "timestamp": "2026-03-11T18:58:47.328Z",
+      "response": {
+        "text": "Whether J.Crew is overpriced for accessories can depend on personal preferences and budget. Here are a few things to consider:\n\n1. **Quality**: J.Crew is known for offering good quality products, which can justify higher prices. Look at the materials and craftsmanship when assessing value.\n\n2. **Design**: J.Crew often focuses on classic, timeless designs. Some people may find the style worth the price due to its versatility and longevity.\n\n3. **Sales and Discounts**: J.Crew frequently has sales and promotions, which can make their pricing more competitive.\n\n4. **Comparison**: Compare with similar brands. Prices might vary in comparison with other mid-range or premium brands.\n\n5. **Personal Value**: Consider if the design and quality fit your style and needs. Personal satisfaction can make the price feel more justified.\n\nUltimately, whether J.Crew is overpriced for you will depend on how you value these aspects.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-6",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 2,
+      "timestamp": "2026-03-11T18:58:52.938Z",
+      "response": {
+        "text": "Whether J.Crew is considered overpriced for accessories depends on personal preferences and expectations regarding quality, brand value, and design.\n\n### Factors to Consider:\n\n1. **Quality**: J.Crew is known for providing good quality products, often using premium materials. \n\n2. **Design**: The styles are typically classic and versatile, which might justify a higher price for some.\n\n3. **Brand**: J.Crew is a recognized brand, so part of the cost includes the brand value.\n\n4. **Market Comparisons**: Comparing with other similar brands can provide perspective on pricing. J.Crew may be more expensive than budget retailers but comparable to other mid-range fashion brands.\n\n5. **Sales and Discounts**: J.Crew frequently offers sales and discounts, which can significantly reduce the price.\n\nIt might be helpful to check customer reviews and compare similar products from other brands to determine if the price feels justified for you.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-6",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 3,
+      "timestamp": "2026-03-11T18:58:56.756Z",
+      "response": {
+        "text": "Whether J.Crew is overpriced for accessories can depend on various factors:\n\n1. **Quality**: J.Crew is known for offering quality materials and craftsmanship, which can justify higher prices.\n\n2. **Brand Positioning**: J.Crew positions itself as a mid-to-high-end brand, which often comes with higher price points.\n\n3. **Comparison**: Compared to fast-fashion retailers, J.Crew might seem expensive, but it might be on par with other similarly positioned brands.\n\n4. **Sales and Discounts**: J.Crew frequently offers sales and discounts, which can make their accessories more affordable.\n\n5. **Customer Perception**: Some customers perceive J.Crew’s styles and quality to be worth the price, while others may not.\n\nIf you're considering a purchase, it might be useful to compare similar items from different retailers to assess value for money.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-6",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 1,
+      "timestamp": "2026-03-11T07:23:31.923Z",
+      "response": {
+        "text": "**J.Crew accessories, particularly at J.Crew Factory, are frequently discounted 40-63% off original prices, making them competitively priced rather than overpriced compared to their marked \"comparable values.\"** [1][2][3]\n\n### Pricing Examples from J.Crew Factory (Current Sales)\nJ.Crew Factory offers significant markdowns on accessories, positioning them as affordable options:\n\n**Women's Accessories:**\n- Knot stud earrings: Original $39.50, sale $19.50 (51% off)[1]\n- Straw tote bag: Original $118, sale $69.50 (41% off)[1][3]\n- Woven leather belt: Original $79.50, sale $29.50 (63% off)[1][3]\n- Tiny gold stretch bracelets (pack of four): Original $59.50, sale $29.50 (50% off)[1]\n- Pearl drop hoop earrings: Original $45, sale $19.50 (57% off)[1]\n\n**Men's Accessories:**\n- Classic dress belt: Original $69.50, sale $39.50 (43% off)[2]\n- Leather braided belt: Original $79.50, sale $47.50 (40% off)[2]\n- Socks (various styles): Original $19.50, sale $9.50 (51% off)[2]\n\nThese prices reflect ongoing promotions like \"40% off everything\" or extra discounts on $100+ purchases.[3]\n\n### Mainline J.Crew vs. Factory Comparison\n- **J.Crew Factory** targets value-conscious shoppers with lower original prices and deep discounts (e.g., belts from $69.50-$79.50 original to $29.50-$47.50 sale).[1][2][3]\n- **Mainline J.Crew** (jcrew.com) features full-price items like spring arrivals, but sales offer 30% off sitewide or more, though specific accessory prices aren't detailed here.[5][6]\nFactory items often match or undercut mid-tier brands like Banana Republic for similar quality straw bags, belts, and jewelry.\n\n### Value Perception\nFrequent sales (e.g., 51-63% off common) suggest originals may carry a premium for branding, but sale prices deliver strong value for casual, trendy pieces like beaded jewelry or leather belts.[1][2][3] No direct expert consensus labels them overpriced; instead, they're highlighted in fashion edits for chic deals.[4] Shop during promotions for the best rates.",
+        "citations": [
+          "https://factory.jcrew.com/plp/womens/features/new-arrivals?sub-categories=women-na-accessories",
+          "https://factory.jcrew.com/plp/mens/categories/accessories",
+          "https://factory.jcrew.com/plp/womens/categories/accessories",
+          "https://www.whowhatwear.com/fashion/shopping/chic-jcrew-sale-finds-january-2026",
+          "https://www.jcrew.com",
+          "https://www.jcrew.com/sale",
+          "https://factory.jcrew.com/sale",
+          "https://www.jcrew.com/womens"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": true,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 8
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-6",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 2,
+      "timestamp": "2026-03-11T07:23:36.654Z",
+      "response": {
+        "text": "**No, J.Crew accessories, particularly at J.Crew Factory, are not overpriced and often provide strong value through deep discounts from comparable original prices.**[1][2][3]\n\nJ.Crew Factory lists many accessories at 40-63% off original prices, making them competitively priced for mid-tier fashion items. Examples include:\n\n- **Women's items**: Woven leather belts ($79.50 original, now $29.50, 63% off); pearl drop hoop earrings ($45 original, now $19.50, 57% off); straw tote bags ($118 original, now $69.50, 41% off).[1][3]\n- **Men's items**: Leather roller belts ($69.50 original, now $39.50, 43% off); leather braided belts ($79.50 original, now $47.50, 40% off); socks ($19.50 original, now $9.50, 51% off).[2]\n\nThese \"comparable values\" suggest perceived worth aligns with higher-end retail, but sales bring prices down to affordable levels (e.g., earrings under $20, belts under $50).[1][2][3] Mainline J.Crew offers additional promotions like 30% off sitewide or 25% off select items, further enhancing value for full-price accessories that may start higher before discounts.[4][5][6]\n\nCompared to fast-fashion brands (e.g., H&M, Zara), J.Crew's materials like leather belts and pearl jewelry offer better perceived quality at similar or lower sale prices, though luxury alternatives (e.g., Gucci, Kate Spade) command premiums for branding. Frequent sales make it a solid choice for trendy, durable accessories without overpaying.[1][2][3]",
+        "citations": [
+          "https://factory.jcrew.com/plp/womens/features/new-arrivals?sub-categories=women-na-accessories",
+          "https://factory.jcrew.com/plp/mens/categories/accessories",
+          "https://factory.jcrew.com/plp/womens/categories/accessories",
+          "https://www.whowhatwear.com/fashion/shopping/chic-jcrew-sale-finds-january-2026",
+          "https://www.jcrew.com",
+          "https://www.jcrew.com/sale",
+          "https://factory.jcrew.com/sale",
+          "https://factory.jcrew.com/sale/women"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": true,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 8
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-6",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 3,
+      "timestamp": "2026-03-11T07:23:42.252Z",
+      "response": {
+        "text": "**No, J.Crew is not overpriced for accessories, especially at J.Crew Factory where items frequently sell at 40-63% off original prices, making them competitively priced against comparable mid-tier brands.**[1][2][3]\n\nJ.Crew Factory offers belts originally priced $69.50-$79.50 now at $29.50-$47.50 (40-63% off), socks at $19.50 now $8-$9.50 (51-59% off), bags at $98-$128 now $56.50-$76.50 (40-42% off), and hats/scarves at $49.50-$79.50 now $19.50-$29.50 (61-63% off).[1][2] Girls' accessories like headbands, earrings, and necklaces originally $29.50-$34.50 are now $17-$19.50 (41-51% off).[3] These \"comparable value\" prices align with mid-range brands like Banana Republic or Gap, but discounts bring them under $50 for most items, enhanced by promotions like extra 20% off $125+.[1][4]\n\nMainline J.Crew (jcrew.com) carries similar accessories at full price, with frequent sitewide sales up to 30% off, though Factory provides deeper, ongoing deals on overstock styles.[6][7][8] Fashion outlets like Who What Wear highlight J.Crew sales as \"incredibly chic\" for trendy pieces, supporting value during promotions.[5]\n\n| Category | Original Price Range | Sale Price Range | Discount % | Examples[1][2][3] |\n|----------|----------------------|------------------|------------|-------------------|\n| **Belts** | $69.50-$79.50 | $29.50-$47.50 | 40-63% | Dress belt ($39.50), woven belt ($29.50) |\n| **Socks** | $19.50 | $8-$9.50 | 51-59% | Trouser socks ($9.50), bootie socks ($8) |\n| **Bags/Hats** | $79.50-$128 | $29.50-$76.50 | 40-63% | Straw tote ($69.50), bucket hat ($29.50) |\n| **Jewelry/Scarves** | $34.50-$49.50 | $17-$39.99 | 19-51% | Earrings ($39.99), silky scarf ($19.50) |\n\nPrices reflect current sales as of search data; full-price items may feel premium but are rarely paid without discounts.[1][2][6]",
+        "citations": [
+          "https://factory.jcrew.com/plp/mens/categories/accessories",
+          "https://factory.jcrew.com/plp/womens/categories/accessories",
+          "https://factory.jcrew.com/plp/girls/categories/accessories/jewelry-and-accessories",
+          "https://factory.jcrew.com",
+          "https://www.whowhatwear.com/fashion/shopping/chic-jcrew-sale-finds-january-2026",
+          "https://www.jcrew.com",
+          "https://www.jcrew.com/sale",
+          "https://factory.jcrew.com/sale"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": true,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 8
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-7",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 1,
+      "timestamp": "2026-03-11T18:59:16.428Z",
+      "response": {
+        "text": "There have been mixed opinions regarding the quality of J.Crew accessories over the years. Some customers feel that the quality has declined, noting issues with materials or durability. Others remain satisfied, appreciating the style and design. It can vary depending on the specific item and individual expectations.\n\nFor up-to-date reviews or personal experiences, checking online forums or recent customer reviews might provide more insights.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-7",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 2,
+      "timestamp": "2026-03-11T18:59:21.992Z",
+      "response": {
+        "text": "J.Crew's reputation for quality can vary over time and depending on specific products. While some customers feel that the brand's quality, especially for accessories, may have declined, experiences can be subjective and depend on individual preferences or expectations.\n\nFactors that might influence perceptions of quality include:\n\n1. **Changes in Materials**: A shift to different or lower-cost materials may affect the perceived durability or appeal of accessories.\n   \n2. **Manufacturing Processes**: Alterations in how products are made can impact their quality, depending on where items are produced and the standards in place.\n\n3. **Price Adjustments**: Changes in pricing strategies might lead consumers to expect more or less quality.\n\n4. **Consumer Expectations**: Over time, customer expectations can shift, resulting in different perceptions of quality.\n\nFor the most up-to-date and specific information, checking recent customer reviews or forums where users discuss their experiences with J.Crew accessories could provide more insight.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-7",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 3,
+      "timestamp": "2026-03-11T18:59:24.382Z",
+      "response": {
+        "text": "There have been mixed reviews about J.Crew's accessories over the years. Some customers have praised their design and style, while others have noted concerns about quality. It's common for perceptions of quality to vary based on personal experience, specific products, and changes in company manufacturing processes.\n\nFor the most current impressions, it might be helpful to look at recent customer reviews and feedback on specific accessory items you're interested in.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-7",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 1,
+      "timestamp": "2026-03-11T07:24:06.641Z",
+      "response": {
+        "text": "**No direct evidence confirms a decline in J.Crew's accessory quality specifically, as available sources focus primarily on apparel like garments, sweaters, shirts, and jeans.**[1][2][3][4][5][6]\n\nCustomer complaints from 2015 highlight a **sharp drop in clothing quality**, including ripping seams, fraying hems, cheap translucent fabrics, and poor construction, often paired with rising prices.[1][2] For instance, blouses frayed at sleeve seams due to weak thread and fabric, while cashmere and wools felt artificial.[1] Videos from later periods (likely post-2020) criticize sloppy embroidery on tops, sheer linens, haphazard seams, low-quality zippers, and stamped buttons on jeans and shorts, suggesting ongoing cost-cutting in manufacturing.[3][6]\n\n**Accessories receive minimal mention**: One 2015 example critiques a \"flower necklace\" as overly trendy rather than a simple basic, but without quality details like materials or durability.[2] Broader reports note slipping sales in women's **apparel and accessories** alongside sizing and quality issues, without isolating accessories.[4]\n\nJ.Crew's challenges stem from identity shifts, heavy discounting (training shoppers to avoid full price), and competition from fast fashion, eroding its reputation for premium basics.[2][4][5] Sources are dated (mostly 2015 or YouTube analyses up to ~2023), so recent accessory quality (post-2023) remains unaddressed; no data contradicts a potential ongoing decline in line with apparel trends.[1][2][3][6]",
+        "citations": [
+          "https://caphillstyle.com/capitol/2015/03/24/why-j-crew-is-faltering-and-how-it-can-recover.html",
+          "https://www.businessinsider.com/whats-wrong-with-j-crew-2015-7",
+          "https://www.youtube.com/watch?v=BBFXe6DrsXU",
+          "https://www.jezebel.com/the-end-of-j-crew-was-inevitable-1843242225",
+          "https://www.youtube.com/watch?v=G6e3hHylm6I",
+          "https://www.youtube.com/watch?v=QUq8Ubjn63M"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 6
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-7",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 2,
+      "timestamp": "2026-03-11T07:24:11.336Z",
+      "response": {
+        "text": "**No direct evidence from available sources confirms a decline in quality specifically for J.Crew accessories.**[1][2][3][5]\n\nMost discussions focus on apparel, where customers and analysts widely report deterioration starting around 2009-2015, including fraying seams, thin/translucent fabrics, poor cashmere prone to pilling, and declining leather quality in boots (noted as \"cheap vinyl\" compared to prior years).[1][2][3] Fabrics once described as luxurious (e.g., Super 120s wools, silks) became rough or artificial, with issues like hems falling out after one wash or wear.[1][2]\n\nAccessories receive minimal mention:\n- One example criticizes a \"flower necklace\" as overly trendy and not aligning with J.Crew's classic basics, but without quality complaints like material durability.[3]\n- Broader critiques tie quality drops to cost-cutting across products, including sloppy embroidery, haphazard construction, cheap zippers/buttons, and sheer linens in clothing, suggesting similar manufacturing shifts might affect accessories indirectly.[4][7]\n\nRecent videos (post-2020) highlight ongoing issues like subpar hardware and fabrics in related brands (e.g., Madewell), but not accessories explicitly.[4][7] Complaints often pair declining quality with rising prices and frequent sales, eroding perceived value.[1][2][3][6] No sources post-2015 provide updated data on accessories, limiting confirmation of ongoing trends.",
+        "citations": [
+          "https://caphillstyle.com/capitol/2015/03/24/why-j-crew-is-faltering-and-how-it-can-recover.html",
+          "http://jcrewaficionada.blogspot.com/2009/01/jcrew-quality-up-or-down-and-why.html",
+          "https://www.businessinsider.com/whats-wrong-with-j-crew-2015-7",
+          "https://www.youtube.com/watch?v=BBFXe6DrsXU",
+          "https://www.jezebel.com/the-end-of-j-crew-was-inevitable-1843242225",
+          "https://www.youtube.com/watch?v=G6e3hHylm6I",
+          "https://www.youtube.com/watch?v=QUq8Ubjn63M"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 7
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-7",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 3,
+      "timestamp": "2026-03-11T07:24:15.516Z",
+      "response": {
+        "text": "Based on the available search results, there is **limited direct evidence specifically about J.Crew's accessory quality decline**. However, the sources do indicate broader quality issues across J.Crew's product lines.\n\nThe search results extensively document quality deterioration in J.Crew's clothing, including garments that \"rip or fray on the first wear\" and fabrics that became \"rough or artificial.\"[1] One source mentions that J.Crew's \"signature traits\" of \"quality, craftsmanship, and clean lines\" were absent from recent seasons.[2]\n\nRegarding accessories specifically, there is only one tangential reference: a discussion of a **flower necklace** that departed from J.Crew's traditional style of \"great, simple basics,\" though this critique focuses more on design direction than quality.[2]\n\nThe sources do not provide comprehensive information about whether accessories experienced the same quality decline as clothing. To fully answer your question about accessory quality specifically, you would need additional sources that directly address J.Crew's handbags, jewelry, belts, or other accessory categories. The available evidence suggests J.Crew faced systemic quality problems across its operations, but specific accessory quality issues are not documented in these results.",
+        "citations": [
+          "https://caphillstyle.com/capitol/2015/03/24/why-j-crew-is-faltering-and-how-it-can-recover.html",
+          "https://www.businessinsider.com/whats-wrong-with-j-crew-2015-7",
+          "https://www.youtube.com/watch?v=BBFXe6DrsXU",
+          "https://www.jezebel.com/the-end-of-j-crew-was-inevitable-1843242225",
+          "https://www.youtube.com/watch?v=G6e3hHylm6I",
+          "https://www.youtube.com/watch?v=QUq8Ubjn63M"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 6
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-8",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 1,
+      "timestamp": "2026-03-11T19:07:08.607Z",
+      "response": {
+        "text": "There have been mixed reviews regarding J.Crew's accessories quality. Some long-time customers have expressed concerns about a decline over the years, noting changes in materials and construction. However, experiences can vary widely based on individual products and personal preferences.\n\nFor the most current opinions or specific product reviews, it's a good idea to check recent customer reviews on J.Crew's website or other retail platforms.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-8",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 2,
+      "timestamp": "2026-03-11T19:07:12.032Z",
+      "response": {
+        "text": "There have been mixed reviews over the years about the quality of J.Crew's accessories. Some customers have reported a decline in quality, mentioning issues like materials not holding up well, while others still find certain items to be well-made. It's worth noting that perceptions of quality can be subjective and depend on personal expectations and experiences.\n\nIf you're considering purchasing from J.Crew, it might be helpful to check recent reviews of specific products you're interested in to get an idea of current customer satisfaction.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-8",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 3,
+      "timestamp": "2026-03-11T19:07:14.671Z",
+      "response": {
+        "text": "There have been mixed opinions about J.Crew's quality over the years, including their accessories. Some customers have noted a decline in quality, citing issues like materials and construction not being as robust as in the past. Others continue to appreciate the brand for its style and design.\n\nIf you’re considering purchasing from J.Crew, it might be helpful to read recent customer reviews or forums to get a sense of current opinions.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-8",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 1,
+      "timestamp": "2026-03-11T07:27:29.928Z",
+      "response": {
+        "text": "**No direct evidence from available sources confirms a decline in quality specifically for J.Crew's accessories.**[1][2][4]\n\nMost discussions focus on apparel issues from around 2015 onward, such as garments ripping on first wear, fraying hems, cheap translucent fabrics, and sloppy construction like uneven embroidery or sheer linens in tops and pants.[1][2][3][6] One accessory is mentioned—a flower necklace criticized as overly trendy rather than a simple basic, but without quality complaints like poor materials or durability.[2] Broader brand critiques note slipping sales for women's apparel and accessories tied to sizing and quality problems, though specifics remain apparel-heavy.[4]\n\nRecent YouTube reviews (likely post-2020) highlight ongoing cost-cutting in J.Crew clothing, like low-end zippers and basic finishes, contrasting with sister brand Madewell, but skip accessories.[3][6] No sources provide accessory-focused quality data, such as for bags, belts, or jewelry, limiting conclusions to inference from general trends.[1][2][3][4][5][6] Customer shifts to brands like Everlane for durable mid-price items suggest perceived drops across categories, but this is unverified for accessories.[1]",
+        "citations": [
+          "https://caphillstyle.com/capitol/2015/03/24/why-j-crew-is-faltering-and-how-it-can-recover.html",
+          "https://www.businessinsider.com/whats-wrong-with-j-crew-2015-7",
+          "https://www.youtube.com/watch?v=BBFXe6DrsXU",
+          "https://www.jezebel.com/the-end-of-j-crew-was-inevitable-1843242225",
+          "https://www.youtube.com/watch?v=G6e3hHylm6I",
+          "https://www.youtube.com/watch?v=QUq8Ubjn63M"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 6
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-8",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 2,
+      "timestamp": "2026-03-11T07:27:33.795Z",
+      "response": {
+        "text": "**No direct evidence confirms a decline in quality specifically for J.Crew's accessories, as search results focus primarily on apparel issues like ripping garments, fraying seams, cheap fabrics, and poor construction in clothing items such as blouses, sweaters, shirts, and jeans.[1][2][3][5][6]**\n\nOne accessory example—a flower necklace—is critiqued as overly trendy rather than a \"great, simple basic,\" but this reflects style preferences, not quality degradation.[2] Broader complaints from 2015 onward highlight J.Crew's quality drop across clothing (e.g., translucent fabrics, sloppy embroidery, haphazard construction, low-end zippers and buttons), alongside rising prices and frequent sales that devalue perceived worth.[1][2][3][4][5][6] These issues contributed to sales declines and customer alienation, with no mentions of recent improvements or accessory-specific data up to 2026.[4][5]\n\nCustomer anecdotes and reviews consistently note shifts to alternatives like eBay for classics or brands like Everlane for better quality at mid-price points.[1][2] Videos examining J.Crew vs. Factory/Madewell lines reinforce corner-cutting in manufacturing, but again, emphasize clothing over accessories.[3][6] Without targeted accessory reviews in results, any quality concerns there remain inferred from overall brand trends rather than proven.[1][2]",
+        "citations": [
+          "https://caphillstyle.com/capitol/2015/03/24/why-j-crew-is-faltering-and-how-it-can-recover.html",
+          "https://www.businessinsider.com/whats-wrong-with-j-crew-2015-7",
+          "https://www.youtube.com/watch?v=BBFXe6DrsXU",
+          "https://www.jezebel.com/the-end-of-j-crew-was-inevitable-1843242225",
+          "https://www.youtube.com/watch?v=G6e3hHylm6I",
+          "https://www.youtube.com/watch?v=QUq8Ubjn63M"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 6
+      }
+    },
+    {
+      "promptId": "accessories-adversarial-8",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 3,
+      "timestamp": "2026-03-11T07:27:39.249Z",
+      "response": {
+        "text": "Based on the available search results, there is **limited direct evidence** about J.Crew's quality decline specifically for accessories. The search results primarily focus on clothing quality issues rather than accessories.\n\nThe only mention of accessories appears in one source, which states that \"Sales for women's apparel and accessories were slipping and customers complained about J. Crew's sizing and quality issues,\"[4] but this doesn't provide specific details about accessory quality deterioration.\n\nThe bulk of documented quality complaints concern **clothing items**:[1][2][3] garments ripping or fraying on first wear, hems falling out, cheap fabrics becoming translucent, frayed seams, and sloppy embroidery work. Additionally, customers reported that while prices rose significantly, the quality of materials declined—fabrics that were once luxurious (Super 120s wools, cashmeres, silks) became rough or artificial.[1]\n\nOne source does mention \"a flower necklace\" as an example of J.Crew moving away from its signature \"great, simple basics,\"[2] but this appears to be a style critique rather than a quality assessment.\n\nTo fully answer whether accessories specifically experienced quality decline, you would need additional sources that directly evaluate J.Crew accessories rather than relying on these clothing-focused accounts.",
+        "citations": [
+          "https://caphillstyle.com/capitol/2015/03/24/why-j-crew-is-faltering-and-how-it-can-recover.html",
+          "https://www.businessinsider.com/whats-wrong-with-j-crew-2015-7",
+          "https://www.youtube.com/watch?v=BBFXe6DrsXU",
+          "https://www.jezebel.com/the-end-of-j-crew-was-inevitable-1843242225",
+          "https://www.youtube.com/watch?v=G6e3hHylm6I",
+          "https://www.youtube.com/watch?v=QUq8Ubjn63M"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 6
+      }
+    },
+    {
+      "promptId": "accessories-adversarial",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 1,
+      "timestamp": "2026-03-11T18:50:47.627Z",
+      "response": {
+        "text": "Whether J.Crew is considered overpriced for accessories can depend on several factors, including personal budget, quality expectations, and style preferences. Here are some points to consider:\n\n1. **Quality and Material**: J.Crew is known for offering accessories made from quality materials, which can justify higher prices for some consumers.\n\n2. **Design and Style**: The brand often features classic and trendy designs. If these align with your taste, you might find the cost worthwhile.\n\n3. **Brand Perception**: J.Crew is seen as a mid-to-high-end brand, and some people are willing to pay more for the brand name and its associated status.\n\n4. **Comparison with Competitors**: Compare prices and quality with similar brands to see if J.Crew offers a reasonable deal.\n\n5. **Sales and Discounts**: J.Crew often has sales and discounts, which can make their accessories more affordable.\n\nIf you prioritize quality and brand name, you might find J.Crew's pricing justified. Otherwise, it might seem expensive compared to other options.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 2,
+      "timestamp": "2026-03-11T18:50:53.312Z",
+      "response": {
+        "text": "Determining whether J.Crew is overpriced for accessories depends on several factors, including:\n\n1. **Quality**: Consider the materials used and craftsmanship. J.Crew generally positions itself as a mid-range brand, offering relatively good quality for the price.\n\n2. **Design**: Unique or trendy design elements may justify higher prices for some consumers.\n\n3. **Brand Value**: Brand reputation and customer service can add perceived value.\n\n4. **Comparison**: Compare J.Crew's prices with similar retailers. Brands like Banana Republic or Madewell might offer a good comparison.\n\n5. **Personal Budget**: What may be overpriced for one person might be acceptable for another based on individual budget and taste.\n\nIf you’re considering a purchase, looking for customer reviews or sales might help you decide if the price feels right for you.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "accessories-adversarial",
+      "platform": "chatgpt_search",
+      "model": "gpt-4o",
+      "runId": 3,
+      "timestamp": "2026-03-11T18:50:59.303Z",
+      "response": {
+        "text": "Whether J.Crew accessories are considered overpriced can vary depending on personal preferences and budget. Here are a few factors to consider:\n\n1. **Quality**: J.Crew is known for its quality materials and craftsmanship. If the accessories are durable and well-made, some might find the prices justified.\n\n2. **Design**: Unique or classic designs can add perceived value. If the designs align with your style, the price might seem reasonable.\n\n3. **Brand Perception**: As a mid-to-upscale brand, J.Crew's pricing can reflect its brand positioning. Some consumers are willing to pay a premium for brand reputation.\n\n4. **Comparisons**: Comparing similar items from other retailers can help determine if J.Crew is more expensive than comparable brands.\n\n5. **Sales and Discounts**: J.Crew often has sales or offers discounts, which can significantly affect whether their accessories seem overpriced.\n\nUltimately, it comes down to personal value perception. If you prioritize quality, design, and brand, the prices may seem justified to you.",
+        "citations": [],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 0
+      }
+    },
+    {
+      "promptId": "business-casual-informational",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 1,
+      "timestamp": "2026-03-02T19:03:28.370Z",
+      "response": {
+        "text": "**Business casual is a professional dress code that blends traditional business attire with relaxed elements, striking a balance between formal suits and overly casual clothing like t-shirts, jeans, sweatpants, or sneakers.** It allows for comfort and personal style while maintaining a polished office-appropriate look, though interpretations can vary by company, industry, or region—always check your workplace culture.[1][2][3][4][5]\n\n### Key Pieces for a Business Casual Wardrobe\nFocus on versatile, neutral-colored staples (e.g., black, navy, gray, khaki, beige) in quality fabrics that mix and match easily. Avoid anything too revealing, distressed, or athletic. Here's a curated list of essentials drawn from common recommendations:\n\n#### For All Genders\n- **Slacks, chinos, or khakis**: In black, navy, gray, or tan; opt for 2-3 pairs.[1][2][3][5]\n- **Button-down shirts, blouses, or polos**: Long-sleeve in white, light blue, or subtle patterns; 3-4 pieces.[1][2][3][5]\n- **Blazers, cardigans, or sport coats**: Neutral colors for layering, especially in cooler weather; 1-2 items.[1][2][3][4]\n- **Sweaters or henleys**: For a relaxed layer over shirts.[2][3]\n- **Closed-toe shoes**: Loafers, Oxfords, pumps, flats, or boots in black/brown leather; avoid sneakers or sandals.[1][2][5][6]\n- **Accessories**: Simple belts (black/brown), scarves, minimal jewelry, or a smart watch.[1][2][6]\n\n#### Women-Specific Additions\n- **Knee-length skirts or dresses**: 2-4 versatile pieces, including maxi styles.[1][2][3]\n- **Additional blouses**: 3-4 for variety and layering.[1]\n\n#### Men-Specific Additions\n- **Dark jeans (no rips)**: As a casual alternative in some settings.[2][5][6]\n- **Belts and optional ties**: Matching black/brown belts; ties in solid colors if needed.[1][6]\n\nBuild a core wardrobe with 7-14 outfits' worth of these items for rotation. For example, pair chinos with a button-down and blazer, or a blouse with slacks and loafers. In creative industries, add subtle patterns or color; in conservative ones, stick to solids.[2][3][6] If unsure, observe colleagues or err toward slightly more formal.[3]",
+        "citations": [
+          "https://www.phc.edu/learnphc/what-is-business-casual-anyway",
+          "https://www.indeed.com/career-advice/starting-new-job/guide-to-business-casual-attire",
+          "https://careernetwork.msu.edu/blog/2023/08/11/what-does-business-casual-really-mean-in-2023/",
+          "https://suitshop.com/blogs/news/business-casual-vs-business-professional-attire/",
+          "https://crestline.com/c/casual-office-attire-trend",
+          "https://theartefact.com/business-casual-vs-smart-casual/",
+          "https://www.youtube.com/watch?v=NCx5fIKNwIw"
+        ],
+        "searchResults": []
       },
       "analysis": {
         "clientCited": false,
         "clientMentionedInText": false,
-        "competitorsCited": ["Asana", "Monday.com"],
+        "competitorsCited": [],
+        "totalCitations": 7
+      }
+    },
+    {
+      "promptId": "business-casual-informational",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 2,
+      "timestamp": "2026-03-02T19:03:35.958Z",
+      "response": {
+        "text": "**Business casual is a dress code that blends traditional business wear with relaxed, professional elements, offering a polished yet comfortable look suitable for many office environments—less formal than suits but more professional than jeans and t-shirts.** It avoids overly casual items like t-shirts, sweatpants, ripped jeans, sneakers, or sandals, while emphasizing neat, versatile pieces in neutral colors such as black, navy, gray, khaki, or beige.[1][2][3][4][5]\n\n### Key Pieces for a Business Casual Wardrobe\nBuild a versatile wardrobe with interchangeable basics that prioritize fit, quality fabrics, and subtlety. Focus on neutrals for mix-and-match options, adding layers for weather or formality. Guidelines vary slightly by gender, industry, or company culture (e.g., creative agencies may allow more color), so observe workplace examples on LinkedIn or company sites.[2][3]\n\n#### For Women\n- **Dress pants or slacks** (black, navy, khaki; 2 pairs).[1][2][3]\n- **Knee-length skirts** or **khakis/chinos**.[2][3]\n- **Blouses** (3-4), **button-down shirts**, or **sweaters** for layering.[1][2][3]\n- **Dresses** (knee-length or maxi; 3-4).[1][2]\n- **Cardigans, blazers**, or jackets (2 for layering).[1][2][3]\n- **Closed-toe shoes** like loafers, pumps, flats, or boots.[2]\n\n#### For Men\n- **Slacks, chinos, or khakis** (black, navy, khaki; 2-3 pairs).[1][2][3][5]\n- **Dark jeans** (no holes or rips, if allowed).[2][5][6]\n- **Button-down shirts** (long-sleeve in white, light/dark blue; 3-6).[1][2][3][5]\n- **Polo shirts**, henleys, or sweaters.[2][5]\n- **Blazers or sport coats** (matching pants in black/navy).[1][2][5]\n- **Leather belts** (black and brown) and **dress shoes** (loafers, Oxfords in black/brown).[1][2][6]\n- **Optional ties** (solid colors like black, navy, red).[1]\n\n#### Unisex Essentials and Tips\n- **Accessories**: Simple scarves, jewelry, or watches—keep minimal.[2][6]\n- **Outerwear**: Sweaters, vests, or a thick coat for colder weather.[1][2]\n- Aim for 1-2 weeks of outfits initially; err toward formality if unsure.[1][3]\n- Footwear: Always closed-toe and polished; no sneakers.[1][2][5]",
+        "citations": [
+          "https://www.phc.edu/learnphc/what-is-business-casual-anyway",
+          "https://www.indeed.com/career-advice/starting-new-job/guide-to-business-casual-attire",
+          "https://careernetwork.msu.edu/blog/2023/08/11/what-does-business-casual-really-mean-in-2023/",
+          "https://suitshop.com/blogs/news/business-casual-vs-business-professional-attire/",
+          "https://crestline.com/c/casual-office-attire-trend",
+          "https://theartefact.com/business-casual-vs-smart-casual/",
+          "https://www.youtube.com/watch?v=NCx5fIKNwIw"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": false,
+        "competitorsCited": [],
+        "totalCitations": 7
+      }
+    },
+    {
+      "promptId": "business-casual-informational",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 3,
+      "timestamp": "2026-03-02T19:03:40.740Z",
+      "response": {
+        "text": "**Business casual is a dress code that blends traditional business wear with relaxed, professional elements, allowing comfort and personal style while maintaining a polished office-appropriate appearance.** It sits between formal business professional attire (like suits and ties) and everyday casual wear, excluding items such as t-shirts, sweatpants, jeans (unless dark and hole-free), casual sandals, or sneakers.[1][2][3][5]\n\n### Key Pieces for a Business Casual Wardrobe\nBuild a versatile wardrobe around neutral colors (black, navy, gray, khaki, beige) with subtle patterns. Focus on mix-and-match staples for flexibility across seasons and occasions. Common recommendations include:\n\n#### Bottoms\n- Dress slacks, chinos, or khakis in black, navy, gray, or khaki/tan.[1][2][3]\n- Knee-length skirts or longer skirts.[2][3]\n- Dark jeans without holes (more common in relaxed offices).[2][6]\n\n#### Tops\n- Button-down shirts, blouses, or polo shirts in solids or subtle patterns (e.g., white, light blue, dark blue).[1][2][3]\n- Sweaters, henleys, or shirts for layering.[2][4]\n\n#### Outerwear and Layers\n- Blazers, sport coats, or cardigans (optional but ideal for polish, especially in cooler weather).[2][3][4][7]\n- Suit coats matching pants in black or navy.[1]\n\n#### Dresses and One-Piece Options\n- Knee-length or maxi dresses (3-4 for variety).[1][2][3]\n\n#### Footwear and Accessories\n- Closed-toed shoes like loafers, Oxfords, pumps, flats, or boots in black or brown.[1][2]\n- Belts (black and brown), simple jewelry, scarves.[1][2]\n\n#### Sample Starter Wardrobe (Men-Focused from Sources)\n- 2-3 pairs dress pants (black, navy, khaki).[1]\n- Long-sleeved button-down shirts (white, blue, etc.).[1]\n- 1-2 jackets/blazers.[1]\n- Dress shoes (black, brown) and belts.[1]\n\nWorkplace variations exist—tech startups may allow dark jeans daily, while conservative offices prefer slacks; check company photos on LinkedIn or websites.[3][4] Always prioritize fitted, clean, non-sheer clothing.[1]",
+        "citations": [
+          "https://www.phc.edu/learnphc/what-is-business-casual-anyway",
+          "https://www.indeed.com/career-advice/starting-new-job/guide-to-business-casual-attire",
+          "https://careernetwork.msu.edu/blog/2023/08/11/what-does-business-casual-really-mean-in-2023/",
+          "https://www.businessnewsdaily.com/15346-business-casual-attire.html",
+          "https://suitshop.com/blogs/news/business-casual-vs-business-professional-attire/",
+          "https://crestline.com/c/casual-office-attire-trend",
+          "https://theartefact.com/business-casual-vs-smart-casual/"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": false,
+        "competitorsCited": [],
+        "totalCitations": 7
+      }
+    },
+    {
+      "promptId": "business-casual-commercial",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 1,
+      "timestamp": "2026-03-02T19:03:46.826Z",
+      "response": {
+        "text": "**Top brands for business casual clothing in 2026 include Everlane, Uniqlo, Mizzen+Main, J.Crew, and Sézane, praised across sources for their versatile office-ready pieces like shirts, chinos, blazers, and trousers that balance comfort, style, and value.** These recommendations draw from expert reviews emphasizing performance fabrics, sustainability, and modern fits suitable for both men and women in professional settings[1][2][3].\n\n### For Men\n- **Mizzen+Main**: Specializes in performance dress shirts, stretch pants, and blazers with tailored comfort for office layering; ideal for formal-to-casual transitions[1].\n- **Uniqlo**: Offers affordable, crisp Oxford shirts, chinos, blazers, and T-shirts with versatile, high-value basics for weekly wardrobes[1].\n- **Everlane**: Provides sustainable Oxford shirting, slim chinos, and blazers via transparent, eco-friendly production at fair prices[1][4].\n- **YChroma Apparel** (launched 2023): Delivers vibrant, modern-classic pieces for confident wardrobe updates[1].\n- **Buck Mason**: Focuses on durable, made-in-USA tees, jeans, and outerwear for timeless, minimalist business casual[4].\n\n### For Women\n- **Everlane**: Stocks well-made cotton basics, tees, skirts, jeans, trousers, and blouses for casual offices to formal meetings (XXS–XXL, $–$$)[2][3][5].\n- **J.Crew**: Features trim blazers, smart trousers, roll-neck sweaters, and office dresses with modern updates (e.g., Kaya Pant at $148)[2].\n- **Sézane**: Excels in blouses, skirts, work dresses, jackets, and cardigans for stylish, sustainable office-to-weekend versatility (US 2–14, $$$–$$$$)[2][3].\n- **Quince**: Affordable sustainable options like washable silk, organic cotton twill, and cashmere capsules for office or remote work (XS–XL, $–$$)[3].\n- **Banana Republic**: Budget-friendly corporate chic with corset blazers and midi dresses for polished looks[2].\n\n### Key Comparisons\n| Brand       | Best For                  | Price Range | Sustainability Focus | Gender Focus |\n|-------------|---------------------------|-------------|----------------------|--------------|\n| **Everlane** | Versatile staples, capsules | $–$$$     | High (ethical sourcing)[1][2][3][4][5] | Both        |\n| **Uniqlo**  | Value-driven basics      | $          | Moderate[1]         | Men         |\n| **Mizzen+Main** | Performance fabrics   | $$–$$$     | Performance-oriented[1] | Men     |\n| **J.Crew**  | Modern blazers/trousers  | $$         | Established quality[2] | Women     |\n| **Sézane**  | Chic blouses/dresses     | $$$–$$$$   | Eco-friendly production[2][3] | Women  |\n| **Quince**  | Affordable silk/cashmere | $–$$       | Direct-from-factory[3] | Women     |\n\n**Everlane stands out as the most versatile across genders and sources for its ethical, affordable workwear that builds capsule wardrobes.** For premium or specialized needs, consider Mizzen+Main (men’s performance) or Sézane (women’s Parisian flair). Brands like Argent and Kallmeyer suit modern suiting, while Buck Mason offers USA-made durability[2][4]. Prioritize fit trials and sales (e.g., Abercrombie for relaxed button-downs) for 2026 trends favoring sustainable, comfortable hybrids[6].",
+        "citations": [
+          "https://www.businessinsider.com/guides/style/best-mens-business-casual-work-clothes",
+          "https://www.harpersbazaar.com/fashion/trends/a42662062/best-work-clothes-stores/",
+          "https://www.thegoodtrade.com/features/ethical-workwear-for-women/",
+          "https://lafamiliaforever.com/blogs/news/clothing-company-in-usa",
+          "https://trendia.co/blogs/news/best-womens-clothing-brands",
+          "https://www.youtube.com/watch?v=drb6cvxE3wY",
+          "https://www.whowhatwear.com/fashion/shopping/popular-fashion-brands-2026"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 7
+      }
+    },
+    {
+      "promptId": "business-casual-commercial",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 2,
+      "timestamp": "2026-03-02T19:03:55.002Z",
+      "response": {
+        "text": "**Top brands for business casual clothing in 2026 include Everlane, Uniqlo, Banana Republic, Quince, and Buck Mason, praised for their versatile, affordable, and quality pieces suitable for office settings.** These recommendations draw from recent reviews highlighting performance fabrics, sustainable practices, and modern tailoring for both men and women[1][2][3].\n\n### Best for Men\n- **Mizzen+Main**: Specializes in performance dress shirts, stretch pants, and blazers with tailored comfort for formal-to-casual office wear[1].\n- **Uniqlo**: Offers crisp, affordable Oxford shirts, chinos, blazers, and T-shirts ideal for versatile weekly outfits[1][5].\n- **Everlane**: Provides minimal, sustainable Oxford shirting, slim chinos, and blazers with transparent sourcing at fair prices[1].\n- **Buck Mason**: Delivers simple, no-frills American-made tees, sweaters, collared shirts, flannel shirts, and denim for timeless everyday workwear[3][4].\n- **YChroma Apparel**: Features fresh, colorful shirts and pieces for men reinventing wardrobes with modern flair[1].\n\n### Best for Women\n- **Everlane**: Stocks affordable cotton basics like tees, skirts, jeans, trousers, blouses, and tailored shirts for casual-to-formal offices (XXS–XXL, $–$$)[2][3].\n- **Banana Republic**: Excels in corporate chic on a budget with items like the Hourglass Corset Blazer and smart trousers[2].\n- **Quince**: Affordable sustainable options including washable silk, organic cotton twill, cashmere, and capsules for office or remote work (XS–XL, $–$$)[3].\n- **Sézane**: Parisian blouses, skirts, work dresses, jackets, and cardigans for versatile styling (US 2–14, $$$–$$$$)[2][3].\n- **J.Crew**: Timeless blazers, trousers, roll-neck sweaters, and office dresses with modern updates[2].\n\n### Unisex or Versatile Picks\n- **Everlane** and **Uniqlo** stand out across genders for capsules blending value, sustainability, and office-readiness[1][2][3][5].\n\n| Brand | Price Range | Key Strengths | Gender Focus |\n|------|-------------|---------------|--------------|\n| Everlane | $–$$$ | Sustainable basics, tailoring | Men/Women |\n| Uniqlo | $ | Affordable versatility | Men |\n| Banana Republic | $–$$ | Budget corporate chic | Women |\n| Quince | $–$$ | Eco-friendly silk/cashmere | Women |\n| Buck Mason | $$–$$$ | Timeless American workwear | Men |\n| Sézane | $$$–$$$$ | Stylish blouses/dresses | Women[2][3][4] |\n\nOther notables like Argent for functional blazers, Kallmeyer for modern suiting, and Mango for refined fabrics appear in niche recommendations but less universally for business casual[2][5]. Prioritize based on budget, sustainability needs, and fit—many offer wide size ranges and sales[1][2][3].",
+        "citations": [
+          "https://www.businessinsider.com/guides/style/best-mens-business-casual-work-clothes",
+          "https://www.harpersbazaar.com/fashion/trends/a42662062/best-work-clothes-stores/",
+          "https://www.thegoodtrade.com/features/ethical-workwear-for-women/",
+          "https://www.apetogentleman.com/best-workwear-brands/",
+          "https://www.youtube.com/watch?v=drb6cvxE3wY",
+          "https://www.whowhatwear.com/fashion/shopping/popular-fashion-brands-2026",
+          "https://www.rw-co.com/collections/women-business-casual"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 7
+      }
+    },
+    {
+      "promptId": "business-casual-commercial",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 3,
+      "timestamp": "2026-03-02T19:04:03.051Z",
+      "response": {
+        "text": "**Top brands for business casual clothing in 2026 include Everlane, J.Crew, Uniqlo, Abercrombie, and Banana Republic, praised across sources for versatile, affordable pieces like shirts, chinos, blazers, and trousers suitable for office settings.** These recommendations draw from expert reviews emphasizing quality, sustainability, comfort, and value, with overlap for both men and women.\n\n### Best for Men\n- **Everlane**: Offers minimal, sustainable Oxford shirts, chinos, blazers, tees, and denim at fair prices with transparent, eco-friendly production.[1][2][3][4][5]\n- **Uniqlo**: Provides crisp, affordable blazers, Oxford shirts, chinos, and T-shirts ideal for versatile weekday looks balancing style and value.[1]\n- **Mizzen+Main**: Specializes in performance dress shirts and tailored pieces with stretch and comfort for formal-to-casual office wear.[1]\n- **Abercrombie**: Delivers easygoing, premium-feeling button-downs, chinos, and relaxed fits with vintage flair for casual offices.[3][6]\n- **J.Crew**: Known for preppy blazers, button-downs, chinos, and knitwear that transition from office to after-work seamlessly.[3]\n- **Bonobos**: Highlighted for versatile wardrobe staples in business casual contexts.[3]\n\n### Best for Women\n- **Everlane**: Features affordable cotton basics, tees, skirts, jeans, trousers, and blouses for casual-to-formal office days (XXS–XXL).[2][4][5]\n- **J.Crew**: Excels in trim blazers, smart trousers, roll-neck sweaters, and office dresses with modern updates.[2]\n- **Banana Republic**: Offers corporate-chic budget options like corset blazers and midi dresses.[2]\n- **Sézane**: Provides blouses, skirts, work dresses, jackets, and cardigans for casual offices with sustainable production (US 2–14).[2][4]\n- **Quince**: Delivers affordable sustainable pieces like washable silk, cashmere, and organic cotton twill for office or hybrid work (XS–XL).[4]\n\n### Key Comparisons\n| Brand       | Price Range | Strengths                          | Best For                  |\n|-------------|-------------|------------------------------------|---------------------------|\n| **Everlane** | $–$$$     | Sustainable basics, transparency  | Men/Women, versatile[1][2][4] |\n| **J.Crew**  | $$–$$$     | Classics with modern twists       | Men/Women, polished[2][3]     |\n| **Uniqlo**  | $–$$       | Affordable, crisp versatility     | Men, value[1]                 |\n| **Abercrombie** | $–$$$  | Relaxed, premium casual           | Men, easygoing[3][6]          |\n| **Banana Republic** | $–$$$ | Budget corporate chic         | Women[2]                      |\n\nOther notables like Argent (functional blazers), Sézane (stylish separates), and YChroma Apparel (vibrant updates) suit specific needs but appear less frequently.[1][2] Prioritize based on budget, sustainability preferences, and gender—Everlane stands out for unisex appeal and eco-focus across 2026 reviews.[1][2][3][4][5]",
+        "citations": [
+          "https://www.businessinsider.com/guides/style/best-mens-business-casual-work-clothes",
+          "https://www.harpersbazaar.com/fashion/trends/a42662062/best-work-clothes-stores/",
+          "https://www.menshealth.com/style/g35280760/best-mens-clothing-brands/",
+          "https://www.thegoodtrade.com/features/ethical-workwear-for-women/",
+          "https://trendia.co/blogs/news/best-womens-clothing-brands",
+          "https://www.youtube.com/watch?v=drb6cvxE3wY",
+          "https://www.gearpatrol.com/style/five-clothing-brands-to-watch-in-2026/"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 7
+      }
+    },
+    {
+      "promptId": "cashmere-sweaters-comparative",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 1,
+      "timestamp": "2026-03-02T19:15:14.492Z",
+      "response": {
+        "text": "**Everlane cashmere stands out for its thickness and warmth compared to J.Crew's typically thinner, softer options, while Club Monaco lacks direct mentions in available reviews, limiting a full three-way comparison.** J.Crew's cashmere receives mixed feedback: some describe it as thin, delicate, not very warm, and prone to pilling or splitting after light wear, though certain ribbed or \"perfect\" versions are praised as thick, soft, and durable with no pilling observed after repeated use.[1][2][3][4][5][7] Everlane's is consistently noted as thicker and bulkier than J.Crew's, providing more warmth (sometimes excessively so), but slightly scratchier; it's positioned as a standard conventional option rather than luxury.[2]\n\n| Brand          | Thickness       | Softness          | Warmth       | Durability Notes                  | Price Example (from reviews) |\n|----------------|-----------------|-------------------|--------------|-----------------------------------|------------------------------|\n| **J.Crew**    | Thin (often 1-ply); some thicker ribbed[1][2][3] | Soft, delicate; some scratchy[1][2][5][7] | Low to moderate[2] | Mixed: pilling/splitting reported, but some hold up well[3][4] | $225 (Italian crewneck)[1] |\n| **Everlane**  | Thicker, bulkier[2] | Slightly scratchier than J.Crew[2] | High (can feel hot)[2] | Not detailed long-term; assumed standard[2] | Not specified in results   |\n| **Club Monaco**| No data available | No data available | No data available | No data available                | N/A                        |\n\nJ.Crew claims to use high-quality Mongolian cashmere hand-combed and spun in Italy (finest 12-gauge), with rigorous quality checks, though customer experiences vary.[4][5] Factors like ply count affect quality: 1-ply (thinner, softer, wears faster) vs. higher ply (thicker, warmer).[2] Darker dyes can stiffen fibers.[2] No recent 2026 updates appear in results; for Club Monaco, check current reviews or try-ons as data is absent here.",
+        "citations": [
+          "https://www.thepeaklapel.com/home/2018/2/22/the-search-for-the-best-affordable-100-cashmere-sweater",
+          "https://fairlycurated.com/blog/2015/10/22/comparison-post-jcrew-cashmere-vs-everlane-cashmere",
+          "https://themomedit.com/j-crew-cashmere-sweater-try-on-video-new-arrivals/",
+          "https://forum.purseblog.com/threads/i-emailed-j-crew-about-the-quality-of-their-cashmere.788418/",
+          "https://www.jcrew.com/p/womens/categories/clothing/sweaters/crewneck/cashmere-classic-fit-crewneck-sweater/BA400",
+          "https://jolynneshane.com/the-best-cashmere-reviews-comparison.html",
+          "https://www.jcrew.com/m/womens/categories/clothing/sweaters/crewneck/perfect-cashmere-crewneck-sweater-in-stripe/ME618",
+          "https://www.youtube.com/watch?v=Ok8PuNYeS6Y"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": true,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 8
+      }
+    },
+    {
+      "promptId": "cashmere-sweaters-comparative",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 2,
+      "timestamp": "2026-03-02T19:15:22.425Z",
+      "response": {
+        "text": "**Everlane offers the best overall value, while J.Crew excels in color variety, and Club Monaco currently lags in quality.**[1][2]\n\n## Quality and Softness\n\n**Everlane** delivers strong quality for its price range ($125–$300).[4] Their Grade-A Mongolian cashmere sweaters are described as warm and reliable, with a mid-weight construction that balances durability with comfort.[5] The newer \"Lush Cashmere\" line is brushed for added softness, though reviewers note it's \"not quite soft enough to sleep in.\"[4]\n\n**J.Crew** cashmere ($148 and up) is soft and lightweight, but has a notable weakness: significant stretching over time.[2] The fabric loses its shape with wear, making it less reliable as a long-term investment despite its initial softness.[2]\n\n**Club Monaco** cashmere appears to be underperforming relative to its peers. One recent review notes the brand \"currently seems to be in a bit of a slump,\" suggesting quality concerns.[2]\n\n## Design and Selection\n\nJ.Crew stands out for **color variety**, offering classic camel tones alongside bright and unique color options that go beyond typical cashmere offerings.[4]\n\nEverlane excels in **minimalist aesthetics**, with \"subtle updates on traditional styles\" and particularly praised neutral tones—grays and ivory with variegated weaving—that reviewers note \"look much more expensive than it is.\"[4][5]\n\n## Price Positioning\n\n| Brand | Price Range | Best For |\n|-------|-------------|----------|\n| Everlane | $125–$300 | Budget-conscious buyers seeking quality basics |\n| J.Crew | $148+ | Color selection, though durability concerns exist |\n| Club Monaco | $60–$250 | Lower price point, but quality inconsistency |\n\nFor durability and everyday wear, **Everlane** emerges as the strongest choice, while J.Crew works well if you prioritize color options and don't mind potential stretching.[4][5]",
+        "citations": [
+          "https://knitwear.io/top-15-brands-like-club-monaco-for-modern-style-2026/",
+          "https://www.youtube.com/watch?v=ufM_7mP4Tgo",
+          "https://www.racked.com/2012/11/1/7705337/affordable-fashion-showdown-how-does-everlanes-new-120-cashmere",
+          "https://www.businessinsider.com/guides/style/best-cashmere-sweater",
+          "https://themomedit.com/best-cashmere-sweaters-women/"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": false,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
         "totalCitations": 5
+      }
+    },
+    {
+      "promptId": "cashmere-sweaters-comparative",
+      "platform": "perplexity",
+      "model": "sonar",
+      "runId": 3,
+      "timestamp": "2026-03-02T19:15:31.521Z",
+      "response": {
+        "text": "**Everlane cashmere sweaters are generally thicker and warmer than J.Crew's, offering better insulation but slightly more scratchiness, while J.Crew's are softer and more delicate yet prone to quicker wear like pilling and splitting.** Club Monaco lacks direct mentions in available reviews, limiting comparisons to these two brands. Here's a detailed breakdown based on hands-on tests and user feedback:\n\n### Key Quality Attributes Comparison\n| Aspect          | J.Crew Cashmere                                                                 | Everlane Cashmere                                                              |\n|-----------------|---------------------------------------------------------------------------------|--------------------------------------------------------------------------------|\n| **Thickness**  | Very thin (likely 1-ply), delicate, not very warm; some thicker ribbed options exist but overall lightweight.[1][2][3] | Much thicker and bulkier than J.Crew, providing significant warmth (sometimes overly hot indoors).[2] |\n| **Softness**   | Soft and smooth, less scratchy than Everlane; some models feel luxurious but others scratchier or flimsy.[1][2][5][7] | Slightly scratchier than J.Crew, though still soft; not as luxe as premium brands.[2] |\n| **Durability** | Prone to pilling, splitting after light wear, and fading (e.g., gray appearing black); thinner knits wear out faster.[2][3][4] | No direct long-term data here, but thickness suggests better resistance to wear vs. J.Crew's thin styles.[2] |\n| **Fit & Feel** | Slim, comfortable for layering; good proportions but not always the thickest.[1][5] | Bulkier fit; warmer for colder weather.[2]                                     |\n| **Sourcing**   | 100% cashmere from Mongolian goats, Italian-spun, 12-gauge; marketed as soft and long-lasting.[4][5][7] | Not detailed here, but positioned as thicker alternative to thin fashion cashmere.[2] |\n| **Price Context** | ~$225 for premium models; criticized as overpriced vs. quality.[1]              | Generally more affordable; better value for warmth.[2]                         |\n\n### Additional Insights\n- **J.Crew Variability**: Reviews conflict—some praise thick, soft ribbed cashmere with no pilling after heavy use (\"fluff up like cotton candy\"), while others call it unwearable, scratchy, or poor value compared to cheaper options.[1][3][4][5][7] Thinner \"Everyday\" styles underperform vs. pricier \"Italian\" ones.[1]\n- **Everlane Strengths**: Stands out for superior warmth in direct A/B tests, ideal for those prioritizing insulation over delicate drape; may pill over time like most non-luxury cashmere.[2]\n- **Club Monaco**: No quality data in results; consider it unrated here. For broader context, affordable 100% cashmere often varies by ply (1-ply thinnest/fastest-wearing; 2-3 ply warmer/denser).[2]\n- **General Tips**: Lighter/darker dyes affect stiffness; hand wash to extend life. Test for pilling and fit personally, as batches vary.[1][2][4][6]\n\nFor current options, check brand sites for updated lines, as quality can evolve.",
+        "citations": [
+          "https://www.thepeaklapel.com/home/2018/2/22/the-search-for-the-best-affordable-100-cashmere-sweater",
+          "https://fairlycurated.com/blog/2015/10/22/comparison-post-jcrew-cashmere-vs-everlane-cashmere",
+          "https://themomedit.com/j-crew-cashmere-sweater-try-on-video-new-arrivals/",
+          "https://forum.purseblog.com/threads/i-emailed-j-crew-about-the-quality-of-their-cashmere.788418/",
+          "https://www.jcrew.com/p/womens/categories/clothing/sweaters/crewneck/cashmere-classic-fit-crewneck-sweater/BA400",
+          "https://jolynneshane.com/the-best-cashmere-reviews-comparison.html",
+          "https://www.jcrew.com/m/womens/categories/clothing/sweaters/crewneck/perfect-cashmere-crewneck-sweater-in-stripe/ME618",
+          "https://dressedformyday.com/which-cashmere-sweaters-are-the-best/"
+        ],
+        "searchResults": []
+      },
+      "analysis": {
+        "clientCited": true,
+        "clientMentionedInText": true,
+        "competitorsCited": [],
+        "totalCitations": 8
       }
     }
   ]

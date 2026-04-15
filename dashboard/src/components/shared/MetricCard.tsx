@@ -36,7 +36,7 @@ export function MetricCard({
           <p className="text-sm text-[#9CA3AF]">{label}</p>
           <p
             className={cn(
-              'mt-1 font-heading font-semibold text-[#E5E7EB]',
+              'mt-1 font-data font-semibold text-[#E5E7EB]',
               variant === 'large' && 'text-3xl',
               variant === 'default' && 'text-2xl',
               variant === 'compact' && 'text-xl'

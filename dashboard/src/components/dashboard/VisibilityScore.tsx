@@ -1,20 +1,44 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Building2, Info } from 'lucide-react';
 import { ScoreGauge } from '@/components/shared';
 import { analyzedMetrics } from '@/lib/fixtures';
+import { getOverallBrandMetrics, type OverallBrandMetrics } from '@/lib/platform-data';
 import { getScoreTextClass } from '@/lib/colors';
 import { cn } from '@/lib/utils';
 
 export function VisibilityScore() {
   const { summary, textMetrics } = analyzedMetrics;
-  const score = summary.overallScore;
+  const [batchMetrics, setBatchMetrics] = useState<OverallBrandMetrics | null>(null);
 
-  // Find top competitor by mention rate
-  const brandMetrics = textMetrics?.overall.brandMetrics ?? {};
-  const topCompetitorByMentions = Object.entries(brandMetrics)
-    .filter(([name]) => !analyzedMetrics.competitorOverview.find(c => c.name === name && c.isClient))
-    .sort(([, a], [, b]) => b.mentionRate - a.mentionRate)[0];
+  useEffect(() => {
+    getOverallBrandMetrics().then(setBatchMetrics);
+  }, []);
+
+  // Find top competitor by mention rate, preferring batch data
+  let topCompetitorName = '';
+  let topCompetitorRate = 0;
+
+  if (batchMetrics) {
+    for (const [name, rates] of Object.entries(batchMetrics.competitorRates)) {
+      if (rates.mentionRate > topCompetitorRate) {
+        topCompetitorName = name;
+        topCompetitorRate = rates.mentionRate;
+      }
+    }
+  } else {
+    const brandMetrics = textMetrics?.overall.brandMetrics ?? {};
+    const top = Object.entries(brandMetrics)
+      .filter(([name]) => !analyzedMetrics.competitorOverview.find(c => c.name === name && c.isClient))
+      .sort(([, a], [, b]) => b.mentionRate - a.mentionRate)[0];
+    if (top) {
+      topCompetitorName = top[0];
+      topCompetitorRate = top[1].mentionRate;
+    }
+  }
+
+  const score = summary.overallScore;
 
   const getScoreInterpretation = (score: number): string => {
     if (score < 25) {
@@ -64,13 +88,11 @@ export function VisibilityScore() {
         <div className="mt-4 flex items-center gap-2 text-sm">
           <span className="text-[#6B7280]">Top competitor:</span>
           <span className="font-medium text-[#E5E7EB]">
-            {topCompetitorByMentions ? topCompetitorByMentions[0] : summary.topCompetitor.name}
+            {topCompetitorName || summary.topCompetitor.name}
           </span>
           <span className="text-[#6B7280]">at</span>
           <span className="font-medium text-amber-400">
-            {topCompetitorByMentions
-              ? (topCompetitorByMentions[1].mentionRate * 100).toFixed(0)
-              : (summary.topCompetitor.citationShare * 100).toFixed(0)}%
+            {(topCompetitorRate * 100).toFixed(0)}%
           </span>
           <span className="text-[#6B7280]">mention rate</span>
         </div>

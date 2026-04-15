@@ -16,12 +16,30 @@ export const COLORS = {
 };
 
 export const COMPETITOR_COLORS: Record<string, string> = {
-  'TechFlow': '#00D4AA',
-  'Asana': '#F06A6A',
-  'Monday.com': '#0073EA',
-  'ClickUp': '#7B68EE',
-  'Notion': '#FFFFFF',
+  'J.Crew': '#00D4AA',
+  'Banana Republic': '#F06A6A',
+  'Everlane': '#10B981',
+  'Abercrombie & Fitch': '#7B68EE',
+  'Gap': '#3B82F6',
+  'Club Monaco': '#EC4899',
   'Other': '#6B7280',
+};
+
+// Canonical platform color + label definitions — single source of truth
+export const PLATFORM_COLORS: Record<string, string> = {
+  perplexity: '#20B8CD',
+  chatgpt_search: '#10A37F',
+  gemini: '#8E44AD',
+  claude: '#D97706',
+  google_ai_overview: '#4285F4',
+};
+
+export const PLATFORM_LABELS: Record<string, string> = {
+  perplexity: 'Perplexity',
+  chatgpt_search: 'ChatGPT Search',
+  gemini: 'Gemini',
+  claude: 'Claude',
+  google_ai_overview: 'Google AI Overview',
 };
 
 export const CHART_COLORS = [

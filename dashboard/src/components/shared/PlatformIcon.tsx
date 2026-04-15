@@ -1,5 +1,6 @@
 import { cn } from '@/lib/utils';
 import { Sparkles, Search, Bot, Lock } from 'lucide-react';
+import { PLATFORM_COLORS } from '@/lib/colors';
 
 type Platform = 'perplexity' | 'google_ai_overview' | 'chatgpt_search' | 'claude_search';
 
@@ -19,22 +20,22 @@ const platformConfig: Record<Platform, {
   perplexity: {
     label: 'Perplexity',
     icon: Sparkles,
-    color: '#20B8CD',
+    color: PLATFORM_COLORS.perplexity,
   },
   google_ai_overview: {
     label: 'Google AI',
     icon: Search,
-    color: '#4285F4',
+    color: PLATFORM_COLORS.google_ai_overview,
   },
   chatgpt_search: {
     label: 'ChatGPT',
     icon: Bot,
-    color: '#10A37F',
+    color: PLATFORM_COLORS.chatgpt_search,
   },
   claude_search: {
     label: 'Claude',
     icon: Bot,
-    color: '#D97706',
+    color: PLATFORM_COLORS.claude,
   },
 };
 
