@@ -1,37 +1,19 @@
 {
-  "client": {
-    "name": "ScaledAgile",
-    "domains": ["scaledagile.com", "scaledagileframework.com"],
-    "industry": "enterprise-agile-software"
-  },
-  "competitors": [
-    { "name": "Atlassian", "domains": ["atlassian.com"] },
-    { "name": "ServiceNow", "domains": ["servicenow.com"] },
-    { "name": "Planview", "domains": ["planview.com"] },
-    { "name": "Digital.ai", "domains": ["digital.ai"] },
-    { "name": "Broadcom Rally", "domains": ["broadcom.com"] },
-    { "name": "LeanIX", "domains": ["leanix.net"] }
-  ],
+  "brand": "ScaledAgile",
+  "competitor": "Atlassian",
   "archetype": "b2b",
-  "generation": {
-    "targetPromptCount": 250,
-    "topicsPerCategory": {
-      "Awareness": 18,
-      "Consideration": 15,
-      "Conversion": 22
-    }
-  },
-  "keyTopics": [
-    "SAFe framework",
-    "Agile transformation",
-    "Enterprise agile",
-    "PI planning",
-    "Agile at scale",
-    "DevOps transformation",
-    "Lean portfolio management",
-    "Business agility",
-    "Agile coaching",
-    "Value streams"
+  "targetPromptCount": 250,
+  "topics": [
+    { "id": "safe-framework", "name": "SAFe framework", "category": "Awareness" },
+    { "id": "agile-transformation", "name": "Agile transformation", "category": "Awareness" },
+    { "id": "enterprise-agile", "name": "Enterprise agile", "category": "Awareness" },
+    { "id": "pi-planning", "name": "PI planning", "category": "Consideration" },
+    { "id": "agile-at-scale", "name": "Agile at scale", "category": "Consideration" },
+    { "id": "devops-transformation", "name": "DevOps transformation", "category": "Consideration" },
+    { "id": "lean-portfolio-mgmt", "name": "Lean portfolio management", "category": "Conversion" },
+    { "id": "business-agility", "name": "Business agility", "category": "Conversion" },
+    { "id": "agile-coaching", "name": "Agile coaching", "category": "Conversion" },
+    { "id": "value-streams", "name": "Value streams", "category": "Conversion" }
   ],
   "personas": [
     "CTO",
