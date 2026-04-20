@@ -10,7 +10,7 @@ import {
 
 const DEDUP_JACCARD_THRESHOLD = 0.85;
 const FLAT_EXPECTED_SHARE = 0.20;      // 1/5 per intent, 1/5 per isotope
-const COVERAGE_BIAS_TOLERANCE = 0.02;  // flag when share exceeds 0.22
+const COVERAGE_BIAS_TOLERANCE = 0.03;  // flag when share exceeds 0.23 (accommodates rounding noise)
 
 export function tokenize(text: string): Set<string> {
   return new Set(

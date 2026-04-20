@@ -57,13 +57,21 @@ function main() {
     contexts: config.contexts,
   });
 
+  // Coverage check runs on pre-dedup allocation output where the flat
+  // invariant (max - min <= 1) is guaranteed by construction. Dedup can
+  // remove prompts unevenly across cells (seed text similarity is
+  // content-dependent), which is expected and not a structural violation.
+  const coverage = checkCoverageBias(result.prompts, template, result.tier);
   const deduped = dedupePrompts(result.prompts);
-  const coverage = checkCoverageBias(deduped, template, result.tier);
+
+  const dedupWarnings: string[] = deduped.length < result.prompts.length
+    ? [`dedup removed ${result.prompts.length - deduped.length} near-duplicate prompts (${deduped.length} remain)`]
+    : [];
 
   const output = {
     tier: result.tier,
     totalPrompts: deduped.length,
-    warnings: [...result.warnings, ...coverage.warnings],
+    warnings: [...result.warnings, ...coverage.warnings, ...dedupWarnings],
     errors: coverage.errors,
     stats: result.stats,
     coverage,

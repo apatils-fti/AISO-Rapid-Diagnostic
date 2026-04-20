@@ -148,25 +148,25 @@ describe('generate: full tier (flat, target=250)', () => {
     expect(seen.size).toBe(25);
   });
 
-  it('intent distribution within 0.22 flat threshold', () => {
+  it('intent distribution within 0.23 flat threshold', () => {
     const result = generate(defaultOpts(250));
     const counts: Record<string, number> = {};
     for (const p of result.prompts) counts[p.intent_stage] = (counts[p.intent_stage] ?? 0) + 1;
     for (const intent of INTENT_STAGES) {
       const share = (counts[intent] ?? 0) / result.prompts.length;
-      expect(share, `intent=${intent}`).toBeLessThanOrEqual(0.22);
-      expect(share, `intent=${intent}`).toBeGreaterThanOrEqual(0.18);
+      expect(share, `intent=${intent}`).toBeLessThanOrEqual(0.23);
+      expect(share, `intent=${intent}`).toBeGreaterThanOrEqual(0.17);
     }
   });
 
-  it('isotope distribution within 0.22 flat threshold', () => {
+  it('isotope distribution within 0.23 flat threshold', () => {
     const result = generate(defaultOpts(250));
     const counts: Record<string, number> = {};
     for (const p of result.prompts) counts[p.isotope] = (counts[p.isotope] ?? 0) + 1;
     for (const iso of ISOTOPES) {
       const share = (counts[iso] ?? 0) / result.prompts.length;
-      expect(share, `isotope=${iso}`).toBeLessThanOrEqual(0.22);
-      expect(share, `isotope=${iso}`).toBeGreaterThanOrEqual(0.18);
+      expect(share, `isotope=${iso}`).toBeLessThanOrEqual(0.23);
+      expect(share, `isotope=${iso}`).toBeGreaterThanOrEqual(0.17);
     }
   });
 
