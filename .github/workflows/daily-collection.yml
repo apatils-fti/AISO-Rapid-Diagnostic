@@ -97,7 +97,8 @@ jobs:
           fi
           echo "Running with limit: ${LIMIT:-unlimited}"
           node scripts/onboard-client.js \
-            --config configs/fti.json \
+            --config configs/scaledagile.json \
+            --prompts top-scaledagile-prompts.json \
             --skip-generate $LIMIT_ARG
 
       - name: Stop Next.js server

@@ -1,0 +1,2036 @@
+[
+  {
+    "promptId": "b2b-learning-declarative-0",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "What is SAFe framework and why is it becoming table stakes in Awareness?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-declarative-1",
+    "topicId": "agile-transformation",
+    "topicName": "Agile transformation",
+    "category": "Awareness",
+    "promptText": "How does enterprise scale differ from framework adoption in enterprise Awareness tools?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-declarative-2",
+    "topicId": "enterprise-agile",
+    "topicName": "Enterprise agile",
+    "category": "Awareness",
+    "promptText": "What does Enterprise agile actually deliver at the platform level in Awareness?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-declarative-3",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "How has Consideration evolved in the last three years and where is PI planning headed?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-declarative-4",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "What's the architectural difference between legacy Consideration and modern Agile at scale-native platforms?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-declarative-5",
+    "topicId": "devops-transformation",
+    "topicName": "DevOps transformation",
+    "category": "Consideration",
+    "promptText": "What is DevOps transformation and why is it becoming table stakes in Consideration?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-declarative-6",
+    "topicId": "lean-portfolio-mgmt",
+    "topicName": "Lean portfolio management",
+    "category": "Conversion",
+    "promptText": "How does framework adoption differ from agile maturity in enterprise Conversion tools?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-declarative-7",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "What does Business agility actually deliver at the platform level in Conversion?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-declarative-8",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "How has Conversion evolved in the last three years and where is Agile coaching headed?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-declarative-9",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "What's the architectural difference between legacy Conversion and modern Value streams-native platforms?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-10",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "What's the real difference between framework adoption-based and agile maturity-based Awareness platforms?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-11",
+    "topicId": "agile-transformation",
+    "topicName": "Agile transformation",
+    "category": "Awareness",
+    "promptText": "Platform vs point solution for Agile transformation — what's the actual tradeoff?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-12",
+    "topicId": "enterprise-agile",
+    "topicName": "Enterprise agile",
+    "category": "Awareness",
+    "promptText": "SAFe certified vs enterprise scale architecture in Awareness — where does each break down at scale?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-13",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "Multi-tenant vs single-tenant Consideration — which matters for PI planning?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-14",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "Build vs buy for Agile at scale — when does the math flip?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-15",
+    "topicId": "devops-transformation",
+    "topicName": "DevOps transformation",
+    "category": "Consideration",
+    "promptText": "What's the real difference between agile maturity-based and SAFe certified-based Consideration platforms?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-16",
+    "topicId": "lean-portfolio-mgmt",
+    "topicName": "Lean portfolio management",
+    "category": "Conversion",
+    "promptText": "Platform vs point solution for Lean portfolio management — what's the actual tradeoff?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-17",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "enterprise scale vs framework adoption architecture in Conversion — where does each break down at scale?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-18",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "Multi-tenant vs single-tenant Conversion — which matters for Agile coaching?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-19",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "Build vs buy for Value streams — when does the math flip?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-20",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "As a Enterprise Architect evaluating Awareness for the first time, what do I need to understand about SAFe framework?",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-21",
+    "topicId": "agile-transformation",
+    "topicName": "Agile transformation",
+    "category": "Awareness",
+    "promptText": "I'm a Agile Coach inheriting post-merger integration — walk me through Agile transformation in Awareness",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-22",
+    "topicId": "enterprise-agile",
+    "topicName": "Enterprise agile",
+    "category": "Awareness",
+    "promptText": "For a VP of Engineering running a team with framework adoption, what does Enterprise agile mean in practice?",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-23",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "How should a PMO Director in lean-agile operating model rollout think about PI planning vs existing investments?",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-24",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "I'm a CTO with SAFe certified stack — what's the primer on Agile at scale I need before kickoff?",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-25",
+    "topicId": "devops-transformation",
+    "topicName": "DevOps transformation",
+    "category": "Consideration",
+    "promptText": "As a Head of Transformation evaluating Consideration for the first time, what do I need to understand about DevOps transformation?",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-26",
+    "topicId": "lean-portfolio-mgmt",
+    "topicName": "Lean portfolio management",
+    "category": "Conversion",
+    "promptText": "I'm a Enterprise Architect inheriting scaling from team to portfolio level — walk me through Lean portfolio management in Conversion",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-27",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "For a Agile Coach running a team with agile maturity, what does Business agility mean in practice?",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-28",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "How should a VP of Engineering in DevOps pipeline modernization think about Agile coaching vs existing investments?",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-29",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "I'm a PMO Director with enterprise scale stack — what's the primer on Value streams I need before kickoff?",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-30",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "Explain SAFe framework for a team running framework adoption, agile maturity, and digital transformation initiative at 50000 ACV",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-31",
+    "topicId": "agile-transformation",
+    "topicName": "Agile transformation",
+    "category": "Awareness",
+    "promptText": "Primer on Agile transformation when we need agile maturity, SAFe certified, and audit-trail compliance for enterprise agile adoption",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-32",
+    "topicId": "enterprise-agile",
+    "topicName": "Enterprise agile",
+    "category": "Awareness",
+    "promptText": "What does SAFe certified mean for Awareness at the 500000 enterprise tier?",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-33",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "How should I think about PI planning given enterprise scale, framework adoption, and our post-merger integration constraints?",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-34",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "Walk me through Agile at scale for a stack with framework adoption, agile maturity, and under 150000 budget",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-35",
+    "topicId": "devops-transformation",
+    "topicName": "DevOps transformation",
+    "category": "Consideration",
+    "promptText": "Explain DevOps transformation for a team running agile maturity, SAFe certified, and lean-agile operating model rollout at 500000 ACV",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-36",
+    "topicId": "lean-portfolio-mgmt",
+    "topicName": "Lean portfolio management",
+    "category": "Conversion",
+    "promptText": "Primer on Lean portfolio management when we need SAFe certified, enterprise scale, and audit-trail compliance for digital transformation initiative",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-37",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "What does enterprise scale mean for Conversion at the 150000 enterprise tier?",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-38",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "How should I think about Agile coaching given framework adoption, agile maturity, and our scaling from team to portfolio level constraints?",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-39",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "Walk me through Value streams for a stack with agile maturity, SAFe certified, and under 50000 budget",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-adversarial-40",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "Is SAFe framework a standalone purchase or is it already included in SAFe certified platforms we're paying for?",
+    "isotope": "adversarial",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-adversarial-41",
+    "topicId": "agile-transformation",
+    "topicName": "Agile transformation",
+    "category": "Awareness",
+    "promptText": "Why is every Awareness vendor suddenly claiming enterprise scale — is it meaningful?",
+    "isotope": "adversarial",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-adversarial-42",
+    "topicId": "enterprise-agile",
+    "topicName": "Enterprise agile",
+    "category": "Awareness",
+    "promptText": "What do Awareness vendors bury in the MSA that bites you in year two?",
+    "isotope": "adversarial",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-adversarial-43",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "Is agile maturity certification actually audited or a self-attested checkbox?",
+    "isotope": "adversarial",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-adversarial-44",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "Why does Consideration TCO always land at 3× the quoted 500000 by year three?",
+    "isotope": "adversarial",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-adversarial-45",
+    "topicId": "devops-transformation",
+    "topicName": "DevOps transformation",
+    "category": "Consideration",
+    "promptText": "Is DevOps transformation a standalone purchase or is it already included in enterprise scale platforms we're paying for?",
+    "isotope": "adversarial",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-adversarial-46",
+    "topicId": "lean-portfolio-mgmt",
+    "topicName": "Lean portfolio management",
+    "category": "Conversion",
+    "promptText": "Why is every Conversion vendor suddenly claiming framework adoption — is it meaningful?",
+    "isotope": "adversarial",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-adversarial-48",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "Is SAFe certified certification actually audited or a self-attested checkbox?",
+    "isotope": "adversarial",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-adversarial-49",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "Why does Conversion TCO always land at 3× the quoted 150000 by year three?",
+    "isotope": "adversarial",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-discovery-declarative-50",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "Who are the leading vendors in Awareness for SAFe framework?",
+    "isotope": "declarative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-declarative-51",
+    "topicId": "agile-transformation",
+    "topicName": "Agile transformation",
+    "category": "Awareness",
+    "promptText": "Top Awareness platforms for enterprises running post-merger integration",
+    "isotope": "declarative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-declarative-52",
+    "topicId": "enterprise-agile",
+    "topicName": "Enterprise agile",
+    "category": "Awareness",
+    "promptText": "Which vendors specialize in Enterprise agile for VP of Engineering?",
+    "isotope": "declarative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-declarative-53",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "Well-regarded enterprise scale Awareness vendors in {current year}",
+    "isotope": "declarative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-declarative-54",
+    "topicId": "agile-transformation",
+    "topicName": "Agile transformation",
+    "category": "Awareness",
+    "promptText": "Enterprise-grade Awareness options for Agile transformation",
+    "isotope": "declarative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-declarative-55",
+    "topicId": "enterprise-agile",
+    "topicName": "Enterprise agile",
+    "category": "Awareness",
+    "promptText": "Who are the leading vendors in Awareness for Enterprise agile?",
+    "isotope": "declarative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-declarative-56",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "Top Awareness platforms for enterprises running scaling from team to portfolio level",
+    "isotope": "declarative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-declarative-57",
+    "topicId": "agile-transformation",
+    "topicName": "Agile transformation",
+    "category": "Awareness",
+    "promptText": "Which vendors specialize in Agile transformation for Agile Coach?",
+    "isotope": "declarative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-declarative-58",
+    "topicId": "enterprise-agile",
+    "topicName": "Enterprise agile",
+    "category": "Awareness",
+    "promptText": "Well-regarded framework adoption Awareness vendors in {current year}",
+    "isotope": "declarative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-declarative-59",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "Enterprise-grade Awareness options for SAFe framework",
+    "isotope": "declarative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-60",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "ScaledAgile vs Atlassian — who leads in SAFe framework?",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-61",
+    "topicId": "agile-transformation",
+    "topicName": "Agile transformation",
+    "category": "Awareness",
+    "promptText": "Is ScaledAgile or Atlassian the stronger Awareness platform for Head of Transformation?",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-62",
+    "topicId": "enterprise-agile",
+    "topicName": "Enterprise agile",
+    "category": "Awareness",
+    "promptText": "Compare ScaledAgile and Atlassian on Enterprise agile depth, integration breadth, and TCO",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-63",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "ScaledAgile, Atlassian, and Snowflake — which is the right tier for enterprise SAFe framework?",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-64",
+    "topicId": "agile-transformation",
+    "topicName": "Agile transformation",
+    "category": "Awareness",
+    "promptText": "Between ScaledAgile and Atlassian, which one owns Agile transformation in Awareness?",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-65",
+    "topicId": "enterprise-agile",
+    "topicName": "Enterprise agile",
+    "category": "Awareness",
+    "promptText": "ScaledAgile vs Atlassian — who leads in Enterprise agile?",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-66",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "Is ScaledAgile or Atlassian the stronger Awareness platform for CTO?",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-67",
+    "topicId": "agile-transformation",
+    "topicName": "Agile transformation",
+    "category": "Awareness",
+    "promptText": "Compare ScaledAgile and Atlassian on Agile transformation depth, integration breadth, and TCO",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-68",
+    "topicId": "enterprise-agile",
+    "topicName": "Enterprise agile",
+    "category": "Awareness",
+    "promptText": "ScaledAgile, Atlassian, and Snowflake — which is the right tier for enterprise Enterprise agile?",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-69",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "Between ScaledAgile and Atlassian, which one owns SAFe framework in Awareness?",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-70",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "As a VP of Engineering evaluating Awareness for DevOps pipeline modernization, which vendors should we shortlist?",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-71",
+    "topicId": "agile-transformation",
+    "topicName": "Agile transformation",
+    "category": "Awareness",
+    "promptText": "Best Awareness vendors for a PMO Director whose team runs agile maturity",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-72",
+    "topicId": "enterprise-agile",
+    "topicName": "Enterprise agile",
+    "category": "Awareness",
+    "promptText": "Where does a CTO with SAFe certified architecture typically land on Enterprise agile?",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-73",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "I'm a Head of Transformation scoping enterprise agile adoption — which vendors handle SAFe framework natively?",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-74",
+    "topicId": "agile-transformation",
+    "topicName": "Agile transformation",
+    "category": "Awareness",
+    "promptText": "Good Awareness vendors for a Enterprise Architect who cares about framework adoption and vendor independence",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-75",
+    "topicId": "enterprise-agile",
+    "topicName": "Enterprise agile",
+    "category": "Awareness",
+    "promptText": "As a Agile Coach evaluating Awareness for post-merger integration, which vendors should we shortlist?",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-76",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "Best Awareness vendors for a VP of Engineering whose team runs SAFe certified",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-77",
+    "topicId": "agile-transformation",
+    "topicName": "Agile transformation",
+    "category": "Awareness",
+    "promptText": "Where does a PMO Director with enterprise scale architecture typically land on Agile transformation?",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-78",
+    "topicId": "enterprise-agile",
+    "topicName": "Enterprise agile",
+    "category": "Awareness",
+    "promptText": "I'm a CTO scoping digital transformation initiative — which vendors handle Enterprise agile natively?",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-79",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "Good Awareness vendors for a Head of Transformation who cares about agile maturity and vendor independence",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-80",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "Awareness vendors offering SAFe framework with SAFe certified, enterprise scale, and 500000 ACV cap",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-81",
+    "topicId": "agile-transformation",
+    "topicName": "Agile transformation",
+    "category": "Awareness",
+    "promptText": "Find us a Awareness platform: enterprise scale, framework adoption, deployed in post-merger integration, SOC 2 Type II",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-82",
+    "topicId": "enterprise-agile",
+    "topicName": "Enterprise agile",
+    "category": "Awareness",
+    "promptText": "Which vendors offer Enterprise agile with framework adoption, SAML SSO, and per-seat pricing under 150000?",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-83",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "Awareness options with agile maturity, SAFe certified, multi-region, and open API",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-84",
+    "topicId": "agile-transformation",
+    "topicName": "Agile transformation",
+    "category": "Awareness",
+    "promptText": "Vendors handling Agile transformation under 50000 with SAFe certified, enterprise scale, and native digital transformation initiative support",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-85",
+    "topicId": "enterprise-agile",
+    "topicName": "Enterprise agile",
+    "category": "Awareness",
+    "promptText": "Awareness vendors offering Enterprise agile with enterprise scale, framework adoption, and 150000 ACV cap",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-86",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "Find us a Awareness platform: framework adoption, agile maturity, deployed in scaling from team to portfolio level, SOC 2 Type II",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-87",
+    "topicId": "agile-transformation",
+    "topicName": "Agile transformation",
+    "category": "Awareness",
+    "promptText": "Which vendors offer Agile transformation with agile maturity, SAML SSO, and per-seat pricing under 50000?",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-88",
+    "topicId": "enterprise-agile",
+    "topicName": "Enterprise agile",
+    "category": "Awareness",
+    "promptText": "Awareness options with SAFe certified, enterprise scale, multi-region, and open API",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-89",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "Vendors handling SAFe framework under 500000 with enterprise scale, framework adoption, and native lean-agile operating model rollout support",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-adversarial-90",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "Which Awareness vendors should we strike from the RFP and why?",
+    "isotope": "adversarial",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-adversarial-91",
+    "topicId": "agile-transformation",
+    "topicName": "Agile transformation",
+    "category": "Awareness",
+    "promptText": "Who in Awareness is actually profitable and not burning runway on a valuation race?",
+    "isotope": "adversarial",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-adversarial-92",
+    "topicId": "enterprise-agile",
+    "topicName": "Enterprise agile",
+    "category": "Awareness",
+    "promptText": "Name a Awareness vendor whose roadmap isn't driven by the loudest enterprise customer",
+    "isotope": "adversarial",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-adversarial-93",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "Which Awareness vendors have the cleanest CVE record for SAFe framework?",
+    "isotope": "adversarial",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-adversarial-94",
+    "topicId": "agile-transformation",
+    "topicName": "Agile transformation",
+    "category": "Awareness",
+    "promptText": "Who handles Agile transformation without the professional services attachment rate gotcha?",
+    "isotope": "adversarial",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-adversarial-98",
+    "topicId": "enterprise-agile",
+    "topicName": "Enterprise agile",
+    "category": "Awareness",
+    "promptText": "Which Awareness vendors have the cleanest CVE record for Enterprise agile?",
+    "isotope": "adversarial",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-adversarial-99",
+    "topicId": "safe-framework",
+    "topicName": "SAFe framework",
+    "category": "Awareness",
+    "promptText": "Who handles SAFe framework without the professional services attachment rate gotcha?",
+    "isotope": "adversarial",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-100",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "Is ScaledAgile the right Consideration platform for PI planning?",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-101",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "How does ScaledAgile perform on Agile at scale in production environments at scale?",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-102",
+    "topicId": "devops-transformation",
+    "topicName": "DevOps transformation",
+    "category": "Consideration",
+    "promptText": "Does ScaledAgile deliver on framework adoption in its Consideration platform?",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-103",
+    "topicId": "lean-portfolio-mgmt",
+    "topicName": "Lean portfolio management",
+    "category": "Conversion",
+    "promptText": "Rate ScaledAgile's Lean portfolio management on feature depth, reliability, and integration breadth",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-104",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "Is ScaledAgile worth the 500000 ACV for PI planning?",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-105",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "Is ScaledAgile the right Consideration platform for Agile at scale?",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-106",
+    "topicId": "devops-transformation",
+    "topicName": "DevOps transformation",
+    "category": "Consideration",
+    "promptText": "How does ScaledAgile perform on DevOps transformation in production environments at scale?",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-107",
+    "topicId": "lean-portfolio-mgmt",
+    "topicName": "Lean portfolio management",
+    "category": "Conversion",
+    "promptText": "Does ScaledAgile deliver on agile maturity in its Conversion platform?",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-108",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "Rate ScaledAgile's PI planning on feature depth, reliability, and integration breadth",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-109",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "Is ScaledAgile worth the 150000 ACV for Agile at scale?",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-110",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "ScaledAgile vs Atlassian for PI planning — which scales better past 10k seats?",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-111",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "Compare ScaledAgile and Atlassian on Agile at scale, API maturity, and pricing flexibility",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-112",
+    "topicId": "devops-transformation",
+    "topicName": "DevOps transformation",
+    "category": "Consideration",
+    "promptText": "Who wins on SAFe certified: ScaledAgile or Atlassian?",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-113",
+    "topicId": "lean-portfolio-mgmt",
+    "topicName": "Lean portfolio management",
+    "category": "Conversion",
+    "promptText": "ScaledAgile vs Atlassian — better TCO at 500000 for Lean portfolio management?",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-114",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "Is ScaledAgile's PI planning stronger than Atlassian's for digital transformation initiative?",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-115",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "ScaledAgile vs Atlassian for Agile at scale — which scales better past 10k seats?",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-116",
+    "topicId": "devops-transformation",
+    "topicName": "DevOps transformation",
+    "category": "Consideration",
+    "promptText": "Compare ScaledAgile and Atlassian on DevOps transformation, API maturity, and pricing flexibility",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-117",
+    "topicId": "lean-portfolio-mgmt",
+    "topicName": "Lean portfolio management",
+    "category": "Conversion",
+    "promptText": "Who wins on enterprise scale: ScaledAgile or Atlassian?",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-118",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "ScaledAgile vs Atlassian — better TCO at 150000 for PI planning?",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-119",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "Is ScaledAgile's Agile at scale stronger than Atlassian's for lean-agile operating model rollout?",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-situated-120",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "As a CTO leading digital transformation initiative, is ScaledAgile the right platform for PI planning?",
+    "isotope": "situated",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-situated-121",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "Does ScaledAgile's Consideration platform work for a Head of Transformation whose top requirement is enterprise scale?",
+    "isotope": "situated",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-situated-122",
+    "topicId": "devops-transformation",
+    "topicName": "DevOps transformation",
+    "category": "Consideration",
+    "promptText": "For a Enterprise Architect running scaling from team to portfolio level, does ScaledAgile or Atlassian make more sense?",
+    "isotope": "situated",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-situated-123",
+    "topicId": "lean-portfolio-mgmt",
+    "topicName": "Lean portfolio management",
+    "category": "Conversion",
+    "promptText": "I'm a Agile Coach — evaluate ScaledAgile's Lean portfolio management against my stack and constraints",
+    "isotope": "situated",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-situated-124",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "Should a VP of Engineering standardize on ScaledAgile for PI planning given DevOps pipeline modernization?",
+    "isotope": "situated",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-situated-125",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "As a PMO Director leading lean-agile operating model rollout, is ScaledAgile the right platform for Agile at scale?",
+    "isotope": "situated",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-situated-126",
+    "topicId": "devops-transformation",
+    "topicName": "DevOps transformation",
+    "category": "Consideration",
+    "promptText": "Does ScaledAgile's Consideration platform work for a CTO whose top requirement is framework adoption?",
+    "isotope": "situated",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-situated-127",
+    "topicId": "lean-portfolio-mgmt",
+    "topicName": "Lean portfolio management",
+    "category": "Conversion",
+    "promptText": "For a Head of Transformation running enterprise agile adoption, does ScaledAgile or Atlassian make more sense?",
+    "isotope": "situated",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-situated-128",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "I'm a Enterprise Architect — evaluate ScaledAgile's PI planning against my stack and constraints",
+    "isotope": "situated",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-situated-129",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "Should a Agile Coach standardize on ScaledAgile for Agile at scale given post-merger integration?",
+    "isotope": "situated",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-130",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "Does ScaledAgile's PI planning meet our bar for framework adoption, agile maturity, and 150000 per seat?",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-131",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "Evaluate ScaledAgile's Consideration against our checklist: agile maturity, SAFe certified, SAML, audit logs, 500000 ACV",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-132",
+    "topicId": "devops-transformation",
+    "topicName": "DevOps transformation",
+    "category": "Consideration",
+    "promptText": "Is ScaledAgile's DevOps transformation the best option under 50000 with SAFe certified and enterprise scale?",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-133",
+    "topicId": "lean-portfolio-mgmt",
+    "topicName": "Lean portfolio management",
+    "category": "Conversion",
+    "promptText": "Compare ScaledAgile's Lean portfolio management on enterprise scale, framework adoption, SLA, and data residency",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-134",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "Does ScaledAgile's Consideration platform deliver framework adoption and agile maturity at the 500000 tier?",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-135",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "Does ScaledAgile's Agile at scale meet our bar for agile maturity, SAFe certified, and 50000 per seat?",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-136",
+    "topicId": "devops-transformation",
+    "topicName": "DevOps transformation",
+    "category": "Consideration",
+    "promptText": "Evaluate ScaledAgile's Consideration against our checklist: SAFe certified, enterprise scale, SAML, audit logs, 150000 ACV",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-137",
+    "topicId": "lean-portfolio-mgmt",
+    "topicName": "Lean portfolio management",
+    "category": "Conversion",
+    "promptText": "Is ScaledAgile's Lean portfolio management the best option under 500000 with enterprise scale and framework adoption?",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-138",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "Compare ScaledAgile's PI planning on framework adoption, agile maturity, SLA, and data residency",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-139",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "Does ScaledAgile's Consideration platform deliver agile maturity and SAFe certified at the 150000 tier?",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-adversarial-140",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "What's the catch with ScaledAgile's PI planning?",
+    "isotope": "adversarial",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-adversarial-141",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "Where does ScaledAgile's Consideration platform fall short of its G2 reviews?",
+    "isotope": "adversarial",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-adversarial-142",
+    "topicId": "devops-transformation",
+    "topicName": "DevOps transformation",
+    "category": "Consideration",
+    "promptText": "Has ScaledAgile's DevOps transformation quality regressed since the last platform rewrite?",
+    "isotope": "adversarial",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-adversarial-143",
+    "topicId": "lean-portfolio-mgmt",
+    "topicName": "Lean portfolio management",
+    "category": "Conversion",
+    "promptText": "What do ScaledAgile's churned customers say about Lean portfolio management in year two?",
+    "isotope": "adversarial",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-adversarial-144",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "Why shouldn't we sign with ScaledAgile for PI planning?",
+    "isotope": "adversarial",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-adversarial-145",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "What's the catch with ScaledAgile's Agile at scale?",
+    "isotope": "adversarial",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-adversarial-147",
+    "topicId": "lean-portfolio-mgmt",
+    "topicName": "Lean portfolio management",
+    "category": "Conversion",
+    "promptText": "Has ScaledAgile's Lean portfolio management quality regressed since the last platform rewrite?",
+    "isotope": "adversarial",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-adversarial-148",
+    "topicId": "pi-planning",
+    "topicName": "PI planning",
+    "category": "Consideration",
+    "promptText": "What do ScaledAgile's churned customers say about PI planning in year two?",
+    "isotope": "adversarial",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-adversarial-149",
+    "topicId": "agile-at-scale",
+    "topicName": "Agile at scale",
+    "category": "Consideration",
+    "promptText": "Why shouldn't we sign with ScaledAgile for Agile at scale?",
+    "isotope": "adversarial",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-validation-declarative-150",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "Are we making the right call standardizing on ScaledAgile for Business agility?",
+    "isotope": "declarative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-declarative-151",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "Will we regret signing ScaledAgile for Conversion?",
+    "isotope": "declarative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-declarative-152",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "Is ScaledAgile a safe bet for Business agility at 500000 ACV?",
+    "isotope": "declarative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-declarative-153",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "Can we actually trust ScaledAgile with Agile coaching in production?",
+    "isotope": "declarative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-declarative-154",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "Is ScaledAgile still the right choice for Conversion given DevOps pipeline modernization?",
+    "isotope": "declarative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-declarative-155",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "Are we making the right call standardizing on ScaledAgile for Agile coaching?",
+    "isotope": "declarative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-declarative-157",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "Is ScaledAgile a safe bet for Agile coaching at 150000 ACV?",
+    "isotope": "declarative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-declarative-158",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "Can we actually trust ScaledAgile with Business agility in production?",
+    "isotope": "declarative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-declarative-159",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "Is ScaledAgile still the right choice for Conversion given post-merger integration?",
+    "isotope": "declarative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-comparative-160",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "Should we sign ScaledAgile or renew Atlassian for Business agility?",
+    "isotope": "comparative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-comparative-161",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "We're torn between ScaledAgile and Atlassian for Conversion — which is the safer bet?",
+    "isotope": "comparative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-comparative-162",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "Is ScaledAgile enough of an upgrade over Atlassian to justify migration cost during digital transformation initiative?",
+    "isotope": "comparative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-comparative-163",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "ScaledAgile vs Atlassian — which are we less likely to regret in three years?",
+    "isotope": "comparative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-comparative-164",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "Final check: ScaledAgile or Atlassian for Business agility as we enter scaling from team to portfolio level?",
+    "isotope": "comparative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-comparative-165",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "Should we sign ScaledAgile or renew Atlassian for Agile coaching?",
+    "isotope": "comparative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-comparative-167",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "Is ScaledAgile enough of an upgrade over Atlassian to justify migration cost during lean-agile operating model rollout?",
+    "isotope": "comparative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-comparative-169",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "Final check: ScaledAgile or Atlassian for Agile coaching as we enter enterprise agile adoption?",
+    "isotope": "comparative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-170",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "I'm a Enterprise Architect about to commit 500000 ACV to ScaledAgile for Business agility — is this smart?",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-171",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "As a Agile Coach leading post-merger integration, will ScaledAgile's Agile coaching actually work for us?",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-172",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "Talk me through whether ScaledAgile is right for a VP of Engineering running SAFe certified in DevOps pipeline modernization",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-173",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "I'm a PMO Director facing lean-agile operating model rollout — is ScaledAgile really the right vendor?",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-174",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "For a team in our situation (CTO, digital transformation initiative), is ScaledAgile's Business agility the right fit?",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-175",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "I'm a Head of Transformation about to commit 150000 ACV to ScaledAgile for Agile coaching — is this smart?",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-176",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "As a Enterprise Architect leading scaling from team to portfolio level, will ScaledAgile's Business agility actually work for us?",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-177",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "Talk me through whether ScaledAgile is right for a Agile Coach running enterprise scale in post-merger integration",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-178",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "I'm a VP of Engineering facing DevOps pipeline modernization — is ScaledAgile really the right vendor?",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-179",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "For a team in our situation (PMO Director, lean-agile operating model rollout), is ScaledAgile's Agile coaching the right fit?",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-180",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "We need Conversion that's SAFe certified, enterprise scale, and under 50000 ACV — does ScaledAgile check every box?",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-181",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "Final check: ScaledAgile's Agile coaching against our requirements (enterprise scale, framework adoption, 150000, enterprise agile adoption)",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-182",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "ScaledAgile claims framework adoption and agile maturity — does their security questionnaire actually back it up?",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-183",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "Does ScaledAgile really satisfy agile maturity, SAFe certified, and the 50000 ceiling for Agile coaching?",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-184",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "We're about to sign ScaledAgile's MSA — do they really meet SAFe certified and enterprise scale or is it marketing?",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-185",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "We need Conversion that's enterprise scale, framework adoption, and under 500000 ACV — does ScaledAgile check every box?",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-186",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "Final check: ScaledAgile's Business agility against our requirements (framework adoption, agile maturity, 50000, digital transformation initiative)",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-187",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "ScaledAgile claims agile maturity and SAFe certified — does their security questionnaire actually back it up?",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-188",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "Does ScaledAgile really satisfy SAFe certified, enterprise scale, and the 500000 ceiling for Business agility?",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-189",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "We're about to sign ScaledAgile's MSA — do they really meet enterprise scale and framework adoption or is it marketing?",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-adversarial-190",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "Convince me we shouldn't sign ScaledAgile for Business agility",
+    "isotope": "adversarial",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-adversarial-191",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "What are we missing before we commit to ScaledAgile for Conversion?",
+    "isotope": "adversarial",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-adversarial-192",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "Give me the strongest argument against standardizing on ScaledAgile for Business agility",
+    "isotope": "adversarial",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-adversarial-193",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "What will we regret about choosing ScaledAgile for Agile coaching in 18 months?",
+    "isotope": "adversarial",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-adversarial-194",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "Poke holes in our plan to commit to ScaledAgile through scaling from team to portfolio level",
+    "isotope": "adversarial",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-adversarial-195",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "Convince me we shouldn't sign ScaledAgile for Agile coaching",
+    "isotope": "adversarial",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-adversarial-197",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "Give me the strongest argument against standardizing on ScaledAgile for Agile coaching",
+    "isotope": "adversarial",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-adversarial-198",
+    "topicId": "business-agility",
+    "topicName": "Business agility",
+    "category": "Conversion",
+    "promptText": "What will we regret about choosing ScaledAgile for Business agility in 18 months?",
+    "isotope": "adversarial",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-adversarial-199",
+    "topicId": "agile-coaching",
+    "topicName": "Agile coaching",
+    "category": "Conversion",
+    "promptText": "Poke holes in our plan to commit to ScaledAgile through enterprise agile adoption",
+    "isotope": "adversarial",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-acquisition-declarative-200",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "How do we procure ScaledAgile for Value streams?",
+    "isotope": "declarative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-declarative-201",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "What's ScaledAgile's enterprise sales cycle and minimum commitment for Conversion?",
+    "isotope": "declarative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-declarative-202",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "How do I get ScaledAgile into a POC for Value streams?",
+    "isotope": "declarative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-declarative-203",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "What's ScaledAgile's current pricing for Value streams and where are the negotiation levers?",
+    "isotope": "declarative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-declarative-204",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "We've decided on ScaledAgile for Value streams — what's the cleanest path to contract?",
+    "isotope": "declarative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-comparative-210",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "Onboarding ScaledAgile vs Atlassian for Value streams — which is faster to production?",
+    "isotope": "comparative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-comparative-211",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "ScaledAgile vs Atlassian — whose procurement process moves faster for enterprise Value streams?",
+    "isotope": "comparative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-comparative-212",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "Should we buy Value streams from ScaledAgile directly or through Atlassian's partner channel?",
+    "isotope": "comparative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-comparative-213",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "ScaledAgile or Atlassian — whose MSA is more favorable for Value streams?",
+    "isotope": "comparative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-comparative-214",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "Which vendor has shorter time-to-value for Value streams, ScaledAgile or Atlassian?",
+    "isotope": "comparative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-situated-220",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "I'm a VP of Engineering in DevOps pipeline modernization — what's the fastest way to get ScaledAgile under contract for Value streams?",
+    "isotope": "situated",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-situated-221",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "As a PMO Director, what's the smartest way to structure the ScaledAgile Value streams engagement?",
+    "isotope": "situated",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-situated-222",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "Best way for a CTO leading digital transformation initiative to get ScaledAgile deployed for Value streams this quarter",
+    "isotope": "situated",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-situated-223",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "I'm a Head of Transformation and I need ScaledAgile's Value streams live before enterprise agile adoption closes — how?",
+    "isotope": "situated",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-situated-224",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "How does a Enterprise Architect typically negotiate ScaledAgile's Conversion contract?",
+    "isotope": "situated",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-situated-225",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "I'm a Agile Coach in post-merger integration — what's the fastest way to get ScaledAgile under contract for Value streams?",
+    "isotope": "situated",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-situated-226",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "As a VP of Engineering, what's the smartest way to structure the ScaledAgile Value streams engagement?",
+    "isotope": "situated",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-situated-227",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "Best way for a PMO Director leading lean-agile operating model rollout to get ScaledAgile deployed for Value streams this quarter",
+    "isotope": "situated",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-situated-228",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "I'm a CTO and I need ScaledAgile's Value streams live before digital transformation initiative closes — how?",
+    "isotope": "situated",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-situated-229",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "How does a Head of Transformation typically negotiate ScaledAgile's Conversion contract?",
+    "isotope": "situated",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-230",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "Procure ScaledAgile for Value streams with framework adoption, agile maturity, and under 500000 ACV",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-231",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "Contract ScaledAgile for Value streams — must include agile maturity, SAFe certified, and support post-merger integration",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-232",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "Where can I get ScaledAgile's Value streams with SAFe certified, annual billing, and a 150000 ceiling?",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-233",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "ScaledAgile Value streams contract: enterprise scale, framework adoption, no auto-renew, live before lean-agile operating model rollout",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-234",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "Sign ScaledAgile for Value streams with framework adoption SLA, agile maturity, under 50000, this quarter",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-235",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "Procure ScaledAgile for Value streams with agile maturity, SAFe certified, and under 150000 ACV",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-236",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "Contract ScaledAgile for Value streams — must include SAFe certified, enterprise scale, and support scaling from team to portfolio level",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-237",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "Where can I get ScaledAgile's Value streams with enterprise scale, annual billing, and a 50000 ceiling?",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-238",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "ScaledAgile Value streams contract: framework adoption, agile maturity, no auto-renew, live before DevOps pipeline modernization",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-239",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "Sign ScaledAgile for Value streams with agile maturity SLA, SAFe certified, under 500000, this quarter",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-adversarial-240",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "What's the catch if we sign ScaledAgile's order form for Value streams today?",
+    "isotope": "adversarial",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-adversarial-241",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "Will ScaledAgile actually hit the deployment timeline for Value streams or should we plan for slippage?",
+    "isotope": "adversarial",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-adversarial-242",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "Any hidden fees, professional-services minimums, or true-ups buried in ScaledAgile's Value streams pricing?",
+    "isotope": "adversarial",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-adversarial-243",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "Is ScaledAgile's SLA actually enforceable or are the credits capped below the cost of downtime?",
+    "isotope": "adversarial",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-adversarial-244",
+    "topicId": "value-streams",
+    "topicName": "Value streams",
+    "category": "Conversion",
+    "promptText": "If we sign ScaledAgile for Value streams right now, what's the worst-case scenario in year one?",
+    "isotope": "adversarial",
+    "intent_stage": "acquisition"
+  }
+]

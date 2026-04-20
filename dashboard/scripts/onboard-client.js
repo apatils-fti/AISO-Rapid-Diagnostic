@@ -50,6 +50,8 @@ const skipGenerate = args.includes('--skip-generate');
 // full run.
 const limit = getArg('--limit');
 const limitArg = limit ? ` --limit ${limit}` : '';
+const promptsPath = getArg('--prompts');
+const promptsArg = promptsPath ? ` --prompts ${promptsPath}` : '';
 
 if (!configPath) {
   console.error('Usage: node scripts/onboard-client.js --config configs/fti.json');
@@ -143,7 +145,7 @@ async function main() {
   // After generation, find client_id from Supabase
   if (!state.clientId) {
     const clientConfig = JSON.parse(readFileSync(resolve(generatorDir, configPath), 'utf-8'));
-    const clientName = clientConfig.client?.name;
+    const clientName = clientConfig.client?.name || clientConfig.brand;
     if (clientName) {
       const { data } = await supabase
         .from('clients')
@@ -198,28 +200,28 @@ async function main() {
   // Step 2: Run Claude batch
   runStep(
     'Claude batch collection',
-    `cd "${dashboardDir}" && node scripts/batch-claude-check.js${limitArg}${supabaseArgs}`,
+    `cd "${dashboardDir}" && node scripts/batch-claude-check.js${promptsArg}${limitArg}${supabaseArgs}`,
     state
   );
 
   // Step 3: Run Gemini batch
   runStep(
     'Gemini batch collection',
-    `cd "${dashboardDir}" && node scripts/batch-gemini-check.js${limitArg}${supabaseArgs}`,
+    `cd "${dashboardDir}" && node scripts/batch-gemini-check.js${promptsArg}${limitArg}${supabaseArgs}`,
     state
   );
 
   // Step 4: Run Perplexity batch (direct API call, no localhost dependency)
   runStep(
     'Perplexity batch collection',
-    `cd "${dashboardDir}" && node scripts/batch-perplexity-check.js${limitArg}${supabaseArgs}`,
+    `cd "${dashboardDir}" && node scripts/batch-perplexity-check.js${promptsArg}${limitArg}${supabaseArgs}`,
     state
   );
 
   // Step 5: Run ChatGPT batch (direct API call, no localhost dependency)
   runStep(
     'ChatGPT batch collection',
-    `cd "${dashboardDir}" && node scripts/batch-chatgpt-check.js${limitArg}${supabaseArgs}`,
+    `cd "${dashboardDir}" && node scripts/batch-chatgpt-check.js${promptsArg}${limitArg}${supabaseArgs}`,
     state
   );
 
