@@ -2,18 +2,55 @@ import { Suspense } from 'react';
 import { PageContainer } from '@/components/layout';
 import { PromptTable } from '@/components/prompts';
 import { getPromptResults, getClients, getLatestRunDate } from '@/lib/db';
-import { EnrichmentFilters, PlatformDataProvider } from '@/components/shared';
+import { EnrichmentFilters, DateRangeFilter, PlatformDataProvider } from '@/components/shared';
+import { getAvailableRunDates } from '@/lib/db';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
 
 interface PromptsPageProps {
-  searchParams: Promise<{ client?: string; platform?: string; topic?: string; isotope?: string; sentiment?: string; intent?: string }>;
+  searchParams: Promise<{
+    client?: string;
+    platform?: string;
+    topic?: string;
+    isotope?: string;
+    sentiment?: string;
+    intent?: string;
+    date_from?: string;
+    date_to?: string;
+  }>;
 }
 
-async function PromptsContent({ clientId, platform, topic, isotope, clientName }: {
-  clientId: string; platform?: string; topic?: string; isotope?: string; clientName?: string;
+async function PromptsContent({
+  clientId,
+  platform,
+  topic,
+  isotope,
+  sentiment,
+  intent,
+  dateFrom,
+  dateTo,
+  clientName,
+}: {
+  clientId: string;
+  platform?: string;
+  topic?: string;
+  isotope?: string;
+  sentiment?: string;
+  intent?: string;
+  dateFrom?: string;
+  dateTo?: string;
+  clientName?: string;
 }) {
-  const promptData = await getPromptResults(clientId, platform, topic, isotope);
+  const promptData = await getPromptResults(
+    clientId,
+    platform,
+    topic,
+    isotope,
+    sentiment,
+    intent,
+    dateFrom,
+    dateTo,
+  );
 
   return (
     <div className="space-y-4">
@@ -26,9 +63,10 @@ async function PromptsContent({ clientId, platform, topic, isotope, clientName }
 export default async function PromptsPage({ searchParams }: PromptsPageProps) {
   const params = await searchParams;
   const clientId = params.client || DEFAULT_CLIENT_ID;
-  const [clients, runDate] = await Promise.all([
+  const [clients, runDate, availableDates] = await Promise.all([
     getClients(),
     getLatestRunDate(clientId),
+    getAvailableRunDates(clientId),
   ]);
 
   return (
@@ -40,6 +78,11 @@ export default async function PromptsPage({ searchParams }: PromptsPageProps) {
       runDate={runDate ?? undefined}
     >
       <PlatformDataProvider key={clientId} clientId={clientId}>
+        <DateRangeFilter
+          availableDates={availableDates}
+          currentFrom={params.date_from}
+          currentTo={params.date_to}
+        />
         <Suspense
           fallback={
             <div className="space-y-4">
@@ -53,6 +96,10 @@ export default async function PromptsPage({ searchParams }: PromptsPageProps) {
             platform={params.platform}
             topic={params.topic}
             isotope={params.isotope}
+            sentiment={params.sentiment}
+            intent={params.intent}
+            dateFrom={params.date_from}
+            dateTo={params.date_to}
             clientName={clients.find(c => c.id === clientId)?.name}
           />
         </Suspense>

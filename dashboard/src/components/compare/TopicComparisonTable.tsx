@@ -1,9 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useMemo } from 'react';
 import { ArrowUp, ArrowDown, Minus, ChevronDown, ChevronUp } from 'lucide-react';
-import { analyzedMetrics } from '@/lib/fixtures';
-import { getTopicPlatformStats, type TopicPlatformStats } from '@/lib/platform-data';
 import type { TopicPlatformStat, PlatformComparisonStats } from '@/lib/db';
 import { cn } from '@/lib/utils';
 import { PLATFORM_COLORS } from '@/lib/colors';
@@ -84,116 +82,67 @@ interface TopicComparisonTableProps {
   platformData?: PlatformComparisonStats[];
 }
 
-export function TopicComparisonTable({ selectedPlatforms, topicData, platformData }: TopicComparisonTableProps) {
+export function TopicComparisonTable({ selectedPlatforms, topicData }: TopicComparisonTableProps) {
   const [sortKey, setSortKey] = useState<SortKey>('delta');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
-  const [comparisons, setComparisons] = useState<TopicComparison[]>([]);
 
-  // Build comparisons from server-provided data or fall back to client fetch
-  useEffect(() => {
-    if (topicData && topicData.length > 0) {
-      // Use Supabase data passed from server component
-      const comparisonData = topicData.map(topic => {
-        const perplexityRate = (topic.platforms['perplexity'] ?? 0) * 100;
-        const chatgptRate = (topic.platforms['chatgpt_search'] ?? 0) * 100;
-        const geminiRate = (topic.platforms['gemini'] ?? 0) * 100;
-        const claudeRate = (topic.platforms['claude'] ?? 0) * 100;
+  // Build comparisons directly from server-provided Supabase data. Category
+  // is intentionally blank — `results` table doesn't have a topic_category
+  // column, and there's no separate `topics` table to join. The category
+  // badge below is conditional, so an empty string just means "no badge."
+  const comparisons: TopicComparison[] = useMemo(() => {
+    if (!topicData || topicData.length === 0) return [];
 
-        const rates = [perplexityRate, chatgptRate, geminiRate, claudeRate].filter(r => r > 0);
+    return topicData.map((topic) => {
+      const perplexityRate = (topic.platforms['perplexity'] ?? 0) * 100;
+      const chatgptRate = (topic.platforms['chatgpt_search'] ?? 0) * 100;
+      const geminiRate = (topic.platforms['gemini'] ?? 0) * 100;
+      const claudeRate = (topic.platforms['claude'] ?? 0) * 100;
 
-        return {
-          topicId: topic.topicId,
-          topicName: topic.topicName,
-          category: '',
-          perplexityRate: Math.round(perplexityRate),
-          chatgptRate: Math.round(chatgptRate),
-          geminiRate: Math.round(geminiRate),
-          claudeRate: Math.round(claudeRate),
-          delta: rates.length > 1
-            ? Math.round(Math.max(...rates) - Math.min(...rates))
-            : 0,
-        };
-      });
-      setComparisons(comparisonData);
-      return;
-    }
+      const rates = [perplexityRate, chatgptRate, geminiRate, claudeRate].filter((r) => r > 0);
 
-    // Fall back to client-side fetch from platform-data
-    if (typeof window === 'undefined') return;
-
-    async function loadData() {
-      const comparisonData = await Promise.all(
-        analyzedMetrics.topicResults.map(async (topic) => {
-          const topicStats = await getTopicPlatformStats(topic.topicId);
-
-          const findRate = (platform: string) => {
-            const stat = topicStats.find((s) => s.platform === platform);
-            return stat ? stat.brandMentionRate * 100 : 0;
-          };
-
-          const perplexityRate = findRate('perplexity');
-          const chatgptRate = findRate('chatgpt_search');
-          const geminiRate = findRate('gemini');
-          const claudeRate = findRate('claude');
-
-          const rates = [perplexityRate, chatgptRate, geminiRate, claudeRate].filter(
-            (r) => r > 0
-          );
-
-          return {
-            topicId: topic.topicId,
-            topicName: topic.topicName,
-            category: topic.category,
-            perplexityRate: Math.round(perplexityRate),
-            chatgptRate: Math.round(chatgptRate),
-            geminiRate: Math.round(geminiRate),
-            claudeRate: Math.round(claudeRate),
-            delta: Math.round(
-              Math.max(perplexityRate, chatgptRate, geminiRate, claudeRate) -
-                Math.min(
-                  ...[perplexityRate, chatgptRate, geminiRate, claudeRate].filter(
-                    (r) => r > 0
-                  ),
-                  100
-                )
-            ),
-          };
-        })
-      );
-
-      setComparisons(comparisonData);
-    }
-
-    loadData();
+      return {
+        topicId: topic.topicId,
+        topicName: topic.topicName,
+        category: '',
+        perplexityRate: Math.round(perplexityRate),
+        chatgptRate: Math.round(chatgptRate),
+        geminiRate: Math.round(geminiRate),
+        claudeRate: Math.round(claudeRate),
+        delta: rates.length > 1 ? Math.round(Math.max(...rates) - Math.min(...rates)) : 0,
+      };
+    });
   }, [topicData]);
 
   // Sort comparisons
-  const sortedComparisons = [...comparisons].sort((a, b) => {
-    let comparison = 0;
+  const sortedComparisons = useMemo(() => {
+    return [...comparisons].sort((a, b) => {
+      let comparison = 0;
 
-    switch (sortKey) {
-      case 'topic':
-        comparison = a.topicName.localeCompare(b.topicName);
-        break;
-      case 'perplexity':
-        comparison = a.perplexityRate - b.perplexityRate;
-        break;
-      case 'chatgpt':
-        comparison = a.chatgptRate - b.chatgptRate;
-        break;
-      case 'gemini':
-        comparison = a.geminiRate - b.geminiRate;
-        break;
-      case 'claude':
-        comparison = a.claudeRate - b.claudeRate;
-        break;
-      case 'delta':
-        comparison = Math.abs(a.delta) - Math.abs(b.delta);
-        break;
-    }
+      switch (sortKey) {
+        case 'topic':
+          comparison = a.topicName.localeCompare(b.topicName);
+          break;
+        case 'perplexity':
+          comparison = a.perplexityRate - b.perplexityRate;
+          break;
+        case 'chatgpt':
+          comparison = a.chatgptRate - b.chatgptRate;
+          break;
+        case 'gemini':
+          comparison = a.geminiRate - b.geminiRate;
+          break;
+        case 'claude':
+          comparison = a.claudeRate - b.claudeRate;
+          break;
+        case 'delta':
+          comparison = Math.abs(a.delta) - Math.abs(b.delta);
+          break;
+      }
 
-    return sortDirection === 'desc' ? -comparison : comparison;
-  });
+      return sortDirection === 'desc' ? -comparison : comparison;
+    });
+  }, [comparisons, sortKey, sortDirection]);
 
   const handleSort = (key: SortKey) => {
     if (sortKey === key) {
@@ -253,6 +202,13 @@ export function TopicComparisonTable({ selectedPlatforms, topicData, platformDat
       })
     : platformColumns;
 
+  if (comparisons.length === 0) {
+    return (
+      <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-12 text-center">
+        <p className="text-sm text-[#9CA3AF]">No topic data available.</p>
+      </div>
+    );
+  }
 
   return (
     <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] overflow-hidden">

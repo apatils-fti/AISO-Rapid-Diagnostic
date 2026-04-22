@@ -78,13 +78,18 @@ async function getEnrichedResults(clientId: string, filters: QueryFilters): Prom
   return data as EnrichedResult[];
 }
 
-async function getAvailablePlatforms(clientId: string): Promise<string[]> {
+async function getAvailablePlatforms(clientId: string, filters: QueryFilters): Promise<string[]> {
   if (!supabaseService) return [];
 
-  const { data: runs } = await supabaseService
+  // Scope to the same date window as the rest of the page so the platform
+  // pills don't lie about coverage when a date filter is active.
+  let runsQuery = supabaseService
     .from('runs')
     .select('id')
     .eq('client_id', clientId);
+  if (filters.date_from) runsQuery = runsQuery.gte('run_date', filters.date_from);
+  if (filters.date_to) runsQuery = runsQuery.lte('run_date', filters.date_to);
+  const { data: runs } = await runsQuery;
 
   if (!runs || runs.length === 0) return [];
 
@@ -103,7 +108,7 @@ async function DashboardContent({ clientId, filters }: { clientId: string; filte
     getOverviewStats(clientId, filters),
     getPlatformComparison(clientId, filters),
     getEnrichedResults(clientId, filters),
-    getAvailablePlatforms(clientId),
+    getAvailablePlatforms(clientId, filters),
     getClients(),
     getAvailableRunDates(clientId),
     getWeeklySummary(clientId),

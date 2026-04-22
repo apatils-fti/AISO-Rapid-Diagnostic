@@ -895,12 +895,38 @@ export interface TopicIsotopeRow {
   competitorRates: Record<string, number>; // competitor name → mention rate
 }
 
+/**
+ * Read the client's configured competitor list from `clients.config`. Accepts
+ * both the flat `string[]` shape (used by the seed scripts) and the
+ * `[{name, domains}]` shape (used by the generator). Returns [] when the
+ * client row or competitors array is missing — callers decide whether that's
+ * an empty state or a hard failure.
+ */
+async function fetchConfiguredCompetitors(clientId: string): Promise<string[]> {
+  const sb = reader();
+  if (!sb) return [];
+  const { data } = await sb
+    .from('clients').select('config').eq('id', clientId).maybeSingle();
+  const cfg = (data?.config ?? {}) as {
+    competitors?: Array<string | { name?: string }>;
+  };
+  return (cfg.competitors ?? [])
+    .map((c) => (typeof c === 'string' ? c : c?.name))
+    .filter((n): n is string => Boolean(n));
+}
+
 export async function getTopicIsotopeStats(
   clientId: string,
   filters?: QueryFilters
 ): Promise<TopicIsotopeRow[]> {
   const results = await getAllResultsForClient(clientId, filters);
   if (results.length === 0) return [];
+
+  // Source of truth for which competitors should appear in every topic's
+  // breakdown — not the observed mentions, which only contain brands that
+  // actually showed up in at least one response. Without this seeding, a
+  // competitor with zero mentions silently disappears from the topic table.
+  const configuredCompetitors = await fetchConfiguredCompetitors(clientId);
 
   const map = new Map<string, {
     name: string;
@@ -953,6 +979,12 @@ export async function getTopicIsotopeStats(
       };
     }
     const competitorRates: Record<string, number> = {};
+    // Seed every configured competitor at 0 first, then overwrite with the
+    // observed rate. Competitors with no mentions stay at 0 and still get a
+    // column in the per-topic table.
+    for (const name of configuredCompetitors) {
+      competitorRates[name] = 0;
+    }
     for (const [name, count] of entry.competitors) {
       competitorRates[name] = entry.totalCount > 0 ? count / entry.totalCount : 0;
     }
@@ -993,8 +1025,10 @@ export async function getCompetitorOverview(
   // Client stats
   const clientMentioned = results.filter(r => r.client_mentioned).length;
 
-  // Look up the client's display name for the `isClient: true` row. Was
-  // hardcoded to 'J.Crew', which silently mislabelled every other client.
+  // Fetch client name + configured competitor list. The competitor list is
+  // the source of truth for which brands should appear in the rollup; the
+  // observed mentions only contain brands that actually showed up in at
+  // least one response, so without seeding, 0-mention competitors disappear.
   const sb = reader();
   let clientName = '';
   if (sb) {
@@ -1002,12 +1036,17 @@ export async function getCompetitorOverview(
       .from('clients').select('name').eq('id', clientId).maybeSingle();
     clientName = clientRow?.name ?? '';
   }
+  const configuredCompetitors = await fetchConfiguredCompetitors(clientId);
 
-  // Competitor stats from competitor_mentions JSONB
+  // Seed compMap with every configured competitor at zero before accumulation.
+  // The observed-mention loop below only adds to existing entries.
   const compMap = new Map<string, {
     mentions: number;
     topicMentions: Map<string, { mentioned: number; total: number }>;
   }>();
+  for (const name of configuredCompetitors) {
+    compMap.set(name, { mentions: 0, topicMentions: new Map() });
+  }
 
   for (const r of results) {
     const cm = r.competitor_mentions ?? {};
@@ -1225,14 +1264,22 @@ export async function getPromptResults(
   clientId: string,
   platform?: string,
   topicFilter?: string,
-  isotopeFilter?: string
+  isotopeFilter?: string,
+  sentimentFilter?: string,
+  conversionIntentFilter?: string,
+  dateFrom?: string,
+  dateTo?: string
 ): Promise<PromptResultRow[]> {
   const sb = reader();
   if (!sb) return [];
 
   try {
-    // Get run IDs
-    const { data: runs } = await sb.from('runs').select('id').eq('client_id', clientId);
+    // Get run IDs, scoped by date range to match the global date filter on
+    // every other page query.
+    let runsQuery = sb.from('runs').select('id').eq('client_id', clientId);
+    if (dateFrom) runsQuery = runsQuery.gte('run_date', dateFrom);
+    if (dateTo) runsQuery = runsQuery.lte('run_date', dateTo);
+    const { data: runs } = await runsQuery;
     if (!runs || runs.length === 0) return [];
     const runIds = runs.map((r: any) => r.id);
 
@@ -1245,6 +1292,8 @@ export async function getPromptResults(
     if (platform && platform !== 'all') query = query.eq('platform', platform);
     if (topicFilter) query = query.eq('topic_id', topicFilter);
     if (isotopeFilter) query = query.eq('isotope', isotopeFilter);
+    if (sentimentFilter && sentimentFilter !== 'all') query = query.eq('sentiment', sentimentFilter);
+    if (conversionIntentFilter && conversionIntentFilter !== 'all') query = query.eq('conversion_intent', conversionIntentFilter);
 
     const { data, error } = await query;
     if (error || !data) return [];
