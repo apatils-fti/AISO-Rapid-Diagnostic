@@ -20,6 +20,17 @@
 const fs = require('fs');
 const path = require('path');
 
+// Safety net: a stray unhandled rejection anywhere in the script crashes the
+// nightly run with exit code 1 and loses hours of work. Log and keep going —
+// checkPrompt's own try/catch handles the current prompt, and the next
+// iteration continues. This runner uses fetch() so it doesn't have the
+// Content-Length / raw-JSON.parse bugs that hit the http.request-based
+// runners (claude, gemini), but the handler is cheap safety for any future
+// surprise.
+process.on('unhandledRejection', (reason) => {
+  console.error('[batch-chatgpt] Unhandled rejection:', reason);
+});
+
 // ---------------------------------------------------------------------------
 // CLI args
 // ---------------------------------------------------------------------------

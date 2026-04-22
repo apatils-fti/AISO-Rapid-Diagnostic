@@ -9,6 +9,16 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
+// Safety net: a stray unhandled rejection anywhere in the script (e.g. a
+// JSON.parse throwing inside an event handler, a Supabase call that rejects
+// without being awaited) crashes the nightly run with exit code 1 and loses
+// ~6 hours of work. Log and keep going — checkPrompt's own try/catch handles
+// the current prompt, and the next iteration of the loop continues. Stability
+// of the full run matters more than fidelity on any individual prompt.
+process.on('unhandledRejection', (reason) => {
+  console.error('[batch-gemini] Unhandled rejection:', reason);
+});
+
 // Parse command-line arguments
 function parseArgs() {
   const args = process.argv.slice(2);
@@ -149,16 +159,28 @@ function makeRequest(url, body) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Content-Length': data.length,
+        // UTF-8 byte length, NOT string length. Multi-byte chars like em-dash
+        // (—) or smart-quotes make data.length under-report and truncate the
+        // JSON body server-side → 400 errors.
+        'Content-Length': Buffer.byteLength(data),
       },
     };
 
     const req = (urlObj.protocol === 'https:' ? https : require('http')).request(options, (res) => {
       let responseData = '';
       res.on('data', chunk => responseData += chunk);
+      res.on('error', reject);
       res.on('end', () => {
         if (res.statusCode === 200) {
-          resolve(JSON.parse(responseData));
+          // JSON.parse inside an event handler throws synchronously; wrap
+          // so malformed bodies (partial response, proxy injection, etc.)
+          // become a rejection instead of an uncaughtException that kills
+          // the batch process.
+          try {
+            resolve(JSON.parse(responseData));
+          } catch (err) {
+            reject(new Error(`Invalid JSON response: ${err.message}. Body (first 200 chars): ${responseData.slice(0, 200)}`));
+          }
         } else {
           reject(new Error(`HTTP ${res.statusCode}: ${responseData}`));
         }

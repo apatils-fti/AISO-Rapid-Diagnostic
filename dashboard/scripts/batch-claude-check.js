@@ -9,6 +9,16 @@ const https = require('https');
 const fs = require('fs');
 const path = require('path');
 
+// Safety net: a stray unhandled rejection anywhere in the script (e.g. a
+// JSON.parse throwing inside an event handler, a Supabase call that rejects
+// without being awaited) crashes the nightly run with exit code 1 and loses
+// ~6 hours of work. Log and keep going — checkPrompt's own try/catch handles
+// the current prompt, and the next iteration of the loop continues. Stability
+// of the full run matters more than fidelity on any individual prompt.
+process.on('unhandledRejection', (reason) => {
+  console.error('[batch-claude] Unhandled rejection:', reason);
+});
+
 // Parse command-line arguments
 function parseArgs() {
   const args = process.argv.slice(2);
@@ -149,16 +159,29 @@ function makeRequest(url, body) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Content-Length': data.length,
+        // UTF-8 byte length, NOT string length. Em-dashes (—) and other
+        // multi-byte chars made this under-report on ~40% of ScaledAgile
+        // prompts, truncating the JSON body server-side → 400s.
+        'Content-Length': Buffer.byteLength(data),
       },
     };
 
     const req = (urlObj.protocol === 'https:' ? https : require('http')).request(options, (res) => {
       let responseData = '';
       res.on('data', chunk => responseData += chunk);
+      res.on('error', reject);
       res.on('end', () => {
         if (res.statusCode === 200) {
-          resolve(JSON.parse(responseData));
+          // JSON.parse inside an event handler throws synchronously on bad
+          // input, which becomes an uncaughtException that kills the process
+          // with exit code 1. Wrap it so malformed bodies (partial response,
+          // proxy injecting HTML, etc.) become a rejection that checkPrompt's
+          // try/catch can handle, and the batch moves on to the next prompt.
+          try {
+            resolve(JSON.parse(responseData));
+          } catch (err) {
+            reject(new Error(`Invalid JSON response: ${err.message}. Body (first 200 chars): ${responseData.slice(0, 200)}`));
+          }
         } else {
           reject(new Error(`HTTP ${res.statusCode}: ${responseData}`));
         }
