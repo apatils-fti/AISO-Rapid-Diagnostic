@@ -550,6 +550,40 @@ row with `brand`, `competitors[]`, `client_domains[]` columns, or stand up a
 
 ---
 
+### P2: Migrate `CompetitorQuickCompare` and `CompetitorCard` from fixture data to Supabase
+
+**Problem**: Two components on the dashboard still read J.Crew-specific
+fixture data instead of the live Supabase rows, so they render J.Crew
+competitors regardless of the selected client.
+
+- `dashboard/src/components/dashboard/CompetitorQuickCompare.tsx` — uses
+  `analyzedMetrics.competitorOverview` and `analyzedMetrics.textMetrics`
+  (both from `src/fixtures/analyzedMetrics.json`, which is a J.Crew snapshot).
+  Rendered in `dashboard/page.tsx` as the "Competitor Benchmark" card on the
+  Executive Summary, so picking ScaledAgile in the client switcher still
+  shows the J.Crew leaderboard.
+- `dashboard/src/components/competitors/CompetitorCard.tsx` — has a literal
+  `filteredBrandMetrics['J.Crew']` lookup at line 41 (for the gap-vs-client
+  computation) and a hardcoded "vs J.Crew" label at line 82.
+
+**Solution**: Both components should consume the same Supabase-backed data
+that the Competitors page already reads via `getCompetitorOverview()` (now
+client-name-aware after 9f1b07a's follow-up commit). The fixture path can
+stay as a graceful fallback when Supabase is unreachable, but the live read
+should be the default.
+
+**Files to change**:
+- `dashboard/src/components/dashboard/CompetitorQuickCompare.tsx`
+- `dashboard/src/components/competitors/CompetitorCard.tsx`
+- Possibly `dashboard/src/lib/platform-data.ts` (the existing
+  `getOverallBrandMetrics()` already pulls from Supabase — extend it to
+  return per-competitor rows so `CompetitorQuickCompare` can drop the
+  fixture import entirely).
+
+**Effort**: 1 day
+
+---
+
 ### Known gap: `configs/fti.json` uses old schema
 
 Not a TODO per se, but worth capturing: `generator/configs/fti.json` is

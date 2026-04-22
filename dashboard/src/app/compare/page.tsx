@@ -3,14 +3,18 @@ import { PageContainer } from '@/components/layout';
 import { PlatformComparison } from '@/components/compare/PlatformComparison';
 import { TopicComparisonTable } from '@/components/compare/TopicComparisonTable';
 import { PlatformDataProvider } from '@/components/shared';
-import { getPlatformComparison, getTopicPlatformStats } from '@/lib/db';
+import { getPlatformComparison, getTopicPlatformStats, getClients } from '@/lib/db';
 
-const CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
+const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
 
-async function CompareContent() {
+interface ComparePageProps {
+  searchParams: Promise<{ client?: string }>;
+}
+
+async function CompareContent({ clientId }: { clientId: string }) {
   const [platformStats, topicStats] = await Promise.all([
-    getPlatformComparison(CLIENT_ID),
-    getTopicPlatformStats(CLIENT_ID),
+    getPlatformComparison(clientId),
+    getTopicPlatformStats(clientId),
   ]);
 
   if (platformStats.length === 0) {
@@ -32,13 +36,19 @@ async function CompareContent() {
   );
 }
 
-export default function ComparePage() {
+export default async function ComparePage({ searchParams }: ComparePageProps) {
+  const params = await searchParams;
+  const clientId = params.client || DEFAULT_CLIENT_ID;
+  const clients = await getClients();
+
   return (
     <PageContainer
       title="Platform Comparison"
       description="Compare your brand's visibility across AI search platforms"
+      clients={clients.map(c => ({ id: c.id, name: c.name }))}
+      currentClientId={clientId}
     >
-      <PlatformDataProvider clientId={CLIENT_ID}>
+      <PlatformDataProvider key={clientId} clientId={clientId}>
         <Suspense
           fallback={
             <div className="flex items-center justify-center py-20">
@@ -47,7 +57,7 @@ export default function ComparePage() {
             </div>
           }
         >
-          <CompareContent />
+          <CompareContent clientId={clientId} />
         </Suspense>
       </PlatformDataProvider>
     </PageContainer>

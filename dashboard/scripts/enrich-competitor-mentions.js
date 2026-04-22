@@ -26,13 +26,26 @@ config({ path: resolve(__dirname, '..', '.env.local') });
 // ─── Config ──────────────────────────────────────────────────
 const BATCH_SIZE = 50;
 
-const COMPETITORS = [
+// Default (J.Crew) competitor patterns. Used only in backfill mode (no
+// --client-id). When --client-id is set, competitors are fetched from
+// clients.config.competitors and patterns are auto-generated.
+const DEFAULT_COMPETITORS = [
   { name: 'Banana Republic', patterns: [/banana\s*republic/gi] },
   { name: 'Everlane', patterns: [/everlane/gi] },
   { name: 'Gap', patterns: [/\bgap\b(?!\s+(?:between|in|analysis|from|of|to))/gi] },
   { name: 'Abercrombie & Fitch', patterns: [/abercrombie\s*(?:&|and)?\s*fitch/gi, /abercrombie/gi] },
   { name: 'Club Monaco', patterns: [/club\s*monaco/gi] },
 ];
+
+// Auto-generate a case-insensitive, word-boundary-anchored pattern from a
+// competitor name. Hand-tune the regex (like the J.Crew Gap exclusion above)
+// for competitors with common-word names ('Gap', 'Apex', 'Pulse') to avoid
+// false positives. Distinctive proper nouns (Atlassian, ServiceNow) are
+// fine with the auto-generated form.
+function competitorFromName(name) {
+  const escaped = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  return { name, patterns: [new RegExp(`\\b${escaped}\\b`, 'gi')] };
+}
 
 // ─── CLI args ────────────────────────────────────────────────
 const args = process.argv.slice(2);
@@ -56,9 +69,9 @@ if (!supabaseUrl || !supabaseKey) {
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 // ─── Detection ───────────────────────────────────────────────
-function detectCompetitors(text) {
+function detectCompetitors(text, competitors) {
   const mentions = {};
-  for (const comp of COMPETITORS) {
+  for (const comp of competitors) {
     let count = 0;
     for (const pattern of comp.patterns) {
       const matches = text.match(pattern);
@@ -75,6 +88,34 @@ async function main() {
   console.log('  Competitor Mentions Enrichment');
   console.log('═══════════════════════════════════════════════');
   console.log(`  Scope: ${clientId ? `client ${clientId}` : 'ALL clients (backfill mode)'}`);
+
+  // Resolve the competitor list. With --client-id, read from clients.config
+  // and hard-fail if it's empty (silently writing {} for every result is worse
+  // than a loud error). Without --client-id (backfill), use the J.Crew defaults.
+  let competitors;
+  if (clientId) {
+    const { data: clientRow, error: clientErr } = await supabase
+      .from('clients').select('config').eq('id', clientId).maybeSingle();
+    if (clientErr) {
+      console.error(`  ✗ Client lookup failed: ${clientErr.message}`);
+      process.exit(1);
+    }
+    const cfgList = clientRow?.config?.competitors ?? [];
+    const names = cfgList
+      .map(c => (typeof c === 'string' ? c : c?.name))
+      .filter(Boolean);
+    if (names.length === 0) {
+      console.error(
+        `  ✗ Client ${clientId} has no config.competitors. Refusing to run — would silently produce empty competitor_mentions for every result. Populate clients.config.competitors first.`
+      );
+      process.exit(1);
+    }
+    competitors = names.map(competitorFromName);
+    console.log(`  Competitors (from clients.config): ${names.join(', ')}`);
+  } else {
+    competitors = DEFAULT_COMPETITORS;
+    console.log(`  Competitors (J.Crew defaults): ${competitors.map(c => c.name).join(', ')}`);
+  }
 
   let query = supabase
     .from('results')
@@ -107,7 +148,7 @@ async function main() {
     const batch = rows.slice(i, i + BATCH_SIZE);
     const updates = batch.map(row => ({
       id: row.id,
-      competitor_mentions: detectCompetitors(row.response_text || ''),
+      competitor_mentions: detectCompetitors(row.response_text || '', competitors),
     }));
 
     for (const update of updates) {

@@ -993,6 +993,16 @@ export async function getCompetitorOverview(
   // Client stats
   const clientMentioned = results.filter(r => r.client_mentioned).length;
 
+  // Look up the client's display name for the `isClient: true` row. Was
+  // hardcoded to 'J.Crew', which silently mislabelled every other client.
+  const sb = reader();
+  let clientName = '';
+  if (sb) {
+    const { data: clientRow } = await sb
+      .from('clients').select('name').eq('id', clientId).maybeSingle();
+    clientName = clientRow?.name ?? '';
+  }
+
   // Competitor stats from competitor_mentions JSONB
   const compMap = new Map<string, {
     mentions: number;
@@ -1022,7 +1032,7 @@ export async function getCompetitorOverview(
 
   // Add client as first entry
   rows.push({
-    name: 'J.Crew', // Will be dynamic when multi-client
+    name: clientName,
     isClient: true,
     mentionRate: total > 0 ? clientMentioned / total : 0,
     totalMentions: clientMentioned,

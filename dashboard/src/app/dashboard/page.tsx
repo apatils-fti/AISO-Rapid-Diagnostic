@@ -114,21 +114,21 @@ async function DashboardContent({ clientId, filters }: { clientId: string; filte
   const platform = filters.platform || 'all';
   const isSinglePlatform = platform !== 'all';
 
-  // First Mention Rate requires the competitor list from the client's config
-  // row to scan response text for competitor positioning. Config shape
-  // mirrors generator/configs/*.json: { competitors: [{name, domains}], ... }.
-  // If the shape is missing or empty we fall back to hardcoded J.Crew
-  // competitors so the dashboard isn't silently broken on the default client.
-  // TODO: remove the hardcoded fallback once every clients row has a full
-  //       config JSON populated.
-  const clientConfig = (client?.config ?? {}) as { competitors?: Array<{ name: string }> };
-  const competitorNames =
-    clientConfig.competitors?.map(c => c.name).filter(Boolean) ?? [];
+  // First Mention Rate needs the competitor list from clients.config to scan
+  // response text for competitor positioning. Config shape varies by client:
+  // generator output uses `[{name, domains}]`, the seed scripts use flat
+  // `string[]`. Accept both. Empty when config is absent — we never fall back
+  // to a hardcoded list, since that silently mislabels every other client as
+  // J.Crew (the bug that motivated this fix).
+  const clientConfig = (client?.config ?? {}) as {
+    competitors?: Array<string | { name?: string }>;
+  };
+  const competitorNames = (clientConfig.competitors ?? [])
+    .map(c => (typeof c === 'string' ? c : c?.name))
+    .filter((n): n is string => Boolean(n));
   const brandContext = {
-    clientName: client?.name || 'J.Crew',
-    competitorNames: competitorNames.length > 0
-      ? competitorNames
-      : ['Banana Republic', 'Everlane', 'Madewell', 'Uniqlo', 'Gap'],
+    clientName: client?.name ?? '',
+    competitorNames,
   };
 
   const visibility = getVisibilityScore(results, isSinglePlatform, weights, brandContext);
@@ -211,7 +211,7 @@ Wins Comparisons = comparative prompts where brand gets final recommendation / t
       </div>
 
       {/* Executive Summary */}
-      <ExecutiveSummary overviewData={overview} clientName={client?.name || 'J.Crew'} />
+      <ExecutiveSummary overviewData={overview} clientName={client?.name ?? ''} />
 
       {/* Weekly Summary — only rendered when ≥2 distinct run_dates exist
           (server-side gate via getWeeklySummary returning null) */}
