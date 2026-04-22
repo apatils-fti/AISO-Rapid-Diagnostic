@@ -2,32 +2,77 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowLeft, ExternalLink, Link2, MessageSquare } from 'lucide-react';
-import { ScoreGauge, Badge, StatusBadge, LinearScore } from '@/components/shared';
-import { ISOTOPE_TYPES, ISOTOPE_LABELS, ISOTOPE_DESCRIPTIONS, getPromptsForTopic, analyzedMetrics } from '@/lib/fixtures';
-import { COMPETITOR_COLORS, getHeatmapBgClass, getHeatmapTextClass, getPositionColor } from '@/lib/colors';
+import { ArrowLeft, Link2, MessageSquare } from 'lucide-react';
+import { ScoreGauge, Badge, LinearScore } from '@/components/shared';
+import { COMPETITOR_COLORS, getHeatmapBgClass, getHeatmapTextClass } from '@/lib/colors';
 import { PlatformResponseViewer } from './PlatformResponseViewer';
 import { cn } from '@/lib/utils';
-import type { TopicResult, IsotopeType } from '@/lib/types';
+import type { TopicDetailData } from '@/lib/db';
 
 export type TopicDetailMode = 'citations' | 'mentions';
 
+// Isotope taxonomy inlined locally — these are pure presentation strings, not
+// J.Crew-specific data. Keeping them here avoids pulling @/lib/fixtures (and
+// the J.Crew analyzedMetrics snapshot) into this component's import graph.
+const ISOTOPE_ORDER = [
+  'informational',
+  'commercial',
+  'comparative',
+  'persona',
+  'specific',
+  'conversational',
+] as const;
+
+const ISOTOPE_LABELS: Record<string, string> = {
+  informational: 'Informational',
+  commercial: 'Commercial',
+  comparative: 'Comparative',
+  persona: 'Persona',
+  specific: 'Specific',
+  conversational: 'Conversational',
+};
+
+const ISOTOPE_DESCRIPTIONS: Record<string, string> = {
+  informational: 'Educational queries asking "What is X?"',
+  commercial: 'Buying intent queries like "Best X tools"',
+  comparative: 'Head-to-head queries like "X vs Y vs Z"',
+  persona: 'Role-based queries like "As a [role], what should I use?"',
+  specific: 'Narrow, detailed queries with multiple requirements',
+  conversational: 'Natural, casual phrasing like real user questions',
+};
+
 interface TopicDetailProps {
-  topic: TopicResult;
+  serverData: TopicDetailData;
 }
 
-export function TopicDetail({ topic }: TopicDetailProps) {
+export function TopicDetail({ serverData }: TopicDetailProps) {
   const [mode, setMode] = useState<TopicDetailMode>('mentions');
-  const prompts = getPromptsForTopic(topic.topicId);
 
-  // Get mention metrics for this topic
-  const topicMentionMetrics = analyzedMetrics.textMetrics?.byTopic?.[topic.topicId];
+  const topic = serverData;
+  const youLabel = topic.clientName || 'You';
 
-  // Calculate mention-based robustness
-  const mentionRobustness = (topicMentionMetrics?.brandMetrics?.['J.Crew']?.mentionRate || 0) * 100;
-  const displayRobustness = mode === 'citations'
-    ? Math.round(topic.robustnessScore * 100)
-    : Math.round(mentionRobustness);
+  // Topic-level score used in the hero gauge. Uses the client mention rate
+  // (0–1) as a 0–100 score — same interpretation as the rest of the dashboard
+  // where "score" and "mention rate" are treated interchangeably for topic
+  // health.
+  const topicScore = Math.round(topic.clientMentionRate * 100);
+  const citationRobustness =
+    topic.isotopes.length > 0
+      ? Math.round(
+          (topic.isotopes.reduce((s, i) => s + i.citationRate, 0) / topic.isotopes.length) * 100
+        )
+      : 0;
+  const displayRobustness = mode === 'citations' ? citationRobustness : topicScore;
+
+  // Stable isotope ordering — show the known taxonomy first, then any
+  // isotope the data surfaces that isn't in the canonical list.
+  const isotopeMap = new Map(topic.isotopes.map((i) => [i.isotope, i] as const));
+  const orderedIsotopes = [
+    ...ISOTOPE_ORDER.filter((iso) => isotopeMap.has(iso)).map((iso) => isotopeMap.get(iso)!),
+    ...topic.isotopes.filter((i) => !ISOTOPE_ORDER.includes(i.isotope as (typeof ISOTOPE_ORDER)[number])),
+  ];
+
+  const topCompetitor = topic.competitors.find((c) => !c.isClient);
 
   return (
     <div className="space-y-6">
@@ -47,10 +92,12 @@ export function TopicDetail({ topic }: TopicDetailProps) {
             {topic.topicName}
           </h1>
           <div className="mt-2 flex items-center gap-3">
-            <Badge variant="outline">{topic.category}</Badge>
             <span className="text-sm text-[#6B7280]">
-              {mode === 'citations' ? 'Citation' : 'Mention'} Robustness: {displayRobustness}%
+              {mode === 'citations' ? 'Citation' : 'Mention'} Rate: {displayRobustness}%
             </span>
+            <Badge variant="outline">
+              {topic.totalResponses} responses
+            </Badge>
           </div>
         </div>
 
@@ -82,51 +129,48 @@ export function TopicDetail({ topic }: TopicDetailProps) {
               Mentions
             </button>
           </div>
-          <ScoreGauge
-            score={topic.overallScore}
-            size="lg"
-            label="Topic Score"
-          />
+          <ScoreGauge score={topicScore} size="lg" label="Topic Score" />
         </div>
       </div>
 
       {/* Mention Performance (Mentions Mode) */}
-      {mode === 'mentions' && topicMentionMetrics && (
+      {mode === 'mentions' && (
         <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-6">
           <h2 className="font-heading text-lg font-semibold text-[#E5E7EB] mb-6">
             Brand Performance for {topic.topicName}
           </h2>
           <div className="grid grid-cols-2 gap-6">
-            {/* J.Crew Metrics */}
             <div className="space-y-4">
               <div>
-                <h3 className="text-sm font-medium text-[#00D4AA] mb-3">J.Crew (You)</h3>
+                <h3 className="text-sm font-medium text-[#00D4AA] mb-3">
+                  {youLabel} {topic.clientName && '(You)'}
+                </h3>
                 <div className="space-y-3">
                   <div>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-sm text-[#6B7280]">Mention Rate</span>
                       <span className="text-sm font-medium text-[#E5E7EB]">
-                        {(topicMentionMetrics.brandMetrics['J.Crew'].mentionRate * 100).toFixed(1)}%
+                        {(topic.clientMentionRate * 100).toFixed(1)}%
                       </span>
                     </div>
                     <LinearScore
-                      score={topicMentionMetrics.brandMetrics['J.Crew'].mentionRate * 100}
+                      score={topic.clientMentionRate * 100}
                       size="sm"
                       showValue={false}
                     />
                     <p className="text-xs text-[#6B7280] mt-1">
-                      Mentioned in {Math.round(topicMentionMetrics.brandMetrics['J.Crew'].mentionRate * 100)}% of responses
+                      Mentioned in {Math.round(topic.clientMentionRate * 100)}% of responses
                     </p>
                   </div>
                   <div>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-sm text-[#6B7280]">First Mention Rate</span>
                       <span className="text-sm font-medium text-[#E5E7EB]">
-                        {(topicMentionMetrics.brandMetrics['J.Crew'].firstMentionRate * 100).toFixed(1)}%
+                        {(topic.clientFirstMentionRate * 100).toFixed(1)}%
                       </span>
                     </div>
                     <LinearScore
-                      score={topicMentionMetrics.brandMetrics['J.Crew'].firstMentionRate * 100}
+                      score={topic.clientFirstMentionRate * 100}
                       size="sm"
                       showValue={false}
                     />
@@ -138,11 +182,11 @@ export function TopicDetail({ topic }: TopicDetailProps) {
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-sm text-[#6B7280]">Avg Mentions Per Response</span>
                       <span className="text-sm font-medium text-[#E5E7EB]">
-                        {topicMentionMetrics.brandMetrics['J.Crew'].avgMentionCount.toFixed(1)}x
+                        {topic.clientAvgMentionCount.toFixed(1)}x
                       </span>
                     </div>
                     <LinearScore
-                      score={Math.min(topicMentionMetrics.brandMetrics['J.Crew'].avgMentionCount * 20, 100)}
+                      score={Math.min(topic.clientAvgMentionCount * 20, 100)}
                       size="sm"
                       showValue={false}
                     />
@@ -151,7 +195,7 @@ export function TopicDetail({ topic }: TopicDetailProps) {
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-[#6B7280]">Total Mentions</span>
                       <span className="text-lg font-bold text-[#00D4AA]">
-                        {topicMentionMetrics.brandMetrics['J.Crew'].totalMentions.toLocaleString()}
+                        {topic.clientTotalMentions.toLocaleString()}
                       </span>
                     </div>
                   </div>
@@ -159,7 +203,6 @@ export function TopicDetail({ topic }: TopicDetailProps) {
               </div>
             </div>
 
-            {/* Topic-Level Stats */}
             <div className="space-y-4">
               <div>
                 <h3 className="text-sm font-medium text-[#E5E7EB] mb-3">Topic Statistics</h3>
@@ -168,33 +211,35 @@ export function TopicDetail({ topic }: TopicDetailProps) {
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-sm text-[#6B7280]">Share of Voice</span>
                       <span className="text-lg font-bold text-[#E5E7EB]">
-                        {(topicMentionMetrics.shareOfVoice * 100).toFixed(1)}%
+                        {(topic.clientShareOfVoice * 100).toFixed(1)}%
                       </span>
                     </div>
                     <p className="text-xs text-[#6B7280]">
-                      J.Crew's share of all brand mentions in this topic
+                      {youLabel}'s share of all brand mentions in this topic
                     </p>
                   </div>
                   <div className="rounded bg-[#22252F] p-3">
                     <div className="flex items-center justify-between mb-1">
-                      <span className="text-sm text-[#6B7280]">Avg Mention Position</span>
-                      <span className="text-lg font-bold text-[#E5E7EB]">
-                        #{topicMentionMetrics.avgMentionPosition.toFixed(1)}
+                      <span className="text-sm text-[#6B7280]">Top Competitor</span>
+                      <span className="text-sm font-medium text-[#E5E7EB]">
+                        {topCompetitor?.name ?? '—'}
                       </span>
                     </div>
                     <p className="text-xs text-[#6B7280]">
-                      Average position when mentioned in responses
+                      {topCompetitor
+                        ? `${(topCompetitor.mentionRate * 100).toFixed(1)}% mention rate on this topic`
+                        : 'No competitor data for this topic yet'}
                     </p>
                   </div>
                   <div className="rounded bg-[#22252F] p-3">
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-sm text-[#6B7280]">Total Responses</span>
                       <span className="text-lg font-bold text-[#E5E7EB]">
-                        {topicMentionMetrics.totalResponses.toLocaleString()}
+                        {topic.totalResponses.toLocaleString()}
                       </span>
                     </div>
                     <p className="text-xs text-[#6B7280]">
-                      {topicMentionMetrics.responsesWithMention} contained brand mentions
+                      {topic.responsesWithMention} contained brand mentions
                     </p>
                   </div>
                 </div>
@@ -210,103 +255,108 @@ export function TopicDetail({ topic }: TopicDetailProps) {
           <h2 className="font-heading text-lg font-semibold text-[#E5E7EB] mb-6">
             Isotope Breakdown
           </h2>
-        <div className="space-y-4">
-          {ISOTOPE_TYPES.map((isotope) => {
-            const result = topic.isotopeResults[isotope];
-            const prompt = prompts.find(p => p.isotope === isotope);
-
-            return (
-              <div
-                key={isotope}
-                className="rounded-lg border border-[#2A2D37] bg-[#22252F] p-4"
-              >
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="font-medium text-[#E5E7EB]">
-                        {ISOTOPE_LABELS[isotope]}
-                      </span>
-                      <StatusBadge
-                        cited={result.cited}
-                        consistency={result.consistency}
-                      />
+          <div className="space-y-4">
+            {orderedIsotopes.length === 0 ? (
+              <p className="text-sm text-[#6B7280]">No isotope data for this topic.</p>
+            ) : (
+              orderedIsotopes.map((result) => (
+                <div
+                  key={result.isotope}
+                  className="rounded-lg border border-[#2A2D37] bg-[#22252F] p-4"
+                >
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-2">
+                        <span className="font-medium text-[#E5E7EB]">
+                          {ISOTOPE_LABELS[result.isotope] ?? result.isotope}
+                        </span>
+                        <Badge
+                          variant={result.citationRate > 0.5 ? 'success' : result.citationRate > 0 ? 'outline' : 'error'}
+                          size="sm"
+                        >
+                          {result.citationRate > 0.5 ? 'Strong' : result.citationRate > 0 ? 'Partial' : 'None'}
+                        </Badge>
+                      </div>
+                      <p className="text-sm text-[#6B7280]">
+                        {ISOTOPE_DESCRIPTIONS[result.isotope] ?? ''}
+                      </p>
                     </div>
-                    <p className="text-sm text-[#6B7280]">
-                      {ISOTOPE_DESCRIPTIONS[isotope]}
-                    </p>
-                  </div>
-                  <div
-                    className={cn(
-                      'flex h-12 w-20 items-center justify-center rounded border',
-                      getHeatmapBgClass(result.consistency)
-                    )}
-                  >
-                    <span className={cn('text-sm font-medium', getHeatmapTextClass(result.consistency))}>
-                      {result.runsWithCitation}/{result.runs}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Prompt text */}
-                {prompt && (
-                  <div className="mt-3 rounded bg-[#1A1D27] p-3">
-                    <p className="text-sm text-[#9CA3AF] italic">
-                      "{prompt.text}"
-                    </p>
-                  </div>
-                )}
-
-                {/* Stats row */}
-                <div className="mt-3 flex items-center gap-6 text-sm">
-                  <div>
-                    <span className="text-[#6B7280]">Citations: </span>
-                    <span className="text-[#E5E7EB]">{result.citationCount}</span>
-                  </div>
-                  {result.avgPosition && (
-                    <div>
-                      <span className="text-[#6B7280]">Avg Position: </span>
-                      <span style={{ color: getPositionColor(result.avgPosition) }}>
-                        #{result.avgPosition.toFixed(1)}
+                    <div
+                      className={cn(
+                        'flex h-12 w-20 items-center justify-center rounded border',
+                        getHeatmapBgClass(result.citationRate)
+                      )}
+                    >
+                      <span className={cn('text-sm font-medium', getHeatmapTextClass(result.citationRate))}>
+                        {result.responsesWithCitation}/{result.totalResponses}
                       </span>
+                    </div>
+                  </div>
+
+                  {/* Sample prompt text */}
+                  {result.samplePromptText && (
+                    <div className="mt-3 rounded bg-[#1A1D27] p-3">
+                      <p className="text-sm text-[#9CA3AF] italic">
+                        &ldquo;{result.samplePromptText}&rdquo;
+                      </p>
                     </div>
                   )}
-                  <div>
-                    <span className="text-[#6B7280]">Consistency: </span>
-                    <span className={getHeatmapTextClass(result.consistency)}>
-                      {(result.consistency * 100).toFixed(0)}%
-                    </span>
-                  </div>
-                </div>
 
-                {/* Competitor citations */}
-                <div className="mt-4 pt-3 border-t border-[#2A2D37]">
-                  <span className="text-xs text-[#6B7280] uppercase tracking-wider">
-                    Competitor Citations
-                  </span>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    {Object.entries(result.competitorCitations).map(([competitor, count]) => (
-                      <div
-                        key={competitor}
-                        className="flex items-center gap-2 rounded bg-[#1A1D27] px-2 py-1"
-                      >
-                        <div
-                          className="h-2 w-2 rounded-full"
-                          style={{ backgroundColor: COMPETITOR_COLORS[competitor] || '#6B7280' }}
-                        />
-                        <span className="text-xs text-[#9CA3AF]">{competitor}</span>
-                        <span className="text-xs font-medium text-[#E5E7EB]">{count}</span>
-                      </div>
-                    ))}
+                  {/* Stats row */}
+                  <div className="mt-3 flex items-center gap-6 text-sm">
+                    <div>
+                      <span className="text-[#6B7280]">Citations: </span>
+                      <span className="text-[#E5E7EB]">{result.totalCitationCount}</span>
+                    </div>
+                    <div>
+                      <span className="text-[#6B7280]">Mention Rate: </span>
+                      <span className={getHeatmapTextClass(result.mentionRate)}>
+                        {(result.mentionRate * 100).toFixed(0)}%
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-[#6B7280]">Citation Rate: </span>
+                      <span className={getHeatmapTextClass(result.citationRate)}>
+                        {(result.citationRate * 100).toFixed(0)}%
+                      </span>
+                    </div>
                   </div>
+
+                  {/* Competitor mentions within this isotope */}
+                  {Object.keys(result.competitorMentions).length > 0 && (
+                    <div className="mt-4 pt-3 border-t border-[#2A2D37]">
+                      <span className="text-xs text-[#6B7280] uppercase tracking-wider">
+                        Competitor Mentions (this isotope)
+                      </span>
+                      <div className="mt-2 flex flex-wrap gap-2">
+                        {Object.entries(result.competitorMentions)
+                          .sort(([, a], [, b]) => b - a)
+                          .map(([competitor, count]) => (
+                            <div
+                              key={competitor}
+                              className="flex items-center gap-2 rounded bg-[#1A1D27] px-2 py-1"
+                            >
+                              <div
+                                className="h-2 w-2 rounded-full"
+                                style={{ backgroundColor: COMPETITOR_COLORS[competitor] || '#6B7280' }}
+                              />
+                              <span className="text-xs text-[#9CA3AF]">{competitor}</span>
+                              <span className="text-xs font-medium text-[#E5E7EB]">{count}</span>
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              ))
+            )}
+          </div>
         </div>
       )}
 
-      {/* Multi-Platform AI Responses */}
+      {/* Multi-Platform AI Responses — unchanged. PlatformResponseViewer reads
+          from platform-data.ts which is already Supabase-backed for the active
+          client via <PlatformDataProvider>. */}
       <PlatformResponseViewer topicId={topic.topicId} />
 
       {/* Competitive Overview for this topic */}
@@ -315,38 +365,42 @@ export function TopicDetail({ topic }: TopicDetailProps) {
           {mode === 'citations' ? 'Topic Competitive Overview (Citations)' : 'Competitor Mention Comparison'}
         </h2>
         {mode === 'citations' ? (
-          <TopicCompetitorChart topic={topic} />
+          <TopicCompetitorChart isotopes={topic.isotopes} />
         ) : (
-          <TopicMentionComparisonChart topicId={topic.topicId} />
+          <TopicMentionComparisonChart competitors={topic.competitors} />
         )}
       </div>
     </div>
   );
 }
 
-function TopicCompetitorChart({ topic }: { topic: TopicResult }) {
-  // Aggregate competitor citations across all isotopes
-  const competitorTotals: Record<string, number> = {};
-  let totalCitations = 0;
-
-  for (const isotope of ISOTOPE_TYPES) {
-    const result = topic.isotopeResults[isotope];
-    for (const [competitor, count] of Object.entries(result.competitorCitations)) {
-      competitorTotals[competitor] = (competitorTotals[competitor] || 0) + count;
-      totalCitations += count;
+// Aggregates competitor mention counts across all isotopes for this topic and
+// renders a horizontal-bar breakdown. Was previously keyed off
+// `competitorCitations` in the J.Crew fixture (URL-citation counts); we now
+// use `competitorMentions` (brand-name occurrences) from the enricher.
+// Different source data, same visual story — "which competitor dominates
+// this topic in the responses we've seen."
+function TopicCompetitorChart({ isotopes }: { isotopes: TopicDetailData['isotopes'] }) {
+  const totals: Record<string, number> = {};
+  for (const iso of isotopes) {
+    for (const [name, count] of Object.entries(iso.competitorMentions)) {
+      totals[name] = (totals[name] ?? 0) + count;
     }
   }
 
-  const sortedCompetitors = Object.entries(competitorTotals)
-    .sort(([, a], [, b]) => b - a);
+  const sorted = Object.entries(totals).sort(([, a], [, b]) => b - a);
+  if (sorted.length === 0) {
+    return <p className="text-sm text-[#6B7280]">No competitor mentions detected on this topic.</p>;
+  }
 
-  const maxCitations = Math.max(...Object.values(competitorTotals));
+  const totalMentions = sorted.reduce((s, [, c]) => s + c, 0);
+  const maxMentions = Math.max(...sorted.map(([, c]) => c));
 
   return (
     <div className="space-y-3">
-      {sortedCompetitors.map(([competitor, count]) => {
-        const percentage = totalCitations > 0 ? (count / totalCitations) * 100 : 0;
-        const barWidth = (count / maxCitations) * 100;
+      {sorted.map(([competitor, count]) => {
+        const percentage = totalMentions > 0 ? (count / totalMentions) * 100 : 0;
+        const barWidth = maxMentions > 0 ? (count / maxMentions) * 100 : 0;
         const color = COMPETITOR_COLORS[competitor] || '#6B7280';
 
         return (
@@ -354,7 +408,7 @@ function TopicCompetitorChart({ topic }: { topic: TopicResult }) {
             <div className="flex items-center justify-between mb-1">
               <span className="text-sm text-[#E5E7EB]">{competitor}</span>
               <span className="text-sm text-[#9CA3AF]">
-                {count} citations ({percentage.toFixed(1)}%)
+                {count} mentions ({percentage.toFixed(1)}%)
               </span>
             </div>
             <div className="h-2 w-full rounded-full bg-[#22252F]">
@@ -370,34 +424,25 @@ function TopicCompetitorChart({ topic }: { topic: TopicResult }) {
   );
 }
 
-function TopicMentionComparisonChart({ topicId }: { topicId: string }) {
-  const topicMetrics = analyzedMetrics.textMetrics?.byTopic?.[topicId];
-
-  if (!topicMetrics) {
-    return (
-      <p className="text-sm text-[#6B7280]">No mention data available for this topic.</p>
-    );
+function TopicMentionComparisonChart({ competitors }: { competitors: TopicDetailData['competitors'] }) {
+  if (competitors.length === 0) {
+    return <p className="text-sm text-[#6B7280]">No mention data available for this topic.</p>;
   }
 
-  // Sort competitors by mention rate
-  const sortedCompetitors = Object.entries(topicMetrics.brandMetrics)
-    .sort(([, a], [, b]) => b.mentionRate - a.mentionRate);
-
-  const maxMentionRate = Math.max(...Object.values(topicMetrics.brandMetrics).map(m => m.mentionRate));
+  const maxMentionRate = Math.max(0.01, ...competitors.map((c) => c.mentionRate));
 
   return (
     <div className="space-y-4">
-      {sortedCompetitors.map(([competitor, metrics]) => {
-        const barWidth = (metrics.mentionRate / maxMentionRate) * 100;
-        const color = COMPETITOR_COLORS[competitor] || '#6B7280';
-        const isClient = competitor === 'J.Crew';
+      {competitors.map((competitor) => {
+        const barWidth = (competitor.mentionRate / maxMentionRate) * 100;
+        const color = COMPETITOR_COLORS[competitor.name] || '#6B7280';
 
         return (
           <div
-            key={competitor}
+            key={competitor.name || '—'}
             className={cn(
               'rounded-lg border p-4',
-              isClient ? 'border-[#00D4AA]/30 bg-[#00D4AA]/5' : 'border-[#2A2D37] bg-[#22252F]'
+              competitor.isClient ? 'border-[#00D4AA]/30 bg-[#00D4AA]/5' : 'border-[#2A2D37] bg-[#22252F]'
             )}
           >
             <div className="flex items-center justify-between mb-3">
@@ -407,43 +452,27 @@ function TopicMentionComparisonChart({ topicId }: { topicId: string }) {
                   style={{ backgroundColor: color }}
                 />
                 <span className={cn(
-                  'text-sm font-medium',
-                  isClient ? 'text-[#00D4AA]' : 'text-[#E5E7EB]'
+                  'font-medium',
+                  competitor.isClient ? 'text-[#00D4AA]' : 'text-[#E5E7EB]'
                 )}>
-                  {competitor}
-                  {isClient && ' (You)'}
+                  {competitor.name || '—'}
+                  {competitor.isClient && <span className="ml-2 text-xs text-[#6B7280]">(You)</span>}
                 </span>
               </div>
-              <div className="flex items-center gap-4">
-                <div className="text-right">
-                  <div className="text-xs text-[#6B7280]">Mention Rate</div>
-                  <div className="text-sm font-medium text-[#E5E7EB]">
-                    {(metrics.mentionRate * 100).toFixed(1)}%
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-xs text-[#6B7280]">Total Mentions</div>
-                  <div className="text-sm font-medium text-[#E5E7EB]">
-                    {metrics.totalMentions.toLocaleString()}
-                  </div>
-                </div>
+              <div className="flex items-center gap-4 text-sm">
+                <span className="text-[#9CA3AF]">
+                  {(competitor.mentionRate * 100).toFixed(1)}%
+                </span>
+                <span className="text-[#6B7280]">
+                  {competitor.totalMentions.toLocaleString()} mentions
+                </span>
               </div>
             </div>
             <div className="h-2 w-full rounded-full bg-[#1A1D27]">
               <div
                 className="h-full rounded-full transition-all duration-500"
-                style={{ width: `${barWidth}%`, backgroundColor: color }}
+                style={{ width: `${barWidth}%`, backgroundColor: color, opacity: competitor.isClient ? 1 : 0.7 }}
               />
-            </div>
-            <div className="mt-2 grid grid-cols-2 gap-4 text-xs">
-              <div>
-                <span className="text-[#6B7280]">First Mention Rate: </span>
-                <span className="text-[#E5E7EB]">{(metrics.firstMentionRate * 100).toFixed(1)}%</span>
-              </div>
-              <div>
-                <span className="text-[#6B7280]">Avg Count: </span>
-                <span className="text-[#E5E7EB]">{metrics.avgMentionCount.toFixed(1)}x</span>
-              </div>
             </div>
           </div>
         );

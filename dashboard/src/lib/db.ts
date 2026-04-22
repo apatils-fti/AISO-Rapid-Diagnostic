@@ -1175,6 +1175,212 @@ export async function getGapAnalysis(
 }
 
 // ---------------------------------------------------------------------------
+// Topic Detail (for /topics/[topicId] drill-down page)
+// ---------------------------------------------------------------------------
+
+export interface TopicDetailIsotope {
+  isotope: string;
+  totalResponses: number;
+  responsesWithMention: number;
+  responsesWithCitation: number;
+  mentionRate: number;
+  citationRate: number;
+  totalCitationCount: number;
+  competitorMentions: Record<string, number>;
+  samplePromptText: string;
+}
+
+export interface TopicDetailCompetitor {
+  name: string;
+  mentionRate: number;
+  totalMentions: number;
+  isClient: boolean;
+}
+
+export interface TopicDetailData {
+  topicId: string;
+  topicName: string;
+  clientName: string;
+  totalResponses: number;
+  responsesWithMention: number;
+  clientMentionRate: number;
+  clientFirstMentionRate: number;
+  clientAvgMentionCount: number;
+  clientTotalMentions: number;
+  clientShareOfVoice: number;
+  isotopes: TopicDetailIsotope[];
+  competitors: TopicDetailCompetitor[];
+}
+
+/**
+ * Per-topic drill-down data for /topics/[topicId]. Returns null when the
+ * client has no results for this topic (caller renders a 404). Seeds the
+ * competitor list from clients.config so 0-mention competitors still appear
+ * in the comparison chart.
+ */
+export async function getTopicDetail(
+  clientId: string,
+  topicId: string,
+  filters?: QueryFilters
+): Promise<TopicDetailData | null> {
+  const sb = reader();
+  if (!sb) return null;
+
+  // Pull results for this client + topic, honouring date/platform/sentiment
+  // filters. Reuses getAllResultsForClient and then filters to this topic
+  // client-side — cheap because the per-topic slice is small.
+  const allResults = await getAllResultsForClient(clientId, filters);
+  const results = allResults.filter((r) => r.topic_id === topicId);
+  if (results.length === 0) return null;
+
+  // Client name + configured competitor list (same shape as
+  // getCompetitorOverview; kept inline to avoid an extra round-trip).
+  let clientName = '';
+  let configuredCompetitors: string[] = [];
+  {
+    const { data: clientRow } = await sb
+      .from('clients').select('name, config').eq('id', clientId).maybeSingle();
+    clientName = (clientRow?.name as string | undefined) ?? '';
+    const cfg = (clientRow?.config ?? {}) as {
+      competitors?: Array<string | { name?: string }>;
+    };
+    configuredCompetitors = (cfg.competitors ?? [])
+      .map((c) => (typeof c === 'string' ? c : c?.name))
+      .filter((n): n is string => Boolean(n));
+  }
+
+  // Per-prompt text lookup — pulled from the prompts table, same join
+  // pattern as getPromptResults. Missing prompt_text falls back to empty.
+  const promptIds = [...new Set(results.map((r) => r.prompt_id))];
+  const promptTextMap = new Map<string, string>();
+  if (promptIds.length > 0) {
+    const { data: promptRows } = await sb
+      .from('prompts')
+      .select('prompt_id, prompt_text, isotope')
+      .in('prompt_id', promptIds);
+    for (const row of (promptRows ?? []) as Array<{ prompt_id: string; prompt_text: string | null }>) {
+      if (row.prompt_text) promptTextMap.set(row.prompt_id, row.prompt_text);
+    }
+  }
+
+  const totalResponses = results.length;
+  const responsesWithMention = results.filter((r) => r.client_mentioned).length;
+  const responsesWithFirstMention = results.filter((r) => r.first_mention).length;
+  const clientTotalMentions = results.reduce((s, r) => s + (r.mention_count ?? 0), 0);
+  const clientAvgMentionCount = totalResponses > 0 ? clientTotalMentions / totalResponses : 0;
+  const clientMentionRate = totalResponses > 0 ? responsesWithMention / totalResponses : 0;
+  const clientFirstMentionRate = totalResponses > 0 ? responsesWithFirstMention / totalResponses : 0;
+
+  // Topic name from any result in the set. Prefer a non-empty one to avoid
+  // rendering an empty heading when one batch row is missing topic_name.
+  const topicName = results.find((r) => r.topic_name)?.topic_name ?? topicId;
+
+  // Per-isotope aggregation.
+  const byIsotope = new Map<string, {
+    total: number;
+    mentioned: number;
+    cited: number;
+    citationCount: number;
+    competitors: Map<string, number>;
+    samplePromptId: string;
+  }>();
+
+  for (const r of results) {
+    const iso = r.isotope ?? 'unknown';
+    if (!byIsotope.has(iso)) {
+      byIsotope.set(iso, {
+        total: 0,
+        mentioned: 0,
+        cited: 0,
+        citationCount: 0,
+        competitors: new Map(),
+        samplePromptId: r.prompt_id,
+      });
+    }
+    const entry = byIsotope.get(iso)!;
+    entry.total++;
+    if (r.client_mentioned) entry.mentioned++;
+    if ((r.citation_count ?? 0) > 0) entry.cited++;
+    entry.citationCount += r.citation_count ?? 0;
+
+    const cm = r.competitor_mentions ?? {};
+    for (const [name, count] of Object.entries(cm)) {
+      if ((count as number) > 0) {
+        entry.competitors.set(name, (entry.competitors.get(name) ?? 0) + (count as number));
+      }
+    }
+  }
+
+  const isotopes: TopicDetailIsotope[] = [...byIsotope.entries()].map(([iso, e]) => ({
+    isotope: iso,
+    totalResponses: e.total,
+    responsesWithMention: e.mentioned,
+    responsesWithCitation: e.cited,
+    mentionRate: e.total > 0 ? e.mentioned / e.total : 0,
+    citationRate: e.total > 0 ? e.cited / e.total : 0,
+    totalCitationCount: e.citationCount,
+    competitorMentions: Object.fromEntries(e.competitors),
+    samplePromptText: promptTextMap.get(e.samplePromptId) ?? '',
+  }));
+
+  // Per-competitor aggregation across the whole topic. Seed with configured
+  // competitors at zero so the comparison chart shows the full set rather
+  // than only brands that happened to appear.
+  const compCounts = new Map<string, { mentioned: number; total: number }>();
+  for (const name of configuredCompetitors) {
+    compCounts.set(name, { mentioned: 0, total: 0 });
+  }
+  for (const r of results) {
+    const cm = r.competitor_mentions ?? {};
+    for (const [name, count] of Object.entries(cm)) {
+      if (!compCounts.has(name)) compCounts.set(name, { mentioned: 0, total: 0 });
+      const entry = compCounts.get(name)!;
+      if ((count as number) > 0) entry.mentioned += count as number;
+    }
+  }
+
+  // Total competitor mentions across every response — used for share-of-voice.
+  let totalCompetitorMentions = 0;
+  for (const [, entry] of compCounts) totalCompetitorMentions += entry.mentioned;
+  const clientShareOfVoice =
+    clientTotalMentions + totalCompetitorMentions > 0
+      ? clientTotalMentions / (clientTotalMentions + totalCompetitorMentions)
+      : 0;
+
+  const competitors: TopicDetailCompetitor[] = [];
+  competitors.push({
+    name: clientName,
+    mentionRate: clientMentionRate,
+    totalMentions: clientTotalMentions,
+    isClient: true,
+  });
+  for (const [name, entry] of compCounts) {
+    competitors.push({
+      name,
+      mentionRate: totalResponses > 0 ? entry.mentioned / totalResponses : 0,
+      totalMentions: entry.mentioned,
+      isClient: false,
+    });
+  }
+  competitors.sort((a, b) => b.mentionRate - a.mentionRate);
+
+  return {
+    topicId,
+    topicName,
+    clientName,
+    totalResponses,
+    responsesWithMention,
+    clientMentionRate,
+    clientFirstMentionRate,
+    clientAvgMentionCount,
+    clientTotalMentions,
+    clientShareOfVoice,
+    isotopes,
+    competitors,
+  };
+}
+
+// ---------------------------------------------------------------------------
 // Top Gaps (for the dashboard "Top Opportunities" card)
 // ---------------------------------------------------------------------------
 
