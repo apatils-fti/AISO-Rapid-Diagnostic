@@ -30,6 +30,7 @@ async function PromptsContent({
   dateFrom,
   dateTo,
   clientName,
+  clientDomains,
 }: {
   clientId: string;
   platform?: string;
@@ -40,6 +41,7 @@ async function PromptsContent({
   dateFrom?: string;
   dateTo?: string;
   clientName?: string;
+  clientDomains?: string[];
 }) {
   const promptData = await getPromptResults(
     clientId,
@@ -55,9 +57,23 @@ async function PromptsContent({
   return (
     <div className="space-y-4">
       <EnrichmentFilters />
-      <PromptTable serverData={promptData} clientName={clientName} />
+      <PromptTable
+        serverData={promptData}
+        clientName={clientName}
+        clientDomains={clientDomains}
+      />
     </div>
   );
+}
+
+/**
+ * Extract a client's owned-domain list from the JSONB `clients.config` column.
+ * Accepts the two shapes used by the generator (`{client: {domains}}`) and
+ * the seed scripts (`{clientDomains: string[]}`).
+ */
+function extractClientDomains(config: unknown): string[] {
+  const cfg = (config ?? {}) as { clientDomains?: string[]; client?: { domains?: string[] } };
+  return cfg.clientDomains ?? cfg.client?.domains ?? [];
 }
 
 export default async function PromptsPage({ searchParams }: PromptsPageProps) {
@@ -100,7 +116,8 @@ export default async function PromptsPage({ searchParams }: PromptsPageProps) {
             intent={params.intent}
             dateFrom={params.date_from}
             dateTo={params.date_to}
-            clientName={clients.find(c => c.id === clientId)?.name}
+            clientName={clients.find((c) => c.id === clientId)?.name}
+            clientDomains={extractClientDomains(clients.find((c) => c.id === clientId)?.config)}
           />
         </Suspense>
       </PlatformDataProvider>

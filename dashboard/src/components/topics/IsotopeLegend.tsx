@@ -1,7 +1,7 @@
 'use client';
 
 import { InfoTooltip } from '@/components/shared';
-import { ISOTOPE_TYPES, ISOTOPE_LABELS, ISOTOPE_DESCRIPTIONS } from '@/lib/fixtures';
+import { ISOTOPE_TYPES, ISOTOPE_LABELS, ISOTOPE_DESCRIPTIONS } from '@/lib/taxonomy';
 import type { HeatmapMode } from './IsotopeHeatmap';
 
 interface IsotopeLegendProps {

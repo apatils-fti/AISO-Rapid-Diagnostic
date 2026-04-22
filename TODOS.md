@@ -581,71 +581,46 @@ nightly enrichment pipeline. Not needed for the current page.
 
 ---
 
-### P3: Delete fixture JSON files and `lib/fixtures.ts`
+### ~~P3: Delete fixture JSON files and `lib/fixtures.ts`~~ — **DONE**
 
-**Problem**: After the P0 / P1 / P2 + FIX1 / FIX2 work above, the dashboard
-renders cleanly from Supabase for any client. But `@/lib/fixtures` still
-gets imported from a handful of files, which means `analyzedMetrics.json`
-(~160KB of J.Crew snapshot data) is still pulled into every page that
-transitively touches them.
+Shipped across a sequence of commits culminating in the P3 cleanup pass.
+The dashboard no longer imports anything from `@/lib/fixtures`, and the
+directory is gone.
 
-**Remaining fixture-import surface**:
+What landed:
+- **TopicDetail + /topics/[topicId]** (`aac5914`): per-topic detail page
+  now reads from Supabase via new `getTopicDetail(clientId, topicId)`
+  helper. Fixed the 404 bug on drill-down for non-J.Crew clients and took
+  the biggest item off this P3.
+- **P3 cleanup pass** (final commit in this series):
+  - Created `dashboard/src/lib/taxonomy.ts` with `ISOTOPE_TYPES`,
+    `ISOTOPE_LABELS`, `ISOTOPE_DESCRIPTIONS`.
+  - Updated `TopicRow`, `IsotopeLegend`, `TopicDetail`, `PromptTable`,
+    `IsotopeHeatmap` to import constants from taxonomy.
+  - Deleted dead code: `src/lib/claude-service.ts` and
+    `src/lib/gemini-service.ts` (both exported classes with zero
+    importers anywhere in the tree).
+  - Migrated `serpapi-service.ts` off `clientConfig` — `checkAIOverview`
+    now takes an optional `brandContext: { brandName, clientDomains }`
+    param. `GoogleAIOverviewButton` accepts the same as a prop;
+    `PromptTable` forwards it; `prompts/page.tsx` extracts
+    `clientDomains` from `clients.config` and threads the full context
+    down. Feature flag still off by default (`SERPAPI_CONFIG.ENABLED`) —
+    migrated anyway so the bundle can drop fixtures.ts.
+  - `ExecutiveSummary.tsx` — removed the dormant `getExecutiveSummary()`
+    fallback branch and the `|| 'J.Crew'` literal. Component now a pure
+    render of the `overviewData` prop.
+  - Deleted: `src/lib/fixtures.ts`, `src/fixtures/analyzedMetrics.json`,
+    `src/fixtures/promptLibrary.json`, `src/fixtures/clientConfig.json`,
+    `src/fixtures/rawResults.json`. Removed the empty `src/fixtures/`
+    directory.
 
-Dormant fixture path:
-- `dashboard/src/components/dashboard/ExecutiveSummary.tsx` — has a
-  fallback branch that calls `getExecutiveSummary()` from platform-data
-  when no `overviewData` prop is passed. The dashboard page always passes
-  `overviewData`, so the fixture path is never hit at runtime. Still an
-  import, still drags the JSON in.
+`FaraComparisonView.tsx` was flagged in the pre-work audit but turned
+out to have no fixture import at all (just a historical doc-comment
+reference). No work needed.
 
-Taxonomy-only consumers (pure constants, no J.Crew-specific data):
-- `dashboard/src/components/topics/IsotopeLegend.tsx` — imports
-  `ISOTOPE_TYPES`, `ISOTOPE_LABELS`, `ISOTOPE_DESCRIPTIONS`
-- `dashboard/src/components/topics/TopicRow.tsx` — imports `ISOTOPE_TYPES`
-- `dashboard/src/components/topics/TopicDetail.tsx` — imports
-  `ISOTOPE_TYPES`, `ISOTOPE_LABELS`, `ISOTOPE_DESCRIPTIONS`, plus helpers
-  `getPromptsForTopic` and `analyzedMetrics` directly (this one is more
-  than taxonomy — it renders per-topic detail off the fixture. Probably
-  needs the same serverData treatment as the other topic-page components
-  before it can lose its fixture import.)
-- `dashboard/src/components/prompts/FaraComparisonView.tsx` — Fara-flagged
-  feature, currently behind `FARA_CONFIG.ENABLED`. Uses `rawResults` and
-  the isotope constants.
-
-**Approach**:
-
-1. Fix `ExecutiveSummary.tsx` — delete the useEffect fallback branch that
-   calls `getExecutiveSummary()`. The `overviewData` prop is always
-   provided; the fallback is dead code. One-line surgery.
-2. Extract the isotope constants to a new `dashboard/src/lib/taxonomy.ts`
-   and update the four taxonomy-only consumers to import from there.
-   Cleaner than inlining per-consumer like `PromptTable` did in `5a80cef`
-   because it keeps the constants in one place.
-3. `TopicDetail.tsx` needs real work — it reads `analyzedMetrics` +
-   `getPromptsForTopic()` to render the per-topic detail page. Before
-   deleting fixtures, it needs a server-data migration similar to what
-   the other topic-page components got. Scope this as part of the P3
-   commit.
-4. `FaraComparisonView.tsx` is behind a feature flag — if FARA is not
-   being shipped imminently, either gate the file off entirely with a
-   stub, or migrate it alongside. Flag is off by default.
-5. `git grep '@/lib/fixtures'` → nothing. Delete:
-   - `dashboard/src/fixtures/analyzedMetrics.json`
-   - `dashboard/src/fixtures/promptLibrary.json`
-   - `dashboard/src/fixtures/clientConfig.json`
-   - `dashboard/src/fixtures/rawResults.json`
-   - `dashboard/src/lib/fixtures.ts`
-6. `npm run build` + verify. Drop ~160KB from the bundle.
-
-**Blocked by**: nothing externally — the remaining migrations are small.
-The biggest unknown is `TopicDetail.tsx`, which renders per-topic prompt
-detail from the fixture and needs its own `serverData`-style migration
-(would use `getTopicIsotopeStats` + a new `getTopicPrompts(clientId,
-topicId)` helper most likely).
-
-**Effort**: 1-1.5 days. Taxonomy extraction (1hr) + ExecutiveSummary
-cleanup (15min) + `TopicDetail` rewrite (half-day) + FaraComparisonView
-decision + cleanup (2-4hr) + file deletion + build verification (30min).
+Bundle impact: the J.Crew snapshot (~160KB of static JSON) is gone from
+every page's import graph.
 
 ---
 

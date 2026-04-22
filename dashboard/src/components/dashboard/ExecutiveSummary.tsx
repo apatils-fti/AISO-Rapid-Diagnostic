@@ -1,8 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { TrendingUp, TrendingDown, Target, Zap, Users, BarChart3, Layers } from 'lucide-react';
-import { getExecutiveSummary, type ExecutiveSummary as ExecSummaryData } from '@/lib/platform-data';
+import { TrendingUp, TrendingDown, Zap, Users, BarChart3, Layers } from 'lucide-react';
 import type { OverviewStats } from '@/lib/db';
 import { cn } from '@/lib/utils';
 import { getScoreColor, getScoreTextClass } from '@/lib/colors';
@@ -13,38 +11,16 @@ interface ExecutiveSummaryProps {
 }
 
 export function ExecutiveSummary({ overviewData, clientName }: ExecutiveSummaryProps) {
-  const [fetchedSummary, setFetchedSummary] = useState<ExecSummaryData | null>(null);
+  if (!overviewData) return null;
 
-  useEffect(() => {
-    if (overviewData) return;
-    if (typeof window === 'undefined') return;
-    getExecutiveSummary().then(setFetchedSummary);
-  }, [overviewData]);
-
-  // Convert overviewData to the shape this component expects
-  const summary: ExecSummaryData | null = overviewData
-    ? {
-        clientName: clientName ?? 'J.Crew',
-        overallMentionRate: overviewData.mentionRate,
-        rank: overviewData.rank,
-        totalCompetitors: overviewData.competitorStats.length + 1,
-        topCompetitor: overviewData.topCompetitor,
-        topCompetitorRate: overviewData.topCompetitorRate,
-        biggestGapTopic: overviewData.biggestGapTopic,
-        biggestGapDelta: overviewData.biggestGapDelta,
-        platformsWithData: overviewData.platformCount,
-        platformCount: 4,
-      }
-    : fetchedSummary;
-
-  if (!summary) return null;
-
-  const mentionPct = (summary.overallMentionRate * 100).toFixed(0);
-  const topCompPct = (summary.topCompetitorRate * 100).toFixed(0);
-  const gapPct = (summary.biggestGapDelta * 100).toFixed(0);
-  const isLeading = summary.rank === 1;
-  // Derive a visibility score (0–100) from mention rate for the hero display
-  const visScore = Math.round(summary.overallMentionRate * 100);
+  const mentionPct = (overviewData.mentionRate * 100).toFixed(0);
+  const topCompPct = (overviewData.topCompetitorRate * 100).toFixed(0);
+  const gapPct = (overviewData.biggestGapDelta * 100).toFixed(0);
+  const isLeading = overviewData.rank === 1;
+  const visScore = Math.round(overviewData.mentionRate * 100);
+  const totalCompetitors = overviewData.competitorStats.length + 1;
+  const platformCount = overviewData.platformCount;
+  const displayClientName = clientName ?? '';
 
   return (
     <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] overflow-hidden mb-6">
@@ -71,35 +47,40 @@ export function ExecutiveSummary({ overviewData, clientName }: ExecutiveSummaryP
           {/* Narrative */}
           <div className="flex-1 pt-1">
             <p className="text-[#E5E7EB] text-base leading-relaxed">
-              <span className="font-semibold text-[#00D4AA]">{summary.clientName}</span>{' '}
-              is mentioned in{' '}
+              {displayClientName && (
+                <>
+                  <span className="font-semibold text-[#00D4AA]">{displayClientName}</span>
+                  {' is mentioned in '}
+                </>
+              )}
+              {!displayClientName && 'Mentioned in '}
               <span className="font-semibold text-[#00D4AA]">{mentionPct}%</span>{' '}
               of AI responses across{' '}
               <span className="font-medium text-[#E5E7EB]">
-                {summary.platformsWithData} platform{summary.platformsWithData !== 1 ? 's' : ''}
+                {platformCount} platform{platformCount !== 1 ? 's' : ''}
               </span>
               {' — '}
               {isLeading ? (
                 <span className="text-[#10B981] font-medium">
-                  leading all {summary.totalCompetitors} tracked competitors
+                  leading all {totalCompetitors} tracked competitors
                 </span>
               ) : (
                 <>
                   ranked{' '}
                   <span className="font-semibold text-[#E5E7EB]">
-                    #{summary.rank}
+                    #{overviewData.rank}
                   </span>{' '}
-                  of {summary.totalCompetitors} competitors
+                  of {totalCompetitors} competitors
                 </>
               )}
               .
             </p>
-            {summary.biggestGapTopic && summary.biggestGapDelta > 0 && (
+            {overviewData.biggestGapTopic && overviewData.biggestGapDelta > 0 && (
               <p className="text-[#9CA3AF] text-sm mt-2">
                 <TrendingDown className="inline h-3.5 w-3.5 text-amber-400 mr-1 -mt-0.5" />
                 Biggest opportunity:{' '}
                 <span className="text-[#E5E7EB] font-medium">
-                  {summary.biggestGapTopic}
+                  {overviewData.biggestGapTopic}
                 </span>{' '}
                 — trailing by{' '}
                 <span className="text-amber-400 font-medium">{gapPct}pt</span>
@@ -113,29 +94,29 @@ export function ExecutiveSummary({ overviewData, clientName }: ExecutiveSummaryP
           <StatPill
             icon={BarChart3}
             label="Rank"
-            value={`#${summary.rank}`}
-            sublabel={`of ${summary.totalCompetitors}`}
+            value={`#${overviewData.rank}`}
+            sublabel={`of ${totalCompetitors}`}
             color={isLeading ? '#10B981' : '#F59E0B'}
           />
           <StatPill
             icon={Layers}
             label="Platforms"
-            value={`${summary.platformsWithData}`}
-            sublabel={`of ${summary.platformCount} tracked`}
+            value={`${platformCount}`}
+            sublabel="with data"
             color="#3B82F6"
           />
           <StatPill
             icon={Users}
             label="Top Competitor"
-            value={summary.topCompetitor || '—'}
-            sublabel={summary.topCompetitor ? `${topCompPct}% mention rate` : ''}
+            value={overviewData.topCompetitor || '—'}
+            sublabel={overviewData.topCompetitor ? `${topCompPct}% mention rate` : ''}
             color="#8B5CF6"
           />
           <StatPill
             icon={Zap}
             label="Biggest Gap"
-            value={summary.biggestGapTopic ? `${gapPct}pt` : '—'}
-            sublabel={summary.biggestGapTopic || ''}
+            value={overviewData.biggestGapTopic ? `${gapPct}pt` : '—'}
+            sublabel={overviewData.biggestGapTopic || ''}
             color="#EF4444"
           />
         </div>

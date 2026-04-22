@@ -12,6 +12,7 @@ import type { TopicResult, IsotopeType, IsotopeResult } from '@/lib/types';
 import { FilterBar, FilterDropdown, SearchInput } from '@/components/shared';
 import { IsotopeLegend, IsotopeHeaders } from './IsotopeLegend';
 import { TopicRow } from './TopicRow';
+import { ISOTOPE_TYPES } from '@/lib/taxonomy';
 import { cn } from '@/lib/utils';
 
 export type HeatmapMode = 'citations' | 'mentions';
@@ -35,18 +36,9 @@ const EMPTY_ISOTOPE_RESULT: IsotopeResult = {
   competitorCitations: {},
 };
 
-const ALL_ISOTOPES: IsotopeType[] = [
-  'informational',
-  'commercial',
-  'comparative',
-  'persona',
-  'specific',
-  'conversational',
-];
-
 function emptyIsotopeResults(): Record<IsotopeType, IsotopeResult> {
   const out = {} as Record<IsotopeType, IsotopeResult>;
-  for (const iso of ALL_ISOTOPES) out[iso] = EMPTY_ISOTOPE_RESULT;
+  for (const iso of ISOTOPE_TYPES) out[iso] = EMPTY_ISOTOPE_RESULT;
   return out;
 }
 

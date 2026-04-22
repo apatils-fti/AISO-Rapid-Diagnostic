@@ -12,7 +12,7 @@
 
 import { useState, useEffect } from 'react';
 import { Search, Loader2, CheckCircle, XCircle, ExternalLink } from 'lucide-react';
-import { SerpApiService, type GoogleAIOverviewResult } from '@/lib/serpapi-service';
+import { SerpApiService, type GoogleAIOverviewResult, type SerpApiBrandContext } from '@/lib/serpapi-service';
 import { SERPAPI_CONFIG } from '@/lib/serpapi-config';
 import { cn } from '@/lib/utils';
 
@@ -20,12 +20,17 @@ interface GoogleAIOverviewButtonProps {
   promptId: string;
   topicId: string;
   promptText: string;
+  /** Used for client-mention detection in the AI overview response. Omitted
+   * means "don't flag anything as a client cite" — acceptable when the
+   * feature flag is off and nobody's looking at the results. */
+  brandContext?: SerpApiBrandContext;
 }
 
 export function GoogleAIOverviewButton({
   promptId,
   topicId,
   promptText,
+  brandContext,
 }: GoogleAIOverviewButtonProps) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -46,7 +51,7 @@ export function GoogleAIOverviewButton({
     setLoading(true);
 
     try {
-      const checkResult = await SerpApiService.checkAIOverview(promptText, promptId, topicId);
+      const checkResult = await SerpApiService.checkAIOverview(promptText, promptId, topicId, brandContext);
       setResult(checkResult);
       setSearchesUsed(SerpApiService.getSearchesUsed());
     } catch (err) {
@@ -152,8 +157,10 @@ export function GoogleAIOverviewButton({
                   </span>
                   <div className="space-y-1">
                     {result.citedSources.map((url, i) => {
-                      const isClient = url.toLowerCase().includes('jcrew.com') ||
-                                      url.toLowerCase().includes('j-crew');
+                      const lowerUrl = url.toLowerCase();
+                      const isClient = (brandContext?.clientDomains ?? []).some((d) =>
+                        lowerUrl.includes(d.toLowerCase())
+                      );
                       return (
                         <div
                           key={i}

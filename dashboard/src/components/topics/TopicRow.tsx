@@ -5,7 +5,7 @@ import { ChevronRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { HeatmapCell } from './HeatmapCell';
 import { LinearScore } from '@/components/shared';
-import { ISOTOPE_TYPES } from '@/lib/fixtures';
+import { ISOTOPE_TYPES } from '@/lib/taxonomy';
 import type { TopicResult } from '@/lib/types';
 import type { HeatmapMode } from './IsotopeHeatmap';
 import type { TopicIsotopeStats } from '@/lib/platform-data';

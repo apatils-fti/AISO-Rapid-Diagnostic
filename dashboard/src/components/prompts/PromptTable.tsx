@@ -18,32 +18,11 @@ import {
 } from '@/lib/platform-data';
 import { cn, truncate } from '@/lib/utils';
 import { getHeatmapTextClass } from '@/lib/colors';
+import { ISOTOPE_TYPES, ISOTOPE_LABELS } from '@/lib/taxonomy';
 import type { IsotopeType } from '@/lib/types';
 import type { PromptResultRow } from '@/lib/db';
 
 export type PromptTableMode = 'citations' | 'mentions';
-
-// Locally-defined isotope taxonomy. Intentionally not imported from
-// `@/lib/fixtures` — those exports are fine in isolation but the import graph
-// drags the J.Crew analyzedMetrics snapshot into any component that touches
-// them.
-const ISOTOPE_TYPES: IsotopeType[] = [
-  'informational',
-  'commercial',
-  'comparative',
-  'persona',
-  'specific',
-  'conversational',
-];
-
-const ISOTOPE_LABELS: Record<IsotopeType, string> = {
-  informational: 'Informational',
-  commercial: 'Commercial',
-  comparative: 'Comparative',
-  persona: 'Persona',
-  specific: 'Specific',
-  conversational: 'Conversational',
-};
 
 interface PromptRowData {
   promptId: string;
@@ -71,9 +50,12 @@ const PLATFORM_PILL_ICONS: Record<string, typeof Sparkles> = {
 interface PromptTableProps {
   serverData?: PromptResultRow[];
   clientName?: string;
+  /** Used by the Google AI Overview feature for client citation detection.
+   * Wired through from prompts/page.tsx via clients.config.clientDomains. */
+  clientDomains?: string[];
 }
 
-export function PromptTable({ serverData, clientName }: PromptTableProps) {
+export function PromptTable({ serverData, clientName, clientDomains }: PromptTableProps) {
   const [mode, setMode] = useState<PromptTableMode>('mentions');
   const [searchQuery, setSearchQuery] = useState('');
   const [topicFilter, setTopicFilter] = useState('all');
@@ -334,6 +316,7 @@ export function PromptTable({ serverData, clientName }: PromptTableProps) {
                 selectedPlatform={selectedPlatform}
                 platformResponse={platformResponseMap[row.promptId]}
                 clientName={clientName}
+                clientDomains={clientDomains}
               />
             ))}
           </tbody>
@@ -357,9 +340,10 @@ interface PromptRowProps {
   selectedPlatform: string;
   platformResponse?: PromptResponse;
   clientName?: string;
+  clientDomains?: string[];
 }
 
-function PromptRow({ row, mode, isExpanded, onToggle, selectedPlatform, platformResponse, clientName }: PromptRowProps) {
+function PromptRow({ row, mode, isExpanded, onToggle, selectedPlatform, platformResponse, clientName, clientDomains }: PromptRowProps) {
   // Use selected-platform data if available, otherwise fall back to the
   // prompt-level aggregate so the row still renders useful info.
   const hasPlatformData = !!platformResponse;
@@ -455,7 +439,7 @@ function PromptRow({ row, mode, isExpanded, onToggle, selectedPlatform, platform
       {isExpanded && (
         <tr>
           <td colSpan={8} className="bg-[#22252F] px-4 py-4">
-            <ExpandedPromptDetail row={row} clientName={clientName} />
+            <ExpandedPromptDetail row={row} clientName={clientName} clientDomains={clientDomains} />
           </td>
         </tr>
       )}
@@ -476,9 +460,10 @@ const PLATFORM_ICONS: Record<string, typeof Sparkles> = {
 interface ExpandedPromptDetailProps {
   row: PromptRowData;
   clientName?: string;
+  clientDomains?: string[];
 }
 
-function ExpandedPromptDetail({ row, clientName }: ExpandedPromptDetailProps) {
+function ExpandedPromptDetail({ row, clientName, clientDomains }: ExpandedPromptDetailProps) {
   const [responses, setResponses] = useState<PromptResponse[]>([]);
   const [selectedPlatform, setSelectedPlatform] = useState<string>('');
   const [loading, setLoading] = useState(true);
@@ -645,6 +630,11 @@ function ExpandedPromptDetail({ row, clientName }: ExpandedPromptDetailProps) {
           promptId={row.promptId}
           topicId={row.topicId}
           promptText={row.promptText}
+          brandContext={
+            clientName
+              ? { brandName: clientName, clientDomains: clientDomains ?? [] }
+              : undefined
+          }
         />
       )}
     </div>

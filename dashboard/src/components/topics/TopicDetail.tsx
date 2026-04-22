@@ -8,38 +8,22 @@ import { COMPETITOR_COLORS, getHeatmapBgClass, getHeatmapTextClass } from '@/lib
 import { PlatformResponseViewer } from './PlatformResponseViewer';
 import { cn } from '@/lib/utils';
 import type { TopicDetailData } from '@/lib/db';
+import { ISOTOPE_TYPES, ISOTOPE_LABELS, ISOTOPE_DESCRIPTIONS } from '@/lib/taxonomy';
+import type { IsotopeType } from '@/lib/types';
 
 export type TopicDetailMode = 'citations' | 'mentions';
 
-// Isotope taxonomy inlined locally — these are pure presentation strings, not
-// J.Crew-specific data. Keeping them here avoids pulling @/lib/fixtures (and
-// the J.Crew analyzedMetrics snapshot) into this component's import graph.
-const ISOTOPE_ORDER = [
-  'informational',
-  'commercial',
-  'comparative',
-  'persona',
-  'specific',
-  'conversational',
-] as const;
+// TopicDetailData.isotopes[*].isotope is typed as `string` because Supabase
+// can return unknown values (e.g. an isotope the pipeline didn't classify).
+// Cast to the taxonomy key type before lookup and fall back to the raw
+// string when the isotope isn't in the canonical list.
+function isotopeLabel(iso: string): string {
+  return ISOTOPE_LABELS[iso as IsotopeType] ?? iso;
+}
 
-const ISOTOPE_LABELS: Record<string, string> = {
-  informational: 'Informational',
-  commercial: 'Commercial',
-  comparative: 'Comparative',
-  persona: 'Persona',
-  specific: 'Specific',
-  conversational: 'Conversational',
-};
-
-const ISOTOPE_DESCRIPTIONS: Record<string, string> = {
-  informational: 'Educational queries asking "What is X?"',
-  commercial: 'Buying intent queries like "Best X tools"',
-  comparative: 'Head-to-head queries like "X vs Y vs Z"',
-  persona: 'Role-based queries like "As a [role], what should I use?"',
-  specific: 'Narrow, detailed queries with multiple requirements',
-  conversational: 'Natural, casual phrasing like real user questions',
-};
+function isotopeDescription(iso: string): string {
+  return ISOTOPE_DESCRIPTIONS[iso as IsotopeType] ?? '';
+}
 
 interface TopicDetailProps {
   serverData: TopicDetailData;
@@ -68,8 +52,8 @@ export function TopicDetail({ serverData }: TopicDetailProps) {
   // isotope the data surfaces that isn't in the canonical list.
   const isotopeMap = new Map(topic.isotopes.map((i) => [i.isotope, i] as const));
   const orderedIsotopes = [
-    ...ISOTOPE_ORDER.filter((iso) => isotopeMap.has(iso)).map((iso) => isotopeMap.get(iso)!),
-    ...topic.isotopes.filter((i) => !ISOTOPE_ORDER.includes(i.isotope as (typeof ISOTOPE_ORDER)[number])),
+    ...ISOTOPE_TYPES.filter((iso) => isotopeMap.has(iso)).map((iso) => isotopeMap.get(iso)!),
+    ...topic.isotopes.filter((i) => !ISOTOPE_TYPES.includes(i.isotope as IsotopeType)),
   ];
 
   const topCompetitor = topic.competitors.find((c) => !c.isClient);
@@ -268,7 +252,7 @@ export function TopicDetail({ serverData }: TopicDetailProps) {
                     <div className="flex-1">
                       <div className="flex items-center gap-3 mb-2">
                         <span className="font-medium text-[#E5E7EB]">
-                          {ISOTOPE_LABELS[result.isotope] ?? result.isotope}
+                          {isotopeLabel(result.isotope)}
                         </span>
                         <Badge
                           variant={result.citationRate > 0.5 ? 'success' : result.citationRate > 0 ? 'outline' : 'error'}
@@ -278,7 +262,7 @@ export function TopicDetail({ serverData }: TopicDetailProps) {
                         </Badge>
                       </div>
                       <p className="text-sm text-[#6B7280]">
-                        {ISOTOPE_DESCRIPTIONS[result.isotope] ?? ''}
+                        {isotopeDescription(result.isotope)}
                       </p>
                     </div>
                     <div

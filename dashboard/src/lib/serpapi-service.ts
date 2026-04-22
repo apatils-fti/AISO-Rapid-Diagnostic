@@ -11,7 +11,16 @@
  */
 
 import { SERPAPI_CONFIG } from './serpapi-config';
-import { clientConfig } from './fixtures';
+
+/**
+ * Passed into checkAIOverview so detectClientMention can tell if the active
+ * client's brand shows up in the overview text or citations. Previously read
+ * statically from clientConfig (a J.Crew snapshot) — now threaded per-call.
+ */
+export interface SerpApiBrandContext {
+  brandName: string;
+  clientDomains: string[];
+}
 
 export interface GoogleAIOverviewResult {
   promptId: string;
@@ -47,7 +56,8 @@ export class SerpApiService {
   static async checkAIOverview(
     promptText: string,
     promptId: string,
-    topicId: string
+    topicId: string,
+    brandContext?: SerpApiBrandContext
   ): Promise<GoogleAIOverviewResult> {
     // Check if already exists
     const existing = this.getResult(promptId);
@@ -91,7 +101,7 @@ export class SerpApiService {
       const data = await response.json();
 
       // Parse AI Overview from response
-      const result = this.parseAIOverview(data, promptId, topicId);
+      const result = this.parseAIOverview(data, promptId, topicId, brandContext);
 
       // Save result
       this.saveResult(result);
@@ -118,7 +128,8 @@ export class SerpApiService {
   private static parseAIOverview(
     data: any,
     promptId: string,
-    topicId: string
+    topicId: string,
+    brandContext?: SerpApiBrandContext
   ): GoogleAIOverviewResult {
     const aiOverview = data.ai_overview;
 
@@ -148,8 +159,13 @@ export class SerpApiService {
       }
     }
 
-    // Check if client is mentioned in overview text or cited
-    const clientMentioned = this.detectClientMention(overviewText, citedSources);
+    // Check if client is mentioned in overview text or cited. When no
+    // brandContext is passed the feature degrades to "client never detected"
+    // rather than trying to match against a stale default — that's honest
+    // for a multi-client pipeline.
+    const clientMentioned = brandContext
+      ? this.detectClientMention(overviewText, citedSources, brandContext)
+      : false;
 
     return {
       promptId,
@@ -165,19 +181,23 @@ export class SerpApiService {
   /**
    * Detect client mention in overview text or citations
    */
-  private static detectClientMention(overviewText: string, citedSources: string[]): boolean {
+  private static detectClientMention(
+    overviewText: string,
+    citedSources: string[],
+    brandContext: SerpApiBrandContext
+  ): boolean {
     const lowerText = overviewText.toLowerCase();
-    const brandName = clientConfig.clientName.toLowerCase();
+    const brandName = brandContext.brandName.toLowerCase();
 
     // Check text for brand mention
-    if (lowerText.includes(brandName)) {
+    if (brandName && lowerText.includes(brandName)) {
       return true;
     }
 
     // Check citations for client domains
     for (const url of citedSources) {
       const lowerUrl = url.toLowerCase();
-      for (const domain of clientConfig.clientDomains) {
+      for (const domain of brandContext.clientDomains) {
         if (lowerUrl.includes(domain.toLowerCase())) {
           return true;
         }
