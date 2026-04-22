@@ -93,9 +93,89 @@ function SidebarClientInfo() {
   );
 }
 
-export function Sidebar() {
+// Renders the nav links with the active client param appended to every href,
+// so switching tabs preserves ?client=. Pulls usePathname + useSearchParams,
+// both of which require a Suspense boundary in the App Router. Mounted under
+// the same Suspense as SidebarClientInfo above to share the boundary.
+function SidebarNavLinks() {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const clientParam = searchParams.get('client');
+  const querySuffix = clientParam ? `?client=${clientParam}` : '';
 
+  return (
+    <>
+      {navItems.map((item) => {
+        const isActive =
+          pathname === item.href ||
+          (item.href !== '/dashboard' && pathname.startsWith(item.href));
+        const Icon = item.icon;
+
+        return (
+          <Link
+            key={item.href}
+            href={`${item.href}${querySuffix}`}
+            className={cn(
+              'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+              isActive
+                ? 'bg-[#00D4AA]/10 text-[#00D4AA]'
+                : 'text-[#9CA3AF] hover:bg-[#1A1D27] hover:text-[#E5E7EB]'
+            )}
+          >
+            <Icon className="h-5 w-5" />
+            {item.label}
+          </Link>
+        );
+      })}
+
+      {/* Fara Visual Checks - Feature Flagged */}
+      {FARA_CONFIG.ENABLED && (
+        <Link
+          href={`/prompts-fara${querySuffix}`}
+          className={cn(
+            'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+            pathname === '/prompts-fara'
+              ? 'bg-[#00D4AA]/10 text-[#00D4AA]'
+              : 'text-[#9CA3AF] hover:bg-[#1A1D27] hover:text-[#E5E7EB]'
+          )}
+        >
+          <Camera className="h-5 w-5" />
+          <span className="flex items-center gap-2">
+            Visual Checks
+            <span className="text-xs px-1.5 py-0.5 rounded bg-[#F59E0B]/10 text-[#F59E0B]">
+              Beta
+            </span>
+          </span>
+        </Link>
+      )}
+    </>
+  );
+}
+
+// Static fallback rendered during the brief Suspense window before
+// useSearchParams resolves. Hrefs are bare (no client param). Fine because
+// the user almost never sees this — the fallback just covers SSR + hydration.
+function SidebarNavFallback() {
+  return (
+    <>
+      {navItems.map((item) => {
+        const Icon = item.icon;
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-[#9CA3AF] hover:bg-[#1A1D27] hover:text-[#E5E7EB] transition-colors"
+          >
+            <Icon className="h-5 w-5" />
+            {item.label}
+          </Link>
+        );
+      })}
+    </>
+  );
+}
+
+export function Sidebar() {
   return (
     <aside className="fixed left-0 top-0 z-40 h-screen w-60 border-r border-[#2A2D37] bg-[#0F1117]">
       <div className="flex h-full flex-col">
@@ -123,49 +203,9 @@ export function Sidebar() {
 
         {/* Navigation */}
         <nav className="flex-1 space-y-1 px-3 py-4">
-          {navItems.map((item) => {
-            const isActive =
-              pathname === item.href ||
-              (item.href !== '/dashboard' && pathname.startsWith(item.href));
-            const Icon = item.icon;
-
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={cn(
-                  'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
-                  isActive
-                    ? 'bg-[#00D4AA]/10 text-[#00D4AA]'
-                    : 'text-[#9CA3AF] hover:bg-[#1A1D27] hover:text-[#E5E7EB]'
-                )}
-              >
-                <Icon className="h-5 w-5" />
-                {item.label}
-              </Link>
-            );
-          })}
-
-          {/* Fara Visual Checks - Feature Flagged */}
-          {FARA_CONFIG.ENABLED && (
-            <Link
-              href="/prompts-fara"
-              className={cn(
-                'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
-                pathname === '/prompts-fara'
-                  ? 'bg-[#00D4AA]/10 text-[#00D4AA]'
-                  : 'text-[#9CA3AF] hover:bg-[#1A1D27] hover:text-[#E5E7EB]'
-              )}
-            >
-              <Camera className="h-5 w-5" />
-              <span className="flex items-center gap-2">
-                Visual Checks
-                <span className="text-xs px-1.5 py-0.5 rounded bg-[#F59E0B]/10 text-[#F59E0B]">
-                  Beta
-                </span>
-              </span>
-            </Link>
-          )}
+          <Suspense fallback={<SidebarNavFallback />}>
+            <SidebarNavLinks />
+          </Suspense>
         </nav>
 
         {/* Bottom Actions */}
