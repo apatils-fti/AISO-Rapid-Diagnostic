@@ -10,7 +10,15 @@ interface GapAnalysisPageProps {
   searchParams: Promise<{ client?: string; platform?: string; sentiment?: string; isotope?: string; intent?: string }>;
 }
 
-async function GapContent({ clientId, filters }: { clientId: string; filters: QueryFilters }) {
+async function GapContent({
+  clientId,
+  filters,
+  clientName,
+}: {
+  clientId: string;
+  filters: QueryFilters;
+  clientName?: string;
+}) {
   const gaps = await getGapAnalysis(clientId, filters);
 
   if (gaps.length === 0) {
@@ -27,11 +35,11 @@ async function GapContent({ clientId, filters }: { clientId: string; filters: Qu
   return (
     <div className="space-y-6">
       <EnrichmentFilters />
-      <TopGapPriorities serverGapData={gaps} />
+      <TopGapPriorities serverGapData={gaps} clientName={clientName} />
       <QuadrantChart serverGapData={gaps} />
       <LayerComparison serverGapData={gaps} />
-      <GapBridges />
-      <GapInsightCard serverGapData={gaps} />
+      <GapBridges serverGapData={gaps} />
+      <GapInsightCard serverGapData={gaps} clientName={clientName} />
     </div>
   );
 }
@@ -53,7 +61,7 @@ export default async function GapAnalysisPage({ searchParams }: GapAnalysisPageP
   return (
     <PageContainer
       title="Gap Analysis"
-      description="Parametric knowledge vs. RAG citation analysis"
+      description="Where competitors outperform you, topic by topic"
       clients={clients.map(c => ({ id: c.id, name: c.name }))}
       currentClientId={clientId}
       runDate={runDate ?? undefined}
@@ -67,7 +75,11 @@ export default async function GapAnalysisPage({ searchParams }: GapAnalysisPageP
           </div>
         }
       >
-        <GapContent clientId={clientId} filters={filters} />
+        <GapContent
+          clientId={clientId}
+          filters={filters}
+          clientName={clients.find(c => c.id === clientId)?.name}
+        />
       </Suspense>
     </PageContainer>
   );
