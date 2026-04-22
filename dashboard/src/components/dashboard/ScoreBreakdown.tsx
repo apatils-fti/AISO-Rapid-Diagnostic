@@ -1,13 +1,18 @@
 'use client';
 
+import { useState } from 'react';
 import { MessageSquare, Trophy, PieChart, TrendingUp, Link2, ChevronDown, ChevronUp, Info, Calculator } from 'lucide-react';
-import { useState, useEffect } from 'react';
 import { MetricCard, Tooltip } from '@/components/shared';
-import { analyzedMetrics } from '@/lib/fixtures';
-import { getOverallBrandMetrics, type OverallBrandMetrics } from '@/lib/platform-data';
+import type { OverviewStats } from '@/lib/db';
 import { formatPercent, cn } from '@/lib/utils';
 
-// Industry weights - matching collector/src/industry-profiles.ts
+// NOTE: As of 2026-04-22 this component is exported from
+// `components/dashboard/index.ts` but not rendered by any page — Executive
+// Summary uses <ExecutiveSummary> + <PillarCard> instead. Kept around (and
+// kept current) so it's ready if/when reintroduced.
+
+// Industry weights — matches collector/src/industry-profiles.ts. Indexed by
+// archetype id stored on the clients row.
 const INDUSTRY_WEIGHTS: Record<string, { domain: number; mention: number; position: number; voice: number }> = {
   'fashion-apparel': { domain: 15, mention: 35, position: 25, voice: 25 },
   'saas-software': { domain: 40, mention: 25, position: 20, voice: 15 },
@@ -18,6 +23,18 @@ const INDUSTRY_WEIGHTS: Record<string, { domain: number; mention: number; positi
   'food-beverage': { domain: 15, mention: 40, position: 25, voice: 20 },
   'default': { domain: 25, mention: 30, position: 25, voice: 20 },
 };
+
+const ARCHETYPE_LABEL: Record<string, string> = {
+  'fashion-apparel': 'Fashion & Apparel',
+  'saas-software': 'SaaS / Software',
+  'finance-banking': 'Finance & Banking',
+  'healthcare-pharma': 'Healthcare / Pharma',
+  'retail-ecommerce': 'Retail / E-commerce',
+  'travel-hospitality': 'Travel & Hospitality',
+  'food-beverage': 'Food & Beverage',
+};
+
+const LOW_CITATION_ARCHETYPES = new Set(['fashion-apparel', 'food-beverage']);
 
 interface ScoreComponent {
   id: string;
@@ -31,33 +48,39 @@ interface ScoreComponent {
   icon: React.ElementType;
 }
 
-export function ScoreBreakdown() {
-  const { summary, textMetrics } = analyzedMetrics;
+interface ScoreBreakdownProps {
+  overviewData?: OverviewStats | null;
+  archetype?: string;
+}
+
+export function ScoreBreakdown({ overviewData, archetype }: ScoreBreakdownProps) {
   const [showCitations, setShowCitations] = useState(false);
-  const [batchMetrics, setBatchMetrics] = useState<OverallBrandMetrics | null>(null);
 
-  useEffect(() => {
-    getOverallBrandMetrics().then(setBatchMetrics);
-  }, []);
+  if (!overviewData) {
+    return (
+      <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-6 text-sm text-[#9CA3AF]">
+        No overview data available.
+      </div>
+    );
+  }
 
-  // Use batch metrics when available, fall back to fixture
-  const brandMentionRate = batchMetrics?.brandMentionRate ?? summary.brandMentionRate ?? 0;
-  const firstMentionRate = batchMetrics?.firstMentionRate ?? summary.firstMentionRate ?? 0;
-  const shareOfVoice = batchMetrics?.shareOfVoice ?? summary.shareOfVoice ?? 0;
-  const citationRate = batchMetrics?.citationRate ?? summary.citationShare;
-  const totalResponses = batchMetrics?.totalResponses ?? textMetrics?.overall.totalResponses ?? summary.totalPrompts * 3;
-  const promptsWithMention = batchMetrics?.promptsWithMention ?? Math.round(brandMentionRate * totalResponses);
-  const promptsWithCitation = batchMetrics?.promptsWithCitation ?? 0;
+  const brandMentionRate = overviewData.mentionRate;
+  const firstMentionRate = overviewData.firstMentionRate;
+  const shareOfVoice = overviewData.shareOfVoice;
+  const citationRate = overviewData.citationRate;
+  const totalResponses = overviewData.totalResults;
+  const promptsWithMention = overviewData.promptsWithMention;
+  const promptsWithCitation = overviewData.promptsWithCitation;
 
-  // Get industry weights
-  const industryId = summary.industry?.id ?? 'default';
+  // Industry weights from archetype, falling back to a generic default.
+  const industryId = archetype ?? 'default';
   const weights = INDUSTRY_WEIGHTS[industryId] ?? INDUSTRY_WEIGHTS['default'];
+  const industryName = archetype ? ARCHETYPE_LABEL[archetype] : 'General';
 
-  // Calculate position score (same formula as analyze.ts)
-  const avgPosition = summary.avgMentionPosition ?? 0;
-  const positionScore = avgPosition > 0
-    ? Math.max(0, 1 - (avgPosition - 1) / 4)
-    : 0;
+  // Position score: not currently in OverviewStats. Treated as 0 until
+  // avgMentionPosition is added to the server-side computation.
+  const avgPosition = 0;
+  const positionScore = 0;
 
   // Calculate each component's contribution
   const components: ScoreComponent[] = [
@@ -107,12 +130,10 @@ export function ScoreBreakdown() {
     },
   ];
 
-  // Sort by contribution (highest first)
   const sortedComponents = [...components].sort((a, b) => b.contribution - a.contribution);
   const totalScore = Math.round(components.reduce((sum, c) => sum + c.contribution, 0));
   const maxPossible = 100;
 
-  // Color map for segmented bar (raw hex values)
   const segmentColors: Record<string, string> = {
     'bg-emerald-500': '#10B981',
     'bg-blue-500': '#3B82F6',
@@ -129,7 +150,7 @@ export function ScoreBreakdown() {
           <span className="text-sm font-medium text-[#E5E7EB]">Score Breakdown</span>
         </div>
         <span className="text-xs text-[#6B7280]">
-          Weighted for {summary.industry?.name ?? 'General'}
+          Weighted for {industryName}
         </span>
       </div>
 
@@ -148,7 +169,6 @@ export function ScoreBreakdown() {
             />
           ))}
         </div>
-        {/* Legend for segmented bar */}
         <div className="flex items-center gap-4 mt-2">
           {sortedComponents.map((c) => (
             <div key={c.id} className="flex items-center gap-1.5">
@@ -162,7 +182,7 @@ export function ScoreBreakdown() {
         </div>
       </div>
 
-      {/* Score Components — always visible */}
+      {/* Score Components */}
       <div className="space-y-3">
         {sortedComponents.map((component) => {
           const Icon = component.icon;
@@ -204,7 +224,6 @@ export function ScoreBreakdown() {
                   </span>
                 </div>
               </div>
-              {/* Progress bar showing contribution */}
               <div className="flex items-center gap-2">
                 <div className="flex-1 h-2 bg-[#22252F] rounded-full overflow-hidden">
                   <div
@@ -288,8 +307,8 @@ export function ScoreBreakdown() {
         />
         <MetricCard
           label="Avg Position"
-          value={summary.avgMentionPosition ? `#${summary.avgMentionPosition.toFixed(1)}` : 'N/A'}
-          subValue="When mentioned"
+          value="N/A"
+          subValue="Not yet computed"
           icon={TrendingUp}
           variant="compact"
         />
@@ -303,9 +322,9 @@ export function ScoreBreakdown() {
         >
           {showCitations ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           Domain Citation Details
-          {summary.industry?.citationExpectation === 'low' && (
+          {archetype && LOW_CITATION_ARCHETYPES.has(archetype) && (
             <span className="text-xs bg-[#22252F] px-2 py-0.5 rounded">
-              {weights.domain}% weight for {summary.industry.name}
+              {weights.domain}% weight for {industryName}
             </span>
           )}
         </button>

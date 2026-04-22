@@ -550,53 +550,67 @@ row with `brand`, `competitors[]`, `client_domains[]` columns, or stand up a
 
 ---
 
-### P2: Complete fixture-to-Supabase migration (remaining components)
+### P2 (HARD): Migrate Gap Analysis page off J.Crew fixtures
 
-**Problem**: After 5a80cef (P0) + c25476e (P1), the dashboard top half (layout
-chrome, prompts table, competitors page, dashboard sidebar cards) all read
-from Supabase. Nine components elsewhere still import from `@/lib/fixtures`
-and render J.Crew snapshot data regardless of which client is selected. They
-also block deleting the fixture JSON files (~160KB of static J.Crew data
-shipped to every page).
+**Problem**: The entire `/gap-analysis` page renders J.Crew fixture data
+regardless of the selected client. After commits 5a80cef → 6fbace6 the rest
+of the dashboard reads from Supabase; this page is the last surface still
+on fixtures.
 
 **Components still on fixtures**:
+- `dashboard/src/components/gap-analysis/TopGapPriorities.tsx` — has
+  `const CLIENT_NAME = 'J.Crew'` (line 21), iterates
+  `analyzedMetrics.topicResults` and `getFilteredTopicBrandMetrics`.
+- `dashboard/src/components/gap-analysis/QuadrantChart.tsx` — destructures
+  `analyzedMetrics.competitorOverview` + `gapAnalysis`. Plots competitors
+  by `parametricMentionRate` (J.Crew-only field — no Supabase equivalent).
+- `dashboard/src/components/gap-analysis/LayerComparison.tsx` (and the
+  inline `GapBridges` export) — uses `topic.parametricPresence.mentionRate`
+  and `topic.robustnessScore`, both J.Crew-only fields.
+- `dashboard/src/components/gap-analysis/GapInsightCard.tsx` — renders
+  `analyzedMetrics.gapAnalysis.insight` (a hand-written narrative paragraph)
+  and `.recommendations` (a hand-written list).
 
-Topics tab:
-- `dashboard/src/components/topics/IsotopeHeatmap.tsx` — uses
-  `analyzedMetrics.topicResults` for the topic list and has
-  `const CLIENT_NAME = 'J.Crew'` literal at line 48 for sorting.
+**Why this is HARD, not just "rewire the prop"**:
 
-Compare tab:
-- `dashboard/src/components/compare/TopicComparisonTable.tsx` — iterates
-  `analyzedMetrics.topicResults` to build the row set.
+The "Diagnostic Insight" paragraph and the "Recommendations" list in
+`GapInsightCard` aren't computed from data — they're authored prose that
+ships with the J.Crew fixture. There's no Supabase column to read them from.
 
-Gap Analysis tab (entire page is fixture-backed):
-- `dashboard/src/components/gap-analysis/TopGapPriorities.tsx`
-- `dashboard/src/components/gap-analysis/QuadrantChart.tsx`
-- `dashboard/src/components/gap-analysis/LayerComparison.tsx`
-- `dashboard/src/components/gap-analysis/GapInsightCard.tsx`
+To migrate, we need a **generation step** that takes the client's Supabase
+results + competitor overview + topic gaps and produces a fresh insight +
+recommendations paragraph per client. Options:
 
-Dashboard tab (cards beyond the ones already migrated):
-- `dashboard/src/components/dashboard/VisibilityScore.tsx`
-- `dashboard/src/components/dashboard/ScoreBreakdown.tsx`
-- `dashboard/src/components/dashboard/ExecutiveSummary.tsx` — has a fallback
-  branch that calls `getExecutiveSummary()` from platform-data when no
-  `overviewData` prop is passed. The dashboard page does pass overviewData
-  so this is dormant in practice, but it's still a fixture path that needs
-  to go.
+1. **Claude API call at page-render time** — server-side `getGapInsight(clientId)`
+   that builds a prompt from getOverviewStats + getCompetitorOverview +
+   getTopGaps and asks Claude for a 2-paragraph narrative + 3-5 bullet
+   recommendations. Cache per (clientId, dateRange) since the data is slow-
+   moving. Cost: ~1c per page render before caching.
+2. **Pre-generate during the nightly enrichment pipeline** — add a
+   `gap_insights` table populated by a new script that runs after VADER
+   enrichment. Page just reads the row. No render-time API call. Adds a
+   stable artefact but requires schema work and a new pipeline step.
+3. **Drop the narrative section entirely** for now — show only the
+   data-derived bits (quadrant, layer comparison, top gaps) and add the
+   narrative back in a follow-up. Lowest effort but loses the "what does
+   this mean for me" value of the page.
 
-**Solution**: Each component takes a `serverData` prop populated by db.ts,
-matching the pattern used in the P1 commit. New db.ts helpers needed:
-- `getTopicComparisonRows(clientId, filters)` for TopicComparisonTable
-- `getGapAnalysis(clientId, filters)` already exists — wire it into the four
-  gap-analysis children directly instead of reaching for the fixture.
-- `getVisibilityBreakdown(clientId, filters)` for VisibilityScore +
-  ScoreBreakdown (the old fixture path computed sub-pillar contributions
-  from analyzedMetrics.summary; equivalent math now lives in
-  `lib/metrics.ts` against EnrichedResult arrays).
+The other three components are mechanically simpler — they need
+`serverGapData` from `getGapAnalysis()` plus per-competitor parametric
+data (which doesn't exist in Supabase yet — `parametricMentionRate` was a
+J.Crew-only field measured in a separate analysis pass). So `QuadrantChart`
+needs either a new `parametric_mention_rate` column on a competitor table,
+or to be redesigned to plot two metrics that DO exist (e.g.
+mention-rate-without-search vs mention-rate-with-search).
 
-**Effort**: 2-3 days. The gap-analysis page is the biggest chunk
-(four components, two of them chart-heavy).
+**Recommended approach**: option 2 (pre-generated `gap_insights` table) +
+new `competitor_parametric` table populated by a one-off "what does each AI
+already know about this brand without searching" probe. This makes the page
+data-driven and avoids per-render API spend.
+
+**Effort**: 4-5 days. Schema design (1d) + pipeline script (1d) + four
+component rewrites (2d) + Claude prompt iteration on the insight paragraph
+(0.5-1d).
 
 ---
 

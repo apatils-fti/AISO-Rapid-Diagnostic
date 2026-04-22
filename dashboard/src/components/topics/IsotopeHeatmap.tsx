@@ -2,13 +2,13 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { Link2, MessageSquare } from 'lucide-react';
-import { analyzedMetrics, getTopicCategories, getFilteredTopicBrandMetrics } from '@/lib/fixtures';
 import {
   getTopicIsotopeStatsMap,
   getTopicStatsMap,
   type TopicIsotopeStats,
 } from '@/lib/platform-data';
 import type { TopicIsotopeRow } from '@/lib/db';
+import type { TopicResult, IsotopeType, IsotopeResult } from '@/lib/types';
 import { FilterBar, FilterDropdown, SearchInput } from '@/components/shared';
 import { IsotopeLegend, IsotopeHeaders } from './IsotopeLegend';
 import { TopicRow } from './TopicRow';
@@ -19,6 +19,35 @@ export type HeatmapMode = 'citations' | 'mentions';
 interface IsotopeHeatmapProps {
   selectedPlatforms?: string[];
   serverTopicData?: TopicIsotopeRow[];
+}
+
+// Empty IsotopeResult used as a placeholder when rendering Supabase topics
+// through the legacy TopicRow / HeatmapCell components. Both components fall
+// back to fixture fields only when batchStats is missing — and we always pass
+// batchStats for Supabase topics — so these zeroes never reach the screen.
+const EMPTY_ISOTOPE_RESULT: IsotopeResult = {
+  cited: false,
+  citationCount: 0,
+  avgPosition: null,
+  consistency: 0,
+  runs: 0,
+  runsWithCitation: 0,
+  competitorCitations: {},
+};
+
+const ALL_ISOTOPES: IsotopeType[] = [
+  'informational',
+  'commercial',
+  'comparative',
+  'persona',
+  'specific',
+  'conversational',
+];
+
+function emptyIsotopeResults(): Record<IsotopeType, IsotopeResult> {
+  const out = {} as Record<IsotopeType, IsotopeResult>;
+  for (const iso of ALL_ISOTOPES) out[iso] = EMPTY_ISOTOPE_RESULT;
+  return out;
 }
 
 export function IsotopeHeatmap({ selectedPlatforms, serverTopicData }: IsotopeHeatmapProps) {
@@ -38,59 +67,80 @@ export function IsotopeHeatmap({ selectedPlatforms, serverTopicData }: IsotopeHe
     getTopicStatsMap(selectedPlatforms).then(setTopicStatsMap);
   }, [selectedPlatforms]);
 
-  const categories = getTopicCategories();
+  // Categories from the server data. Currently always empty string because
+  // results table has no topic_category column (see TopicComparisonTable for
+  // the same constraint). Filter dropdown will collapse to just "All" until
+  // category is denormalised into results or surfaced via a topics table.
+  const categories = useMemo(() => {
+    if (!serverTopicData) return [];
+    const set = new Set<string>();
+    for (const t of serverTopicData) {
+      if (t.category) set.add(t.category);
+    }
+    return [...set].sort();
+  }, [serverTopicData]);
+
   const categoryOptions = [
     { value: 'all', label: 'All Categories' },
-    ...categories.map(c => ({ value: c, label: c })),
+    ...categories.map((c) => ({ value: c, label: c })),
   ];
 
-  const filteredTopics = useMemo(() => {
-    const CLIENT_NAME = 'J.Crew';
+  // Build a TopicResult-shaped list from serverTopicData so the existing
+  // TopicRow / HeatmapCell components keep working. Sort by gap to the
+  // strongest competitor — was previously hardcoded against J.Crew via
+  // analyzedMetrics + a literal CLIENT_NAME string.
+  const filteredTopics: TopicResult[] = useMemo(() => {
+    if (!serverTopicData) return [];
 
-    const filtered = analyzedMetrics.topicResults.filter(topic => {
-      const matchesSearch = topic.topicName.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory = categoryFilter === 'all' || topic.category === categoryFilter;
+    const filtered = serverTopicData.filter((t) => {
+      const matchesSearch = t.topicName.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesCategory = categoryFilter === 'all' || t.category === categoryFilter;
       return matchesSearch && matchesCategory;
     });
 
-    // Sort by biggest gap/opportunity using platform-filtered metrics
-    return filtered.sort((a, b) => {
-      const aMetrics = getFilteredTopicBrandMetrics(a.topicId, selectedPlatforms);
-      const bMetrics = getFilteredTopicBrandMetrics(b.topicId, selectedPlatforms);
-      const aClientRate = aMetrics[CLIENT_NAME]?.mentionRate ?? 0;
-      const bClientRate = bMetrics[CLIENT_NAME]?.mentionRate ?? 0;
-
-      const aMaxComp = Math.max(
-        0,
-        ...Object.entries(aMetrics)
-          .filter(([name]) => name !== CLIENT_NAME)
-          .map(([, m]) => m.mentionRate)
-      );
-      const bMaxComp = Math.max(
-        0,
-        ...Object.entries(bMetrics)
-          .filter(([name]) => name !== CLIENT_NAME)
-          .map(([, m]) => m.mentionRate)
-      );
-
-      const aGap = aMaxComp - aClientRate;
-      const bGap = bMaxComp - bClientRate;
-
-      return bGap - aGap; // Biggest gap first
+    const sorted = [...filtered].sort((a, b) => {
+      const aMaxComp = Math.max(0, ...Object.values(a.competitorRates ?? {}));
+      const bMaxComp = Math.max(0, ...Object.values(b.competitorRates ?? {}));
+      const aGap = aMaxComp - a.overallMentionRate;
+      const bGap = bMaxComp - b.overallMentionRate;
+      return bGap - aGap; // biggest gap first
     });
-  }, [searchQuery, categoryFilter, selectedPlatforms]);
 
-  // Group topics by category
+    // Adapt shape to TopicResult so we can keep using the existing TopicRow.
+    // robustnessScore is set from overallMentionRate as a sane default; the
+    // value is only used when topicStats fallback fires (it doesn't, since
+    // we always pass batchStats below). overallScore + parametricPresence
+    // are unused by TopicRow but required by the type.
+    return sorted.map((t): TopicResult => ({
+      topicId: t.topicId,
+      topicName: t.topicName,
+      category: t.category,
+      overallScore: 0,
+      robustnessScore: t.overallMentionRate,
+      isotopeResults: emptyIsotopeResults(),
+      parametricPresence: {
+        mentioned: false,
+        mentionRate: 0,
+        sentiment: 'neutral',
+        position: 'absent',
+      },
+    }));
+  }, [serverTopicData, searchQuery, categoryFilter]);
+
+  // Group topics by category — when category data is empty, everything bucket
+  // into the empty group, which we render under a "Topics" header instead of
+  // an empty pill.
   const groupedTopics = useMemo(() => {
-    const groups: Record<string, typeof filteredTopics> = {};
+    const groups: Record<string, TopicResult[]> = {};
     for (const topic of filteredTopics) {
-      if (!groups[topic.category]) {
-        groups[topic.category] = [];
-      }
-      groups[topic.category].push(topic);
+      const key = topic.category || 'Topics';
+      if (!groups[key]) groups[key] = [];
+      groups[key].push(topic);
     }
     return groups;
   }, [filteredTopics]);
+
+  const hasCategories = categories.length > 0;
 
   return (
     <div className="space-y-6">
@@ -138,12 +188,14 @@ export function IsotopeHeatmap({ selectedPlatforms, serverTopicData }: IsotopeHe
             placeholder="Search topics..."
             className="w-48"
           />
-          <FilterDropdown
-            label="Category"
-            options={categoryOptions}
-            value={categoryFilter}
-            onChange={setCategoryFilter}
-          />
+          {hasCategories && (
+            <FilterDropdown
+              label="Category"
+              options={categoryOptions}
+              value={categoryFilter}
+              onChange={setCategoryFilter}
+            />
+          )}
         </FilterBar>
       </div>
 
@@ -159,7 +211,7 @@ export function IsotopeHeatmap({ selectedPlatforms, serverTopicData }: IsotopeHe
 
         {/* Body */}
         <div className="divide-y divide-[#2A2D37]">
-          {categoryFilter === 'all' ? (
+          {hasCategories && categoryFilter === 'all' ? (
             // Show grouped by category
             Object.entries(groupedTopics).map(([category, topics]) => (
               <div key={category}>
@@ -169,7 +221,7 @@ export function IsotopeHeatmap({ selectedPlatforms, serverTopicData }: IsotopeHe
                   </span>
                 </div>
                 <div>
-                  {topics.map(topic => (
+                  {topics.map((topic) => (
                     <TopicRow
                       key={topic.topicId}
                       topic={topic}
@@ -182,8 +234,7 @@ export function IsotopeHeatmap({ selectedPlatforms, serverTopicData }: IsotopeHe
               </div>
             ))
           ) : (
-            // Show flat list
-            filteredTopics.map(topic => (
+            filteredTopics.map((topic) => (
               <TopicRow
                 key={topic.topicId}
                 topic={topic}
@@ -198,7 +249,9 @@ export function IsotopeHeatmap({ selectedPlatforms, serverTopicData }: IsotopeHe
 
       {filteredTopics.length === 0 && (
         <div className="text-center py-12 text-[#6B7280]">
-          No topics found matching your criteria.
+          {serverTopicData && serverTopicData.length > 0
+            ? 'No topics found matching your criteria.'
+            : 'No topic data available for this client.'}
         </div>
       )}
     </div>

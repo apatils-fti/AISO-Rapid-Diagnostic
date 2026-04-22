@@ -1,56 +1,62 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import { Building2, Info } from 'lucide-react';
 import { ScoreGauge } from '@/components/shared';
-import { analyzedMetrics } from '@/lib/fixtures';
-import { getOverallBrandMetrics, type OverallBrandMetrics } from '@/lib/platform-data';
+import type { OverviewStats } from '@/lib/db';
 import { getScoreTextClass } from '@/lib/colors';
 import { cn } from '@/lib/utils';
 
-export function VisibilityScore() {
-  const { summary, textMetrics } = analyzedMetrics;
-  const [batchMetrics, setBatchMetrics] = useState<OverallBrandMetrics | null>(null);
+// NOTE: As of 2026-04-22 this component is exported from
+// `components/dashboard/index.ts` but not rendered by any page — Executive
+// Summary uses <ExecutiveSummary> + <PillarCard> instead. Kept around (and
+// kept current) so it's ready if/when reintroduced. Drop or merge with
+// ExecutiveSummary if it stays unused after the next dashboard pass.
 
-  useEffect(() => {
-    getOverallBrandMetrics().then(setBatchMetrics);
-  }, []);
+// Industry display labels matching the archetype IDs stored on clients.
+const ARCHETYPE_LABEL: Record<string, string> = {
+  'fashion-apparel': 'Fashion & Apparel',
+  'saas-software': 'SaaS / Software',
+  'finance-banking': 'Finance & Banking',
+  'healthcare-pharma': 'Healthcare / Pharma',
+  'retail-ecommerce': 'Retail / E-commerce',
+  'travel-hospitality': 'Travel & Hospitality',
+  'food-beverage': 'Food & Beverage',
+};
 
-  // Find top competitor by mention rate, preferring batch data
-  let topCompetitorName = '';
-  let topCompetitorRate = 0;
+// Archetypes where citation behaviour is light — surface a tooltip hint
+// matching the old fixture-driven copy.
+const LOW_CITATION_ARCHETYPES = new Set(['fashion-apparel', 'food-beverage']);
 
-  if (batchMetrics) {
-    for (const [name, rates] of Object.entries(batchMetrics.competitorRates)) {
-      if (rates.mentionRate > topCompetitorRate) {
-        topCompetitorName = name;
-        topCompetitorRate = rates.mentionRate;
-      }
-    }
-  } else {
-    const brandMetrics = textMetrics?.overall.brandMetrics ?? {};
-    const top = Object.entries(brandMetrics)
-      .filter(([name]) => !analyzedMetrics.competitorOverview.find(c => c.name === name && c.isClient))
-      .sort(([, a], [, b]) => b.mentionRate - a.mentionRate)[0];
-    if (top) {
-      topCompetitorName = top[0];
-      topCompetitorRate = top[1].mentionRate;
-    }
+interface VisibilityScoreProps {
+  overviewData?: OverviewStats | null;
+  archetype?: string;
+}
+
+export function VisibilityScore({ overviewData, archetype }: VisibilityScoreProps) {
+  if (!overviewData) {
+    return (
+      <div className="flex items-start gap-8">
+        <ScoreGauge score={0} size="xl" label="Visibility Score" className="flex-shrink-0" />
+        <div className="flex-1 text-[#9CA3AF]">No overview data available.</div>
+      </div>
+    );
   }
 
-  const score = summary.overallScore;
+  const score = overviewData.visibilityScore;
+  const industryName = archetype ? ARCHETYPE_LABEL[archetype] : undefined;
+  const lowCitationArchetype = archetype ? LOW_CITATION_ARCHETYPES.has(archetype) : false;
 
-  const getScoreInterpretation = (score: number): string => {
-    if (score < 25) {
+  const getScoreInterpretation = (s: number): string => {
+    if (s < 25) {
       return "Your AI search visibility is critically low. You're being significantly outperformed by all tracked competitors.";
     }
-    if (score < 40) {
+    if (s < 40) {
       return "Your AI search visibility is below average. You're being outperformed by most tracked competitors.";
     }
-    if (score < 60) {
+    if (s < 60) {
       return "Your AI search visibility is moderate. There's significant room for improvement against top competitors.";
     }
-    if (score < 80) {
+    if (s < 80) {
       return "Your AI search visibility is good. You're competitive but could strengthen presence in key areas.";
     }
     return "Your AI search visibility is excellent. You're a leader in AI search presence.";
@@ -69,33 +75,33 @@ export function VisibilityScore() {
           <h3 className={cn('text-2xl font-heading font-bold', getScoreTextClass(score))}>
             {score < 40 ? 'Below Average' : score < 60 ? 'Moderate' : 'Good'}
           </h3>
-          {summary.industry && (
+          {industryName && (
             <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#22252F] border border-[#2A2D37] text-xs text-[#9CA3AF]">
               <Building2 className="h-3 w-3" />
-              {summary.industry.name}
+              {industryName}
             </span>
           )}
         </div>
         <p className="mt-2 text-[#9CA3AF] leading-relaxed">
           {getScoreInterpretation(score)}
         </p>
-        {summary.industry?.citationExpectation === 'low' && (
+        {lowCitationArchetype && (
           <p className="mt-2 text-xs text-[#6B7280] flex items-center gap-1">
             <Info className="h-3 w-3" />
-            Score weighted for {summary.industry.name.toLowerCase()} (brand mentions matter more than domain citations)
+            Score weighted for {industryName?.toLowerCase()} (brand mentions matter more than domain citations)
           </p>
         )}
-        <div className="mt-4 flex items-center gap-2 text-sm">
-          <span className="text-[#6B7280]">Top competitor:</span>
-          <span className="font-medium text-[#E5E7EB]">
-            {topCompetitorName || summary.topCompetitor.name}
-          </span>
-          <span className="text-[#6B7280]">at</span>
-          <span className="font-medium text-amber-400">
-            {(topCompetitorRate * 100).toFixed(0)}%
-          </span>
-          <span className="text-[#6B7280]">mention rate</span>
-        </div>
+        {overviewData.topCompetitor && (
+          <div className="mt-4 flex items-center gap-2 text-sm">
+            <span className="text-[#6B7280]">Top competitor:</span>
+            <span className="font-medium text-[#E5E7EB]">{overviewData.topCompetitor}</span>
+            <span className="text-[#6B7280]">at</span>
+            <span className="font-medium text-amber-400">
+              {(overviewData.topCompetitorRate * 100).toFixed(0)}%
+            </span>
+            <span className="text-[#6B7280]">mention rate</span>
+          </div>
+        )}
       </div>
     </div>
   );
