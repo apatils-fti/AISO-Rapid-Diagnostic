@@ -28,7 +28,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 config({ path: resolve(__dirname, '..', '.env.local') });
 
 // ─── Config ──────────────────────────────────────────────────
-const CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
+// BRAND_NAME is still hardcoded to J.Crew because it's interpolated into the
+// Claude sentiment prompt below. Make this client-aware before running this
+// script for any non-J.Crew client (the VADER enricher in the nightly pipeline
+// is brand-agnostic and doesn't have this issue).
 const BRAND_NAME = 'J.Crew';
 const BATCH_SIZE = 10;
 const BATCH_DELAY_MS = 2000;
@@ -43,6 +46,9 @@ function getArg(flag) {
 }
 const limit = getArg('--limit') ? parseInt(getArg('--limit'), 10) : undefined;
 const platformFilter = getArg('--platform');
+// Optional. When set, only this client's runs are processed. When omitted,
+// every un-enriched result across all clients is processed (backfill mode).
+const clientId = getArg('--client-id');
 
 // ─── Validate env ────────────────────────────────────────────
 const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -151,40 +157,40 @@ async function main() {
   console.log('═══════════════════════════════════════════════');
   console.log('  AISO Supabase Enrichment Pipeline');
   console.log('═══════════════════════════════════════════════');
-  console.log(`  Client:     ${BRAND_NAME} (${CLIENT_ID})`);
+  console.log(`  Brand:      ${BRAND_NAME}`);
+  console.log(`  Scope:      ${clientId ? `client ${clientId}` : 'ALL clients (backfill mode)'}`);
   console.log(`  Batch size: ${BATCH_SIZE}`);
   console.log(`  Log every:  ${LOG_INTERVAL} results`);
   if (limit) console.log(`  Limit:      ${limit}`);
   if (platformFilter) console.log(`  Platform:   ${platformFilter}`);
   console.log('');
 
-  // ── Step 1: Get run_ids for this client ──
-  //    results.run_id → runs.id → runs.client_id
-  const { data: runs, error: runsError } = await supabase
-    .from('runs')
-    .select('id')
-    .eq('client_id', CLIENT_ID);
-
-  if (runsError) {
-    console.error('  ✗ Failed to fetch runs:', runsError.message);
-    process.exit(1);
-  }
-
-  const runIds = runs.map(r => r.id);
-  console.log(`  Found ${runIds.length} runs for client`);
-
-  if (runIds.length === 0) {
-    console.log('  No runs found for this client. Nothing to enrich.');
-    return;
-  }
-
-  // ── Step 2: Fetch un-enriched results for those runs ──
+  // ── Step 1: Build the un-enriched-results query ──
   let query = supabase
     .from('results')
     .select('id, response_text, client_mentioned, isotope, topic_name, platform, run_id')
-    .in('run_id', runIds)
     .is('sentiment', null)
     .order('created_at', { ascending: true });
+
+  // ── Step 2: Optionally narrow to one client's runs ──
+  //    results.run_id → runs.id → runs.client_id
+  if (clientId) {
+    const { data: runs, error: runsError } = await supabase
+      .from('runs')
+      .select('id')
+      .eq('client_id', clientId);
+
+    if (runsError) {
+      console.error('  ✗ Failed to fetch runs:', runsError.message);
+      process.exit(1);
+    }
+    if (!runs?.length) {
+      console.log('  No runs found for this client. Nothing to enrich.');
+      return;
+    }
+    console.log(`  Found ${runs.length} runs for client`);
+    query = query.in('run_id', runs.map(r => r.id));
+  }
 
   if (platformFilter) query = query.eq('platform', platformFilter);
   if (limit) query = query.limit(limit);
@@ -290,7 +296,7 @@ async function main() {
 
   const summary = {
     timestamp: new Date().toISOString(),
-    clientId: CLIENT_ID,
+    clientId: clientId ?? null,
     brand: BRAND_NAME,
     platform: platformFilter || 'all',
     totalRows: rows.length,

@@ -74,7 +74,7 @@ function loadState() {
   if (resume && existsSync(stateFile)) {
     return JSON.parse(readFileSync(stateFile, 'utf-8'));
   }
-  return { completedSteps: [], clientId: null, libraryId: null };
+  return { completedSteps: [], clientId: null, libraryId: null, runStartedAt: null };
 }
 
 function saveState(state) {
@@ -128,6 +128,13 @@ async function main() {
   console.log('');
 
   const state = loadState();
+  // Capture once, persist across --resume. Used at the verify step to scope
+  // the run summary to rows created during THIS onboarding execution rather
+  // than every historical run for the client.
+  if (!state.runStartedAt) {
+    state.runStartedAt = new Date().toISOString();
+    saveState(state);
+  }
   const generatorDir = resolve(__dirname, '..', '..', 'generator');
   const dashboardDir = resolve(__dirname, '..');
 
@@ -196,6 +203,9 @@ async function main() {
   // Without these, the runners short-circuit Supabase writes on line 39
   // of their initSupabase() and only write to a local JSON file.
   const supabaseArgs = ` --client-id ${state.clientId} --library-id ${state.libraryId}`;
+  // Enrichment scripts only need --client-id to scope to this client; without
+  // it they fall back to backfill mode (process every un-enriched row).
+  const enrichClientArg = ` --client-id ${state.clientId}`;
 
   // Step 2: Run Claude batch
   runStep(
@@ -236,40 +246,54 @@ async function main() {
   // Step 6: Enrich sentiment (VADER)
   runStep(
     'VADER sentiment enrichment',
-    `cd "${dashboardDir}" && node scripts/enrich-sentiment-vader.js`,
+    `cd "${dashboardDir}" && node scripts/enrich-sentiment-vader.js${enrichClientArg}`,
     state
   );
 
   // Step 5: Enrich competitor mentions
   runStep(
     'Competitor mentions enrichment',
-    `cd "${dashboardDir}" && node scripts/enrich-competitor-mentions.js`,
+    `cd "${dashboardDir}" && node scripts/enrich-competitor-mentions.js${enrichClientArg}`,
     state
   );
 
   // Step 6: Enrich citation sources
   runStep(
     'Citation source enrichment',
-    `cd "${dashboardDir}" && node scripts/enrich-citation-sources.js`,
+    `cd "${dashboardDir}" && node scripts/enrich-citation-sources.js${enrichClientArg}`,
     state
   );
 
   // Step 7: Verify results
+  // Scoped to runs created during THIS onboarding execution. Each batch
+  // runner stamps `metadata.startedAt` when it inserts its run row, so we
+  // filter on that to exclude historical runs for the same client (which is
+  // what was inflating the verify counts before).
   console.log('\n  ▶  Verify results');
-  const { data: runs } = await supabase
+  console.log(`     client_id:  ${state.clientId}`);
+  console.log(`     scoped to runs with metadata.startedAt >= ${state.runStartedAt}`);
+
+  const { data: runs, error: runsErr } = await supabase
     .from('runs')
-    .select('id, platform, mention_rate, prompt_count')
-    .eq('client_id', state.clientId);
+    .select('id, platform, mention_rate, prompt_count, metadata')
+    .eq('client_id', state.clientId)
+    .gte('metadata->>startedAt', state.runStartedAt);
+
+  if (runsErr) {
+    console.error(`     Runs query failed: ${runsErr.message}`);
+  }
+
+  const runIds = (runs || []).map(r => r.id);
 
   const { count } = await supabase
     .from('results')
     .select('id', { count: 'exact', head: true })
-    .in('run_id', (runs || []).map(r => r.id));
+    .in('run_id', runIds);
 
   const enrichedCount = await supabase
     .from('results')
     .select('id', { count: 'exact', head: true })
-    .in('run_id', (runs || []).map(r => r.id))
+    .in('run_id', runIds)
     .not('sentiment', 'is', null);
 
   markCompleted(state, 'Verify results');

@@ -24,7 +24,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 config({ path: resolve(__dirname, '..', '.env.local') });
 
 // ─── Config ──────────────────────────────────────────────────
-const CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
 const BATCH_SIZE = 50;
 
 const COMPETITORS = [
@@ -43,6 +42,9 @@ function getArg(flag) {
 }
 const limit = getArg('--limit') ? parseInt(getArg('--limit'), 10) : undefined;
 const platformFilter = getArg('--platform');
+// Optional. When set, only this client's runs are processed. When omitted,
+// every un-enriched result across all clients is processed (backfill mode).
+const clientId = getArg('--client-id');
 
 // ─── Supabase ────────────────────────────────────────────────
 const supabaseUrl = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -72,24 +74,22 @@ async function main() {
   console.log('═══════════════════════════════════════════════');
   console.log('  Competitor Mentions Enrichment');
   console.log('═══════════════════════════════════════════════');
+  console.log(`  Scope: ${clientId ? `client ${clientId}` : 'ALL clients (backfill mode)'}`);
 
-  // Get run IDs for client
-  const { data: runs, error: runsErr } = await supabase
-    .from('runs').select('id').eq('client_id', CLIENT_ID);
-  if (runsErr || !runs?.length) {
-    console.error('  No runs found for client');
-    process.exit(1);
-  }
-  const runIds = runs.map(r => r.id);
-  console.log(`  Found ${runIds.length} runs`);
-
-  // Fetch un-enriched results (competitor_mentions is null or empty object)
   let query = supabase
     .from('results')
     .select('id, response_text, platform')
-    .in('run_id', runIds)
     .or('competitor_mentions.is.null,competitor_mentions.eq.{}')
     .order('created_at', { ascending: true });
+
+  if (clientId) {
+    const { data: runs, error: runsErr } = await supabase
+      .from('runs').select('id').eq('client_id', clientId);
+    if (runsErr) { console.error('  Runs query failed:', runsErr.message); process.exit(1); }
+    if (!runs?.length) { console.log('  No runs found for this client. Nothing to process.'); return; }
+    console.log(`  Found ${runs.length} runs`);
+    query = query.in('run_id', runs.map(r => r.id));
+  }
 
   if (platformFilter) query = query.eq('platform', platformFilter);
   if (limit) query = query.limit(limit);
