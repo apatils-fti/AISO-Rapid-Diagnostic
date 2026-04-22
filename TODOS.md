@@ -550,37 +550,85 @@ row with `brand`, `competitors[]`, `client_domains[]` columns, or stand up a
 
 ---
 
-### P2: Migrate `CompetitorQuickCompare` and `CompetitorCard` from fixture data to Supabase
+### P2: Complete fixture-to-Supabase migration (remaining components)
 
-**Problem**: Two components on the dashboard still read J.Crew-specific
-fixture data instead of the live Supabase rows, so they render J.Crew
-competitors regardless of the selected client.
+**Problem**: After 5a80cef (P0) + c25476e (P1), the dashboard top half (layout
+chrome, prompts table, competitors page, dashboard sidebar cards) all read
+from Supabase. Nine components elsewhere still import from `@/lib/fixtures`
+and render J.Crew snapshot data regardless of which client is selected. They
+also block deleting the fixture JSON files (~160KB of static J.Crew data
+shipped to every page).
 
-- `dashboard/src/components/dashboard/CompetitorQuickCompare.tsx` — uses
-  `analyzedMetrics.competitorOverview` and `analyzedMetrics.textMetrics`
-  (both from `src/fixtures/analyzedMetrics.json`, which is a J.Crew snapshot).
-  Rendered in `dashboard/page.tsx` as the "Competitor Benchmark" card on the
-  Executive Summary, so picking ScaledAgile in the client switcher still
-  shows the J.Crew leaderboard.
-- `dashboard/src/components/competitors/CompetitorCard.tsx` — has a literal
-  `filteredBrandMetrics['J.Crew']` lookup at line 41 (for the gap-vs-client
-  computation) and a hardcoded "vs J.Crew" label at line 82.
+**Components still on fixtures**:
 
-**Solution**: Both components should consume the same Supabase-backed data
-that the Competitors page already reads via `getCompetitorOverview()` (now
-client-name-aware after 9f1b07a's follow-up commit). The fixture path can
-stay as a graceful fallback when Supabase is unreachable, but the live read
-should be the default.
+Topics tab:
+- `dashboard/src/components/topics/IsotopeHeatmap.tsx` — uses
+  `analyzedMetrics.topicResults` for the topic list and has
+  `const CLIENT_NAME = 'J.Crew'` literal at line 48 for sorting.
 
-**Files to change**:
-- `dashboard/src/components/dashboard/CompetitorQuickCompare.tsx`
-- `dashboard/src/components/competitors/CompetitorCard.tsx`
-- Possibly `dashboard/src/lib/platform-data.ts` (the existing
-  `getOverallBrandMetrics()` already pulls from Supabase — extend it to
-  return per-competitor rows so `CompetitorQuickCompare` can drop the
-  fixture import entirely).
+Compare tab:
+- `dashboard/src/components/compare/TopicComparisonTable.tsx` — iterates
+  `analyzedMetrics.topicResults` to build the row set.
 
-**Effort**: 1 day
+Gap Analysis tab (entire page is fixture-backed):
+- `dashboard/src/components/gap-analysis/TopGapPriorities.tsx`
+- `dashboard/src/components/gap-analysis/QuadrantChart.tsx`
+- `dashboard/src/components/gap-analysis/LayerComparison.tsx`
+- `dashboard/src/components/gap-analysis/GapInsightCard.tsx`
+
+Dashboard tab (cards beyond the ones already migrated):
+- `dashboard/src/components/dashboard/VisibilityScore.tsx`
+- `dashboard/src/components/dashboard/ScoreBreakdown.tsx`
+- `dashboard/src/components/dashboard/ExecutiveSummary.tsx` — has a fallback
+  branch that calls `getExecutiveSummary()` from platform-data when no
+  `overviewData` prop is passed. The dashboard page does pass overviewData
+  so this is dormant in practice, but it's still a fixture path that needs
+  to go.
+
+**Solution**: Each component takes a `serverData` prop populated by db.ts,
+matching the pattern used in the P1 commit. New db.ts helpers needed:
+- `getTopicComparisonRows(clientId, filters)` for TopicComparisonTable
+- `getGapAnalysis(clientId, filters)` already exists — wire it into the four
+  gap-analysis children directly instead of reaching for the fixture.
+- `getVisibilityBreakdown(clientId, filters)` for VisibilityScore +
+  ScoreBreakdown (the old fixture path computed sub-pillar contributions
+  from analyzedMetrics.summary; equivalent math now lives in
+  `lib/metrics.ts` against EnrichedResult arrays).
+
+**Effort**: 2-3 days. The gap-analysis page is the biggest chunk
+(four components, two of them chart-heavy).
+
+---
+
+### P3: Delete fixture JSON files and `lib/fixtures.ts`
+
+**Problem**: Once every component listed in the P2 above is migrated, the
+fixture JSON files become dead weight. They're a J.Crew snapshot from
+pre-Supabase days, ~160KB total, shipped to every page that imports
+fixtures.ts (which currently is most of them transitively).
+
+**Solution**: After P2 lands and `git grep '@/lib/fixtures'` returns nothing,
+delete:
+- `dashboard/src/fixtures/analyzedMetrics.json`
+- `dashboard/src/fixtures/promptLibrary.json`
+- `dashboard/src/fixtures/clientConfig.json`
+- `dashboard/src/fixtures/rawResults.json`
+- `dashboard/src/lib/fixtures.ts`
+
+Also re-check `dashboard/src/components/topics/IsotopeLegend.tsx`,
+`dashboard/src/components/topics/TopicRow.tsx`,
+`dashboard/src/components/topics/TopicDetail.tsx`, and
+`dashboard/src/components/prompts/FaraComparisonView.tsx` — these were on
+the import-graph survey but only use the generic ISOTOPE_TYPES /
+ISOTOPE_LABELS constants. Either migrate those constants to a new
+`@/lib/taxonomy.ts` (the cleaner option), or inline them per consumer like
+PromptTable did in 5a80cef.
+
+**Blocked by**: P2 above. Cannot land independently — TypeScript build will
+fail until every fixture import is gone.
+
+**Effort**: Half a day. Mostly mechanical: delete files, run build, fix any
+remaining import errors, verify no runtime regression.
 
 ---
 
