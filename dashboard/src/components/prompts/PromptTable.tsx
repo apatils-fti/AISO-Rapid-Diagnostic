@@ -1,13 +1,12 @@
 'use client';
 
 import { useState, useEffect, useMemo } from 'react';
-import { ChevronDown, Check, X, ExternalLink, Link2, MessageSquare, Sparkles, Bot, Gem, Search } from 'lucide-react';
+import { ChevronDown, Check, X, Link2, MessageSquare, Sparkles, Bot, Gem, Search } from 'lucide-react';
 import { FaraVisualCheckButton } from './FaraVisualCheckButton';
 import { GoogleAIOverviewButton } from './GoogleAIOverviewButton';
 import { FARA_CONFIG } from '@/lib/fara-config';
 import { SERPAPI_CONFIG } from '@/lib/serpapi-config';
-import { FilterBar, FilterDropdown, SearchInput, Badge, StatusBadge, LinearScore } from '@/components/shared';
-import { promptLibrary, analyzedMetrics, rawResults, ISOTOPE_TYPES, ISOTOPE_LABELS, getTopicCategories } from '@/lib/fixtures';
+import { FilterBar, FilterDropdown, SearchInput, Badge } from '@/components/shared';
 import {
   getPromptResponses,
   getAllResponsesForPlatform,
@@ -20,23 +19,45 @@ import {
 import { cn, truncate } from '@/lib/utils';
 import { getHeatmapTextClass } from '@/lib/colors';
 import type { IsotopeType } from '@/lib/types';
+import type { PromptResultRow } from '@/lib/db';
 
 export type PromptTableMode = 'citations' | 'mentions';
+
+// Locally-defined isotope taxonomy. Intentionally not imported from
+// `@/lib/fixtures` — those exports are fine in isolation but the import graph
+// drags the J.Crew analyzedMetrics snapshot into any component that touches
+// them.
+const ISOTOPE_TYPES: IsotopeType[] = [
+  'informational',
+  'commercial',
+  'comparative',
+  'persona',
+  'specific',
+  'conversational',
+];
+
+const ISOTOPE_LABELS: Record<IsotopeType, string> = {
+  informational: 'Informational',
+  commercial: 'Commercial',
+  comparative: 'Comparative',
+  persona: 'Persona',
+  specific: 'Specific',
+  conversational: 'Conversational',
+};
 
 interface PromptRowData {
   promptId: string;
   promptText: string;
   topicId: string;
   topicName: string;
-  category: string;
   isotope: IsotopeType;
-  cited: boolean;
-  consistency: number;
   runs: number;
   runsWithCitation: number;
+  runsWithMention: number;
   citationCount: number;
   topCompetitor: string;
   mentionRate: number;
+  consistency: number;
 }
 
 const PLATFORM_PILL_ICONS: Record<string, typeof Sparkles> = {
@@ -48,10 +69,11 @@ const PLATFORM_PILL_ICONS: Record<string, typeof Sparkles> = {
 };
 
 interface PromptTableProps {
-  serverData?: import('@/lib/db').PromptResultRow[];
+  serverData?: PromptResultRow[];
+  clientName?: string;
 }
 
-export function PromptTable({ serverData }: PromptTableProps) {
+export function PromptTable({ serverData, clientName }: PromptTableProps) {
   const [mode, setMode] = useState<PromptTableMode>('mentions');
   const [searchQuery, setSearchQuery] = useState('');
   const [topicFilter, setTopicFilter] = useState('all');
@@ -61,7 +83,6 @@ export function PromptTable({ serverData }: PromptTableProps) {
   const [selectedPlatform, setSelectedPlatform] = useState<string>('perplexity');
   const [platformResponseMap, setPlatformResponseMap] = useState<Record<string, PromptResponse>>({});
   const [platformStats, setPlatformStats] = useState<PlatformStats[]>([]);
-  const [platformLoading, setPlatformLoading] = useState(true);
 
   // Load platform stats and default to platform with most data
   useEffect(() => {
@@ -76,85 +97,98 @@ export function PromptTable({ serverData }: PromptTableProps) {
 
   // Load all responses for selected platform
   useEffect(() => {
-    setPlatformLoading(true);
-    getAllResponsesForPlatform(selectedPlatform).then((map) => {
-      setPlatformResponseMap(map);
-      setPlatformLoading(false);
-    });
+    getAllResponsesForPlatform(selectedPlatform).then(setPlatformResponseMap);
   }, [selectedPlatform]);
 
-  // Build row data from fixtures
+  // Build row data from server-fetched Supabase results.
   const rowData: PromptRowData[] = useMemo(() => {
-    const rows: PromptRowData[] = [];
+    if (!serverData) return [];
 
-    for (const topic of promptLibrary.topics) {
-      const topicResult = analyzedMetrics.topicResults.find(t => t.topicId === topic.id);
-      if (!topicResult) continue;
+    return serverData.map((row) => {
+      const results = row.results;
+      const runs = results.length;
+      const runsWithCitation = results.filter((r) => r.citations && r.citations.length > 0).length;
+      const runsWithMention = results.filter((r) => r.clientMentioned).length;
+      const citationCount = results.reduce((sum, r) => sum + (r.citations?.length ?? 0), 0);
 
-      // Get mention metrics for this topic
-      const topicMentionMetrics = analyzedMetrics.textMetrics?.byTopic?.[topic.id];
-      const mentionRate = topicMentionMetrics?.brandMetrics?.['J.Crew']?.mentionRate || 0;
-
-      for (const prompt of topic.prompts) {
-        const isotopeResult = topicResult.isotopeResults[prompt.isotope as IsotopeType];
-
-        // Find top competitor for this isotope
-        const competitorCitations = isotopeResult.competitorCitations;
-        const topCompetitor = Object.entries(competitorCitations)
-          .sort(([, a], [, b]) => b - a)[0];
-
-        rows.push({
-          promptId: prompt.id,
-          promptText: prompt.text,
-          topicId: topic.id,
-          topicName: topic.name,
-          category: topic.category,
-          isotope: prompt.isotope as IsotopeType,
-          cited: isotopeResult.cited,
-          consistency: isotopeResult.consistency,
-          runs: isotopeResult.runs,
-          runsWithCitation: isotopeResult.runsWithCitation,
-          citationCount: isotopeResult.citationCount,
-          topCompetitor: topCompetitor ? topCompetitor[0] : '-',
-          mentionRate: mentionRate, // Topic-level mention rate
-        });
+      // Top competitor = whichever competitor accumulates the most mentions
+      // across all platforms for this prompt (source: results.competitor_mentions
+      // JSONB, populated by scripts/enrich-competitor-mentions.js).
+      const competitorTotals = new Map<string, number>();
+      for (const r of results) {
+        for (const [name, count] of Object.entries(r.competitorMentions ?? {})) {
+          competitorTotals.set(name, (competitorTotals.get(name) ?? 0) + (count ?? 0));
+        }
       }
+      const topComp = [...competitorTotals.entries()].sort((a, b) => b[1] - a[1])[0];
+
+      return {
+        promptId: row.promptId,
+        promptText: row.promptText || `(prompt text unavailable: ${row.promptId})`,
+        topicId: row.topicId,
+        topicName: row.topicName,
+        isotope: (row.isotope || 'informational') as IsotopeType,
+        runs,
+        runsWithCitation,
+        runsWithMention,
+        citationCount,
+        topCompetitor: topComp ? topComp[0] : '—',
+        mentionRate: runs > 0 ? runsWithMention / runs : 0,
+        consistency: runs > 0 ? runsWithCitation / runs : 0,
+      };
+    });
+  }, [serverData]);
+
+  // Filter options derived from the data that's actually loaded
+  const topicOptions = useMemo(() => {
+    const seen = new Map<string, string>();
+    for (const row of rowData) {
+      if (row.topicId && !seen.has(row.topicId)) seen.set(row.topicId, row.topicName);
     }
-
-    return rows;
-  }, []);
-
-  // Filter options
-  const topicOptions = [
-    { value: 'all', label: 'All Topics' },
-    ...promptLibrary.topics.map(t => ({ value: t.id, label: t.name })),
-  ];
+    return [
+      { value: 'all', label: 'All Topics' },
+      ...[...seen.entries()].map(([id, name]) => ({ value: id, label: name })),
+    ];
+  }, [rowData]);
 
   const isotopeOptions = [
     { value: 'all', label: 'All Isotopes' },
-    ...ISOTOPE_TYPES.map(i => ({ value: i, label: ISOTOPE_LABELS[i] })),
+    ...ISOTOPE_TYPES.map((i) => ({ value: i, label: ISOTOPE_LABELS[i] })),
   ];
 
   const citedOptions = [
     { value: 'all', label: 'All Status' },
-    { value: 'cited', label: 'Cited' },
-    { value: 'not-cited', label: 'Not Cited' },
+    { value: 'cited', label: 'Has citations' },
+    { value: 'not-cited', label: 'No citations' },
   ];
 
   // Apply filters
   const filteredRows = useMemo(() => {
-    return rowData.filter(row => {
-      const matchesSearch = row.promptText.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    return rowData.filter((row) => {
+      const matchesSearch =
+        row.promptText.toLowerCase().includes(searchQuery.toLowerCase()) ||
         row.topicName.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesTopic = topicFilter === 'all' || row.topicId === topicFilter;
       const matchesIsotope = isotopeFilter === 'all' || row.isotope === isotopeFilter;
-      const matchesCited = citedFilter === 'all' ||
-        (citedFilter === 'cited' && row.cited) ||
-        (citedFilter === 'not-cited' && !row.cited);
+      const matchesCited =
+        citedFilter === 'all' ||
+        (citedFilter === 'cited' && row.runsWithCitation > 0) ||
+        (citedFilter === 'not-cited' && row.runsWithCitation === 0);
 
       return matchesSearch && matchesTopic && matchesIsotope && matchesCited;
     });
   }, [rowData, searchQuery, topicFilter, isotopeFilter, citedFilter]);
+
+  if (!serverData || serverData.length === 0) {
+    return (
+      <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] py-12 text-center">
+        <p className="text-lg text-[#9CA3AF]">No prompt results found.</p>
+        <p className="mt-2 text-sm text-[#6B7280]">
+          Run batch collection for this client, then check back.
+        </p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -290,7 +324,7 @@ export function PromptTable({ serverData }: PromptTableProps) {
             </tr>
           </thead>
           <tbody className="divide-y divide-[#2A2D37]">
-            {filteredRows.map(row => (
+            {filteredRows.map((row) => (
               <PromptRow
                 key={row.promptId}
                 row={row}
@@ -299,6 +333,7 @@ export function PromptTable({ serverData }: PromptTableProps) {
                 onToggle={() => setExpandedRow(expandedRow === row.promptId ? null : row.promptId)}
                 selectedPlatform={selectedPlatform}
                 platformResponse={platformResponseMap[row.promptId]}
+                clientName={clientName}
               />
             ))}
           </tbody>
@@ -321,16 +356,16 @@ interface PromptRowProps {
   onToggle: () => void;
   selectedPlatform: string;
   platformResponse?: PromptResponse;
+  clientName?: string;
 }
 
-function PromptRow({ row, mode, isExpanded, onToggle, selectedPlatform, platformResponse }: PromptRowProps) {
-  const rawResult = rawResults.results.find(r => r.promptId === row.promptId);
-
-  // Use batch data for selected platform when available, fall back to fixture data
+function PromptRow({ row, mode, isExpanded, onToggle, selectedPlatform, platformResponse, clientName }: PromptRowProps) {
+  // Use selected-platform data if available, otherwise fall back to the
+  // prompt-level aggregate so the row still renders useful info.
   const hasPlatformData = !!platformResponse;
   const displayCited = hasPlatformData
     ? (mode === 'citations' ? platformResponse.clientCited : platformResponse.clientMentioned)
-    : (mode === 'citations' ? row.cited : row.mentionRate > 0);
+    : (mode === 'citations' ? row.runsWithCitation > 0 : row.runsWithMention > 0);
   const displayValue = hasPlatformData
     ? (mode === 'citations' ? (platformResponse.clientCited ? 1 : 0) : (platformResponse.clientMentioned ? 1 : 0))
     : (mode === 'citations' ? row.consistency : row.mentionRate);
@@ -342,8 +377,7 @@ function PromptRow({ row, mode, isExpanded, onToggle, selectedPlatform, platform
         onClick={onToggle}
       >
         <td className="px-4 py-3">
-          <div className="text-sm font-medium text-[#E5E7EB]">{row.topicName}</div>
-          <div className="text-xs text-[#6B7280]">{row.category}</div>
+          <div className="text-sm font-medium text-[#E5E7EB]">{row.topicName || '—'}</div>
         </td>
         <td className="px-4 py-3">
           <div className="text-sm text-[#9CA3AF] max-w-md">
@@ -352,7 +386,7 @@ function PromptRow({ row, mode, isExpanded, onToggle, selectedPlatform, platform
         </td>
         <td className="px-4 py-3 text-center">
           <Badge variant="outline" size="sm">
-            {ISOTOPE_LABELS[row.isotope]}
+            {ISOTOPE_LABELS[row.isotope] ?? row.isotope}
           </Badge>
         </td>
         <td className="px-4 py-3 text-center">
@@ -384,22 +418,6 @@ function PromptRow({ row, mode, isExpanded, onToggle, selectedPlatform, platform
         <td className="px-4 py-3 text-center">
           {!hasPlatformData ? (
             <span className="text-xs text-[#4A4D57]">—</span>
-          ) : mode === 'citations' ? (
-            <div className="flex items-center justify-center gap-2">
-              <div className="w-16 h-1.5 bg-[#22252F] rounded-full overflow-hidden">
-                <div
-                  className="h-full rounded-full"
-                  style={{
-                    width: `${displayValue * 100}%`,
-                    backgroundColor: displayValue === 0 ? '#EF4444' :
-                      displayValue < 0.67 ? '#F59E0B' : '#10B981',
-                  }}
-                />
-              </div>
-              <span className={cn('text-sm', getHeatmapTextClass(displayValue))}>
-                {displayValue > 0 ? 'Yes' : 'No'}
-              </span>
-            </div>
           ) : (
             <div className="flex items-center justify-center gap-2">
               <div className="w-16 h-1.5 bg-[#22252F] rounded-full overflow-hidden">
@@ -407,9 +425,12 @@ function PromptRow({ row, mode, isExpanded, onToggle, selectedPlatform, platform
                   className="h-full rounded-full"
                   style={{
                     width: `${displayValue * 100}%`,
-                    backgroundColor: displayValue === 0 ? '#EF4444' :
-                      displayValue < 0.33 ? '#F59E0B' :
-                      displayValue < 0.67 ? '#10B981' : '#10B981',
+                    backgroundColor:
+                      displayValue === 0
+                        ? '#EF4444'
+                        : displayValue < 0.33
+                        ? '#F59E0B'
+                        : '#10B981',
                   }}
                 />
               </div>
@@ -434,7 +455,7 @@ function PromptRow({ row, mode, isExpanded, onToggle, selectedPlatform, platform
       {isExpanded && (
         <tr>
           <td colSpan={8} className="bg-[#22252F] px-4 py-4">
-            <ExpandedPromptDetail row={row} mode={mode} rawResult={rawResult} />
+            <ExpandedPromptDetail row={row} clientName={clientName} />
           </td>
         </tr>
       )}
@@ -454,11 +475,10 @@ const PLATFORM_ICONS: Record<string, typeof Sparkles> = {
 
 interface ExpandedPromptDetailProps {
   row: PromptRowData;
-  mode: PromptTableMode;
-  rawResult?: typeof rawResults.results[0];
+  clientName?: string;
 }
 
-function ExpandedPromptDetail({ row, mode, rawResult }: ExpandedPromptDetailProps) {
+function ExpandedPromptDetail({ row, clientName }: ExpandedPromptDetailProps) {
   const [responses, setResponses] = useState<PromptResponse[]>([]);
   const [selectedPlatform, setSelectedPlatform] = useState<string>('');
   const [loading, setLoading] = useState(true);
@@ -567,10 +587,10 @@ function ExpandedPromptDetail({ row, mode, rawResult }: ExpandedPromptDetailProp
               )}
             </div>
 
-            {/* Response text with scroll */}
+            {/* Response text with brand highlighting */}
             <div className="p-3 max-h-64 overflow-y-auto">
               <div className="text-sm text-[#C9CDD5] whitespace-pre-wrap leading-relaxed">
-                {highlightBrand(currentResponse.responseText)}
+                {highlightBrand(currentResponse.responseText, clientName)}
               </div>
             </div>
 
@@ -581,28 +601,20 @@ function ExpandedPromptDetail({ row, mode, rawResult }: ExpandedPromptDetailProp
                   Citations ({currentResponse.citations.length})
                 </div>
                 <div className="space-y-1">
-                  {currentResponse.citations.map((url, i) => {
-                    const isClient = url.includes('jcrew.com') || url.includes('j-crew');
-                    return (
-                      <div key={i} className="flex items-center gap-2 text-xs">
-                        <span className={isClient ? 'text-[#00D4AA]' : 'text-[#9CA3AF]'}>
-                          [{i + 1}]
-                        </span>
-                        <a
-                          href={url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className={cn(
-                            'truncate hover:underline',
-                            isClient ? 'text-[#00D4AA]' : 'text-blue-400'
-                          )}
-                          onClick={(e) => e.stopPropagation()}
-                        >
-                          {url}
-                        </a>
-                      </div>
-                    );
-                  })}
+                  {currentResponse.citations.map((url, i) => (
+                    <div key={i} className="flex items-center gap-2 text-xs">
+                      <span className="text-[#9CA3AF]">[{i + 1}]</span>
+                      <a
+                        href={url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="truncate hover:underline text-blue-400"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {url}
+                      </a>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
@@ -623,7 +635,7 @@ function ExpandedPromptDetail({ row, mode, rawResult }: ExpandedPromptDetailProp
         <FaraVisualCheckButton
           promptId={row.promptId}
           promptText={row.promptText}
-          platformResult={rawResult}
+          platformResult={undefined}
         />
       )}
 
@@ -639,11 +651,21 @@ function ExpandedPromptDetail({ row, mode, rawResult }: ExpandedPromptDetailProp
   );
 }
 
-function highlightBrand(text: string): React.ReactNode {
+// Highlight each occurrence of the current client's brand name. Case-
+// insensitive; falls back to returning the raw text when clientName is empty
+// (e.g. during the short window before Supabase config loads).
+function highlightBrand(text: string, clientName?: string): React.ReactNode {
   if (!text) return null;
-  const parts = text.split(/(J\.?\s*Crew)/gi);
+  if (!clientName) return text;
+
+  // Escape regex special chars in the brand name so "Digital.ai" matches
+  // literally instead of treating "." as "any character."
+  const escaped = clientName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const pattern = new RegExp(`(${escaped})`, 'gi');
+  const parts = text.split(pattern);
+
   return parts.map((part, idx) =>
-    /J\.?\s*Crew/i.test(part) ? (
+    pattern.test(part) ? (
       <span key={idx} className="text-[#00D4AA] font-medium bg-[#00D4AA]/10 px-0.5 rounded">
         {part}
       </span>

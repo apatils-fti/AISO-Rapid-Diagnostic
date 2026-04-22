@@ -1,7 +1,7 @@
 import { PageContainer } from '@/components/layout';
 import { TrendsView } from '@/components/trends/TrendsView';
 import { DateRangeFilter } from '@/components/shared';
-import { getAvailableRunDates, getClients } from '@/lib/db';
+import { getAvailableRunDates, getClients, getLatestRunDate } from '@/lib/db';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
 
@@ -16,9 +16,10 @@ interface TrendsPageProps {
 export default async function TrendsPage({ searchParams }: TrendsPageProps) {
   const params = await searchParams;
   const clientId = params.client || DEFAULT_CLIENT_ID;
-  const [availableDates, clients] = await Promise.all([
+  const [availableDates, clients, runDate] = await Promise.all([
     getAvailableRunDates(clientId),
     getClients(),
+    getLatestRunDate(clientId),
   ]);
   const clientOptions = clients.map((c) => ({ id: c.id, name: c.name }));
 
@@ -28,6 +29,7 @@ export default async function TrendsPage({ searchParams }: TrendsPageProps) {
       description="Track mention rate changes over time across platforms and topics"
       clients={clientOptions}
       currentClientId={clientId}
+      runDate={runDate ?? undefined}
     >
       <div className="space-y-4">
         <DateRangeFilter

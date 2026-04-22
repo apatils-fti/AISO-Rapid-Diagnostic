@@ -7,9 +7,10 @@ interface PageContainerProps {
   children: React.ReactNode;
   clients?: ClientOption[];
   currentClientId?: string;
+  runDate?: string;
 }
 
-export function PageContainer({ title, description, children, clients, currentClientId }: PageContainerProps) {
+export function PageContainer({ title, description, children, clients, currentClientId, runDate }: PageContainerProps) {
   return (
     <div className="ml-60 min-h-screen bg-[#0F1117]">
       <Header
@@ -17,6 +18,7 @@ export function PageContainer({ title, description, children, clients, currentCl
         description={description}
         clients={clients}
         currentClientId={currentClientId}
+        runDate={runDate}
       />
       <main className="p-6">
         {children}

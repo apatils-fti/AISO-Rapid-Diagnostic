@@ -14,6 +14,7 @@ import {
   getPlatformComparison,
   getClients,
   getAvailableRunDates,
+  getLatestRunDate,
   getWeeklySummary,
   type QueryFilters,
 } from '@/lib/db';
@@ -335,7 +336,10 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
     date_to: params.date_to,
   };
 
-  const clients = await getClients();
+  const [clients, runDate] = await Promise.all([
+    getClients(),
+    getLatestRunDate(clientId),
+  ]);
   const clientOptions = clients.map(c => ({ id: c.id, name: c.name }));
 
   return (
@@ -344,6 +348,7 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
       description="AI Search Presence Overview"
       clients={clientOptions}
       currentClientId={clientId}
+      runDate={runDate ?? undefined}
     >
       <PlatformDataProvider key={clientId} clientId={clientId}>
       <Suspense

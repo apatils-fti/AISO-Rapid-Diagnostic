@@ -1,14 +1,14 @@
 'use client';
 
+import { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useSearchParams } from 'next/navigation';
 import {
   LayoutDashboard,
   Grid3X3,
   Users,
   Layers,
   List,
-
   Download,
   Settings,
   Activity,
@@ -17,47 +17,81 @@ import {
   TrendingUp,
 } from 'lucide-react';
 import { FARA_CONFIG } from '@/lib/fara-config';
-import { cn } from '@/lib/utils';
-import { clientConfig } from '@/lib/fixtures';
-import { formatDateShort } from '@/lib/utils';
+import { cn, formatDateShort } from '@/lib/utils';
+import { supabaseAnon } from '@/lib/supabase';
 
 const navItems = [
-  {
-    label: 'Overview',
-    href: '/dashboard',
-    icon: LayoutDashboard,
-  },
-  {
-    label: 'Topics',
-    href: '/topics',
-    icon: Grid3X3,
-  },
-  {
-    label: 'Competitors',
-    href: '/competitors',
-    icon: Users,
-  },
-  {
-    label: 'Gap Analysis',
-    href: '/gap-analysis',
-    icon: Layers,
-  },
-  {
-    label: 'Compare Platforms',
-    href: '/compare',
-    icon: GitCompare,
-  },
-  {
-    label: 'Prompt Detail',
-    href: '/prompts',
-    icon: List,
-  },
-  {
-    label: 'Trends',
-    href: '/trends',
-    icon: TrendingUp,
-  },
+  { label: 'Overview', href: '/dashboard', icon: LayoutDashboard },
+  { label: 'Topics', href: '/topics', icon: Grid3X3 },
+  { label: 'Competitors', href: '/competitors', icon: Users },
+  { label: 'Gap Analysis', href: '/gap-analysis', icon: Layers },
+  { label: 'Compare Platforms', href: '/compare', icon: GitCompare },
+  { label: 'Prompt Detail', href: '/prompts', icon: List },
+  { label: 'Trends', href: '/trends', icon: TrendingUp },
 ];
+
+// Reads the selected client from ?client= and fetches its name + latest run
+// date from Supabase. Rendered inside a <Suspense> — useSearchParams requires
+// it. Returns empty placeholders if Supabase isn't configured or the client
+// can't be found, rather than falling back to fixture (J.Crew) values.
+function SidebarClientInfo() {
+  const searchParams = useSearchParams();
+  const clientId = searchParams.get('client');
+  const [state, setState] = useState<{ name: string | null; runDate: string | null; loading: boolean }>({
+    name: null,
+    runDate: null,
+    loading: true,
+  });
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function load() {
+      if (!supabaseAnon || !clientId) {
+        if (!cancelled) setState({ name: null, runDate: null, loading: false });
+        return;
+      }
+
+      try {
+        const [{ data: client }, { data: runs }] = await Promise.all([
+          supabaseAnon.from('clients').select('name').eq('id', clientId).maybeSingle(),
+          supabaseAnon
+            .from('runs')
+            .select('run_date')
+            .eq('client_id', clientId)
+            .not('run_date', 'is', null)
+            .order('run_date', { ascending: false })
+            .limit(1),
+        ]);
+
+        if (cancelled) return;
+        setState({
+          name: (client?.name as string | undefined) ?? null,
+          runDate: (runs?.[0]?.run_date as string | undefined) ?? null,
+          loading: false,
+        });
+      } catch {
+        if (!cancelled) setState({ name: null, runDate: null, loading: false });
+      }
+    }
+
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, [clientId]);
+
+  return (
+    <>
+      <div className="text-sm font-medium text-[#E5E7EB]">
+        {state.loading ? '—' : state.name ?? '—'}
+      </div>
+      <div className="text-xs text-[#6B7280]">
+        Run: {state.runDate ? formatDateShort(state.runDate) : '—'}
+      </div>
+    </>
+  );
+}
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -75,12 +109,16 @@ export function Sidebar() {
 
         {/* Client Info */}
         <div className="border-b border-[#2A2D37] px-4 py-4">
-          <div className="text-sm font-medium text-[#E5E7EB]">
-            {clientConfig.clientName}
-          </div>
-          <div className="text-xs text-[#6B7280]">
-            Run: {formatDateShort(clientConfig.runDate)}
-          </div>
+          <Suspense
+            fallback={
+              <>
+                <div className="text-sm font-medium text-[#E5E7EB]">—</div>
+                <div className="text-xs text-[#6B7280]">Run: —</div>
+              </>
+            }
+          >
+            <SidebarClientInfo />
+          </Suspense>
         </div>
 
         {/* Navigation */}

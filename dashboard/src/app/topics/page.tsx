@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { PageContainer } from '@/components/layout';
 import { IsotopeHeatmap } from '@/components/topics';
-import { getTopicIsotopeStats, getClients, type QueryFilters } from '@/lib/db';
+import { getTopicIsotopeStats, getClients, getLatestRunDate, type QueryFilters } from '@/lib/db';
 import { EnrichmentFilters, PlatformDataProvider } from '@/components/shared';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
@@ -30,7 +30,10 @@ export default async function TopicsPage({ searchParams }: TopicsPageProps) {
     isotope: params.isotope,
     conversionIntent: params.intent,
   };
-  const clients = await getClients();
+  const [clients, runDate] = await Promise.all([
+    getClients(),
+    getLatestRunDate(clientId),
+  ]);
 
   return (
     <PageContainer
@@ -38,6 +41,7 @@ export default async function TopicsPage({ searchParams }: TopicsPageProps) {
       description="Isotope analysis across all tracked topics"
       clients={clients.map(c => ({ id: c.id, name: c.name }))}
       currentClientId={clientId}
+      runDate={runDate ?? undefined}
     >
       <PlatformDataProvider key={clientId} clientId={clientId}>
         <Suspense

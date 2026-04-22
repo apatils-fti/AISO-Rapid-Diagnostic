@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { PageContainer } from '@/components/layout';
 import { PromptTable } from '@/components/prompts';
-import { getPromptResults, getClients } from '@/lib/db';
+import { getPromptResults, getClients, getLatestRunDate } from '@/lib/db';
 import { EnrichmentFilters, PlatformDataProvider } from '@/components/shared';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
@@ -10,15 +10,15 @@ interface PromptsPageProps {
   searchParams: Promise<{ client?: string; platform?: string; topic?: string; isotope?: string; sentiment?: string; intent?: string }>;
 }
 
-async function PromptsContent({ clientId, platform, topic, isotope }: {
-  clientId: string; platform?: string; topic?: string; isotope?: string;
+async function PromptsContent({ clientId, platform, topic, isotope, clientName }: {
+  clientId: string; platform?: string; topic?: string; isotope?: string; clientName?: string;
 }) {
   const promptData = await getPromptResults(clientId, platform, topic, isotope);
 
   return (
     <div className="space-y-4">
       <EnrichmentFilters />
-      <PromptTable serverData={promptData} />
+      <PromptTable serverData={promptData} clientName={clientName} />
     </div>
   );
 }
@@ -26,7 +26,10 @@ async function PromptsContent({ clientId, platform, topic, isotope }: {
 export default async function PromptsPage({ searchParams }: PromptsPageProps) {
   const params = await searchParams;
   const clientId = params.client || DEFAULT_CLIENT_ID;
-  const clients = await getClients();
+  const [clients, runDate] = await Promise.all([
+    getClients(),
+    getLatestRunDate(clientId),
+  ]);
 
   return (
     <PageContainer
@@ -34,6 +37,7 @@ export default async function PromptsPage({ searchParams }: PromptsPageProps) {
       description="Complete breakdown of all prompts and responses"
       clients={clients.map(c => ({ id: c.id, name: c.name }))}
       currentClientId={clientId}
+      runDate={runDate ?? undefined}
     >
       <PlatformDataProvider key={clientId} clientId={clientId}>
         <Suspense
@@ -49,6 +53,7 @@ export default async function PromptsPage({ searchParams }: PromptsPageProps) {
             platform={params.platform}
             topic={params.topic}
             isotope={params.isotope}
+            clientName={clients.find(c => c.id === clientId)?.name}
           />
         </Suspense>
       </PlatformDataProvider>

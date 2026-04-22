@@ -3,7 +3,7 @@ import { PageContainer } from '@/components/layout';
 import { PlatformComparison } from '@/components/compare/PlatformComparison';
 import { TopicComparisonTable } from '@/components/compare/TopicComparisonTable';
 import { PlatformDataProvider } from '@/components/shared';
-import { getPlatformComparison, getTopicPlatformStats, getClients } from '@/lib/db';
+import { getPlatformComparison, getTopicPlatformStats, getClients, getLatestRunDate } from '@/lib/db';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
 
@@ -39,7 +39,10 @@ async function CompareContent({ clientId }: { clientId: string }) {
 export default async function ComparePage({ searchParams }: ComparePageProps) {
   const params = await searchParams;
   const clientId = params.client || DEFAULT_CLIENT_ID;
-  const clients = await getClients();
+  const [clients, runDate] = await Promise.all([
+    getClients(),
+    getLatestRunDate(clientId),
+  ]);
 
   return (
     <PageContainer
@@ -47,6 +50,7 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
       description="Compare your brand's visibility across AI search platforms"
       clients={clients.map(c => ({ id: c.id, name: c.name }))}
       currentClientId={clientId}
+      runDate={runDate ?? undefined}
     >
       <PlatformDataProvider key={clientId} clientId={clientId}>
         <Suspense

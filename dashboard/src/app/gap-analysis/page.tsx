@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { PageContainer } from '@/components/layout';
 import { QuadrantChart, LayerComparison, GapBridges, GapInsightCard, TopGapPriorities } from '@/components/gap-analysis';
-import { getGapAnalysis, getClients, type QueryFilters } from '@/lib/db';
+import { getGapAnalysis, getClients, getLatestRunDate, type QueryFilters } from '@/lib/db';
 import { EnrichmentFilters } from '@/components/shared';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
@@ -45,7 +45,10 @@ export default async function GapAnalysisPage({ searchParams }: GapAnalysisPageP
     isotope: params.isotope,
     conversionIntent: params.intent,
   };
-  const clients = await getClients();
+  const [clients, runDate] = await Promise.all([
+    getClients(),
+    getLatestRunDate(clientId),
+  ]);
 
   return (
     <PageContainer
@@ -53,6 +56,7 @@ export default async function GapAnalysisPage({ searchParams }: GapAnalysisPageP
       description="Parametric knowledge vs. RAG citation analysis"
       clients={clients.map(c => ({ id: c.id, name: c.name }))}
       currentClientId={clientId}
+      runDate={runDate ?? undefined}
     >
       <Suspense
         fallback={

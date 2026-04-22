@@ -1236,6 +1236,29 @@ export async function getPromptResults(
  * Used to populate the Custom date filter dropdown — only dates that have
  * data are selectable.
  */
+/**
+ * Return the most recent run_date for this client, or null when the client
+ * has no runs yet. Used by layout chrome (header, sidebar) to display the
+ * "as of" date next to the client switcher.
+ */
+export async function getLatestRunDate(clientId: string): Promise<string | null> {
+  const sb = reader();
+  if (!sb) return null;
+
+  try {
+    const { data, error } = await sb
+      .from('runs')
+      .select('run_date')
+      .eq('client_id', clientId)
+      .not('run_date', 'is', null)
+      .order('run_date', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+    if (error || !data) return null;
+    return (data as { run_date: string }).run_date ?? null;
+  } catch { return null; }
+}
+
 export async function getAvailableRunDates(clientId: string): Promise<string[]> {
   const sb = reader();
   if (!sb) return [];

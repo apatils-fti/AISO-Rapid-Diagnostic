@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { PageContainer } from '@/components/layout';
 import { ShareOfVoice, TopicCompetition, CompetitorCard } from '@/components/competitors';
-import { getCompetitorOverview, getTopicIsotopeStats, getClients, type QueryFilters } from '@/lib/db';
+import { getCompetitorOverview, getTopicIsotopeStats, getClients, getLatestRunDate, type QueryFilters } from '@/lib/db';
 import { EnrichmentFilters } from '@/components/shared';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
@@ -55,7 +55,10 @@ export default async function CompetitorsPage({ searchParams }: CompetitorsPageP
     isotope: params.isotope,
     conversionIntent: params.intent,
   };
-  const clients = await getClients();
+  const [clients, runDate] = await Promise.all([
+    getClients(),
+    getLatestRunDate(clientId),
+  ]);
 
   return (
     <PageContainer
@@ -63,6 +66,7 @@ export default async function CompetitorsPage({ searchParams }: CompetitorsPageP
       description="Brand awareness and mention analysis across AI responses"
       clients={clients.map(c => ({ id: c.id, name: c.name }))}
       currentClientId={clientId}
+      runDate={runDate ?? undefined}
     >
       <Suspense
         fallback={

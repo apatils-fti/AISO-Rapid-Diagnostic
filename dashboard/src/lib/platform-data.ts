@@ -5,13 +5,17 @@
  * given clientId. The clientId is set once per page via <PlatformDataProvider>
  * and all exported query functions use the module-level current client.
  *
- * Perplexity and ChatGPT Search platform stats still come from the
- * pre-computed fixture (analyzedMetrics.json) — this legacy split is
- * preserved intentionally. Gemini, Claude, Google AI Overview stats come
- * from Supabase via the `results` table.
+ * All five platforms (Perplexity, ChatGPT Search, Gemini, Claude, Google AI
+ * Overview) read from Supabase. The old J.Crew fixture fallbacks were removed
+ * — empty data now means "no Supabase rows for this client" rather than
+ * silently rendering another client's snapshot.
+ *
+ * Brand name + competitor list also come from Supabase (clients.config)
+ * rather than the static J.Crew fixture, so text analysis
+ * (first-mention detection, citation matching, share-of-voice) is correct
+ * for every client.
  */
 
-import { analyzedMetrics, clientConfig, promptLibrary } from './fixtures';
 import { PLATFORM_COLORS } from './colors';
 import { supabaseAnon } from './supabase';
 
@@ -101,9 +105,16 @@ const SUPABASE_PLATFORMS = ['perplexity', 'chatgpt_search', 'gemini', 'claude', 
 // Internal types
 // ---------------------------------------------------------------------------
 
+interface ClientInfo {
+  name: string;
+  competitors: string[];
+  clientDomains: string[];
+}
+
 interface BatchResult {
   promptId: string;
   topicId: string;
+  isotope: string | null;
   responseText: string;
   citations: string[];
   clientMentioned: boolean;
@@ -132,7 +143,7 @@ let _currentClientId: string | null = null;
 export function setCurrentClientId(clientId: string | null): void {
   if (_currentClientId === clientId) return;
   _currentClientId = clientId;
-  _cache = { batchData: {}, platformStats: null, loaded: false, clientId };
+  _cache = { batchData: {}, platformStats: null, clientInfo: null, loaded: false, clientId };
 }
 
 // ---------------------------------------------------------------------------
@@ -142,25 +153,21 @@ export function setCurrentClientId(clientId: string | null): void {
 let _cache: {
   batchData: Record<string, EnrichedResult[]>;
   platformStats: PlatformStats[] | null;
+  clientInfo: ClientInfo | null;
   loaded: boolean;
   clientId: string | null;
 } = {
   batchData: {},
   platformStats: null,
+  clientInfo: null,
   loaded: false,
   clientId: null,
 };
 
 // ---------------------------------------------------------------------------
-// Text analysis helpers
+// Text analysis helpers — all take clientInfo explicitly so tests / callers
+// can't accidentally reach for a stale module-level default.
 // ---------------------------------------------------------------------------
-
-const CLIENT_NAME = clientConfig.clientName;
-const CLIENT_PATTERNS = [
-  CLIENT_NAME.toLowerCase(),
-  ...clientConfig.clientDomains.map((d) => d.toLowerCase()),
-];
-const COMPETITOR_NAMES = clientConfig.competitors.map((c) => c.name);
 
 function countMentions(text: string, brand: string): number {
   const lower = text.toLowerCase();
@@ -174,12 +181,12 @@ function countMentions(text: string, brand: string): number {
   return count;
 }
 
-function isClientFirstMention(text: string): boolean {
+function isClientFirstMention(text: string, info: ClientInfo): boolean {
   const lower = text.toLowerCase();
-  const clientPos = lower.indexOf(CLIENT_NAME.toLowerCase());
+  const clientPos = lower.indexOf(info.name.toLowerCase());
   if (clientPos === -1) return false;
 
-  for (const comp of COMPETITOR_NAMES) {
+  for (const comp of info.competitors) {
     const compPos = lower.indexOf(comp.toLowerCase());
     if (compPos !== -1 && compPos < clientPos) {
       return false;
@@ -188,28 +195,32 @@ function isClientFirstMention(text: string): boolean {
   return true;
 }
 
-function findCompetitorsMentioned(text: string): string[] {
+function findCompetitorsMentioned(text: string, info: ClientInfo): string[] {
   const lower = text.toLowerCase();
-  return COMPETITOR_NAMES.filter((name) => lower.includes(name.toLowerCase()));
+  return info.competitors.filter((name) => lower.includes(name.toLowerCase()));
 }
 
-function isClientCited(citations: string[]): boolean {
+function isClientCited(citations: string[], info: ClientInfo): boolean {
+  const patterns = [
+    info.name.toLowerCase(),
+    ...info.clientDomains.map((d) => d.toLowerCase()),
+  ];
   return citations.some((url) =>
-    CLIENT_PATTERNS.some((p) => url.toLowerCase().includes(p))
+    patterns.some((p) => url.toLowerCase().includes(p))
   );
 }
 
-function enrichResult(result: BatchResult): EnrichedResult {
+function enrichResult(result: BatchResult, info: ClientInfo): EnrichedResult {
   const text = result.responseText || '';
-  const cited = isClientCited(result.citations);
+  const cited = isClientCited(result.citations, info);
   return {
     ...result,
-    mentionCount: countMentions(text, CLIENT_NAME),
-    isFirstMention: isClientFirstMention(text),
-    competitorsMentioned: findCompetitorsMentioned(text),
+    mentionCount: countMentions(text, info.name),
+    isFirstMention: isClientFirstMention(text, info),
+    competitorsMentioned: findCompetitorsMentioned(text, info),
     clientCited: cited,
     clientMentioned:
-      text.toLowerCase().includes(CLIENT_NAME.toLowerCase()) || cited,
+      text.toLowerCase().includes(info.name.toLowerCase()) || cited,
   };
 }
 
@@ -233,11 +244,49 @@ function normalizeSupabaseRow(row: Record<string, unknown>): BatchResult | null 
   return {
     promptId: (row.prompt_id ?? '') as string,
     topicId: (row.topic_id ?? '') as string,
+    isotope: (row.isotope as string | null) ?? null,
     responseText,
     citations,
     clientMentioned: Boolean(row.client_mentioned ?? false),
     timestamp: (row.created_at ?? '') as string,
     error: row.error as string | undefined,
+  };
+}
+
+/**
+ * Fetch the client row and shape it into a ClientInfo. Accepts flat string
+ * competitor lists as well as `[{name, domains}]` shapes emitted by the
+ * generator.
+ */
+async function fetchClientInfo(clientId: string): Promise<ClientInfo | null> {
+  if (!supabaseAnon) return null;
+
+  const { data, error } = await supabaseAnon
+    .from('clients')
+    .select('name, config')
+    .eq('id', clientId)
+    .maybeSingle();
+
+  if (error || !data) return null;
+
+  const row = data as { name?: string; config?: Record<string, unknown> };
+  const config = (row.config ?? {}) as {
+    competitors?: Array<string | { name?: string; domains?: string[] }>;
+    clientDomains?: string[];
+    client?: { domains?: string[] };
+  };
+
+  const competitors = (config.competitors ?? [])
+    .map((c) => (typeof c === 'string' ? c : c?.name))
+    .filter((n): n is string => Boolean(n));
+
+  const clientDomains =
+    config.clientDomains ?? config.client?.domains ?? [];
+
+  return {
+    name: row.name ?? '',
+    competitors,
+    clientDomains,
   };
 }
 
@@ -249,6 +298,7 @@ function normalizeSupabaseRow(row: Record<string, unknown>): BatchResult | null 
 async function fetchBatchResultsFromSupabase(
   platform: string,
   clientId: string,
+  info: ClientInfo,
 ): Promise<EnrichedResult[]> {
   if (!supabaseAnon) return [];
 
@@ -268,7 +318,7 @@ async function fetchBatchResultsFromSupabase(
 
     const { data: results, error: resultsError } = await supabaseAnon
       .from('results')
-      .select('prompt_id, topic_id, response_text, citations, client_mentioned, created_at')
+      .select('prompt_id, topic_id, isotope, response_text, citations, client_mentioned, created_at')
       .in('run_id', runIds);
 
     if (resultsError || !results) {
@@ -279,7 +329,7 @@ async function fetchBatchResultsFromSupabase(
     return (results as Array<Record<string, unknown>>)
       .map(normalizeSupabaseRow)
       .filter((r): r is BatchResult => r !== null)
-      .map(enrichResult);
+      .map((r) => enrichResult(r, info));
   } catch (err) {
     console.warn(`[platform-data] Supabase fetch failed for ${platform}:`, err);
     return [];
@@ -288,7 +338,8 @@ async function fetchBatchResultsFromSupabase(
 
 /**
  * Lazy loader. No-op if clientId is not set (provider hasn't mounted) or if
- * the cache already matches the current clientId.
+ * the cache already matches the current clientId. Fetches client info first,
+ * then platform data in parallel.
  */
 async function ensureLoaded(): Promise<void> {
   if (!_currentClientId) return;
@@ -296,30 +347,40 @@ async function ensureLoaded(): Promise<void> {
 
   const clientId = _currentClientId;
 
-  const [perplexityResults, chatgptResults, geminiResults, claudeResults, googleResults] =
-    await Promise.all([
-      fetchBatchResultsFromSupabase('perplexity', clientId),
-      fetchBatchResultsFromSupabase('chatgpt_search', clientId),
-      fetchBatchResultsFromSupabase('gemini', clientId),
-      fetchBatchResultsFromSupabase('claude', clientId),
-      fetchBatchResultsFromSupabase('google_ai_overview', clientId),
-    ]);
+  const info = await fetchClientInfo(clientId);
+  if (!info) {
+    // Hard-fail the load rather than silently producing empty text analysis
+    // for an unknown client. Pages guard against missing data; they'll render
+    // the empty state.
+    console.warn(`[platform-data] No clients row for ${clientId}. Returning empty data.`);
+    _cache = {
+      batchData: Object.fromEntries(SUPABASE_PLATFORMS.map((p) => [p, []])),
+      platformStats: null,
+      clientInfo: null,
+      loaded: true,
+      clientId,
+    };
+    return;
+  }
+
+  const batchDataEntries = await Promise.all(
+    SUPABASE_PLATFORMS.map(async (platform) => {
+      const results = await fetchBatchResultsFromSupabase(platform, clientId, info);
+      return [platform, results] as const;
+    })
+  );
 
   _cache = {
-    batchData: {
-      perplexity: perplexityResults,
-      chatgpt_search: chatgptResults,
-      gemini: geminiResults,
-      claude: claudeResults,
-      google_ai_overview: googleResults,
-    },
+    batchData: Object.fromEntries(batchDataEntries) as Record<string, EnrichedResult[]>,
     platformStats: null,
+    clientInfo: info,
     loaded: true,
     clientId,
   };
 
   console.log(
-    `[platform-data] Loaded from Supabase for clientId=${clientId}: Perplexity=${perplexityResults.length}, ChatGPT=${chatgptResults.length}, Gemini=${geminiResults.length}, Claude=${claudeResults.length}, Google=${googleResults.length}`,
+    `[platform-data] Loaded from Supabase for clientId=${clientId} (${info.name}):`,
+    Object.fromEntries(batchDataEntries.map(([p, rs]) => [p, rs.length])),
   );
 }
 
@@ -373,66 +434,13 @@ function computeBatchPlatformStats(
   };
 }
 
-function computeFixturePlatformStats(platform: string): PlatformStats {
-  const meta = PLATFORM_META[platform];
-  const breakdown = analyzedMetrics.summary.platformBreakdown[platform];
-  const textMetrics = analyzedMetrics.textMetrics?.overall;
-
-  if (!breakdown || !breakdown.available) {
-    return {
-      platform,
-      displayName: meta.displayName,
-      color: meta.color,
-      brandMentionRate: 0,
-      firstMentionRate: 0,
-      avgMentionCount: 0,
-      citationRate: 0,
-      citationsAvailable: true,
-      totalPrompts: 0,
-      promptsWithMention: 0,
-      promptsWithCitation: 0,
-      available: false,
-    };
-  }
-
-  const brandMentionRate =
-    (breakdown as any).brandMentionRate ??
-    textMetrics?.brandMentionRate ??
-    0;
-
-  const clientMetrics = textMetrics?.brandMetrics[CLIENT_NAME];
-  const firstMentionRate = textMetrics?.firstMentionRate ?? 0;
-  const avgMentionCount = clientMetrics?.avgMentionCount ?? 0;
-
-  const totalPrompts = breakdown.totalPrompts ?? 0;
-  const promptsWithMention = Math.round(brandMentionRate * totalPrompts);
-  const promptsWithCitation = breakdown.promptsCited ?? 0;
-  const citationRate = totalPrompts > 0 ? promptsWithCitation / totalPrompts : 0;
-
-  return {
-    platform,
-    displayName: meta.displayName,
-    color: meta.color,
-    brandMentionRate,
-    firstMentionRate,
-    avgMentionCount,
-    citationRate,
-    citationsAvailable: true,
-    totalPrompts,
-    promptsWithMention,
-    promptsWithCitation,
-    available: true,
-  };
-}
-
 // ---------------------------------------------------------------------------
 // Public API
 // ---------------------------------------------------------------------------
 
 /**
- * Get stats for all platforms. Perplexity and ChatGPT Search come from the
- * fixture (legacy). Gemini/Claude/Google come from Supabase via the current
- * clientId set by <PlatformDataProvider>.
+ * Get stats for all platforms, all fetched from Supabase and scoped to the
+ * current clientId set by <PlatformDataProvider>.
  */
 export async function getAllPlatformStats(): Promise<PlatformStats[]> {
   if (typeof window === 'undefined') return [];
@@ -441,13 +449,9 @@ export async function getAllPlatformStats(): Promise<PlatformStats[]> {
 
   if (_cache.platformStats) return _cache.platformStats;
 
-  const stats: PlatformStats[] = [
-    computeFixturePlatformStats('perplexity'),
-    computeFixturePlatformStats('chatgpt_search'),
-    computeBatchPlatformStats('gemini', _cache.batchData.gemini || []),
-    computeBatchPlatformStats('claude', _cache.batchData.claude || []),
-    computeBatchPlatformStats('google_ai_overview', _cache.batchData.google_ai_overview || []),
-  ];
+  const stats: PlatformStats[] = SUPABASE_PLATFORMS.map((platform) =>
+    computeBatchPlatformStats(platform, _cache.batchData[platform] || [])
+  );
 
   _cache.platformStats = stats;
   return stats;
@@ -534,8 +538,7 @@ export async function getTopicResponses(
 }
 
 /**
- * Per-topic stats for each platform. Fixture-backed for Perplexity/ChatGPT,
- * Supabase-backed for Gemini/Claude.
+ * Per-topic stats for each platform, entirely from Supabase batch data.
  */
 export async function getTopicPlatformStats(
   topicId: string,
@@ -544,25 +547,7 @@ export async function getTopicPlatformStats(
 
   await ensureLoaded();
 
-  const stats: TopicPlatformStats[] = [];
-
-  const topicTextMetrics = analyzedMetrics.textMetrics?.byTopic[topicId];
-  for (const platform of ['perplexity', 'chatgpt_search'] as const) {
-    const meta = PLATFORM_META[platform];
-    const breakdown = analyzedMetrics.summary.platformBreakdown[platform];
-    if (!breakdown?.available) continue;
-
-    stats.push({
-      platform,
-      displayName: meta.displayName,
-      color: meta.color,
-      brandMentionRate: topicTextMetrics?.brandMentionRate ?? 0,
-      totalPrompts: topicTextMetrics?.totalResponses ?? 0,
-      promptsWithMention: topicTextMetrics?.responsesWithMention ?? 0,
-    });
-  }
-
-  for (const platform of ['gemini', 'claude'] as const) {
+  return SUPABASE_PLATFORMS.map((platform) => {
     const meta = PLATFORM_META[platform];
     const results = (_cache.batchData[platform] || []).filter(
       (r) => r.topicId === topicId,
@@ -570,111 +555,160 @@ export async function getTopicPlatformStats(
     const total = results.length;
     const withMention = results.filter((r) => r.clientMentioned).length;
 
-    stats.push({
+    return {
       platform,
       displayName: meta.displayName,
       color: meta.color,
       brandMentionRate: total > 0 ? withMention / total : 0,
       totalPrompts: total,
       promptsWithMention: withMention,
-    });
-  }
-
-  return stats;
+    };
+  });
 }
 
 /**
- * Generate an executive summary from the data.
+ * Generate an executive summary from the Supabase cache. Previously this
+ * read pre-computed J.Crew aggregates from analyzedMetrics.json; it now
+ * computes ranks + top competitor + biggest topic gap on the fly from the
+ * current client's results.
  */
 export async function getExecutiveSummary(): Promise<ExecutiveSummary> {
-  const allStats = await getAllPlatformStats();
-  const availableStats = allStats.filter((s) => s.available);
+  const empty: ExecutiveSummary = {
+    clientName: '',
+    overallMentionRate: 0,
+    rank: 1,
+    totalCompetitors: 0,
+    topCompetitor: '',
+    topCompetitorRate: 0,
+    biggestGapTopic: '',
+    biggestGapDelta: 0,
+    platformCount: SUPABASE_PLATFORMS.length,
+    platformsWithData: 0,
+  };
 
-  const totalPrompts = availableStats.reduce((s, p) => s + p.totalPrompts, 0);
-  const totalMentions = availableStats.reduce(
-    (s, p) => s + p.promptsWithMention,
-    0,
-  );
-  const overallMentionRate = totalPrompts > 0 ? totalMentions / totalPrompts : 0;
+  if (typeof window === 'undefined') return empty;
+  await ensureLoaded();
 
-  const brandMetrics = analyzedMetrics.textMetrics?.overall.brandMetrics ?? {};
-  const allBrands = Object.entries(brandMetrics)
-    .map(([name, m]) => ({ name, rate: m.mentionRate }))
-    .sort((a, b) => b.rate - a.rate);
+  const info = _cache.clientInfo;
+  if (!info) return empty;
 
-  const clientRank = allBrands.findIndex((b) => b.name === CLIENT_NAME) + 1;
-  const topCompetitor = allBrands.find((b) => b.name !== CLIENT_NAME);
+  const allResults: EnrichedResult[] = Object.values(_cache.batchData).flat();
+  const total = allResults.length;
+  if (total === 0) return { ...empty, clientName: info.name };
 
-  const topicResults = analyzedMetrics.topicResults;
-  let biggestGapTopic = '';
-  let biggestGapDelta = 0;
+  const clientMentioned = allResults.filter((r) => r.clientMentioned).length;
+  const overallMentionRate = clientMentioned / total;
 
-  for (const topic of topicResults) {
-    const topicMetrics = analyzedMetrics.textMetrics?.byTopic[topic.topicId];
-    if (!topicMetrics) continue;
-
-    const clientRate =
-      topicMetrics.brandMetrics[CLIENT_NAME]?.mentionRate ?? 0;
-    for (const [compName, compMetrics] of Object.entries(
-      topicMetrics.brandMetrics,
-    )) {
-      if (compName === CLIENT_NAME) continue;
-      const delta = compMetrics.mentionRate - clientRate;
-      if (delta > biggestGapDelta) {
-        biggestGapDelta = delta;
-        biggestGapTopic = topic.topicName;
+  // Rank: client + every competitor, sorted by mention rate across all responses
+  const brandRates = new Map<string, { mentioned: number; total: number }>();
+  brandRates.set(info.name, { mentioned: clientMentioned, total });
+  for (const comp of info.competitors) {
+    brandRates.set(comp, { mentioned: 0, total });
+  }
+  const lowerCompetitors = info.competitors.map((c) => c.toLowerCase());
+  for (const r of allResults) {
+    const text = (r.responseText || '').toLowerCase();
+    for (let i = 0; i < info.competitors.length; i++) {
+      if (text.includes(lowerCompetitors[i])) {
+        const entry = brandRates.get(info.competitors[i])!;
+        entry.mentioned++;
       }
     }
   }
 
+  const ranked = [...brandRates.entries()]
+    .map(([name, v]) => ({ name, rate: v.total > 0 ? v.mentioned / v.total : 0 }))
+    .sort((a, b) => b.rate - a.rate);
+
+  const rank = ranked.findIndex((b) => b.name === info.name) + 1;
+  const topCompetitor = ranked.find((b) => b.name !== info.name);
+
+  // Biggest topic gap: per-topic, find the competitor most ahead of the client
+  const perTopic = new Map<string, { topicId: string; counts: Map<string, { mentioned: number; total: number }> }>();
+  for (const r of allResults) {
+    if (!r.topicId) continue;
+    if (!perTopic.has(r.topicId)) {
+      perTopic.set(r.topicId, { topicId: r.topicId, counts: new Map() });
+    }
+    const bucket = perTopic.get(r.topicId)!;
+
+    for (const brand of [info.name, ...info.competitors]) {
+      if (!bucket.counts.has(brand)) {
+        bucket.counts.set(brand, { mentioned: 0, total: 0 });
+      }
+      const entry = bucket.counts.get(brand)!;
+      entry.total++;
+    }
+
+    const text = (r.responseText || '').toLowerCase();
+    if (r.clientMentioned) bucket.counts.get(info.name)!.mentioned++;
+    for (const comp of info.competitors) {
+      if (text.includes(comp.toLowerCase())) {
+        bucket.counts.get(comp)!.mentioned++;
+      }
+    }
+  }
+
+  let biggestGapTopic = '';
+  let biggestGapDelta = 0;
+  for (const { topicId, counts } of perTopic.values()) {
+    const clientEntry = counts.get(info.name);
+    const clientRate = clientEntry && clientEntry.total > 0 ? clientEntry.mentioned / clientEntry.total : 0;
+    for (const comp of info.competitors) {
+      const compEntry = counts.get(comp);
+      if (!compEntry || compEntry.total === 0) continue;
+      const compRate = compEntry.mentioned / compEntry.total;
+      const delta = compRate - clientRate;
+      if (delta > biggestGapDelta) {
+        biggestGapDelta = delta;
+        biggestGapTopic = topicId;
+      }
+    }
+  }
+
+  const platformsWithData = SUPABASE_PLATFORMS.filter((p) => (_cache.batchData[p] ?? []).length > 0).length;
+
   return {
-    clientName: CLIENT_NAME,
+    clientName: info.name,
     overallMentionRate,
-    rank: clientRank || 1,
-    totalCompetitors: allBrands.length,
+    rank: rank || 1,
+    totalCompetitors: ranked.length,
     topCompetitor: topCompetitor?.name ?? '',
     topCompetitorRate: topCompetitor?.rate ?? 0,
     biggestGapTopic,
     biggestGapDelta,
-    platformCount: Object.keys(PLATFORM_META).length,
-    platformsWithData: availableStats.length,
+    platformCount: SUPABASE_PLATFORMS.length,
+    platformsWithData,
   };
 }
 
 /**
- * Compute overall brand metrics from all Supabase batch data.
+ * Compute overall brand metrics from all Supabase batch data, using the
+ * current client's name and competitor list.
  */
 export async function getOverallBrandMetrics(): Promise<OverallBrandMetrics> {
-  if (typeof window === 'undefined') {
-    return {
-      brandMentionRate: 0,
-      firstMentionRate: 0,
-      shareOfVoice: 0,
-      citationRate: 0,
-      totalResponses: 0,
-      promptsWithMention: 0,
-      promptsWithCitation: 0,
-      competitorRates: {},
-    };
-  }
+  const empty: OverallBrandMetrics = {
+    brandMentionRate: 0,
+    firstMentionRate: 0,
+    shareOfVoice: 0,
+    citationRate: 0,
+    totalResponses: 0,
+    promptsWithMention: 0,
+    promptsWithCitation: 0,
+    competitorRates: {},
+  };
+
+  if (typeof window === 'undefined') return empty;
 
   await ensureLoaded();
+
+  const info = _cache.clientInfo;
+  if (!info) return empty;
 
   const allResults: EnrichedResult[] = Object.values(_cache.batchData).flat();
   const total = allResults.length;
 
-  if (total === 0) {
-    return {
-      brandMentionRate: 0,
-      firstMentionRate: 0,
-      shareOfVoice: 0,
-      citationRate: 0,
-      totalResponses: 0,
-      promptsWithMention: 0,
-      promptsWithCitation: 0,
-      competitorRates: {},
-    };
-  }
+  if (total === 0) return empty;
 
   const withMention = allResults.filter((r) => r.clientMentioned).length;
   const withFirstMention = allResults.filter((r) => r.isFirstMention).length;
@@ -684,7 +718,8 @@ export async function getOverallBrandMetrics(): Promise<OverallBrandMetrics> {
   let totalBrandMentionCount = clientMentionCount;
 
   const competitorRates: OverallBrandMetrics['competitorRates'] = {};
-  for (const comp of COMPETITOR_NAMES) {
+  const clientLower = info.name.toLowerCase();
+  for (const comp of info.competitors) {
     const cl = comp.toLowerCase();
     let compMentions = 0;
     let compPromptsMentioned = 0;
@@ -702,10 +737,10 @@ export async function getOverallBrandMetrics(): Promise<OverallBrandMetrics> {
         compPromptsMentioned++;
         compMentions += count;
         const compPos = text.indexOf(cl);
-        const clientPos = text.indexOf(CLIENT_NAME.toLowerCase());
+        const clientPos = text.indexOf(clientLower);
         if (clientPos === -1 || compPos < clientPos) {
           let isFirst = true;
-          for (const other of COMPETITOR_NAMES) {
+          for (const other of info.competitors) {
             if (other === comp) continue;
             const otherPos = text.indexOf(other.toLowerCase());
             if (otherPos !== -1 && otherPos < compPos) {
@@ -784,20 +819,10 @@ export interface TopicIsotopeStats {
   promptsWithCitation: number;
 }
 
-let _promptIsotopeMap: Record<string, string> | null = null;
-function getPromptIsotopeMap(): Record<string, string> {
-  if (_promptIsotopeMap) return _promptIsotopeMap;
-  _promptIsotopeMap = {};
-  for (const topic of promptLibrary.topics) {
-    for (const prompt of topic.prompts) {
-      _promptIsotopeMap[prompt.id] = prompt.isotope;
-    }
-  }
-  return _promptIsotopeMap;
-}
-
 /**
- * Per-topic, per-isotope mention/citation stats.
+ * Per-topic, per-isotope mention/citation stats. Isotope comes from the
+ * results table row (`isotope` column) rather than a static J.Crew prompt
+ * library map, so the heatmap is correct for every client.
  */
 export async function getTopicIsotopeStatsMap(
   platforms?: string[],
@@ -805,7 +830,6 @@ export async function getTopicIsotopeStatsMap(
   if (typeof window === 'undefined') return {};
   await ensureLoaded();
 
-  const isotopeMap = getPromptIsotopeMap();
   const platformKeys = platforms || Object.keys(_cache.batchData);
 
   const accum: Record<
@@ -816,7 +840,7 @@ export async function getTopicIsotopeStatsMap(
   for (const platform of platformKeys) {
     const results = _cache.batchData[platform] || [];
     for (const r of results) {
-      const isotope = isotopeMap[r.promptId];
+      const isotope = r.isotope;
       if (!isotope) continue;
 
       if (!accum[r.topicId]) accum[r.topicId] = {};
@@ -906,5 +930,5 @@ export function getPlatformKeys(): string[] {
  * Clear the cache (testing / manual invalidation).
  */
 export function clearCache(): void {
-  _cache = { batchData: {}, platformStats: null, loaded: false, clientId: _currentClientId };
+  _cache = { batchData: {}, platformStats: null, clientInfo: null, loaded: false, clientId: _currentClientId };
 }
