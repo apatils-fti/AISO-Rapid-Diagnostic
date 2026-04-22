@@ -86,16 +86,29 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          # Temporarily skip Gemini and ChatGPT until billing is sorted.
+          # Remove these two lines to re-enable — onboard-client.js reads
+          # them and short-circuits the corresponding runStep.
+          SKIP_GEMINI: 'true'
+          SKIP_CHATGPT: 'true'
         run: |
-          # Scheduled runs use a small default (10) to cap spend; override
-          # via workflow_dispatch input. A value of 0 means "no limit".
-          LIMIT="${{ github.event.inputs.prompt_limit }}"
-          LIMIT="${LIMIT:-10}"
-          LIMIT_ARG=""
-          if [ "$LIMIT" != "0" ]; then
-            LIMIT_ARG="--limit $LIMIT"
+          # Scheduled (nightly) runs do a full pass over all prompts.
+          # workflow_dispatch defaults to a 10-prompt smoke test (override
+          # via the prompt_limit input; 0 means "no limit").
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            LIMIT_ARG=""
+            echo "Running with limit: unlimited (scheduled run)"
+          else
+            LIMIT="${{ github.event.inputs.prompt_limit }}"
+            LIMIT="${LIMIT:-10}"
+            if [ "$LIMIT" = "0" ]; then
+              LIMIT_ARG=""
+              echo "Running with limit: unlimited"
+            else
+              LIMIT_ARG="--limit $LIMIT"
+              echo "Running with limit: $LIMIT"
+            fi
           fi
-          echo "Running with limit: ${LIMIT:-unlimited}"
           node scripts/onboard-client.js \
             --config configs/scaledagile.json \
             --prompts top-scaledagile-prompts.json \

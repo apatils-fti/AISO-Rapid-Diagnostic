@@ -205,11 +205,15 @@ async function main() {
   );
 
   // Step 3: Run Gemini batch
-  runStep(
-    'Gemini batch collection',
-    `cd "${dashboardDir}" && node scripts/batch-gemini-check.js${promptsArg}${limitArg}${supabaseArgs}`,
-    state
-  );
+  if (process.env.SKIP_GEMINI === 'true') {
+    console.log('  ⏭  Gemini batch collection (SKIP_GEMINI=true)');
+  } else {
+    runStep(
+      'Gemini batch collection',
+      `cd "${dashboardDir}" && node scripts/batch-gemini-check.js${promptsArg}${limitArg}${supabaseArgs}`,
+      state
+    );
+  }
 
   // Step 4: Run Perplexity batch (direct API call, no localhost dependency)
   runStep(
@@ -219,11 +223,15 @@ async function main() {
   );
 
   // Step 5: Run ChatGPT batch (direct API call, no localhost dependency)
-  runStep(
-    'ChatGPT batch collection',
-    `cd "${dashboardDir}" && node scripts/batch-chatgpt-check.js${promptsArg}${limitArg}${supabaseArgs}`,
-    state
-  );
+  if (process.env.SKIP_CHATGPT === 'true') {
+    console.log('  ⏭  ChatGPT batch collection (SKIP_CHATGPT=true)');
+  } else {
+    runStep(
+      'ChatGPT batch collection',
+      `cd "${dashboardDir}" && node scripts/batch-chatgpt-check.js${promptsArg}${limitArg}${supabaseArgs}`,
+      state
+    );
+  }
 
   // Step 6: Enrich sentiment (VADER)
   runStep(
