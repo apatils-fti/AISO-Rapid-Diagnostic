@@ -550,99 +550,102 @@ row with `brand`, `competitors[]`, `client_domains[]` columns, or stand up a
 
 ---
 
-### P2 (HARD): Migrate Gap Analysis page off J.Crew fixtures
+### ~~P2 (HARD): Migrate Gap Analysis page off J.Crew fixtures~~ — **DONE** (5342155)
 
-**Problem**: The entire `/gap-analysis` page renders J.Crew fixture data
-regardless of the selected client. After commits 5a80cef → 6fbace6 the rest
-of the dashboard reads from Supabase; this page is the last surface still
-on fixtures.
+Shipped 2026-04-22 in commit `5342155`. Full rewrite of all four gap-analysis
+children + page-level clientName passthrough. The page no longer requires
+the authored-prose generation step that was originally estimated — the
+narrative is now auto-computed from `getGapAnalysis()` data. Left here as a
+historical marker; safe to delete on the next doc pass.
 
-**Components still on fixtures**:
-- `dashboard/src/components/gap-analysis/TopGapPriorities.tsx` — has
-  `const CLIENT_NAME = 'J.Crew'` (line 21), iterates
-  `analyzedMetrics.topicResults` and `getFilteredTopicBrandMetrics`.
-- `dashboard/src/components/gap-analysis/QuadrantChart.tsx` — destructures
-  `analyzedMetrics.competitorOverview` + `gapAnalysis`. Plots competitors
-  by `parametricMentionRate` (J.Crew-only field — no Supabase equivalent).
-- `dashboard/src/components/gap-analysis/LayerComparison.tsx` (and the
-  inline `GapBridges` export) — uses `topic.parametricPresence.mentionRate`
-  and `topic.robustnessScore`, both J.Crew-only fields.
-- `dashboard/src/components/gap-analysis/GapInsightCard.tsx` — renders
-  `analyzedMetrics.gapAnalysis.insight` (a hand-written narrative paragraph)
-  and `.recommendations` (a hand-written list).
+What changed vs. the original HARD plan:
+- **`QuadrantChart`**: instead of adding a `competitor_parametric` Supabase
+  table to preserve the old (parametric × response) axes, the chart was
+  redesigned. Points are now topics (not competitors), axes are
+  (your mention rate × top competitor mention rate). The new framing is
+  more actionable: top-left quadrant is literally the gaps to close.
+- **`GapInsightCard`**: instead of building a Claude-backed insight
+  pipeline, the narrative is synthesised on the server from the top 3 gaps
+  + dominant competitor name + their average mention rate on those topics.
+  Severity badge derived from the biggest single gap. No LLM call, no
+  per-render API cost, no new schema.
+- **Recommendations section**: dropped entirely. `TopGapPriorities`
+  immediately above the card already lists actionable items — the old recs
+  list was J.Crew-specific authored prose that didn't generalise, and
+  rebuilding it for every client would be filler.
 
-**Why this is HARD, not just "rewire the prop"**:
-
-The "Diagnostic Insight" paragraph and the "Recommendations" list in
-`GapInsightCard` aren't computed from data — they're authored prose that
-ships with the J.Crew fixture. There's no Supabase column to read them from.
-
-To migrate, we need a **generation step** that takes the client's Supabase
-results + competitor overview + topic gaps and produces a fresh insight +
-recommendations paragraph per client. Options:
-
-1. **Claude API call at page-render time** — server-side `getGapInsight(clientId)`
-   that builds a prompt from getOverviewStats + getCompetitorOverview +
-   getTopGaps and asks Claude for a 2-paragraph narrative + 3-5 bullet
-   recommendations. Cache per (clientId, dateRange) since the data is slow-
-   moving. Cost: ~1c per page render before caching.
-2. **Pre-generate during the nightly enrichment pipeline** — add a
-   `gap_insights` table populated by a new script that runs after VADER
-   enrichment. Page just reads the row. No render-time API call. Adds a
-   stable artefact but requires schema work and a new pipeline step.
-3. **Drop the narrative section entirely** for now — show only the
-   data-derived bits (quadrant, layer comparison, top gaps) and add the
-   narrative back in a follow-up. Lowest effort but loses the "what does
-   this mean for me" value of the page.
-
-The other three components are mechanically simpler — they need
-`serverGapData` from `getGapAnalysis()` plus per-competitor parametric
-data (which doesn't exist in Supabase yet — `parametricMentionRate` was a
-J.Crew-only field measured in a separate analysis pass). So `QuadrantChart`
-needs either a new `parametric_mention_rate` column on a competitor table,
-or to be redesigned to plot two metrics that DO exist (e.g.
-mention-rate-without-search vs mention-rate-with-search).
-
-**Recommended approach**: option 2 (pre-generated `gap_insights` table) +
-new `competitor_parametric` table populated by a one-off "what does each AI
-already know about this brand without searching" probe. This makes the page
-data-driven and avoids per-render API spend.
-
-**Effort**: 4-5 days. Schema design (1d) + pipeline script (1d) + four
-component rewrites (2d) + Claude prompt iteration on the insight paragraph
-(0.5-1d).
+If a pre-generated narrative ever becomes a desired product feature (e.g.
+longer executive-summary prose, tone-matched to the client's voice),
+revisit with the option 2 design: a `gap_insights` table populated by the
+nightly enrichment pipeline. Not needed for the current page.
 
 ---
 
 ### P3: Delete fixture JSON files and `lib/fixtures.ts`
 
-**Problem**: Once every component listed in the P2 above is migrated, the
-fixture JSON files become dead weight. They're a J.Crew snapshot from
-pre-Supabase days, ~160KB total, shipped to every page that imports
-fixtures.ts (which currently is most of them transitively).
+**Problem**: After the P0 / P1 / P2 + FIX1 / FIX2 work above, the dashboard
+renders cleanly from Supabase for any client. But `@/lib/fixtures` still
+gets imported from a handful of files, which means `analyzedMetrics.json`
+(~160KB of J.Crew snapshot data) is still pulled into every page that
+transitively touches them.
 
-**Solution**: After P2 lands and `git grep '@/lib/fixtures'` returns nothing,
-delete:
-- `dashboard/src/fixtures/analyzedMetrics.json`
-- `dashboard/src/fixtures/promptLibrary.json`
-- `dashboard/src/fixtures/clientConfig.json`
-- `dashboard/src/fixtures/rawResults.json`
-- `dashboard/src/lib/fixtures.ts`
+**Remaining fixture-import surface**:
 
-Also re-check `dashboard/src/components/topics/IsotopeLegend.tsx`,
-`dashboard/src/components/topics/TopicRow.tsx`,
-`dashboard/src/components/topics/TopicDetail.tsx`, and
-`dashboard/src/components/prompts/FaraComparisonView.tsx` — these were on
-the import-graph survey but only use the generic ISOTOPE_TYPES /
-ISOTOPE_LABELS constants. Either migrate those constants to a new
-`@/lib/taxonomy.ts` (the cleaner option), or inline them per consumer like
-PromptTable did in 5a80cef.
+Dormant fixture path:
+- `dashboard/src/components/dashboard/ExecutiveSummary.tsx` — has a
+  fallback branch that calls `getExecutiveSummary()` from platform-data
+  when no `overviewData` prop is passed. The dashboard page always passes
+  `overviewData`, so the fixture path is never hit at runtime. Still an
+  import, still drags the JSON in.
 
-**Blocked by**: P2 above. Cannot land independently — TypeScript build will
-fail until every fixture import is gone.
+Taxonomy-only consumers (pure constants, no J.Crew-specific data):
+- `dashboard/src/components/topics/IsotopeLegend.tsx` — imports
+  `ISOTOPE_TYPES`, `ISOTOPE_LABELS`, `ISOTOPE_DESCRIPTIONS`
+- `dashboard/src/components/topics/TopicRow.tsx` — imports `ISOTOPE_TYPES`
+- `dashboard/src/components/topics/TopicDetail.tsx` — imports
+  `ISOTOPE_TYPES`, `ISOTOPE_LABELS`, `ISOTOPE_DESCRIPTIONS`, plus helpers
+  `getPromptsForTopic` and `analyzedMetrics` directly (this one is more
+  than taxonomy — it renders per-topic detail off the fixture. Probably
+  needs the same serverData treatment as the other topic-page components
+  before it can lose its fixture import.)
+- `dashboard/src/components/prompts/FaraComparisonView.tsx` — Fara-flagged
+  feature, currently behind `FARA_CONFIG.ENABLED`. Uses `rawResults` and
+  the isotope constants.
 
-**Effort**: Half a day. Mostly mechanical: delete files, run build, fix any
-remaining import errors, verify no runtime regression.
+**Approach**:
+
+1. Fix `ExecutiveSummary.tsx` — delete the useEffect fallback branch that
+   calls `getExecutiveSummary()`. The `overviewData` prop is always
+   provided; the fallback is dead code. One-line surgery.
+2. Extract the isotope constants to a new `dashboard/src/lib/taxonomy.ts`
+   and update the four taxonomy-only consumers to import from there.
+   Cleaner than inlining per-consumer like `PromptTable` did in `5a80cef`
+   because it keeps the constants in one place.
+3. `TopicDetail.tsx` needs real work — it reads `analyzedMetrics` +
+   `getPromptsForTopic()` to render the per-topic detail page. Before
+   deleting fixtures, it needs a server-data migration similar to what
+   the other topic-page components got. Scope this as part of the P3
+   commit.
+4. `FaraComparisonView.tsx` is behind a feature flag — if FARA is not
+   being shipped imminently, either gate the file off entirely with a
+   stub, or migrate it alongside. Flag is off by default.
+5. `git grep '@/lib/fixtures'` → nothing. Delete:
+   - `dashboard/src/fixtures/analyzedMetrics.json`
+   - `dashboard/src/fixtures/promptLibrary.json`
+   - `dashboard/src/fixtures/clientConfig.json`
+   - `dashboard/src/fixtures/rawResults.json`
+   - `dashboard/src/lib/fixtures.ts`
+6. `npm run build` + verify. Drop ~160KB from the bundle.
+
+**Blocked by**: nothing externally — the remaining migrations are small.
+The biggest unknown is `TopicDetail.tsx`, which renders per-topic prompt
+detail from the fixture and needs its own `serverData`-style migration
+(would use `getTopicIsotopeStats` + a new `getTopicPrompts(clientId,
+topicId)` helper most likely).
+
+**Effort**: 1-1.5 days. Taxonomy extraction (1hr) + ExecutiveSummary
+cleanup (15min) + `TopicDetail` rewrite (half-day) + FaraComparisonView
+decision + cleanup (2-4hr) + file deletion + build verification (30min).
 
 ---
 
