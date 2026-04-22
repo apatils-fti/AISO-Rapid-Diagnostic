@@ -1217,6 +1217,13 @@ export interface TopicDetailData {
  * client has no results for this topic (caller renders a 404). Seeds the
  * competitor list from clients.config so 0-mention competitors still appear
  * in the comparison chart.
+ *
+ * Scopes the results query to `topic_id = topicId` at the DB layer instead
+ * of fetching everything via getAllResultsForClient and filtering in JS.
+ * Without this, the Supabase default 1000-row query limit can silently drop
+ * a topic's rows when the client has many results across many topics — the
+ * exact bug that 404'd drill-down for ScaledAgile's `value-streams` when
+ * its 9 result rows all landed past the 1000-row cutoff.
  */
 export async function getTopicDetail(
   clientId: string,
@@ -1226,11 +1233,35 @@ export async function getTopicDetail(
   const sb = reader();
   if (!sb) return null;
 
-  // Pull results for this client + topic, honouring date/platform/sentiment
-  // filters. Reuses getAllResultsForClient and then filters to this topic
-  // client-side — cheap because the per-topic slice is small.
-  const allResults = await getAllResultsForClient(clientId, filters);
-  const results = allResults.filter((r) => r.topic_id === topicId);
+  // Step 1: find this client's run IDs, optionally date-scoped.
+  let runsQuery = sb.from('runs').select('id').eq('client_id', clientId);
+  if (filters?.date_from) runsQuery = runsQuery.gte('run_date', filters.date_from);
+  if (filters?.date_to) runsQuery = runsQuery.lte('run_date', filters.date_to);
+  const { data: runs, error: runsErr } = await runsQuery;
+  if (runsErr || !runs || runs.length === 0) return null;
+  const runIds = (runs as Array<{ id: string }>).map((r) => r.id);
+
+  // Step 2: pull only this topic's results — small query, not vulnerable to
+  // the 1000-row default because a single topic rarely exceeds that.
+  let query = sb
+    .from('results')
+    .select('*')
+    .in('run_id', runIds)
+    .eq('topic_id', topicId);
+
+  if (filters?.platform && filters.platform !== 'all') query = query.eq('platform', filters.platform);
+  if (filters?.sentiment && filters.sentiment !== 'all') query = query.eq('sentiment', filters.sentiment);
+  if (filters?.isotope && filters.isotope !== 'all') query = query.eq('isotope', filters.isotope);
+  if (filters?.conversionIntent && filters.conversionIntent !== 'all') {
+    query = query.eq('conversion_intent', filters.conversionIntent);
+  }
+
+  const { data: rawResults, error: resultsErr } = await query;
+  if (resultsErr) {
+    console.warn('[db] getTopicDetail results query failed:', resultsErr.message);
+    return null;
+  }
+  const results = (rawResults ?? []) as DbResult[];
   if (results.length === 0) return null;
 
   // Client name + configured competitor list (same shape as

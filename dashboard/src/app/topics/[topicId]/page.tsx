@@ -25,6 +25,11 @@ export default async function TopicDetailPage({ params, searchParams }: TopicDet
   const [{ topicId }, searchParamValues] = await Promise.all([params, searchParams]);
   const clientId = searchParamValues.client || DEFAULT_CLIENT_ID;
 
+  // Temporary diagnostic — surfaces in Vercel logs so we can confirm the
+  // right topicId + clientId are hitting this route when 404s get reported.
+  // Remove once the drill-down is stable across multiple clients.
+  console.log('[topics/[topicId]] rendering', { topicId, clientId });
+
   const filters: QueryFilters = {
     platform: searchParamValues.platform,
     sentiment: searchParamValues.sentiment,
