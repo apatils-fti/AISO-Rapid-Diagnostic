@@ -515,6 +515,41 @@ is committed.
 
 ---
 
+### P2: Parameterize per-client config in enrichment scripts
+
+**Problem**: Three enrichment scripts still bake J.Crew-specific values into
+their module constants, so they produce wrong output for any non-J.Crew
+client even after the `--client-id` filter fix (9f1b07a):
+- `dashboard/scripts/enrich-supabase-metrics.js` — `BRAND_NAME = 'J.Crew'`
+  is interpolated into the Claude sentiment prompt
+- `dashboard/scripts/enrich-competitor-mentions.js` — competitor list is the
+  J.Crew set (Banana Republic, Everlane, Gap, Abercrombie, Club Monaco)
+- `dashboard/scripts/enrich-citation-sources.js` — `CLIENT_DOMAINS = ['jcrew.com']`
+  classifies any non-J.Crew owned domain as `other`
+
+The ScaledAgile nightly pipeline currently dodges this because it uses the
+brand-agnostic VADER enricher; competitor mentions and citation classification
+silently produce J.Crew-shaped output. Breaks visibly once we onboard a third
+client or switch sentiment back to the Claude-based enricher.
+
+**Solution**: Each script reads `BRAND_NAME`, competitor list, and client
+domains from Supabase keyed by `--client-id`, instead of from module constants.
+
+**Files to change**:
+- `dashboard/scripts/enrich-supabase-metrics.js`
+- `dashboard/scripts/enrich-competitor-mentions.js`
+- `dashboard/scripts/enrich-citation-sources.js`
+
+**Blocked by**: These scripts need to read client config (brand name,
+competitors, owned domains) from Supabase by `client_id` rather than hardcoded
+values. Requires schema for per-client config — either extend the `clients`
+row with `brand`, `competitors[]`, `client_domains[]` columns, or stand up a
+`client_config` JSONB column populated by the generator.
+
+**Effort**: 1-2 days after the schema is in place
+
+---
+
 ### Known gap: `configs/fti.json` uses old schema
 
 Not a TODO per se, but worth capturing: `generator/configs/fti.json` is
