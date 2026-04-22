@@ -380,63 +380,33 @@ Added during the nightly GitHub Actions sprint (2026-04-14). These items
 unblock or improve the scheduled collection pipeline described in
 `.github/workflows/daily-collection.yml` and `.github/SECRETS.md`.
 
-### P1: `getAllResultsForClient` silently truncates at 1000 rows
+### ~~P1: `getAllResultsForClient` silently truncates at 1000 rows~~ — **DONE**
 
-**Problem**: `dashboard/src/lib/db.ts:getAllResultsForClient` runs
-`sb.from('results').select('*').in('run_id', runIds)` with no pagination.
-Supabase JS defaults to a 1000-row query limit and silently caps the
-response — no error, no warning, just a truncated array. At ScaledAgile
-scale (226 prompts × 4 platforms × ~7 days of nightly runs ≈ 6,300 rows)
-every aggregation query returns incomplete data. The aggregated numbers
-look "mostly right" because the tail drop is invisible, but individual
-topics or platforms whose rows happen to fall past row 1000 are silently
-excluded.
+Shipped option 1 (paginate client-side). Added a shared `paginateAll<T>`
+helper in `dashboard/src/lib/db.ts` that loops
+`.range(offset, offset + 999)` until a page returns `< 1000` rows, then
+applied it at every `results` query site:
 
-Discovered when `/topics/value-streams?client=<scaledagile>` 404'd even
-though 9 rows existed for that topic in Supabase — all 9 rows were past
-the cutoff so `filter(r => r.topic_id === 'value-streams')` returned
-empty. `getTopicDetail` was fixed separately by scoping its query to
-`.eq('topic_id', topicId)` at the DB layer (no longer goes through
-getAllResultsForClient). The underlying bug in getAllResultsForClient
-still affects every other aggregation function.
+- `getAllResultsForClient` (db.ts) — fans out to `getCompetitorOverview`,
+  `getTopicIsotopeStats`, `getPlatformComparison`, `getGapAnalysis`, and
+  `getTopicPlatformStats`
+- `getPromptResults` (db.ts) — Prompt Detail page
+- `getTopicDetail` (db.ts) — Topic drill-down (defensive; single-topic
+  slices are small but want to be robust)
+- `getWeeklySummary` (db.ts) — Weekly Summary card
+- `getEnrichedResults` + `getAvailablePlatforms` (dashboard/page.tsx) —
+  pillar cards + platform filter pills
+- `fetchBatchResultsFromSupabase` (platform-data.ts) — client-side cache
+  that feeds the heatmap, competitor cards, executive summary
 
-**Affected callers** (all use `getAllResultsForClient` and are therefore
-affected at scale):
-- `getCompetitorOverview` — Competitors page, dashboard "Competitor
-  Benchmark" card. Competitors whose mentions live past row 1000 show
-  deflated counts.
-- `getTopicIsotopeStats` — Topics heatmap + anywhere that renders topic
-  × isotope metrics. Per-topic rates are computed from an incomplete slice.
-- `getPlatformComparison` — `/compare` and dashboard platform overview.
-  Platform totals are short by whatever fell off the tail.
-- `getGapAnalysis` — `/gap-analysis` page + the new dashboard
-  `getTopGaps`. Gap sizes are computed against incomplete mention counts.
-- `getEnrichedResults` (in `/dashboard/page.tsx` local helper) — the
-  four AISO Pillar cards compute from truncated data.
-- The local `getAvailablePlatforms` in dashboard/page.tsx — also
-  unpaginated, same issue.
+Queries that stayed single-shot because they're naturally bounded:
+`getResults(runId)`, `getLatestRun`, the start/end-run diff in
+`TrendsView.tsx`. One run × ~226 prompts is always well under 1000.
 
-**Solution** (two viable approaches):
-
-1. **Paginate client-side in `getAllResultsForClient`** — loop
-   `.range(offset, offset + 999)` until a page returns < 1000 rows.
-   Minimal change. Adds N sequential roundtrips (N = ceil(totalRows /
-   1000)). For ScaledAgile at 6,300 rows that's 7 roundtrips — ~1s extra
-   per page render at 150ms per query. Acceptable short-term.
-2. **Move aggregation to SQL via a Supabase RPC** — push the
-   per-platform / per-topic / per-competitor GROUP BYs into a Postgres
-   function. Returns pre-aggregated rows, no row-count issue possible,
-   much faster at scale. The right long-term answer but requires
-   migration authoring + per-function design.
-
-**Recommended**: ship option 1 immediately (unblocks ScaledAgile data
-integrity today). Plan option 2 in a follow-up, starting with whichever
-query is slowest in production (probably `getAllResultsForClient` itself
-since it fans out to every aggregator).
-
-**Effort**: Option 1 is half a day (edit one function, verify each
-caller's behaviour against a scale client). Option 2 is 2-3 days
-(schema RPC + wiring + tests).
+Option 2 (move aggregation to SQL via Supabase RPCs) remains the right
+long-term answer — the paginated client-side approach adds N sequential
+round-trips and recomputes GROUP BYs in JS on every page render. Not
+urgent; revisit when any single page render breaks ~2s budget at scale.
 
 ---
 

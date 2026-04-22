@@ -18,6 +18,7 @@ import {
   getWeeklySummary,
   getCompetitorOverview,
   getTopGaps,
+  paginateAll,
   type QueryFilters,
 } from '@/lib/db';
 import { supabaseService } from '@/lib/supabase';
@@ -48,10 +49,11 @@ interface DashboardPageProps {
 }
 
 async function getEnrichedResults(clientId: string, filters: QueryFilters): Promise<EnrichedResult[]> {
-  if (!supabaseService) return [];
+  const sb = supabaseService;
+  if (!sb) return [];
 
   // Get run IDs for this client, scoped by date range if provided.
-  let runsQuery = supabaseService
+  let runsQuery = sb
     .from('runs')
     .select('id')
     .eq('client_id', clientId);
@@ -62,28 +64,27 @@ async function getEnrichedResults(clientId: string, filters: QueryFilters): Prom
   if (runsError || !runs || runs.length === 0) return [];
   const runIds = runs.map((r: { id: string }) => r.id);
 
-  let query = supabaseService
-    .from('results')
-    .select('*')
-    .in('run_id', runIds)
-    .not('sentiment', 'is', null);
-
-  if (filters.platform && filters.platform !== 'all') query = query.eq('platform', filters.platform);
-  if (filters.sentiment && filters.sentiment !== 'all') query = query.eq('sentiment', filters.sentiment);
-  if (filters.isotope && filters.isotope !== 'all') query = query.eq('isotope', filters.isotope);
-  if (filters.conversionIntent && filters.conversionIntent !== 'all') query = query.eq('conversion_intent', filters.conversionIntent);
-
-  const { data, error } = await query;
-  if (error || !data) return [];
-  return data as EnrichedResult[];
+  return await paginateAll<EnrichedResult>(() => {
+    let query = sb
+      .from('results')
+      .select('*')
+      .in('run_id', runIds)
+      .not('sentiment', 'is', null);
+    if (filters.platform && filters.platform !== 'all') query = query.eq('platform', filters.platform);
+    if (filters.sentiment && filters.sentiment !== 'all') query = query.eq('sentiment', filters.sentiment);
+    if (filters.isotope && filters.isotope !== 'all') query = query.eq('isotope', filters.isotope);
+    if (filters.conversionIntent && filters.conversionIntent !== 'all') query = query.eq('conversion_intent', filters.conversionIntent);
+    return query;
+  });
 }
 
 async function getAvailablePlatforms(clientId: string, filters: QueryFilters): Promise<string[]> {
-  if (!supabaseService) return [];
+  const sb = supabaseService;
+  if (!sb) return [];
 
   // Scope to the same date window as the rest of the page so the platform
   // pills don't lie about coverage when a date filter is active.
-  let runsQuery = supabaseService
+  let runsQuery = sb
     .from('runs')
     .select('id')
     .eq('client_id', clientId);
@@ -92,15 +93,19 @@ async function getAvailablePlatforms(clientId: string, filters: QueryFilters): P
   const { data: runs } = await runsQuery;
 
   if (!runs || runs.length === 0) return [];
+  const runIds = runs.map((r: { id: string }) => r.id);
 
-  const { data, error } = await supabaseService
-    .from('results')
-    .select('platform')
-    .in('run_id', runs.map((r: { id: string }) => r.id))
-    .not('sentiment', 'is', null);
+  // Small column set but the row count still hits the 1000-row cap for large
+  // clients — distinct platforms would be undercounted without pagination.
+  const rows = await paginateAll<{ platform: string }>(() =>
+    sb
+      .from('results')
+      .select('platform')
+      .in('run_id', runIds)
+      .not('sentiment', 'is', null)
+  );
 
-  if (error || !data) return [];
-  return [...new Set(data.map((r: { platform: string }) => r.platform))].sort();
+  return [...new Set(rows.map((r) => r.platform))].sort();
 }
 
 async function DashboardContent({ clientId, filters }: { clientId: string; filters: QueryFilters }) {

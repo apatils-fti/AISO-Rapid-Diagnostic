@@ -30,6 +30,41 @@ function reader() {
   return supabaseAnon ?? supabaseService;
 }
 
+/**
+ * Supabase / PostgREST silently caps any `.select()` at 1000 rows by
+ * default. For large clients (ScaledAgile ≈ 6,300 result rows per day)
+ * that means everything past row 1000 silently vanishes, corrupting every
+ * aggregation that depends on complete data. This helper loops
+ * `.range(offset, offset + PAGE_SIZE - 1)` until the server returns a
+ * short page, accumulating the full result set.
+ *
+ * Note: `.range()` mutates the builder, so we rebuild the query on every
+ * iteration via the `buildQuery` thunk. Errors are logged and we return
+ * whatever was fetched so far — matches the soft-fail style used by every
+ * existing reader in this file.
+ *
+ * Use for any `sb.from('results').select(...)` call that isn't scoped to
+ * a single run id (those stay well under 1000 rows per platform). Also
+ * safe to use for other tables if they grow past the cap.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function paginateAll<T>(buildQuery: () => any, pageSize = 1000): Promise<T[]> {
+  const all: T[] = [];
+  let from = 0;
+  while (true) {
+    const { data, error } = await buildQuery().range(from, from + pageSize - 1);
+    if (error) {
+      console.warn(`[db] paginateAll error at offset ${from}:`, error.message ?? error);
+      break;
+    }
+    if (!data || data.length === 0) break;
+    all.push(...(data as T[]));
+    if (data.length < pageSize) break;
+    from += pageSize;
+  }
+  return all;
+}
+
 // ---------------------------------------------------------------------------
 // Clients
 // ---------------------------------------------------------------------------
@@ -560,27 +595,18 @@ export async function getAllResultsForClient(
     if (runsErr || !runs || runs.length === 0) return [];
     const runIds = runs.map((r: any) => r.id);
 
-    let query = sb
-      .from('results')
-      .select('*')
-      .in('run_id', runIds);
-
-    if (filters?.platform && filters.platform !== 'all') {
-      query = query.eq('platform', filters.platform);
-    }
-    if (filters?.sentiment && filters.sentiment !== 'all') {
-      query = query.eq('sentiment', filters.sentiment);
-    }
-    if (filters?.isotope && filters.isotope !== 'all') {
-      query = query.eq('isotope', filters.isotope);
-    }
-    if (filters?.conversionIntent && filters.conversionIntent !== 'all') {
-      query = query.eq('conversion_intent', filters.conversionIntent);
-    }
-
-    const { data, error } = await query;
-    if (error) { console.warn('[db] getAllResultsForClient error:', error.message); return []; }
-    return (data ?? []) as DbResult[];
+    // Rebuild on every iteration — Supabase's `.range()` mutates the
+    // builder, so reusing the same query object across pages is undefined.
+    return await paginateAll<DbResult>(() => {
+      let query = sb.from('results').select('*').in('run_id', runIds);
+      if (filters?.platform && filters.platform !== 'all') query = query.eq('platform', filters.platform);
+      if (filters?.sentiment && filters.sentiment !== 'all') query = query.eq('sentiment', filters.sentiment);
+      if (filters?.isotope && filters.isotope !== 'all') query = query.eq('isotope', filters.isotope);
+      if (filters?.conversionIntent && filters.conversionIntent !== 'all') {
+        query = query.eq('conversion_intent', filters.conversionIntent);
+      }
+      return query;
+    });
   } catch { return []; }
 }
 
@@ -1241,27 +1267,23 @@ export async function getTopicDetail(
   if (runsErr || !runs || runs.length === 0) return null;
   const runIds = (runs as Array<{ id: string }>).map((r) => r.id);
 
-  // Step 2: pull only this topic's results — small query, not vulnerable to
-  // the 1000-row default because a single topic rarely exceeds that.
-  let query = sb
-    .from('results')
-    .select('*')
-    .in('run_id', runIds)
-    .eq('topic_id', topicId);
-
-  if (filters?.platform && filters.platform !== 'all') query = query.eq('platform', filters.platform);
-  if (filters?.sentiment && filters.sentiment !== 'all') query = query.eq('sentiment', filters.sentiment);
-  if (filters?.isotope && filters.isotope !== 'all') query = query.eq('isotope', filters.isotope);
-  if (filters?.conversionIntent && filters.conversionIntent !== 'all') {
-    query = query.eq('conversion_intent', filters.conversionIntent);
-  }
-
-  const { data: rawResults, error: resultsErr } = await query;
-  if (resultsErr) {
-    console.warn('[db] getTopicDetail results query failed:', resultsErr.message);
-    return null;
-  }
-  const results = (rawResults ?? []) as DbResult[];
+  // Step 2: pull this topic's results. Single-topic slices are small in
+  // practice (one topic × ~4 platforms × ~7 days ≈ 30 rows), but paginate
+  // defensively so we're robust against larger rollouts.
+  const results = await paginateAll<DbResult>(() => {
+    let query = sb
+      .from('results')
+      .select('*')
+      .in('run_id', runIds)
+      .eq('topic_id', topicId);
+    if (filters?.platform && filters.platform !== 'all') query = query.eq('platform', filters.platform);
+    if (filters?.sentiment && filters.sentiment !== 'all') query = query.eq('sentiment', filters.sentiment);
+    if (filters?.isotope && filters.isotope !== 'all') query = query.eq('isotope', filters.isotope);
+    if (filters?.conversionIntent && filters.conversionIntent !== 'all') {
+      query = query.eq('conversion_intent', filters.conversionIntent);
+    }
+    return query;
+  });
   if (results.length === 0) return null;
 
   // Client name + configured competitor list (same shape as
@@ -1520,20 +1542,21 @@ export async function getPromptResults(
     if (!runs || runs.length === 0) return [];
     const runIds = runs.map((r: any) => r.id);
 
-    // Build query
-    let query = sb
-      .from('results')
-      .select('prompt_id, topic_id, topic_name, isotope, response_text, client_mentioned, citations, sentiment, recommendation_strength, cta_present, competitor_mentions, platform')
-      .in('run_id', runIds);
-
-    if (platform && platform !== 'all') query = query.eq('platform', platform);
-    if (topicFilter) query = query.eq('topic_id', topicFilter);
-    if (isotopeFilter) query = query.eq('isotope', isotopeFilter);
-    if (sentimentFilter && sentimentFilter !== 'all') query = query.eq('sentiment', sentimentFilter);
-    if (conversionIntentFilter && conversionIntentFilter !== 'all') query = query.eq('conversion_intent', conversionIntentFilter);
-
-    const { data, error } = await query;
-    if (error || !data) return [];
+    // 226 prompts × 4 platforms ≈ 900 rows per run, multiplied by the
+    // date range. Paginate to avoid the 1000-row silent cap.
+    const data = await paginateAll<Record<string, unknown>>(() => {
+      let query = sb
+        .from('results')
+        .select('prompt_id, topic_id, topic_name, isotope, response_text, client_mentioned, citations, sentiment, recommendation_strength, cta_present, competitor_mentions, platform')
+        .in('run_id', runIds);
+      if (platform && platform !== 'all') query = query.eq('platform', platform);
+      if (topicFilter) query = query.eq('topic_id', topicFilter);
+      if (isotopeFilter) query = query.eq('isotope', isotopeFilter);
+      if (sentimentFilter && sentimentFilter !== 'all') query = query.eq('sentiment', sentimentFilter);
+      if (conversionIntentFilter && conversionIntentFilter !== 'all') query = query.eq('conversion_intent', conversionIntentFilter);
+      return query;
+    });
+    if (data.length === 0) return [];
 
     // Group by prompt_id
     const promptMap = new Map<string, PromptResultRow>();
@@ -1778,19 +1801,22 @@ export async function getWeeklySummary(clientId: string): Promise<WeeklySummary 
     const endRunIds = endRuns.map((r) => r.id);
     const allRunIds = [...startRunIds, ...endRunIds];
 
-    const { data: results, error: resultsErr } = await sb
-      .from('results')
-      .select('run_id, topic_id, topic_name, client_mentioned')
-      .in('run_id', allRunIds);
+    // start + end runs × 226 prompts × 4 platforms per run can exceed 1000.
+    const results = await paginateAll<{ run_id: string; topic_id: string; topic_name: string; client_mentioned: boolean }>(
+      () =>
+        sb
+          .from('results')
+          .select('run_id, topic_id, topic_name, client_mentioned')
+          .in('run_id', allRunIds)
+    );
 
     let mostImprovedTopic: WeeklySummary['mostImprovedTopic'] = null;
-    if (!resultsErr && results) {
-      type ResultRow = { run_id: string; topic_id: string; topic_name: string; client_mentioned: boolean };
+    if (results.length > 0) {
       const startRunIdSet = new Set(startRunIds);
       const endRunIdSet = new Set(endRunIds);
 
       const topicStats = new Map<string, { name: string; startHits: number; startTotal: number; endHits: number; endTotal: number }>();
-      for (const r of results as ResultRow[]) {
+      for (const r of results) {
         const existing = topicStats.get(r.topic_id) ?? { name: r.topic_name, startHits: 0, startTotal: 0, endHits: 0, endTotal: 0 };
         if (startRunIdSet.has(r.run_id)) {
           existing.startTotal += 1;

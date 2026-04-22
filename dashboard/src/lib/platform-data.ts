@@ -18,6 +18,7 @@
 
 import { PLATFORM_COLORS } from './colors';
 import { supabaseAnon } from './supabase';
+import { paginateAll } from './db';
 
 // ---------------------------------------------------------------------------
 // Public types
@@ -315,18 +316,18 @@ async function fetchBatchResultsFromSupabase(
     }
 
     const runIds = (runs as Array<{ id: string }>).map((r) => r.id);
+    const sb = supabaseAnon;
 
-    const { data: results, error: resultsError } = await supabaseAnon
-      .from('results')
-      .select('prompt_id, topic_id, isotope, response_text, citations, client_mentioned, created_at')
-      .in('run_id', runIds);
+    // 226 prompts × 7 days of runs = ~1,580 rows per platform — comfortably
+    // past the 1000-row silent cap. Paginate to fetch the full set.
+    const results = await paginateAll<Record<string, unknown>>(() =>
+      sb
+        .from('results')
+        .select('prompt_id, topic_id, isotope, response_text, citations, client_mentioned, created_at')
+        .in('run_id', runIds)
+    );
 
-    if (resultsError || !results) {
-      if (resultsError) console.warn(`[platform-data] results query failed for ${platform}:`, resultsError.message);
-      return [];
-    }
-
-    return (results as Array<Record<string, unknown>>)
+    return results
       .map(normalizeSupabaseRow)
       .filter((r): r is BatchResult => r !== null)
       .map((r) => enrichResult(r, info));
