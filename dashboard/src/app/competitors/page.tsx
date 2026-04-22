@@ -10,7 +10,7 @@ interface CompetitorsPageProps {
   searchParams: Promise<{ client?: string; platform?: string; sentiment?: string; isotope?: string; intent?: string }>;
 }
 
-async function CompetitorsContent({ clientId, filters }: { clientId: string; filters: QueryFilters }) {
+async function CompetitorsContent({ clientId, filters, clientName }: { clientId: string; filters: QueryFilters; clientName?: string }) {
   const [competitors, topicStats] = await Promise.all([
     getCompetitorOverview(clientId, filters),
     getTopicIsotopeStats(clientId, filters),
@@ -38,7 +38,7 @@ async function CompetitorsContent({ clientId, filters }: { clientId: string; fil
         </h3>
         <div className="grid grid-cols-2 gap-6">
           {competitors.map(comp => (
-            <CompetitorCard key={comp.name} serverData={comp} />
+            <CompetitorCard key={comp.name} serverData={comp} clientName={clientName} />
           ))}
         </div>
       </div>
@@ -80,7 +80,11 @@ export default async function CompetitorsPage({ searchParams }: CompetitorsPageP
           </div>
         }
       >
-        <CompetitorsContent clientId={clientId} filters={filters} />
+        <CompetitorsContent
+          clientId={clientId}
+          filters={filters}
+          clientName={clients.find(c => c.id === clientId)?.name}
+        />
       </Suspense>
     </PageContainer>
   );

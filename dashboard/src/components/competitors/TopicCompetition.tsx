@@ -1,20 +1,33 @@
 'use client';
 
-import { analyzedMetrics, getFilteredTopicBrandMetrics } from '@/lib/fixtures';
 import { COMPETITOR_COLORS } from '@/lib/colors';
 import { cn } from '@/lib/utils';
 import { Crown } from 'lucide-react';
 import type { CompetitorOverviewRow, TopicIsotopeRow } from '@/lib/db';
 
 interface TopicCompetitionProps {
-  mode?: string;
-  selectedPlatforms?: string[];
   serverData?: CompetitorOverviewRow[];
   serverTopicData?: TopicIsotopeRow[];
 }
 
-export function TopicCompetition({ mode = 'mentions', selectedPlatforms, serverData, serverTopicData }: TopicCompetitionProps) {
-  const { competitorOverview: competitors, topicResults: topics } = analyzedMetrics;
+export function TopicCompetition({ serverData, serverTopicData }: TopicCompetitionProps) {
+  const competitors = serverData ?? [];
+  const topics = serverTopicData ?? [];
+
+  if (competitors.length === 0 || topics.length === 0) {
+    return (
+      <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-6">
+        <h3 className="font-heading text-lg font-semibold text-[#E5E7EB] mb-2">
+          Topic-Level Competition
+        </h3>
+        <p className="text-sm text-[#9CA3AF]">No topic-level data available.</p>
+      </div>
+    );
+  }
+
+  // For each topic row, the per-competitor mention rate is on
+  // `topic.competitorRates` — a `Record<brandName, mentionRate>` populated by
+  // getTopicIsotopeStats() in db.ts. Brands not in the map default to 0.
 
   return (
     <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] overflow-hidden">
@@ -23,9 +36,7 @@ export function TopicCompetition({ mode = 'mentions', selectedPlatforms, serverD
           Topic-Level Competition
         </h3>
         <p className="text-sm text-[#9CA3AF]">
-          {mode === 'citations'
-            ? 'Citation share per topic - which brands get cited for each topic area'
-            : 'Mention rates per topic - which brands are discussed most in each topic area'}
+          Mention rates per topic — which brands are discussed most in each topic area
         </p>
       </div>
 
@@ -36,13 +47,13 @@ export function TopicCompetition({ mode = 'mentions', selectedPlatforms, serverD
               <th className="px-4 py-3 text-left text-xs font-medium text-[#9CA3AF] uppercase tracking-wider">
                 Topic
               </th>
-              {competitors.map(c => (
+              {competitors.map((c) => (
                 <th
                   key={c.name}
                   className="px-4 py-3 text-center text-xs font-medium uppercase tracking-wider"
                   style={{ color: COMPETITOR_COLORS[c.name] || '#9CA3AF' }}
                 >
-                  {c.name}
+                  {c.name || '—'}
                 </th>
               ))}
               <th className="px-4 py-3 text-center text-xs font-medium text-[#9CA3AF] uppercase tracking-wider">
@@ -51,26 +62,20 @@ export function TopicCompetition({ mode = 'mentions', selectedPlatforms, serverD
             </tr>
           </thead>
           <tbody className="divide-y divide-[#2A2D37]">
-            {topics.map(topic => {
-              // Find the shares for each competitor
-              const filteredTopicMetrics = getFilteredTopicBrandMetrics(topic.topicId, selectedPlatforms);
-              const shares = competitors.map(c => {
-                let share = 0;
-                if (mode === 'citations') {
-                  share = c.topicShares[topic.topicId] || 0;
-                } else {
-                  share = filteredTopicMetrics[c.name]?.mentionRate || 0;
-                }
-                return {
-                  name: c.name,
-                  share,
-                  isClient: c.isClient,
-                };
-              });
+            {topics.map((topic) => {
+              const compRates = topic.competitorRates ?? {};
 
-              // Find the leader
-              const leader = shares.reduce((max, s) => s.share > max.share ? s : max, shares[0]);
-              const maxShare = Math.max(...shares.map(s => s.share));
+              const shares = competitors.map((c) => ({
+                name: c.name,
+                share: c.isClient ? topic.overallMentionRate : (compRates[c.name] ?? 0),
+                isClient: c.isClient,
+              }));
+
+              const leader = shares.reduce(
+                (max, s) => (s.share > max.share ? s : max),
+                shares[0]
+              );
+              const maxShare = Math.max(...shares.map((s) => s.share));
 
               return (
                 <tr key={topic.topicId} className="hover:bg-[#22252F] transition-colors">
@@ -78,11 +83,11 @@ export function TopicCompetition({ mode = 'mentions', selectedPlatforms, serverD
                     <div className="font-medium text-[#E5E7EB] text-sm">
                       {topic.topicName}
                     </div>
-                    <div className="text-xs text-[#6B7280]">
-                      {topic.category}
-                    </div>
+                    {topic.category && (
+                      <div className="text-xs text-[#6B7280]">{topic.category}</div>
+                    )}
                   </td>
-                  {shares.map(s => {
+                  {shares.map((s) => {
                     const barWidth = maxShare > 0 ? (s.share / maxShare) * 100 : 0;
                     const color = COMPETITOR_COLORS[s.name] || COMPETITOR_COLORS.Other;
 
@@ -117,7 +122,7 @@ export function TopicCompetition({ mode = 'mentions', selectedPlatforms, serverD
                       style={{ color: COMPETITOR_COLORS[leader.name] || '#9CA3AF' }}
                     >
                       <Crown className="h-3 w-3" />
-                      {leader.name}
+                      {leader.name || '—'}
                     </span>
                   </td>
                 </tr>

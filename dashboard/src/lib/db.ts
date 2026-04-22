@@ -1136,6 +1136,70 @@ export async function getGapAnalysis(
 }
 
 // ---------------------------------------------------------------------------
+// Top Gaps (for the dashboard "Top Opportunities" card)
+// ---------------------------------------------------------------------------
+
+export interface TopGapRow {
+  topicId: string;
+  topicName: string;
+  category: string;
+  clientRate: number;
+  topCompetitorName: string;
+  topCompetitorRate: number;
+  gap: number;
+}
+
+/**
+ * For each topic where the client has results, return the gap to the
+ * single best-performing competitor on that topic. Sorted biggest-gap first
+ * and capped at `limit` rows. Used by TopGapsCard on the dashboard.
+ *
+ * Implementation note: piggy-backs on getTopicIsotopeStats (which already
+ * computes per-topic competitorRates) rather than re-querying the results
+ * table — keeps the SQL surface small and the gap math consistent with
+ * what TopicCompetition shows.
+ */
+export async function getTopGaps(
+  clientId: string,
+  filters?: QueryFilters,
+  limit = 5
+): Promise<TopGapRow[]> {
+  const topicStats = await getTopicIsotopeStats(clientId, filters);
+  if (topicStats.length === 0) return [];
+
+  const gaps: TopGapRow[] = [];
+  for (const t of topicStats) {
+    const competitorEntries = Object.entries(t.competitorRates ?? {});
+    if (competitorEntries.length === 0) continue;
+
+    // Pick the strongest competitor on this topic by mention rate.
+    let topName = '';
+    let topRate = 0;
+    for (const [name, rate] of competitorEntries) {
+      if (rate > topRate) {
+        topRate = rate;
+        topName = name;
+      }
+    }
+
+    const gap = topRate - t.overallMentionRate;
+    if (gap > 0) {
+      gaps.push({
+        topicId: t.topicId,
+        topicName: t.topicName,
+        category: t.category,
+        clientRate: t.overallMentionRate,
+        topCompetitorName: topName,
+        topCompetitorRate: topRate,
+        gap,
+      });
+    }
+  }
+
+  return gaps.sort((a, b) => b.gap - a.gap).slice(0, limit);
+}
+
+// ---------------------------------------------------------------------------
 // Phase 2: Prompt Results (for Prompt Detail page)
 // ---------------------------------------------------------------------------
 

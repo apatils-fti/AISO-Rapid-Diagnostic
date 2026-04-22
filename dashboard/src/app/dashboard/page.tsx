@@ -16,6 +16,8 @@ import {
   getAvailableRunDates,
   getLatestRunDate,
   getWeeklySummary,
+  getCompetitorOverview,
+  getTopGaps,
   type QueryFilters,
 } from '@/lib/db';
 import { supabaseService } from '@/lib/supabase';
@@ -97,7 +99,7 @@ async function getAvailablePlatforms(clientId: string): Promise<string[]> {
 }
 
 async function DashboardContent({ clientId, filters }: { clientId: string; filters: QueryFilters }) {
-  const [overview, platformStats, results, platforms, clients, availableDates, weeklySummary] = await Promise.all([
+  const [overview, platformStats, results, platforms, clients, availableDates, weeklySummary, competitorRows, topGaps] = await Promise.all([
     getOverviewStats(clientId, filters),
     getPlatformComparison(clientId, filters),
     getEnrichedResults(clientId, filters),
@@ -105,6 +107,8 @@ async function DashboardContent({ clientId, filters }: { clientId: string; filte
     getClients(),
     getAvailableRunDates(clientId),
     getWeeklySummary(clientId),
+    getCompetitorOverview(clientId, filters),
+    getTopGaps(clientId, filters),
   ]);
 
   // Archetype weights
@@ -314,12 +318,12 @@ Wins Comparisons = comparative prompts where brand gets final recommendation / t
 
       {/* Competitor + Platform Overview */}
       <div className="grid grid-cols-2 gap-6">
-        <CompetitorQuickCompare />
+        <CompetitorQuickCompare serverData={competitorRows} />
         <PlatformOverview platformData={platformStats} />
       </div>
 
       {/* Top Opportunities */}
-      <TopGapsCard />
+      <TopGapsCard serverData={topGaps} clientName={client?.name ?? undefined} />
     </div>
   );
 }

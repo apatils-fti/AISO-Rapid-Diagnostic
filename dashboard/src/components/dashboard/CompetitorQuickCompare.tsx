@@ -1,45 +1,40 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { analyzedMetrics } from '@/lib/fixtures';
-import { getOverallBrandMetrics, type OverallBrandMetrics } from '@/lib/platform-data';
 import { COMPETITOR_COLORS } from '@/lib/colors';
 import { cn } from '@/lib/utils';
+import type { CompetitorOverviewRow } from '@/lib/db';
 
-export function CompetitorQuickCompare() {
-  const [batchMetrics, setBatchMetrics] = useState<OverallBrandMetrics | null>(null);
+interface CompetitorQuickCompareProps {
+  serverData?: CompetitorOverviewRow[];
+}
 
-  useEffect(() => {
-    getOverallBrandMetrics().then(setBatchMetrics);
-  }, []);
+export function CompetitorQuickCompare({ serverData }: CompetitorQuickCompareProps) {
+  const rows = serverData ?? [];
 
-  const textMetrics = analyzedMetrics.textMetrics?.overall.brandMetrics ?? {};
+  if (rows.length === 0) {
+    return (
+      <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-6">
+        <h3 className="font-heading text-lg font-semibold text-[#E5E7EB] mb-2">
+          Competitor Benchmark
+        </h3>
+        <p className="text-xs text-[#6B7280]">No competitor data yet.</p>
+      </div>
+    );
+  }
 
-  // Get mention rate for each competitor, preferring batch data
-  const competitorsWithMentions = analyzedMetrics.competitorOverview.map(c => ({
-    ...c,
-    mentionRate: batchMetrics?.competitorRates[c.name]?.mentionRate
-      ?? textMetrics[c.name]?.mentionRate
-      ?? c.parametricMentionRate,
-    firstMentionRate: batchMetrics?.competitorRates[c.name]?.firstMentionRate
-      ?? textMetrics[c.name]?.firstMentionRate
-      ?? 0,
-  }));
-
-  // Override client mention rate with batch data
-  const competitors = competitorsWithMentions
-    .map(c => c.isClient ? { ...c, mentionRate: batchMetrics?.brandMentionRate ?? c.mentionRate, firstMentionRate: batchMetrics?.firstMentionRate ?? c.firstMentionRate } : c)
-    .sort((a, b) => b.mentionRate - a.mentionRate);
-
-  const maxShare = Math.max(...competitors.map(c => c.mentionRate), 0.01);
-  const clientRate = competitors.find(c => c.isClient)?.mentionRate ?? 0;
+  // CompetitorOverviewRow already has mentionRate. Sort biggest first.
+  const competitors = [...rows].sort((a, b) => b.mentionRate - a.mentionRate);
+  const maxShare = Math.max(...competitors.map((c) => c.mentionRate), 0.01);
+  const clientRate = competitors.find((c) => c.isClient)?.mentionRate ?? 0;
 
   return (
     <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-6">
       <h3 className="font-heading text-lg font-semibold text-[#E5E7EB] mb-2">
         Competitor Benchmark
       </h3>
-      <p className="text-xs text-[#6B7280] mb-6">Brand mention rate in AI responses — gap vs you</p>
+      <p className="text-xs text-[#6B7280] mb-6">
+        Brand mention rate in AI responses — gap vs you
+      </p>
       <div className="space-y-4">
         {competitors.map((competitor) => {
           const barWidth = (competitor.mentionRate / maxShare) * 100;
@@ -57,7 +52,7 @@ export function CompetitorQuickCompare() {
                       competitor.isClient ? 'text-[#00D4AA]' : 'text-[#E5E7EB]'
                     )}
                   >
-                    {competitor.name}
+                    {competitor.name || '—'}
                     {competitor.isClient && (
                       <span className="ml-2 text-xs text-[#6B7280]">(You)</span>
                     )}
@@ -94,8 +89,8 @@ export function CompetitorQuickCompare() {
                 />
               </div>
               <div className="mt-1 text-xs text-[#6B7280] opacity-0 group-hover:opacity-100 transition-opacity">
-                First mention: {(competitor.firstMentionRate * 100).toFixed(0)}% |
-                Citation share: {(competitor.overallCitationShare * 100).toFixed(1)}%
+                {competitor.totalMentions.toLocaleString()} mentions across{' '}
+                {competitor.totalResults.toLocaleString()} responses
               </div>
             </div>
           );

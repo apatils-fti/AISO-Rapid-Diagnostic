@@ -1,64 +1,65 @@
 'use client';
 
-import { analyzedMetrics, getFilteredBrandMetrics } from '@/lib/fixtures';
 import { COMPETITOR_COLORS } from '@/lib/colors';
 import { cn } from '@/lib/utils';
 import type { CompetitorOverviewRow } from '@/lib/db';
 
 interface ShareOfVoiceProps {
-  mode?: string;
-  selectedPlatforms?: string[];
   serverData?: CompetitorOverviewRow[];
 }
 
-export function ShareOfVoice({ mode = 'mentions', selectedPlatforms, serverData }: ShareOfVoiceProps) {
-  const { competitorOverview } = analyzedMetrics;
-  const filteredBrandMetrics = getFilteredBrandMetrics(selectedPlatforms);
+export function ShareOfVoice({ serverData }: ShareOfVoiceProps) {
+  const rows = serverData ?? [];
 
-  // Get share values based on mode
-  const competitors = competitorOverview.map(c => {
-    const mentionRate = filteredBrandMetrics[c.name]?.mentionRate || 0;
-    return {
-      ...c,
-      displayShare: mode === 'citations' ? c.overallCitationShare : mentionRate,
-    };
-  }).sort((a, b) => b.displayShare - a.displayShare);
+  if (rows.length === 0) {
+    return (
+      <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-6">
+        <h3 className="font-heading text-lg font-semibold text-[#E5E7EB] mb-2">
+          Brand Mention Share
+        </h3>
+        <p className="text-sm text-[#9CA3AF]">No competitor data available.</p>
+      </div>
+    );
+  }
 
-  // Calculate "Other" share
-  const totalTracked = competitors.reduce((sum, c) => sum + c.displayShare, 0);
-  const otherShare = Math.max(0, 1 - totalTracked);
+  // Each row already represents a brand with a mentionRate scoped to the
+  // current client's runs. Sort by share, biggest first.
+  const total = rows.reduce((sum, r) => sum + r.mentionRate, 0);
+  const segments = rows
+    .map((r) => ({
+      name: r.name || 'Unknown',
+      share: r.mentionRate,
+      color: COMPETITOR_COLORS[r.name] || COMPETITOR_COLORS.Other,
+      isClient: r.isClient,
+    }))
+    .sort((a, b) => b.share - a.share);
 
-  const segments = [
-    ...competitors.map(c => ({
-      name: c.name,
-      share: c.displayShare,
-      color: COMPETITOR_COLORS[c.name] || COMPETITOR_COLORS.Other,
-      isClient: c.isClient,
-    })),
-    ...(otherShare > 0.01 ? [{
+  // Surface "Other" share if the listed brands don't cover everything (e.g.
+  // when responses mention brands outside the configured competitor list).
+  const otherShare = Math.max(0, 1 - total);
+  if (otherShare > 0.01) {
+    segments.push({
       name: 'Other',
       share: otherShare,
       color: COMPETITOR_COLORS.Other,
       isClient: false,
-    }] : []),
-  ];
+    });
+  }
 
   return (
     <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-6">
       <div className="mb-6">
         <h3 className="font-heading text-lg font-semibold text-[#E5E7EB] mb-2">
-          {mode === 'citations' ? 'Overall Citation Share' : 'Brand Mention Share'}
+          Brand Mention Share
         </h3>
         <p className="text-sm text-[#9CA3AF]">
-          {mode === 'citations'
-            ? 'Percentage of all URL citations each brand receives across AI responses'
-            : 'How often each brand is mentioned in AI responses across all topics'}
+          How often each brand is mentioned in AI responses across all topics
         </p>
       </div>
 
       {/* Stacked bar */}
       <div className="h-12 w-full flex rounded-lg overflow-hidden mb-6">
-        {segments.map((segment, index) => (
+        {segments.map((segment) => (
           <div
             key={segment.name}
             className={cn(
@@ -81,7 +82,7 @@ export function ShareOfVoice({ mode = 'mentions', selectedPlatforms, serverData 
 
       {/* Legend */}
       <div className="flex flex-wrap gap-4">
-        {segments.map(segment => (
+        {segments.map((segment) => (
           <div key={segment.name} className="flex items-center gap-2">
             <div
               className={cn(
@@ -90,10 +91,12 @@ export function ShareOfVoice({ mode = 'mentions', selectedPlatforms, serverData 
               )}
               style={{ backgroundColor: segment.color }}
             />
-            <span className={cn(
-              'text-sm',
-              segment.isClient ? 'text-[#00D4AA] font-medium' : 'text-[#9CA3AF]'
-            )}>
+            <span
+              className={cn(
+                'text-sm',
+                segment.isClient ? 'text-[#00D4AA] font-medium' : 'text-[#9CA3AF]'
+              )}
+            >
               {segment.name}
               {segment.isClient && ' (You)'}
             </span>

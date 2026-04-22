@@ -2,63 +2,16 @@
 
 import { AlertTriangle, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import { analyzedMetrics } from '@/lib/fixtures';
+import type { TopGapRow } from '@/lib/db';
 
-interface MentionGap {
-  topicId: string;
-  topicName: string;
-  category: string;
-  clientRate: number;
-  topCompetitorName: string;
-  topCompetitorRate: number;
-  gap: number;
+interface TopGapsCardProps {
+  serverData?: TopGapRow[];
+  clientName?: string;
 }
 
-const CLIENT_NAME = 'J.Crew';
-
-function findTopMentionGaps(): MentionGap[] {
-  const gaps: MentionGap[] = [];
-  const textMetrics = analyzedMetrics.textMetrics;
-  if (!textMetrics) return gaps;
-
-  for (const topic of analyzedMetrics.topicResults) {
-    const topicMetrics = textMetrics.byTopic[topic.topicId];
-    if (!topicMetrics) continue;
-
-    const clientRate = topicMetrics.brandMetrics[CLIENT_NAME]?.mentionRate ?? 0;
-
-    // Find the competitor with the highest mention rate for this topic
-    let topCompetitorName = '';
-    let topCompetitorRate = 0;
-
-    for (const [brand, metrics] of Object.entries(topicMetrics.brandMetrics)) {
-      if (brand === CLIENT_NAME) continue;
-      if (metrics.mentionRate > topCompetitorRate) {
-        topCompetitorName = brand;
-        topCompetitorRate = metrics.mentionRate;
-      }
-    }
-
-    const gap = topCompetitorRate - clientRate;
-    if (gap > 0) {
-      gaps.push({
-        topicId: topic.topicId,
-        topicName: topic.topicName,
-        category: topic.category,
-        clientRate,
-        topCompetitorName,
-        topCompetitorRate,
-        gap,
-      });
-    }
-  }
-
-  // Sort by biggest gap first
-  return gaps.sort((a, b) => b.gap - a.gap).slice(0, 5);
-}
-
-export function TopGapsCard() {
-  const gaps = findTopMentionGaps();
+export function TopGapsCard({ serverData, clientName }: TopGapsCardProps) {
+  const gaps = serverData ?? [];
+  const displayName = clientName || 'Client';
 
   return (
     <div className="rounded-lg border border-[#2A2D37] bg-[#1A1D27] p-6">
@@ -99,12 +52,14 @@ export function TopGapsCard() {
                     <span className="font-medium text-[#E5E7EB]">
                       {gap.topicName}
                     </span>
-                    <span className="rounded bg-[#1A1D27] px-2 py-0.5 text-xs text-[#9CA3AF]">
-                      {gap.category}
-                    </span>
+                    {gap.category && (
+                      <span className="rounded bg-[#1A1D27] px-2 py-0.5 text-xs text-[#9CA3AF]">
+                        {gap.category}
+                      </span>
+                    )}
                   </div>
                   <p className="text-sm text-[#9CA3AF]">
-                    {CLIENT_NAME} mentioned in{' '}
+                    {displayName} mentioned in{' '}
                     <span className="text-[#E5E7EB]">
                       {(gap.clientRate * 100).toFixed(0)}%
                     </span>{' '}
