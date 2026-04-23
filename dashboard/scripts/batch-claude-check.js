@@ -77,6 +77,23 @@ async function initSupabase() {
 async function saveResultToSupabase(result, promptData) {
   if (!supabase || !supabaseRunId) return;
   try {
+    // Dedup: skip if a row already exists for (run_id, prompt_id). Protects
+    // against double-inserts if a prompt ever gets processed twice within
+    // the same run. Note: does NOT protect against cross-run duplicates —
+    // when --resume restarts the batch it creates a fresh run_id, so rows
+    // from the prior run stay under the old id. Widen this dedup to
+    // (client_id, prompt_id, run_date) if cross-run dedup is needed.
+    const { data: existing } = await supabase
+      .from('results')
+      .select('id')
+      .eq('run_id', supabaseRunId)
+      .eq('prompt_id', result.promptId)
+      .limit(1)
+      .maybeSingle();
+    if (existing) {
+      console.log(`    ⏭  Already saved for this run — skipping`);
+      return;
+    }
     await supabase.from('results').insert({
       run_id: supabaseRunId,
       prompt_id: result.promptId,

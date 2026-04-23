@@ -91,6 +91,19 @@ async function initSupabase() {
 async function saveResultToSupabase(result, promptData) {
   if (!supabase || !supabaseRunId) return;
   try {
+    // Dedup by (run_id, prompt_id). See batch-claude-check.js for caveat
+    // re: cross-run duplicates under --resume.
+    const { data: existing } = await supabase
+      .from('results')
+      .select('id')
+      .eq('run_id', supabaseRunId)
+      .eq('prompt_id', result.promptId)
+      .limit(1)
+      .maybeSingle();
+    if (existing) {
+      console.log(`    ⏭  Already saved for this run — skipping`);
+      return;
+    }
     await supabase.from('results').insert({
       run_id: supabaseRunId,
       prompt_id: result.promptId,

@@ -109,10 +109,41 @@ jobs:
               echo "Running with limit: $LIMIT"
             fi
           fi
-          node scripts/onboard-client.js \
-            --config configs/scaledagile.json \
-            --prompts top-scaledagile-prompts.json \
-            --skip-generate $LIMIT_ARG
+
+          # Retry loop: up to 3 attempts. Attempt 1 runs fresh; attempts
+          # 2+ pass --resume so onboard-client.js skips already-completed
+          # steps. State lives at dashboard/scripts/.onboard-state-*.json
+          # on the same runner, so the file persists across iterations of
+          # this for-loop (but NOT across workflow runs — that'd need
+          # artifact upload/download).
+          PIPELINE_OK=0
+          for ATTEMPT in 1 2 3; do
+            if [ "$ATTEMPT" = "1" ]; then
+              RESUME_ARG=""
+              echo "::group::Pipeline attempt $ATTEMPT/3 (fresh)"
+            else
+              RESUME_ARG="--resume"
+              echo "::warning::Pipeline attempt $ATTEMPT/3 (resuming from last saved state)"
+              echo "::group::Pipeline attempt $ATTEMPT/3 (resume)"
+            fi
+
+            if node scripts/onboard-client.js \
+                --config configs/scaledagile.json \
+                --prompts top-scaledagile-prompts.json \
+                --skip-generate $LIMIT_ARG $RESUME_ARG; then
+              echo "::endgroup::"
+              echo "Pipeline succeeded on attempt $ATTEMPT"
+              PIPELINE_OK=1
+              break
+            fi
+            echo "::endgroup::"
+            echo "::warning::Pipeline attempt $ATTEMPT/3 failed, will retry with --resume"
+          done
+
+          if [ "$PIPELINE_OK" != "1" ]; then
+            echo "::error::Pipeline failed after 3 attempts"
+            exit 1
+          fi
 
       - name: Stop Next.js server
         if: always()

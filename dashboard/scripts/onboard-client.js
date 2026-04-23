@@ -105,7 +105,14 @@ function runStep(name, command, state) {
       stdio: 'inherit',
       cwd: resolve(__dirname, '..'),
       env: { ...process.env },
-      timeout: 600000, // 10 min per step
+      // 2 hours per step. Full 226-prompt batch at ~25s/prompt (Claude
+      // response time + 3.5s rate-limit delay) needs ~95 min. The prior
+      // 10-min timeout was fine when CI ran with --limit 10 (4 min) but
+      // broke every full nightly — execSync SIGTERM'd the child around
+      // prompt 22, onboard-client caught the exception and process.exit'd
+      // the whole pipeline. The workflow job timeout-minutes (120) still
+      // enforces a real ceiling.
+      timeout: 2 * 60 * 60 * 1000,
     });
     markCompleted(state, name);
     console.log(`  ✓  ${name} completed`);
