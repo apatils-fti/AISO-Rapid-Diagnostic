@@ -4,6 +4,8 @@
     "domains": ["jcrew.com", "jcrewfactory.com"],
     "industry": "fashion-apparel"
   },
+  "aliases": ["J.Crew", "J Crew", "Jcrew"],
+  "clientDomains": ["jcrew.com", "j-crew.com"],
   "competitors": [
     { "name": "Banana Republic", "domains": ["bananarepublic.com", "bananarepublicfactory.com"] },
     { "name": "Everlane", "domains": ["everlane.com"] },

@@ -45,6 +45,39 @@ function parseArgs() {
 let supabase = null;
 let supabaseRunId = null;
 
+// Client-aware brand detection. Populated at run start by loadBrandContext()
+// from clients.config. Falls back to empty patterns when --client-id isn't
+// passed, which means checkClientMention returns false for everything — the
+// honest answer when we don't know who the client is.
+let brandContext = {
+  patterns: [], // lowercased brand + aliases — matched whole-word in response text
+  domains: [], // lowercased client domains — substring-matched in citation URLs
+};
+
+async function loadBrandContext() {
+  if (!supabase || !cliArgs.clientId) {
+    console.log('  ⚠ No --client-id — client-mention detection will always return false');
+    return;
+  }
+  const { data, error } = await supabase
+    .from('clients').select('name, config').eq('id', cliArgs.clientId).maybeSingle();
+  if (error || !data) {
+    console.warn('  ⚠ Could not load brand context:', error?.message ?? 'client row missing');
+    return;
+  }
+  const cfg = data.config ?? {};
+  const brand = (data.name || cfg.brand || '').toString();
+  const aliases = Array.isArray(cfg.aliases) ? cfg.aliases : [];
+  const patterns = [brand, ...aliases]
+    .filter((p) => typeof p === 'string' && p.length > 0);
+  const domains = Array.isArray(cfg.clientDomains)
+    ? cfg.clientDomains
+    : (cfg.client?.domains ?? []);
+  brandContext = { patterns, domains };
+  console.log(`  Brand patterns: ${patterns.join(', ') || '(none)'}`);
+  console.log(`  Client domains: ${domains.join(', ') || '(none)'}`);
+}
+
 async function initSupabase() {
   if (!cliArgs.clientId || !cliArgs.libraryId) return;
   try {
@@ -278,21 +311,28 @@ async function checkPrompt(promptData, index, total) {
  * Check if client is mentioned in response or citations
  */
 function checkClientMention(responseText, citations) {
-  const lowerText = responseText.toLowerCase();
+  // Text match: whole-word, case-insensitive. Word boundaries avoid the
+  // nastiest false positive — "SAFe" matching the English word "safe" on
+  // every prompt about security. J.Crew-style patterns with a `.` in them
+  // still work because the regex escapes the dot.
+  if (responseText && matchesBrand(responseText, brandContext.patterns)) return true;
 
-  // Check for J.Crew mention in text
-  if (lowerText.includes('j.crew') || lowerText.includes('j crew') || lowerText.includes('jcrew')) {
-    return true;
+  // Citation match: substring on lowercased URL. Good enough for domain
+  // matching since subdomains/paths should still hit.
+  for (const url of citations ?? []) {
+    const lowerUrl = String(url).toLowerCase();
+    if (brandContext.domains.some((d) => d && lowerUrl.includes(d.toLowerCase()))) return true;
   }
 
-  // Check citations for client domains
-  for (const url of citations) {
-    const lowerUrl = url.toLowerCase();
-    if (lowerUrl.includes('jcrew.com') || lowerUrl.includes('j-crew')) {
-      return true;
-    }
-  }
+  return false;
+}
 
+function matchesBrand(text, patterns) {
+  for (const p of patterns) {
+    if (!p) continue;
+    const escaped = p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    if (new RegExp(`\\b${escaped}\\b`, 'i').test(text)) return true;
+  }
   return false;
 }
 
@@ -311,6 +351,10 @@ async function main() {
 
   // Initialize Supabase (if --client-id and --library-id provided)
   await initSupabase();
+
+  // Load brand patterns + client domains for mention detection. Needs a
+  // Supabase client, so runs after initSupabase.
+  await loadBrandContext();
 
   const startTime = Date.now();
 

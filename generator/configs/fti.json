@@ -4,6 +4,8 @@
     "domains": ["fticonsulting.com"],
     "industry": "management-consulting"
   },
+  "aliases": ["FTI Consulting", "FTI"],
+  "clientDomains": ["fticonsulting.com"],
   "competitors": [
     { "name": "McKinsey", "domains": ["mckinsey.com"] },
     { "name": "Deloitte", "domains": ["deloitte.com"] },

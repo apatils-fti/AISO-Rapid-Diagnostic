@@ -1,5 +1,7 @@
 {
   "brand": "ScaledAgile",
+  "aliases": ["Scaled Agile", "SAFe", "Scaled Agile Framework"],
+  "clientDomains": ["scaledagile.com", "scaledagileframework.com"],
   "competitor": "Atlassian",
   "archetype": "b2b",
   "targetPromptCount": 250,

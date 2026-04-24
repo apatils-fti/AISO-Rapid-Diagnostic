@@ -45,6 +45,34 @@ function parseArgs() {
 let supabase = null;
 let supabaseRunId = null;
 
+// Client-aware brand detection. Populated at run start by loadBrandContext()
+// from clients.config. See batch-claude-check.js for the full rationale.
+let brandContext = { patterns: [], domains: [] };
+
+async function loadBrandContext() {
+  if (!supabase || !cliArgs.clientId) {
+    console.log('  ⚠ No --client-id — client-mention detection will always return false');
+    return;
+  }
+  const { data, error } = await supabase
+    .from('clients').select('name, config').eq('id', cliArgs.clientId).maybeSingle();
+  if (error || !data) {
+    console.warn('  ⚠ Could not load brand context:', error?.message ?? 'client row missing');
+    return;
+  }
+  const cfg = data.config ?? {};
+  const brand = (data.name || cfg.brand || '').toString();
+  const aliases = Array.isArray(cfg.aliases) ? cfg.aliases : [];
+  const patterns = [brand, ...aliases]
+    .filter((p) => typeof p === 'string' && p.length > 0);
+  const domains = Array.isArray(cfg.clientDomains)
+    ? cfg.clientDomains
+    : (cfg.client?.domains ?? []);
+  brandContext = { patterns, domains };
+  console.log(`  Brand patterns: ${patterns.join(', ') || '(none)'}`);
+  console.log(`  Client domains: ${domains.join(', ') || '(none)'}`);
+}
+
 async function initSupabase() {
   if (!cliArgs.clientId || !cliArgs.libraryId) return;
   try {
@@ -273,21 +301,20 @@ async function checkPrompt(promptData, index, total) {
  * Check if client is mentioned in response or citations
  */
 function checkClientMention(responseText, citations) {
-  const lowerText = responseText.toLowerCase();
-
-  // Check for J.Crew mention in text
-  if (lowerText.includes('j.crew') || lowerText.includes('j crew') || lowerText.includes('jcrew')) {
-    return true;
+  if (responseText && matchesBrand(responseText, brandContext.patterns)) return true;
+  for (const url of citations ?? []) {
+    const lowerUrl = String(url).toLowerCase();
+    if (brandContext.domains.some((d) => d && lowerUrl.includes(d.toLowerCase()))) return true;
   }
+  return false;
+}
 
-  // Check citations for client domains
-  for (const url of citations) {
-    const lowerUrl = url.toLowerCase();
-    if (lowerUrl.includes('jcrew.com') || lowerUrl.includes('j-crew')) {
-      return true;
-    }
+function matchesBrand(text, patterns) {
+  for (const p of patterns) {
+    if (!p) continue;
+    const escaped = p.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    if (new RegExp(`\\b${escaped}\\b`, 'i').test(text)) return true;
   }
-
   return false;
 }
 
@@ -306,6 +333,7 @@ async function main() {
 
   // Initialize Supabase (if --client-id and --library-id provided)
   await initSupabase();
+  await loadBrandContext();
 
   const startTime = Date.now();
 
