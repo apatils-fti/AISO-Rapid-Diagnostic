@@ -557,6 +557,11 @@ export interface DbResult {
   cta_present: boolean;
   decision_criteria_winner: boolean;
   conversion_intent: string | null;
+  // Buyer-journey stage from the new 5-stage taxonomy (learning, discovery,
+  // evaluation, validation, acquisition). Populated by the batch runners
+  // from prompt metadata. The Intent filter on the dashboard reads this
+  // column; conversion_intent above is the deprecated three-level rating.
+  intent_stage: string | null;
   competitor_mentions: Record<string, number> | null;
   created_at: string;
 }
@@ -602,8 +607,12 @@ export async function getAllResultsForClient(
       if (filters?.platform && filters.platform !== 'all') query = query.eq('platform', filters.platform);
       if (filters?.sentiment && filters.sentiment !== 'all') query = query.eq('sentiment', filters.sentiment);
       if (filters?.isotope && filters.isotope !== 'all') query = query.eq('isotope', filters.isotope);
+      // QueryFilters field is still named conversionIntent for now (URL param
+      // is `intent`), but the column we filter is `intent_stage` — the
+      // populated one. conversion_intent is null for any client that hasn't
+      // had enrich-supabase-metrics.js run against it (i.e. all of them).
       if (filters?.conversionIntent && filters.conversionIntent !== 'all') {
-        query = query.eq('conversion_intent', filters.conversionIntent);
+        query = query.eq('intent_stage', filters.conversionIntent);
       }
       return query;
     });
@@ -1279,8 +1288,10 @@ export async function getTopicDetail(
     if (filters?.platform && filters.platform !== 'all') query = query.eq('platform', filters.platform);
     if (filters?.sentiment && filters.sentiment !== 'all') query = query.eq('sentiment', filters.sentiment);
     if (filters?.isotope && filters.isotope !== 'all') query = query.eq('isotope', filters.isotope);
+    // See getAllResultsForClient: filter on intent_stage, not the deprecated
+    // conversion_intent column.
     if (filters?.conversionIntent && filters.conversionIntent !== 'all') {
-      query = query.eq('conversion_intent', filters.conversionIntent);
+      query = query.eq('intent_stage', filters.conversionIntent);
     }
     return query;
   });
@@ -1553,7 +1564,9 @@ export async function getPromptResults(
       if (topicFilter) query = query.eq('topic_id', topicFilter);
       if (isotopeFilter) query = query.eq('isotope', isotopeFilter);
       if (sentimentFilter && sentimentFilter !== 'all') query = query.eq('sentiment', sentimentFilter);
-      if (conversionIntentFilter && conversionIntentFilter !== 'all') query = query.eq('conversion_intent', conversionIntentFilter);
+      // intent_stage column (new 5-stage taxonomy), not deprecated
+      // conversion_intent. See getAllResultsForClient for the full note.
+      if (conversionIntentFilter && conversionIntentFilter !== 'all') query = query.eq('intent_stage', conversionIntentFilter);
       return query;
     });
     if (data.length === 0) return [];

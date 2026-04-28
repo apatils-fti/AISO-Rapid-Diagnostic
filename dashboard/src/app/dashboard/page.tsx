@@ -28,6 +28,7 @@ import {
   getAcquisitionScore,
   getRecommendationScore,
   getWeightsForArchetype,
+  getNormalizedIsotope,
 } from '@/lib/metrics';
 import type { EnrichedResult } from '@/lib/metrics';
 import { formatPercent } from '@/lib/utils';
@@ -73,7 +74,9 @@ async function getEnrichedResults(clientId: string, filters: QueryFilters): Prom
     if (filters.platform && filters.platform !== 'all') query = query.eq('platform', filters.platform);
     if (filters.sentiment && filters.sentiment !== 'all') query = query.eq('sentiment', filters.sentiment);
     if (filters.isotope && filters.isotope !== 'all') query = query.eq('isotope', filters.isotope);
-    if (filters.conversionIntent && filters.conversionIntent !== 'all') query = query.eq('conversion_intent', filters.conversionIntent);
+    // intent_stage column (new 5-stage taxonomy: learning/discovery/
+    // evaluation/validation/acquisition). conversion_intent is deprecated.
+    if (filters.conversionIntent && filters.conversionIntent !== 'all') query = query.eq('intent_stage', filters.conversionIntent);
     return query;
   });
 }
@@ -188,7 +191,15 @@ async function DashboardContent({ clientId, filters }: { clientId: string; filte
 
   const visibilitySamples = pickOnePerPlatform(results.filter(r => r.client_mentioned));
   const trustSamples = pickOnePerPlatform(results.filter(r => r.sentiment === 'positive' || r.sentiment === 'hedged'));
-  const acquisitionSamples = pickOnePerPlatform(results.filter(r => r.isotope === 'commercial' || r.isotope === 'specific'));
+  // High-intent isotopes for the Acquisition pillar's sample preview.
+  // Routed through getNormalizedIsotope so both new-taxonomy rows
+  // (declarative/constrained) and any leftover old-taxonomy rows
+  // (commercial/specific) qualify — same logic as the score computation
+  // in metrics.ts:getAcquisitionScore.
+  const acquisitionSamples = pickOnePerPlatform(results.filter(r => {
+    const iso = getNormalizedIsotope(r);
+    return iso === 'declarative' || iso === 'constrained';
+  }));
   const recommendationSamples = pickOnePerPlatform(results.filter(r => r.recommendation_strength === 'strong' || r.recommendation_strength === 'qualified'));
 
   // Formula definitions — plain English metric definitions

@@ -1,7 +1,7 @@
 'use client';
 
 import { InfoTooltip } from '@/components/shared';
-import { ISOTOPE_TYPES, ISOTOPE_LABELS, ISOTOPE_DESCRIPTIONS } from '@/lib/taxonomy';
+import { ISOTOPE_TYPES, ISOTOPE_LABELS, ISOTOPE_SHORT_LABELS, ISOTOPE_DESCRIPTIONS } from '@/lib/taxonomy';
 import type { HeatmapMode } from './IsotopeHeatmap';
 
 interface IsotopeLegendProps {
@@ -70,7 +70,7 @@ export function IsotopeHeaders() {
           <div key={isotope} className="flex-1 text-center">
             <div className="flex items-center justify-center gap-1">
               <span className="text-xs font-medium text-[#9CA3AF] uppercase tracking-wider">
-                {ISOTOPE_LABELS[isotope].slice(0, 4)}
+                {ISOTOPE_SHORT_LABELS[isotope]}
               </span>
               <InfoTooltip content={ISOTOPE_DESCRIPTIONS[isotope]} />
             </div>

@@ -23,26 +23,35 @@ const FILTER_GROUPS: FilterGroup[] = [
     ],
   },
   {
+    // New 5-isotope taxonomy. Old values (informational/commercial/persona/
+    // specific/conversational) no longer match anything in the results
+    // table. lib/metrics.ts normalises legacy rows for aggregation but the
+    // filter bar surfaces only the active vocabulary.
     param: 'isotope',
     label: 'Isotope',
     options: [
       { value: 'all', label: 'All' },
-      { value: 'informational', label: 'Informational' },
-      { value: 'commercial', label: 'Commercial' },
+      { value: 'declarative', label: 'Declarative' },
       { value: 'comparative', label: 'Comparative' },
-      { value: 'persona', label: 'Persona' },
-      { value: 'specific', label: 'Specific' },
-      { value: 'conversational', label: 'Conversational' },
+      { value: 'situated', label: 'Situated' },
+      { value: 'constrained', label: 'Constrained' },
+      { value: 'adversarial', label: 'Adversarial' },
     ],
   },
   {
+    // Intent now reflects buyer-journey stage from `intent_stage` column,
+    // not the old `conversion_intent` (high/medium/low) field — that
+    // column is null for ScaledAgile and any future client. URL param
+    // stays `intent=` for backward compatibility with bookmarks.
     param: 'intent',
     label: 'Intent',
     options: [
       { value: 'all', label: 'All' },
-      { value: 'high', label: 'High' },
-      { value: 'medium', label: 'Medium' },
-      { value: 'low', label: 'Low' },
+      { value: 'learning', label: 'Learning' },
+      { value: 'discovery', label: 'Discovery' },
+      { value: 'evaluation', label: 'Evaluation' },
+      { value: 'validation', label: 'Validation' },
+      { value: 'acquisition', label: 'Acquisition' },
     ],
   },
 ];

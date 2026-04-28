@@ -15,7 +15,13 @@ export interface ClientConfig {
 }
 
 // Prompt Library Types
-export type IsotopeType = 'informational' | 'commercial' | 'comparative' | 'persona' | 'specific' | 'conversational';
+//
+// New 5-isotope taxonomy (active). The old 6-isotope union
+// ('informational' | 'commercial' | 'persona' | 'specific' | 'conversational' +
+// 'comparative') is no longer produced by the generator. lib/metrics.ts
+// keeps a LEGACY_ISOTOPE_MAP that normalises pre-migration FTI/J.Crew rows
+// to the new vocabulary so historical aggregates still render.
+export type IsotopeType = 'declarative' | 'comparative' | 'situated' | 'constrained' | 'adversarial';
 
 export interface Prompt {
   id: string;

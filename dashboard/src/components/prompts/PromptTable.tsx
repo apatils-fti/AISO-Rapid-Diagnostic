@@ -109,7 +109,10 @@ export function PromptTable({ serverData, clientName, clientDomains }: PromptTab
         promptText: row.promptText || `(prompt text unavailable: ${row.promptId})`,
         topicId: row.topicId,
         topicName: row.topicName,
-        isotope: (row.isotope || 'informational') as IsotopeType,
+        // Fallback to 'declarative' when the row has no isotope. Was
+        // 'informational' under the old 6-isotope taxonomy; declarative is
+        // the new-taxonomy equivalent (the default "what is X?" bucket).
+        isotope: (row.isotope || 'declarative') as IsotopeType,
         runs,
         runsWithCitation,
         runsWithMention,
