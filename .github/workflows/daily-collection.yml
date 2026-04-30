@@ -1,30 +1,46 @@
 name: Daily Collection
 
-# Runs the AISO collection pipeline nightly against the FTI client config.
-# Depends on a running Next.js dev server for /api/claude and /api/gemini —
-# the server is started in-workflow and killed at the end. This will go
-# away once the API routes are refactored to be callable directly (see
-# TODOS.md: "Refactor API routes to remove localhost dependency").
+# Runs the AISO collection pipeline nightly against the ScaledAgile client.
+# Each platform runs as its own parallel job, then a single enrich job
+# fans-in once collection finishes. Cuts wall-clock from ~196m (serial) to
+# ~110m (bounded by the slowest platform: Claude).
+#
+# Claude and Gemini still depend on a Next.js dev server because their
+# batch runners hit /api/claude and /api/gemini. Each of those jobs starts
+# its own server (jobs don't share filesystem/network state). Perplexity
+# and ChatGPT call their APIs directly. See TODOS.md
+# ("Refactor API routes to remove localhost dependency").
 
 on:
   schedule:
     # 2am UTC every day — off-peak for most LLM APIs
     - cron: '0 2 * * *'
   workflow_dispatch:
-    # Manual trigger from the Actions tab for testing.
-    # Default is a 10-prompt smoke test so manual runs don't spend
-    # money on a full 250-prompt collection unless explicitly asked.
+    # Manual trigger from the Actions tab. Default 10 = smoke test so manual
+    # clicks don't blow through API budget. Pass 0 for a full run.
     inputs:
       prompt_limit:
         description: 'Max prompts per platform (0 = full run)'
         required: false
         default: '10'
 
+env:
+  # Hard-coded to ScaledAgile. Multi-client = future sprint (matrix or
+  # per-client workflow file).
+  CLIENT_ID: 1aa39aab-4a3b-4af8-b7cc-484cc6ee578c
+  LIBRARY_ID: 2950d65b-5a23-40da-8f65-b150a359d767
+  PROMPTS_FILE: top-scaledagile-prompts.json
+
 jobs:
-  collect:
-    name: Run collection pipeline
+  # ---------------------------------------------------------------------------
+  # Collection jobs — run in parallel, one per platform
+  # ---------------------------------------------------------------------------
+
+  collect-claude:
+    name: Collect — Claude
     runs-on: ubuntu-latest
-    timeout-minutes: 240
+    # 226 prompts × ~25s = ~94m raw; +overhead → 110m to leave headroom.
+    timeout-minutes: 110
 
     steps:
       - name: Checkout repo
@@ -39,21 +55,105 @@ jobs:
 
       - name: Install dashboard dependencies
         working-directory: dashboard
-        # Using npm install (not npm ci) because the committed
-        # package-lock.json was generated on Windows and contains
-        # platform-specific optional deps (@emnapi/*) that don't
+        # npm install (not ci) — package-lock.json was generated on Windows
+        # and contains platform-specific optional deps (@emnapi/*) that don't
         # resolve cleanly on ubuntu-latest under npm ci's strict mode.
-        # npm install tolerates the drift.
         run: npm install
 
       - name: Start Next.js server (background)
         working-directory: dashboard
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          npx next dev > next.log 2>&1 &
+          echo $! > next.pid
+          echo "Waiting for Next.js to come up on port 3000..."
+          for i in $(seq 1 60); do
+            if curl -fsS http://localhost:3000 > /dev/null 2>&1; then
+              echo "Next.js is up (took ${i}s)"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "::error::Next.js did not start within 60 seconds"
+          echo "---- next.log ----"
+          cat next.log || true
+          exit 1
+
+      - name: Run Claude batch
+        working-directory: dashboard
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            LIMIT_ARG=""
+            echo "Running with limit: unlimited (scheduled run)"
+          else
+            LIMIT="${{ github.event.inputs.prompt_limit }}"
+            LIMIT="${LIMIT:-10}"
+            if [ "$LIMIT" = "0" ]; then
+              LIMIT_ARG=""
+              echo "Running with limit: unlimited"
+            else
+              LIMIT_ARG="--limit $LIMIT"
+              echo "Running with limit: $LIMIT"
+            fi
+          fi
+          node scripts/batch-claude-check.js \
+            --prompts "$PROMPTS_FILE" \
+            --client-id "$CLIENT_ID" \
+            --library-id "$LIBRARY_ID" \
+            $LIMIT_ARG
+
+      - name: Stop Next.js server
+        if: always()
+        working-directory: dashboard
+        run: |
+          if [ -f next.pid ]; then
+            kill "$(cat next.pid)" 2>/dev/null || true
+            rm -f next.pid
+          fi
+
+      - name: Upload Next.js log (on failure)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: next-server-log-claude
+          path: dashboard/next.log
+          if-no-files-found: ignore
+          retention-days: 7
+
+  collect-gemini:
+    name: Collect — Gemini
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: dashboard/package-lock.json
+
+      - name: Install dashboard dependencies
+        working-directory: dashboard
+        run: npm install
+
+      - name: Start Next.js server (background)
+        working-directory: dashboard
+        env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          # gemini/route.ts reads NEXT_PUBLIC_GEMINI_API_KEY; aliased
-          # from the same secret. Remove when route is refactored to
-          # drop the NEXT_PUBLIC_ prefix.
+          # gemini/route.ts reads NEXT_PUBLIC_GEMINI_API_KEY; aliased from
+          # the same secret. Remove when the route drops the NEXT_PUBLIC_
+          # prefix.
           NEXT_PUBLIC_GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
@@ -73,23 +173,14 @@ jobs:
           cat next.log || true
           exit 1
 
-      - name: Run collection pipeline
+      - name: Run Gemini batch
         working-directory: dashboard
         env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           NEXT_PUBLIC_GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          # Perplexity and OpenAI runners call their APIs directly (no
-          # localhost route), so these only need to be present for the
-          # "Run collection pipeline" step — not the Next.js startup step.
-          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: |
-          # Scheduled (nightly) runs do a full pass over all prompts.
-          # workflow_dispatch defaults to a 10-prompt smoke test (override
-          # via the prompt_limit input; 0 means "no limit").
           if [ "${{ github.event_name }}" = "schedule" ]; then
             LIMIT_ARG=""
             echo "Running with limit: unlimited (scheduled run)"
@@ -104,41 +195,11 @@ jobs:
               echo "Running with limit: $LIMIT"
             fi
           fi
-
-          # Retry loop: up to 3 attempts. Attempt 1 runs fresh; attempts
-          # 2+ pass --resume so onboard-client.js skips already-completed
-          # steps. State lives at dashboard/scripts/.onboard-state-*.json
-          # on the same runner, so the file persists across iterations of
-          # this for-loop (but NOT across workflow runs — that'd need
-          # artifact upload/download).
-          PIPELINE_OK=0
-          for ATTEMPT in 1 2 3; do
-            if [ "$ATTEMPT" = "1" ]; then
-              RESUME_ARG=""
-              echo "::group::Pipeline attempt $ATTEMPT/3 (fresh)"
-            else
-              RESUME_ARG="--resume"
-              echo "::warning::Pipeline attempt $ATTEMPT/3 (resuming from last saved state)"
-              echo "::group::Pipeline attempt $ATTEMPT/3 (resume)"
-            fi
-
-            if node scripts/onboard-client.js \
-                --config configs/scaledagile.json \
-                --prompts top-scaledagile-prompts.json \
-                --skip-generate $LIMIT_ARG $RESUME_ARG; then
-              echo "::endgroup::"
-              echo "Pipeline succeeded on attempt $ATTEMPT"
-              PIPELINE_OK=1
-              break
-            fi
-            echo "::endgroup::"
-            echo "::warning::Pipeline attempt $ATTEMPT/3 failed, will retry with --resume"
-          done
-
-          if [ "$PIPELINE_OK" != "1" ]; then
-            echo "::error::Pipeline failed after 3 attempts"
-            exit 1
-          fi
+          node scripts/batch-gemini-check.js \
+            --prompts "$PROMPTS_FILE" \
+            --client-id "$CLIENT_ID" \
+            --library-id "$LIBRARY_ID" \
+            $LIMIT_ARG
 
       - name: Stop Next.js server
         if: always()
@@ -153,7 +214,150 @@ jobs:
         if: failure()
         uses: actions/upload-artifact@v4
         with:
-          name: next-server-log
+          name: next-server-log-gemini
           path: dashboard/next.log
           if-no-files-found: ignore
           retention-days: 7
+
+  collect-perplexity:
+    name: Collect — Perplexity
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: dashboard/package-lock.json
+
+      - name: Install dashboard dependencies
+        working-directory: dashboard
+        run: npm install
+
+      - name: Run Perplexity batch
+        working-directory: dashboard
+        env:
+          PERPLEXITY_API_KEY: ${{ secrets.PERPLEXITY_API_KEY }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            LIMIT_ARG=""
+            echo "Running with limit: unlimited (scheduled run)"
+          else
+            LIMIT="${{ github.event.inputs.prompt_limit }}"
+            LIMIT="${LIMIT:-10}"
+            if [ "$LIMIT" = "0" ]; then
+              LIMIT_ARG=""
+              echo "Running with limit: unlimited"
+            else
+              LIMIT_ARG="--limit $LIMIT"
+              echo "Running with limit: $LIMIT"
+            fi
+          fi
+          node scripts/batch-perplexity-check.js \
+            --prompts "$PROMPTS_FILE" \
+            --client-id "$CLIENT_ID" \
+            --library-id "$LIBRARY_ID" \
+            $LIMIT_ARG
+
+  collect-chatgpt:
+    name: Collect — ChatGPT
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: dashboard/package-lock.json
+
+      - name: Install dashboard dependencies
+        working-directory: dashboard
+        run: npm install
+
+      - name: Run ChatGPT batch
+        working-directory: dashboard
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            LIMIT_ARG=""
+            echo "Running with limit: unlimited (scheduled run)"
+          else
+            LIMIT="${{ github.event.inputs.prompt_limit }}"
+            LIMIT="${LIMIT:-10}"
+            if [ "$LIMIT" = "0" ]; then
+              LIMIT_ARG=""
+              echo "Running with limit: unlimited"
+            else
+              LIMIT_ARG="--limit $LIMIT"
+              echo "Running with limit: $LIMIT"
+            fi
+          fi
+          node scripts/batch-chatgpt-check.js \
+            --prompts "$PROMPTS_FILE" \
+            --client-id "$CLIENT_ID" \
+            --library-id "$LIBRARY_ID" \
+            $LIMIT_ARG
+
+  # ---------------------------------------------------------------------------
+  # Enrich job — fans in after all 4 platforms finish
+  # ---------------------------------------------------------------------------
+
+  enrich:
+    name: Enrich results
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    needs: [collect-claude, collect-gemini, collect-perplexity, collect-chatgpt]
+    # Run even if one platform failed — the platforms that did succeed still
+    # need their text enriched. Skip only on workflow cancellation.
+    if: ${{ !cancelled() }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: dashboard/package-lock.json
+
+      - name: Install dashboard dependencies
+        working-directory: dashboard
+        run: npm install
+
+      - name: VADER sentiment enrichment
+        working-directory: dashboard
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scripts/enrich-sentiment-vader.js --client-id "$CLIENT_ID"
+
+      - name: Competitor mentions enrichment
+        working-directory: dashboard
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scripts/enrich-competitor-mentions.js --client-id "$CLIENT_ID"
+
+      - name: Citation source enrichment
+        working-directory: dashboard
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scripts/enrich-citation-sources.js --client-id "$CLIENT_ID"
