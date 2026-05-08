@@ -376,6 +376,32 @@ export async function getClients(): Promise<DbClient[]> {
   } catch { return []; }
 }
 
+export interface DbLibrary {
+  id: string;
+  name: string;
+  total_count: number | null;
+}
+
+/**
+ * Distinct prompt libraries belonging to this client. Drives the library
+ * pill on the filter bar — only rendered when a client has more than one.
+ * Soft-fails to [] when Supabase is unavailable.
+ */
+export async function getAvailableLibraries(clientId: string): Promise<DbLibrary[]> {
+  const sb = reader();
+  if (!sb) return [];
+
+  try {
+    const { data, error } = await sb
+      .from('prompt_libraries')
+      .select('id, name, total_count')
+      .eq('client_id', clientId)
+      .order('name', { ascending: true });
+    if (error) { console.warn('[db] getAvailableLibraries error:', error.message); return []; }
+    return (data ?? []) as DbLibrary[];
+  } catch { return []; }
+}
+
 export async function getRuns(clientId: string): Promise<any[]> {
   const sb = reader();
   if (!sb) return [];
@@ -572,6 +598,10 @@ export interface QueryFilters {
   sentiment?: string;
   isotope?: string;
   conversionIntent?: string;
+  // Scope to a single prompt library when the client has more than one.
+  // Applied at the runs layer (`runs.library_id`); results inherit the
+  // scope through the run_id join. Omit for "all libraries".
+  library_id?: string;
   date_from?: string;   // 'YYYY-MM-DD' inclusive lower bound on runs.run_date
   date_to?: string;     // 'YYYY-MM-DD' inclusive upper bound on runs.run_date
 }
@@ -588,11 +618,12 @@ export async function getAllResultsForClient(
   if (!sb) return [];
 
   try {
-    // Get run IDs for this client, scoped by date range if provided.
+    // Get run IDs for this client, scoped by date range and library if provided.
     let runsQuery = sb
       .from('runs')
       .select('id')
       .eq('client_id', clientId);
+    if (filters?.library_id) runsQuery = runsQuery.eq('library_id', filters.library_id);
     if (filters?.date_from) runsQuery = runsQuery.gte('run_date', filters.date_from);
     if (filters?.date_to) runsQuery = runsQuery.lte('run_date', filters.date_to);
     const { data: runs, error: runsErr } = await runsQuery;
@@ -1268,8 +1299,9 @@ export async function getTopicDetail(
   const sb = reader();
   if (!sb) return null;
 
-  // Step 1: find this client's run IDs, optionally date-scoped.
+  // Step 1: find this client's run IDs, optionally library- and date-scoped.
   let runsQuery = sb.from('runs').select('id').eq('client_id', clientId);
+  if (filters?.library_id) runsQuery = runsQuery.eq('library_id', filters.library_id);
   if (filters?.date_from) runsQuery = runsQuery.gte('run_date', filters.date_from);
   if (filters?.date_to) runsQuery = runsQuery.lte('run_date', filters.date_to);
   const { data: runs, error: runsErr } = await runsQuery;
@@ -1538,15 +1570,17 @@ export async function getPromptResults(
   sentimentFilter?: string,
   conversionIntentFilter?: string,
   dateFrom?: string,
-  dateTo?: string
+  dateTo?: string,
+  libraryId?: string
 ): Promise<PromptResultRow[]> {
   const sb = reader();
   if (!sb) return [];
 
   try {
-    // Get run IDs, scoped by date range to match the global date filter on
-    // every other page query.
+    // Get run IDs, scoped by date range and library to match the global
+    // filters on every other page query.
     let runsQuery = sb.from('runs').select('id').eq('client_id', clientId);
+    if (libraryId) runsQuery = runsQuery.eq('library_id', libraryId);
     if (dateFrom) runsQuery = runsQuery.gte('run_date', dateFrom);
     if (dateTo) runsQuery = runsQuery.lte('run_date', dateTo);
     const { data: runs } = await runsQuery;
@@ -1627,16 +1661,18 @@ export async function getPromptResults(
  * has no runs yet. Used by layout chrome (header, sidebar) to display the
  * "as of" date next to the client switcher.
  */
-export async function getLatestRunDate(clientId: string): Promise<string | null> {
+export async function getLatestRunDate(clientId: string, libraryId?: string): Promise<string | null> {
   const sb = reader();
   if (!sb) return null;
 
   try {
-    const { data, error } = await sb
+    let query = sb
       .from('runs')
       .select('run_date')
       .eq('client_id', clientId)
-      .not('run_date', 'is', null)
+      .not('run_date', 'is', null);
+    if (libraryId) query = query.eq('library_id', libraryId);
+    const { data, error } = await query
       .order('run_date', { ascending: false })
       .limit(1)
       .maybeSingle();
@@ -1645,17 +1681,18 @@ export async function getLatestRunDate(clientId: string): Promise<string | null>
   } catch { return null; }
 }
 
-export async function getAvailableRunDates(clientId: string): Promise<string[]> {
+export async function getAvailableRunDates(clientId: string, libraryId?: string): Promise<string[]> {
   const sb = reader();
   if (!sb) return [];
 
   try {
-    const { data, error } = await sb
+    let query = sb
       .from('runs')
       .select('run_date')
       .eq('client_id', clientId)
-      .not('run_date', 'is', null)
-      .order('run_date', { ascending: false });
+      .not('run_date', 'is', null);
+    if (libraryId) query = query.eq('library_id', libraryId);
+    const { data, error } = await query.order('run_date', { ascending: false });
 
     if (error || !data) return [];
     const unique = [...new Set((data as Array<{ run_date: string }>).map((r) => r.run_date))];
@@ -1680,7 +1717,7 @@ export interface DailyTrendPoint {
  */
 export async function getDailyTrends(
   clientId: string,
-  filters?: { date_from?: string; date_to?: string; days?: number },
+  filters?: { date_from?: string; date_to?: string; days?: number; library_id?: string },
 ): Promise<DailyTrendPoint[]> {
   const sb = reader();
   if (!sb) return [];
@@ -1692,6 +1729,7 @@ export async function getDailyTrends(
       .eq('client_id', clientId)
       .not('run_date', 'is', null);
 
+    if (filters?.library_id) query = query.eq('library_id', filters.library_id);
     if (filters?.date_from) query = query.gte('run_date', filters.date_from);
     if (filters?.date_to) query = query.lte('run_date', filters.date_to);
     if (!filters?.date_from && !filters?.date_to) {
@@ -1766,23 +1804,25 @@ export interface WeeklySummary {
  * a delta from a single day. The dashboard page gates WeeklySummary card
  * rendering on this null check.
  */
-export async function getWeeklySummary(clientId: string): Promise<WeeklySummary | null> {
+export async function getWeeklySummary(clientId: string, libraryId?: string): Promise<WeeklySummary | null> {
   const sb = reader();
   if (!sb) return null;
 
   try {
-    const dates = await getAvailableRunDates(clientId);
+    const dates = await getAvailableRunDates(clientId, libraryId);
     if (dates.length < 2) return null;
 
     const recent = dates.slice(0, 7);
     const endDate = recent[0]!;
     const startDate = recent[recent.length - 1]!;
 
-    const { data: runs, error: runsErr } = await sb
+    let runsQuery = sb
       .from('runs')
       .select('id, run_date, platform, mention_rate, prompt_count')
       .eq('client_id', clientId)
       .in('run_date', [startDate, endDate]);
+    if (libraryId) runsQuery = runsQuery.eq('library_id', libraryId);
+    const { data: runs, error: runsErr } = await runsQuery;
     if (runsErr || !runs || runs.length === 0) return null;
 
     type Row = { id: string; run_date: string; platform: string; mention_rate: number; prompt_count: number };

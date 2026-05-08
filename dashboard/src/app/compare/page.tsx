@@ -2,19 +2,20 @@ import { Suspense } from 'react';
 import { PageContainer } from '@/components/layout';
 import { PlatformComparison } from '@/components/compare/PlatformComparison';
 import { TopicComparisonTable } from '@/components/compare/TopicComparisonTable';
-import { PlatformDataProvider } from '@/components/shared';
-import { getPlatformComparison, getTopicPlatformStats, getClients, getLatestRunDate } from '@/lib/db';
+import { PlatformDataProvider, LibraryFilter } from '@/components/shared';
+import { getPlatformComparison, getTopicPlatformStats, getClients, getAvailableLibraries, getLatestRunDate, type DbLibrary } from '@/lib/db';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
 
 interface ComparePageProps {
-  searchParams: Promise<{ client?: string }>;
+  searchParams: Promise<{ client?: string; library?: string }>;
 }
 
-async function CompareContent({ clientId }: { clientId: string }) {
+async function CompareContent({ clientId, libraryId, libraries }: { clientId: string; libraryId?: string; libraries: DbLibrary[] }) {
+  const filters = libraryId ? { library_id: libraryId } : undefined;
   const [platformStats, topicStats] = await Promise.all([
-    getPlatformComparison(clientId),
-    getTopicPlatformStats(clientId),
+    getPlatformComparison(clientId, filters),
+    getTopicPlatformStats(clientId, filters),
   ]);
 
   if (platformStats.length === 0) {
@@ -30,6 +31,7 @@ async function CompareContent({ clientId }: { clientId: string }) {
 
   return (
     <div className="space-y-6">
+      <LibraryFilter libraries={libraries} />
       <PlatformComparison platformData={platformStats} />
       <TopicComparisonTable topicData={topicStats} platformData={platformStats} />
     </div>
@@ -39,9 +41,11 @@ async function CompareContent({ clientId }: { clientId: string }) {
 export default async function ComparePage({ searchParams }: ComparePageProps) {
   const params = await searchParams;
   const clientId = params.client || DEFAULT_CLIENT_ID;
-  const [clients, runDate] = await Promise.all([
+  const libraryId = params.library;
+  const [clients, runDate, libraries] = await Promise.all([
     getClients(),
-    getLatestRunDate(clientId),
+    getLatestRunDate(clientId, libraryId),
+    getAvailableLibraries(clientId),
   ]);
 
   return (
@@ -61,7 +65,7 @@ export default async function ComparePage({ searchParams }: ComparePageProps) {
             </div>
           }
         >
-          <CompareContent clientId={clientId} />
+          <CompareContent clientId={clientId} libraryId={libraryId} libraries={libraries} />
         </Suspense>
       </PlatformDataProvider>
     </PageContainer>

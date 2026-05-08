@@ -1,16 +1,16 @@
 import { Suspense } from 'react';
 import { PageContainer } from '@/components/layout';
 import { ShareOfVoice, TopicCompetition, CompetitorCard } from '@/components/competitors';
-import { getCompetitorOverview, getTopicIsotopeStats, getClients, getLatestRunDate, type QueryFilters } from '@/lib/db';
-import { EnrichmentFilters } from '@/components/shared';
+import { getCompetitorOverview, getTopicIsotopeStats, getClients, getAvailableLibraries, getLatestRunDate, type QueryFilters, type DbLibrary } from '@/lib/db';
+import { EnrichmentFilters, LibraryFilter } from '@/components/shared';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
 
 interface CompetitorsPageProps {
-  searchParams: Promise<{ client?: string; platform?: string; sentiment?: string; isotope?: string; intent?: string }>;
+  searchParams: Promise<{ client?: string; platform?: string; sentiment?: string; isotope?: string; intent?: string; library?: string }>;
 }
 
-async function CompetitorsContent({ clientId, filters, clientName }: { clientId: string; filters: QueryFilters; clientName?: string }) {
+async function CompetitorsContent({ clientId, filters, clientName, libraries }: { clientId: string; filters: QueryFilters; clientName?: string; libraries: DbLibrary[] }) {
   const [competitors, topicStats] = await Promise.all([
     getCompetitorOverview(clientId, filters),
     getTopicIsotopeStats(clientId, filters),
@@ -29,6 +29,7 @@ async function CompetitorsContent({ clientId, filters, clientName }: { clientId:
 
   return (
     <div className="space-y-6">
+      <LibraryFilter libraries={libraries} />
       <EnrichmentFilters />
       <ShareOfVoice serverData={competitors} />
       <TopicCompetition serverData={competitors} serverTopicData={topicStats} />
@@ -54,10 +55,12 @@ export default async function CompetitorsPage({ searchParams }: CompetitorsPageP
     sentiment: params.sentiment,
     isotope: params.isotope,
     conversionIntent: params.intent,
+    library_id: params.library,
   };
-  const [clients, runDate] = await Promise.all([
+  const [clients, runDate, libraries] = await Promise.all([
     getClients(),
-    getLatestRunDate(clientId),
+    getLatestRunDate(clientId, filters.library_id),
+    getAvailableLibraries(clientId),
   ]);
 
   return (
@@ -84,6 +87,7 @@ export default async function CompetitorsPage({ searchParams }: CompetitorsPageP
           clientId={clientId}
           filters={filters}
           clientName={clients.find(c => c.id === clientId)?.name}
+          libraries={libraries}
         />
       </Suspense>
     </PageContainer>

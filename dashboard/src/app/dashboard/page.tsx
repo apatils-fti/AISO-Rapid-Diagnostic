@@ -14,6 +14,7 @@ import {
   getPlatformComparison,
   getClients,
   getAvailableRunDates,
+  getAvailableLibraries,
   getLatestRunDate,
   getWeeklySummary,
   getCompetitorOverview,
@@ -32,7 +33,7 @@ import {
 } from '@/lib/metrics';
 import type { EnrichedResult } from '@/lib/metrics';
 import { formatPercent } from '@/lib/utils';
-import { EnrichmentFilters, PlatformDataProvider, DateRangeFilter } from '@/components/shared';
+import { EnrichmentFilters, PlatformDataProvider, DateRangeFilter, LibraryFilter } from '@/components/shared';
 import { MetricsFilter } from '../metrics/metrics-filter';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
@@ -44,6 +45,7 @@ interface DashboardPageProps {
     sentiment?: string;
     isotope?: string;
     intent?: string;
+    library?: string;
     date_from?: string;
     date_to?: string;
   }>;
@@ -53,11 +55,12 @@ async function getEnrichedResults(clientId: string, filters: QueryFilters): Prom
   const sb = supabaseService;
   if (!sb) return [];
 
-  // Get run IDs for this client, scoped by date range if provided.
+  // Get run IDs for this client, scoped by date range and library if provided.
   let runsQuery = sb
     .from('runs')
     .select('id')
     .eq('client_id', clientId);
+  if (filters.library_id) runsQuery = runsQuery.eq('library_id', filters.library_id);
   if (filters.date_from) runsQuery = runsQuery.gte('run_date', filters.date_from);
   if (filters.date_to) runsQuery = runsQuery.lte('run_date', filters.date_to);
   const { data: runs, error: runsError } = await runsQuery;
@@ -85,12 +88,13 @@ async function getAvailablePlatforms(clientId: string, filters: QueryFilters): P
   const sb = supabaseService;
   if (!sb) return [];
 
-  // Scope to the same date window as the rest of the page so the platform
-  // pills don't lie about coverage when a date filter is active.
+  // Scope to the same date + library window as the rest of the page so the
+  // platform pills don't lie about coverage when filters are active.
   let runsQuery = sb
     .from('runs')
     .select('id')
     .eq('client_id', clientId);
+  if (filters.library_id) runsQuery = runsQuery.eq('library_id', filters.library_id);
   if (filters.date_from) runsQuery = runsQuery.gte('run_date', filters.date_from);
   if (filters.date_to) runsQuery = runsQuery.lte('run_date', filters.date_to);
   const { data: runs } = await runsQuery;
@@ -111,15 +115,15 @@ async function getAvailablePlatforms(clientId: string, filters: QueryFilters): P
   return [...new Set(rows.map((r) => r.platform))].sort();
 }
 
-async function DashboardContent({ clientId, filters }: { clientId: string; filters: QueryFilters }) {
+async function DashboardContent({ clientId, filters, libraries }: { clientId: string; filters: QueryFilters; libraries: Array<{ id: string; name: string }> }) {
   const [overview, platformStats, results, platforms, clients, availableDates, weeklySummary, competitorRows, topGaps] = await Promise.all([
     getOverviewStats(clientId, filters),
     getPlatformComparison(clientId, filters),
     getEnrichedResults(clientId, filters),
     getAvailablePlatforms(clientId, filters),
     getClients(),
-    getAvailableRunDates(clientId),
-    getWeeklySummary(clientId),
+    getAvailableRunDates(clientId, filters.library_id),
+    getWeeklySummary(clientId, filters.library_id),
     getCompetitorOverview(clientId, filters),
     getTopGaps(clientId, filters),
   ]);
@@ -227,6 +231,7 @@ Wins Comparisons = comparative prompts where brand gets final recommendation / t
     <div className="space-y-6">
       {/* Filters */}
       <div className="space-y-3">
+        <LibraryFilter libraries={libraries} />
         <MetricsFilter platforms={platforms} currentPlatform={platform} />
         <EnrichmentFilters />
         <DateRangeFilter
@@ -357,13 +362,15 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
     sentiment: params.sentiment,
     isotope: params.isotope,
     conversionIntent: params.intent,
+    library_id: params.library,
     date_from: params.date_from,
     date_to: params.date_to,
   };
 
-  const [clients, runDate] = await Promise.all([
+  const [clients, runDate, libraries] = await Promise.all([
     getClients(),
-    getLatestRunDate(clientId),
+    getLatestRunDate(clientId, filters.library_id),
+    getAvailableLibraries(clientId),
   ]);
   const clientOptions = clients.map(c => ({ id: c.id, name: c.name }));
 
@@ -392,7 +399,7 @@ export default async function DashboardPage({ searchParams }: DashboardPageProps
           </div>
         }
       >
-        <DashboardContent clientId={clientId} filters={filters} />
+        <DashboardContent clientId={clientId} filters={filters} libraries={libraries} />
       </Suspense>
       </PlatformDataProvider>
     </PageContainer>

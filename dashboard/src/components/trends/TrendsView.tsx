@@ -48,11 +48,12 @@ interface TopicDelta {
 
 interface TrendsViewProps {
   clientId: string;
+  libraryId?: string;
   dateFrom?: string;
   dateTo?: string;
 }
 
-export function TrendsView({ clientId, dateFrom, dateTo }: TrendsViewProps) {
+export function TrendsView({ clientId, libraryId, dateFrom, dateTo }: TrendsViewProps) {
   const [runs, setRuns] = useState<Run[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -79,6 +80,7 @@ export function TrendsView({ clientId, dateFrom, dateTo }: TrendsViewProps) {
           .select('*')
           .eq('client_id', clientId)
           .not('run_date', 'is', null);
+        if (libraryId) query = query.eq('library_id', libraryId);
         if (dateFrom) query = query.gte('run_date', dateFrom);
         if (dateTo) query = query.lte('run_date', dateTo);
 
@@ -93,7 +95,7 @@ export function TrendsView({ clientId, dateFrom, dateTo }: TrendsViewProps) {
       }
     }
     load();
-  }, [clientId, dateFrom, dateTo]);
+  }, [clientId, libraryId, dateFrom, dateTo]);
 
   // Unique platforms with data
   const platforms = useMemo(() => {

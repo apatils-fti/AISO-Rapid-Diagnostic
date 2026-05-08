@@ -1,23 +1,25 @@
 import { Suspense } from 'react';
 import { PageContainer } from '@/components/layout';
 import { QuadrantChart, LayerComparison, GapBridges, GapInsightCard, TopGapPriorities } from '@/components/gap-analysis';
-import { getGapAnalysis, getClients, getLatestRunDate, type QueryFilters } from '@/lib/db';
-import { EnrichmentFilters } from '@/components/shared';
+import { getGapAnalysis, getClients, getAvailableLibraries, getLatestRunDate, type QueryFilters, type DbLibrary } from '@/lib/db';
+import { EnrichmentFilters, LibraryFilter } from '@/components/shared';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
 
 interface GapAnalysisPageProps {
-  searchParams: Promise<{ client?: string; platform?: string; sentiment?: string; isotope?: string; intent?: string }>;
+  searchParams: Promise<{ client?: string; platform?: string; sentiment?: string; isotope?: string; intent?: string; library?: string }>;
 }
 
 async function GapContent({
   clientId,
   filters,
   clientName,
+  libraries,
 }: {
   clientId: string;
   filters: QueryFilters;
   clientName?: string;
+  libraries: DbLibrary[];
 }) {
   const gaps = await getGapAnalysis(clientId, filters);
 
@@ -34,6 +36,7 @@ async function GapContent({
 
   return (
     <div className="space-y-6">
+      <LibraryFilter libraries={libraries} />
       <EnrichmentFilters />
       <TopGapPriorities serverGapData={gaps} clientName={clientName} />
       <QuadrantChart serverGapData={gaps} />
@@ -52,10 +55,12 @@ export default async function GapAnalysisPage({ searchParams }: GapAnalysisPageP
     sentiment: params.sentiment,
     isotope: params.isotope,
     conversionIntent: params.intent,
+    library_id: params.library,
   };
-  const [clients, runDate] = await Promise.all([
+  const [clients, runDate, libraries] = await Promise.all([
     getClients(),
-    getLatestRunDate(clientId),
+    getLatestRunDate(clientId, filters.library_id),
+    getAvailableLibraries(clientId),
   ]);
 
   return (
@@ -79,6 +84,7 @@ export default async function GapAnalysisPage({ searchParams }: GapAnalysisPageP
           clientId={clientId}
           filters={filters}
           clientName={clients.find(c => c.id === clientId)?.name}
+          libraries={libraries}
         />
       </Suspense>
     </PageContainer>

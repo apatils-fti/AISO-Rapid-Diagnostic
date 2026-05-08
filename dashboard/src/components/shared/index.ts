@@ -6,5 +6,7 @@ export { Tooltip, InfoTooltip } from './Tooltip';
 export { FilterBar, FilterDropdown, SearchInput } from './FilterBar';
 export { PlatformFilter, DEFAULT_PLATFORMS } from './PlatformFilter';
 export { EnrichmentFilters } from './EnrichmentFilters';
+export { LibraryFilter } from './LibraryFilter';
+export type { LibraryOption } from './LibraryFilter';
 export { PlatformDataProvider } from './PlatformDataProvider';
 export { DateRangeFilter } from './DateRangeFilter';

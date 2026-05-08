@@ -2,7 +2,8 @@ import { notFound } from 'next/navigation';
 import { PageContainer } from '@/components/layout';
 import { TopicDetail } from '@/components/topics';
 import { PlatformDataProvider } from '@/components/shared';
-import { getTopicDetail, getClients, getLatestRunDate, type QueryFilters } from '@/lib/db';
+import { getTopicDetail, getClients, getAvailableLibraries, getLatestRunDate, type QueryFilters } from '@/lib/db';
+import { LibraryFilter } from '@/components/shared';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
 
@@ -16,6 +17,7 @@ interface TopicDetailPageProps {
     sentiment?: string;
     isotope?: string;
     intent?: string;
+    library?: string;
     date_from?: string;
     date_to?: string;
   }>;
@@ -35,14 +37,16 @@ export default async function TopicDetailPage({ params, searchParams }: TopicDet
     sentiment: searchParamValues.sentiment,
     isotope: searchParamValues.isotope,
     conversionIntent: searchParamValues.intent,
+    library_id: searchParamValues.library,
     date_from: searchParamValues.date_from,
     date_to: searchParamValues.date_to,
   };
 
-  const [detail, clients, runDate] = await Promise.all([
+  const [detail, clients, runDate, libraries] = await Promise.all([
     getTopicDetail(clientId, topicId, filters),
     getClients(),
-    getLatestRunDate(clientId),
+    getLatestRunDate(clientId, filters.library_id),
+    getAvailableLibraries(clientId),
   ]);
 
   if (!detail) {
@@ -58,6 +62,9 @@ export default async function TopicDetailPage({ params, searchParams }: TopicDet
       runDate={runDate ?? undefined}
     >
       <PlatformDataProvider key={clientId} clientId={clientId}>
+        <div className="mb-4">
+          <LibraryFilter libraries={libraries} />
+        </div>
         <TopicDetail serverData={detail} />
       </PlatformDataProvider>
     </PageContainer>

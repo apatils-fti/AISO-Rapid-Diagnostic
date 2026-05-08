@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
 import { PageContainer } from '@/components/layout';
 import { PromptTable } from '@/components/prompts';
-import { getPromptResults, getClients, getLatestRunDate } from '@/lib/db';
-import { EnrichmentFilters, DateRangeFilter, PlatformDataProvider } from '@/components/shared';
+import { getPromptResults, getClients, getAvailableLibraries, getLatestRunDate, type DbLibrary } from '@/lib/db';
+import { EnrichmentFilters, DateRangeFilter, LibraryFilter, PlatformDataProvider } from '@/components/shared';
 import { getAvailableRunDates } from '@/lib/db';
 
 const DEFAULT_CLIENT_ID = '269b6038-bb3b-4c2d-9fcf-b497beebfe35';
@@ -15,6 +15,7 @@ interface PromptsPageProps {
     isotope?: string;
     sentiment?: string;
     intent?: string;
+    library?: string;
     date_from?: string;
     date_to?: string;
   }>;
@@ -27,10 +28,12 @@ async function PromptsContent({
   isotope,
   sentiment,
   intent,
+  libraryId,
   dateFrom,
   dateTo,
   clientName,
   clientDomains,
+  libraries,
 }: {
   clientId: string;
   platform?: string;
@@ -38,10 +41,12 @@ async function PromptsContent({
   isotope?: string;
   sentiment?: string;
   intent?: string;
+  libraryId?: string;
   dateFrom?: string;
   dateTo?: string;
   clientName?: string;
   clientDomains?: string[];
+  libraries: DbLibrary[];
 }) {
   const promptData = await getPromptResults(
     clientId,
@@ -52,10 +57,12 @@ async function PromptsContent({
     intent,
     dateFrom,
     dateTo,
+    libraryId,
   );
 
   return (
     <div className="space-y-4">
+      <LibraryFilter libraries={libraries} />
       <EnrichmentFilters />
       <PromptTable
         serverData={promptData}
@@ -79,10 +86,11 @@ function extractClientDomains(config: unknown): string[] {
 export default async function PromptsPage({ searchParams }: PromptsPageProps) {
   const params = await searchParams;
   const clientId = params.client || DEFAULT_CLIENT_ID;
-  const [clients, runDate, availableDates] = await Promise.all([
+  const [clients, runDate, availableDates, libraries] = await Promise.all([
     getClients(),
-    getLatestRunDate(clientId),
-    getAvailableRunDates(clientId),
+    getLatestRunDate(clientId, params.library),
+    getAvailableRunDates(clientId, params.library),
+    getAvailableLibraries(clientId),
   ]);
 
   return (
@@ -114,10 +122,12 @@ export default async function PromptsPage({ searchParams }: PromptsPageProps) {
             isotope={params.isotope}
             sentiment={params.sentiment}
             intent={params.intent}
+            libraryId={params.library}
             dateFrom={params.date_from}
             dateTo={params.date_to}
             clientName={clients.find((c) => c.id === clientId)?.name}
             clientDomains={extractClientDomains(clients.find((c) => c.id === clientId)?.config)}
+            libraries={libraries}
           />
         </Suspense>
       </PlatformDataProvider>
