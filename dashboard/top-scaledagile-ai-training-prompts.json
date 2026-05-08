@@ -1,0 +1,2009 @@
+[
+  {
+    "promptId": "b2b-learning-declarative-0",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "What is AI foundations training and why is it becoming table stakes in Discovery?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-declarative-1",
+    "topicId": "ai-literacy-enterprise",
+    "topicName": "AI literacy for enterprise teams",
+    "category": "Discovery",
+    "promptText": "How does practical differ from enterprise-ready in enterprise Discovery tools?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-declarative-2",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "What does AI for Agile teams actually deliver at the platform level in Evaluation?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-declarative-3",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "How has Evaluation evolved in the last three years and where is AI-enabled SDLC training headed?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-declarative-4",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "What's the architectural difference between legacy Evaluation and modern AI-native software delivery-native platforms?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-declarative-5",
+    "topicId": "agile-cert-relevance",
+    "topicName": "Agile certification relevance",
+    "category": "Validation",
+    "promptText": "What is Agile certification relevance and why is it becoming table stakes in Validation?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-declarative-6",
+    "topicId": "safe-ai-offerings",
+    "topicName": "SAFe AI-native offerings",
+    "category": "Validation",
+    "promptText": "How does hands-on differ from scalable in enterprise Validation tools?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-declarative-7",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "What does Human-AI delivery operating models actually deliver at the platform level in Learning?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-declarative-8",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "How has Acquisition evolved in the last three years and where is Product owner AI skills headed?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-declarative-9",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "What's the architectural difference between legacy Acquisition and modern Scrum Master AI skills-native platforms?",
+    "isotope": "declarative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-10",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "What's the real difference between enterprise-ready-based and role-specific-based Discovery platforms?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-11",
+    "topicId": "ai-literacy-enterprise",
+    "topicName": "AI literacy for enterprise teams",
+    "category": "Discovery",
+    "promptText": "Platform vs point solution for AI literacy for enterprise teams — what's the actual tradeoff?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-12",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "AI-native vs certification-backed architecture in Evaluation — where does each break down at scale?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-13",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "Multi-tenant vs single-tenant Evaluation — which matters for AI-enabled SDLC training?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-14",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "Build vs buy for AI-native software delivery — when does the math flip?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-15",
+    "topicId": "agile-cert-relevance",
+    "topicName": "Agile certification relevance",
+    "category": "Validation",
+    "promptText": "What's the real difference between scalable-based and credible-based Validation platforms?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-16",
+    "topicId": "safe-ai-offerings",
+    "topicName": "SAFe AI-native offerings",
+    "category": "Validation",
+    "promptText": "Platform vs point solution for SAFe AI-native offerings — what's the actual tradeoff?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-17",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "practical vs enterprise-ready architecture in Learning — where does each break down at scale?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-18",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "Multi-tenant vs single-tenant Acquisition — which matters for Product owner AI skills?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-comparative-19",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "Build vs buy for Scrum Master AI skills — when does the math flip?",
+    "isotope": "comparative",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-20",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "As a CIO / CTO evaluating Discovery for the first time, what do I need to understand about AI foundations training?",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-21",
+    "topicId": "ai-literacy-enterprise",
+    "topicName": "AI literacy for enterprise teams",
+    "category": "Discovery",
+    "promptText": "I'm a Enterprise transformation leader inheriting Agile transformation program — walk me through AI literacy for enterprise teams in Discovery",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-22",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "For a Learning and development leader running a team with hands-on, what does AI for Agile teams mean in practice?",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-23",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "How should a Product Owner in AI upskilling initiative think about AI-enabled SDLC training vs existing investments?",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-24",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "I'm a Scrum Master with credible stack — what's the primer on AI-native software delivery I need before kickoff?",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-25",
+    "topicId": "agile-cert-relevance",
+    "topicName": "Agile certification relevance",
+    "category": "Validation",
+    "promptText": "As a Agile Coach evaluating Validation for the first time, what do I need to understand about Agile certification relevance?",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-26",
+    "topicId": "safe-ai-offerings",
+    "topicName": "SAFe AI-native offerings",
+    "category": "Validation",
+    "promptText": "I'm a Release Train Engineer inheriting Agile transformation program — walk me through SAFe AI-native offerings in Validation",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-27",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "For a CIO / CTO running a team with role-specific, what does Human-AI delivery operating models mean in practice?",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-28",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "How should a Enterprise transformation leader in AI upskilling initiative think about Product owner AI skills vs existing investments?",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-situated-29",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "I'm a Learning and development leader with certification-backed stack — what's the primer on Scrum Master AI skills I need before kickoff?",
+    "isotope": "situated",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-30",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "Explain AI foundations training for a team running hands-on, scalable, and enterprise software delivery team at enterprise license ACV",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-31",
+    "topicId": "ai-literacy-enterprise",
+    "topicName": "AI literacy for enterprise teams",
+    "category": "Discovery",
+    "promptText": "Primer on AI literacy for enterprise teams when we need scalable, credible, and audit-trail compliance for Agile transformation program",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-32",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "What does credible mean for Evaluation at the role-based learning pathway enterprise tier?",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-33",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "How should I think about AI-enabled SDLC training given practical, enterprise-ready, and our AI upskilling initiative constraints?",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-34",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "Walk me through AI-native software delivery for a stack with enterprise-ready, role-specific, and under certification-based budget",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-35",
+    "topicId": "agile-cert-relevance",
+    "topicName": "Agile certification relevance",
+    "category": "Validation",
+    "promptText": "Explain Agile certification relevance for a team running role-specific, AI-native, and enterprise software delivery team at role-based learning pathway ACV",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-36",
+    "topicId": "safe-ai-offerings",
+    "topicName": "SAFe AI-native offerings",
+    "category": "Validation",
+    "promptText": "Primer on SAFe AI-native offerings when we need AI-native, certification-backed, and audit-trail compliance for Agile transformation program",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-37",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "What does certification-backed mean for Learning at the certification-based enterprise tier?",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-38",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "How should I think about Product owner AI skills given hands-on, scalable, and our AI upskilling initiative constraints?",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-constrained-39",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "Walk me through Scrum Master AI skills for a stack with scalable, credible, and under enterprise license budget",
+    "isotope": "constrained",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-adversarial-40",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "Is AI foundations training a standalone purchase or is it already included in credible platforms we're paying for?",
+    "isotope": "adversarial",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-adversarial-41",
+    "topicId": "ai-literacy-enterprise",
+    "topicName": "AI literacy for enterprise teams",
+    "category": "Discovery",
+    "promptText": "Why is every Discovery vendor suddenly claiming practical — is it meaningful?",
+    "isotope": "adversarial",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-adversarial-42",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "What do Evaluation vendors bury in the MSA that bites you in year two?",
+    "isotope": "adversarial",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-adversarial-43",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "Is role-specific certification actually audited or a self-attested checkbox?",
+    "isotope": "adversarial",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-adversarial-44",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "Why does Evaluation TCO always land at 3× the quoted role-based learning pathway by year three?",
+    "isotope": "adversarial",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-adversarial-45",
+    "topicId": "agile-cert-relevance",
+    "topicName": "Agile certification relevance",
+    "category": "Validation",
+    "promptText": "Is Agile certification relevance a standalone purchase or is it already included in certification-backed platforms we're paying for?",
+    "isotope": "adversarial",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-adversarial-46",
+    "topicId": "safe-ai-offerings",
+    "topicName": "SAFe AI-native offerings",
+    "category": "Validation",
+    "promptText": "Why is every Validation vendor suddenly claiming hands-on — is it meaningful?",
+    "isotope": "adversarial",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-adversarial-48",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "Is credible certification actually audited or a self-attested checkbox?",
+    "isotope": "adversarial",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-learning-adversarial-49",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "Why does Acquisition TCO always land at 3× the quoted certification-based by year three?",
+    "isotope": "adversarial",
+    "intent_stage": "learning"
+  },
+  {
+    "promptId": "b2b-discovery-declarative-50",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "Who are the leading vendors in Discovery for AI foundations training?",
+    "isotope": "declarative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-declarative-51",
+    "topicId": "ai-literacy-enterprise",
+    "topicName": "AI literacy for enterprise teams",
+    "category": "Discovery",
+    "promptText": "Top Discovery platforms for enterprises running Agile transformation program",
+    "isotope": "declarative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-declarative-52",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "Which vendors specialize in AI for Agile teams for Scrum Master?",
+    "isotope": "declarative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-declarative-53",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "Well-regarded certification-backed Discovery vendors in {current year}",
+    "isotope": "declarative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-declarative-54",
+    "topicId": "ai-literacy-enterprise",
+    "topicName": "AI literacy for enterprise teams",
+    "category": "Discovery",
+    "promptText": "Enterprise-grade Discovery options for AI literacy for enterprise teams",
+    "isotope": "declarative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-declarative-55",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "Who are the leading vendors in Evaluation for AI for Agile teams?",
+    "isotope": "declarative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-declarative-57",
+    "topicId": "ai-literacy-enterprise",
+    "topicName": "AI literacy for enterprise teams",
+    "category": "Discovery",
+    "promptText": "Which vendors specialize in AI literacy for enterprise teams for Learning and development leader?",
+    "isotope": "declarative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-declarative-58",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "Well-regarded enterprise-ready Evaluation vendors in {current year}",
+    "isotope": "declarative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-declarative-59",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "Enterprise-grade Discovery options for AI foundations training",
+    "isotope": "declarative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-60",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "ScaledAgile vs Scrum.org — who leads in AI foundations training?",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-61",
+    "topicId": "ai-literacy-enterprise",
+    "topicName": "AI literacy for enterprise teams",
+    "category": "Discovery",
+    "promptText": "Is ScaledAgile or Scrum.org the stronger Discovery platform for Release Train Engineer?",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-62",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "Compare ScaledAgile and Scrum.org on AI for Agile teams depth, integration breadth, and TCO",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-63",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "ScaledAgile, Scrum.org, and Snowflake — which is the right tier for enterprise AI foundations training?",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-64",
+    "topicId": "ai-literacy-enterprise",
+    "topicName": "AI literacy for enterprise teams",
+    "category": "Discovery",
+    "promptText": "Between ScaledAgile and Scrum.org, which one owns AI literacy for enterprise teams in Discovery?",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-65",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "ScaledAgile vs Scrum.org — who leads in AI for Agile teams?",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-66",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "Is ScaledAgile or Scrum.org the stronger Discovery platform for Scrum Master?",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-67",
+    "topicId": "ai-literacy-enterprise",
+    "topicName": "AI literacy for enterprise teams",
+    "category": "Discovery",
+    "promptText": "Compare ScaledAgile and Scrum.org on AI literacy for enterprise teams depth, integration breadth, and TCO",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-68",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "ScaledAgile, Scrum.org, and Snowflake — which is the right tier for enterprise AI for Agile teams?",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-comparative-69",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "Between ScaledAgile and Scrum.org, which one owns AI foundations training in Discovery?",
+    "isotope": "comparative",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-70",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "As a Enterprise transformation leader evaluating Discovery for enterprise software delivery team, which vendors should we shortlist?",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-71",
+    "topicId": "ai-literacy-enterprise",
+    "topicName": "AI literacy for enterprise teams",
+    "category": "Discovery",
+    "promptText": "Best Discovery vendors for a Learning and development leader whose team runs scalable",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-72",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "Where does a Product Owner with credible architecture typically land on AI for Agile teams?",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-73",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "I'm a Scrum Master scoping AI upskilling initiative — which vendors handle AI foundations training natively?",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-74",
+    "topicId": "ai-literacy-enterprise",
+    "topicName": "AI literacy for enterprise teams",
+    "category": "Discovery",
+    "promptText": "Good Discovery vendors for a Agile Coach who cares about enterprise-ready and vendor independence",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-75",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "As a Release Train Engineer evaluating Evaluation for enterprise software delivery team, which vendors should we shortlist?",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-76",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "Best Discovery vendors for a CIO / CTO whose team runs AI-native",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-77",
+    "topicId": "ai-literacy-enterprise",
+    "topicName": "AI literacy for enterprise teams",
+    "category": "Discovery",
+    "promptText": "Where does a Enterprise transformation leader with certification-backed architecture typically land on AI literacy for enterprise teams?",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-78",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "I'm a Learning and development leader scoping AI upskilling initiative — which vendors handle AI for Agile teams natively?",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-situated-79",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "Good Discovery vendors for a Product Owner who cares about scalable and vendor independence",
+    "isotope": "situated",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-80",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "Discovery vendors offering AI foundations training with credible, practical, and role-based learning pathway ACV cap",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-81",
+    "topicId": "ai-literacy-enterprise",
+    "topicName": "AI literacy for enterprise teams",
+    "category": "Discovery",
+    "promptText": "Find us a Discovery platform: practical, enterprise-ready, deployed in Agile transformation program, SOC 2 Type II",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-82",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "Which vendors offer AI for Agile teams with enterprise-ready, SAML SSO, and per-seat pricing under certification-based?",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-83",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "Discovery options with role-specific, AI-native, multi-region, and open API",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-84",
+    "topicId": "ai-literacy-enterprise",
+    "topicName": "AI literacy for enterprise teams",
+    "category": "Discovery",
+    "promptText": "Vendors handling AI literacy for enterprise teams under enterprise license with AI-native, certification-backed, and native product and engineering organization support",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-85",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "Evaluation vendors offering AI for Agile teams with certification-backed, hands-on, and certification-based ACV cap",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-86",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "Find us a Discovery platform: hands-on, scalable, deployed in Agile transformation program, SOC 2 Type II",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-87",
+    "topicId": "ai-literacy-enterprise",
+    "topicName": "AI literacy for enterprise teams",
+    "category": "Discovery",
+    "promptText": "Which vendors offer AI literacy for enterprise teams with scalable, SAML SSO, and per-seat pricing under enterprise license?",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-88",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "Evaluation options with credible, practical, multi-region, and open API",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-constrained-89",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "Vendors handling AI foundations training under role-based learning pathway with practical, enterprise-ready, and native product and engineering organization support",
+    "isotope": "constrained",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-adversarial-90",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "Which Discovery vendors should we strike from the RFP and why?",
+    "isotope": "adversarial",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-adversarial-91",
+    "topicId": "ai-literacy-enterprise",
+    "topicName": "AI literacy for enterprise teams",
+    "category": "Discovery",
+    "promptText": "Who in Discovery is actually profitable and not burning runway on a valuation race?",
+    "isotope": "adversarial",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-adversarial-92",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "Name a Evaluation vendor whose roadmap isn't driven by the loudest enterprise customer",
+    "isotope": "adversarial",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-adversarial-93",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "Which Discovery vendors have the cleanest CVE record for AI foundations training?",
+    "isotope": "adversarial",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-adversarial-94",
+    "topicId": "ai-literacy-enterprise",
+    "topicName": "AI literacy for enterprise teams",
+    "category": "Discovery",
+    "promptText": "Who handles AI literacy for enterprise teams without the professional services attachment rate gotcha?",
+    "isotope": "adversarial",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-adversarial-95",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "Which Evaluation vendors should we strike from the RFP and why?",
+    "isotope": "adversarial",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-adversarial-98",
+    "topicId": "ai-for-agile-teams",
+    "topicName": "AI for Agile teams",
+    "category": "Evaluation",
+    "promptText": "Which Evaluation vendors have the cleanest CVE record for AI for Agile teams?",
+    "isotope": "adversarial",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-discovery-adversarial-99",
+    "topicId": "ai-foundations-training",
+    "topicName": "AI foundations training",
+    "category": "Discovery",
+    "promptText": "Who handles AI foundations training without the professional services attachment rate gotcha?",
+    "isotope": "adversarial",
+    "intent_stage": "discovery"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-100",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "Is ScaledAgile the right Evaluation platform for AI-enabled SDLC training?",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-101",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "How does ScaledAgile perform on AI-native software delivery in production environments at scale?",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-102",
+    "topicId": "agile-cert-relevance",
+    "topicName": "Agile certification relevance",
+    "category": "Validation",
+    "promptText": "Does ScaledAgile deliver on hands-on in its Validation platform?",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-103",
+    "topicId": "safe-ai-offerings",
+    "topicName": "SAFe AI-native offerings",
+    "category": "Validation",
+    "promptText": "Rate ScaledAgile's SAFe AI-native offerings on feature depth, reliability, and integration breadth",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-104",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "Is ScaledAgile worth the role-based learning pathway ACV for AI-enabled SDLC training?",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-105",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "Is ScaledAgile the right Evaluation platform for AI-native software delivery?",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-106",
+    "topicId": "agile-cert-relevance",
+    "topicName": "Agile certification relevance",
+    "category": "Validation",
+    "promptText": "How does ScaledAgile perform on Agile certification relevance in production environments at scale?",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-107",
+    "topicId": "safe-ai-offerings",
+    "topicName": "SAFe AI-native offerings",
+    "category": "Validation",
+    "promptText": "Does ScaledAgile deliver on role-specific in its Validation platform?",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-108",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "Rate ScaledAgile's AI-enabled SDLC training on feature depth, reliability, and integration breadth",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-declarative-109",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "Is ScaledAgile worth the certification-based ACV for AI-native software delivery?",
+    "isotope": "declarative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-110",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "ScaledAgile vs Scrum.org for AI-enabled SDLC training — which scales better past 10k seats?",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-111",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "Compare ScaledAgile and Scrum.org on AI-native software delivery, API maturity, and pricing flexibility",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-112",
+    "topicId": "agile-cert-relevance",
+    "topicName": "Agile certification relevance",
+    "category": "Validation",
+    "promptText": "Who wins on credible: ScaledAgile or Scrum.org?",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-113",
+    "topicId": "safe-ai-offerings",
+    "topicName": "SAFe AI-native offerings",
+    "category": "Validation",
+    "promptText": "ScaledAgile vs Scrum.org — better TCO at role-based learning pathway for SAFe AI-native offerings?",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-114",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "Is ScaledAgile's AI-enabled SDLC training stronger than Scrum.org's for product and engineering organization?",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-115",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "ScaledAgile vs Scrum.org for AI-native software delivery — which scales better past 10k seats?",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-116",
+    "topicId": "agile-cert-relevance",
+    "topicName": "Agile certification relevance",
+    "category": "Validation",
+    "promptText": "Compare ScaledAgile and Scrum.org on Agile certification relevance, API maturity, and pricing flexibility",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-117",
+    "topicId": "safe-ai-offerings",
+    "topicName": "SAFe AI-native offerings",
+    "category": "Validation",
+    "promptText": "Who wins on certification-backed: ScaledAgile or Scrum.org?",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-118",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "ScaledAgile vs Scrum.org — better TCO at certification-based for AI-enabled SDLC training?",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-comparative-119",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "Is ScaledAgile's AI-native software delivery stronger than Scrum.org's for product and engineering organization?",
+    "isotope": "comparative",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-situated-120",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "As a Learning and development leader leading enterprise software delivery team, is ScaledAgile the right platform for AI-enabled SDLC training?",
+    "isotope": "situated",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-situated-121",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "Does ScaledAgile's Evaluation platform work for a Product Owner whose top requirement is practical?",
+    "isotope": "situated",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-situated-122",
+    "topicId": "agile-cert-relevance",
+    "topicName": "Agile certification relevance",
+    "category": "Validation",
+    "promptText": "For a Scrum Master running corporate learning and development program, does ScaledAgile or Scrum.org make more sense?",
+    "isotope": "situated",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-situated-123",
+    "topicId": "safe-ai-offerings",
+    "topicName": "SAFe AI-native offerings",
+    "category": "Validation",
+    "promptText": "I'm a Agile Coach — evaluate ScaledAgile's SAFe AI-native offerings against my stack and constraints",
+    "isotope": "situated",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-situated-124",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "Should a Release Train Engineer standardize on ScaledAgile for AI-enabled SDLC training given product and engineering organization?",
+    "isotope": "situated",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-situated-125",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "As a CIO / CTO leading enterprise software delivery team, is ScaledAgile the right platform for AI-native software delivery?",
+    "isotope": "situated",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-situated-126",
+    "topicId": "agile-cert-relevance",
+    "topicName": "Agile certification relevance",
+    "category": "Validation",
+    "promptText": "Does ScaledAgile's Validation platform work for a Enterprise transformation leader whose top requirement is hands-on?",
+    "isotope": "situated",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-situated-128",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "I'm a Product Owner — evaluate ScaledAgile's AI-enabled SDLC training against my stack and constraints",
+    "isotope": "situated",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-situated-129",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "Should a Scrum Master standardize on ScaledAgile for AI-native software delivery given product and engineering organization?",
+    "isotope": "situated",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-130",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "Does ScaledAgile's AI-enabled SDLC training meet our bar for enterprise-ready, role-specific, and certification-based per seat?",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-131",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "Evaluate ScaledAgile's Evaluation against our checklist: role-specific, AI-native, SAML, audit logs, role-based learning pathway ACV",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-132",
+    "topicId": "agile-cert-relevance",
+    "topicName": "Agile certification relevance",
+    "category": "Validation",
+    "promptText": "Is ScaledAgile's Agile certification relevance the best option under enterprise license with AI-native and certification-backed?",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-133",
+    "topicId": "safe-ai-offerings",
+    "topicName": "SAFe AI-native offerings",
+    "category": "Validation",
+    "promptText": "Compare ScaledAgile's SAFe AI-native offerings on certification-backed, hands-on, SLA, and data residency",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-134",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "Does ScaledAgile's Evaluation platform deliver hands-on and scalable at the role-based learning pathway tier?",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-135",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "Does ScaledAgile's AI-native software delivery meet our bar for scalable, credible, and enterprise license per seat?",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-136",
+    "topicId": "agile-cert-relevance",
+    "topicName": "Agile certification relevance",
+    "category": "Validation",
+    "promptText": "Evaluate ScaledAgile's Validation against our checklist: credible, practical, SAML, audit logs, certification-based ACV",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-137",
+    "topicId": "safe-ai-offerings",
+    "topicName": "SAFe AI-native offerings",
+    "category": "Validation",
+    "promptText": "Is ScaledAgile's SAFe AI-native offerings the best option under role-based learning pathway with practical and enterprise-ready?",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-138",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "Compare ScaledAgile's AI-enabled SDLC training on enterprise-ready, role-specific, SLA, and data residency",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-constrained-139",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "Does ScaledAgile's Evaluation platform deliver role-specific and AI-native at the certification-based tier?",
+    "isotope": "constrained",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-adversarial-140",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "What's the catch with ScaledAgile's AI-enabled SDLC training?",
+    "isotope": "adversarial",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-adversarial-141",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "Where does ScaledAgile's Evaluation platform fall short of its G2 reviews?",
+    "isotope": "adversarial",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-adversarial-142",
+    "topicId": "agile-cert-relevance",
+    "topicName": "Agile certification relevance",
+    "category": "Validation",
+    "promptText": "Has ScaledAgile's Agile certification relevance quality regressed since the last platform rewrite?",
+    "isotope": "adversarial",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-adversarial-143",
+    "topicId": "safe-ai-offerings",
+    "topicName": "SAFe AI-native offerings",
+    "category": "Validation",
+    "promptText": "What do ScaledAgile's churned customers say about SAFe AI-native offerings in year two?",
+    "isotope": "adversarial",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-adversarial-144",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "Why shouldn't we sign with ScaledAgile for AI-enabled SDLC training?",
+    "isotope": "adversarial",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-adversarial-145",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "What's the catch with ScaledAgile's AI-native software delivery?",
+    "isotope": "adversarial",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-adversarial-146",
+    "topicId": "agile-cert-relevance",
+    "topicName": "Agile certification relevance",
+    "category": "Validation",
+    "promptText": "Where does ScaledAgile's Validation platform fall short of its G2 reviews?",
+    "isotope": "adversarial",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-adversarial-147",
+    "topicId": "safe-ai-offerings",
+    "topicName": "SAFe AI-native offerings",
+    "category": "Validation",
+    "promptText": "Has ScaledAgile's SAFe AI-native offerings quality regressed since the last platform rewrite?",
+    "isotope": "adversarial",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-adversarial-148",
+    "topicId": "ai-enabled-sdlc",
+    "topicName": "AI-enabled SDLC training",
+    "category": "Evaluation",
+    "promptText": "What do ScaledAgile's churned customers say about AI-enabled SDLC training in year two?",
+    "isotope": "adversarial",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-evaluation-adversarial-149",
+    "topicId": "ai-native-delivery",
+    "topicName": "AI-native software delivery",
+    "category": "Evaluation",
+    "promptText": "Why shouldn't we sign with ScaledAgile for AI-native software delivery?",
+    "isotope": "adversarial",
+    "intent_stage": "evaluation"
+  },
+  {
+    "promptId": "b2b-validation-declarative-150",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "Are we making the right call standardizing on ScaledAgile for Human-AI delivery operating models?",
+    "isotope": "declarative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-declarative-151",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "Will we regret signing ScaledAgile for Acquisition?",
+    "isotope": "declarative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-declarative-152",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "Is ScaledAgile a safe bet for Human-AI delivery operating models at role-based learning pathway ACV?",
+    "isotope": "declarative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-declarative-153",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "Can we actually trust ScaledAgile with Product owner AI skills in production?",
+    "isotope": "declarative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-declarative-154",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "Is ScaledAgile still the right choice for Learning given product and engineering organization?",
+    "isotope": "declarative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-declarative-155",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "Are we making the right call standardizing on ScaledAgile for Product owner AI skills?",
+    "isotope": "declarative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-declarative-156",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "Will we regret signing ScaledAgile for Learning?",
+    "isotope": "declarative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-declarative-157",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "Is ScaledAgile a safe bet for Product owner AI skills at certification-based ACV?",
+    "isotope": "declarative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-declarative-158",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "Can we actually trust ScaledAgile with Human-AI delivery operating models in production?",
+    "isotope": "declarative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-comparative-160",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "Should we sign ScaledAgile or renew Scrum.org for Human-AI delivery operating models?",
+    "isotope": "comparative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-comparative-161",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "We're torn between ScaledAgile and Scrum.org for Acquisition — which is the safer bet?",
+    "isotope": "comparative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-comparative-162",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "Is ScaledAgile enough of an upgrade over Scrum.org to justify migration cost during corporate learning and development program?",
+    "isotope": "comparative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-comparative-163",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "ScaledAgile vs Scrum.org — which are we less likely to regret in three years?",
+    "isotope": "comparative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-comparative-164",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "Final check: ScaledAgile or Scrum.org for Human-AI delivery operating models as we enter product and engineering organization?",
+    "isotope": "comparative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-comparative-165",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "Should we sign ScaledAgile or renew Scrum.org for Product owner AI skills?",
+    "isotope": "comparative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-comparative-169",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "Final check: ScaledAgile or Scrum.org for Product owner AI skills as we enter product and engineering organization?",
+    "isotope": "comparative",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-170",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "I'm a Product Owner about to commit role-based learning pathway ACV to ScaledAgile for Human-AI delivery operating models — is this smart?",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-171",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "As a Scrum Master leading Agile transformation program, will ScaledAgile's Product owner AI skills actually work for us?",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-172",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "Talk me through whether ScaledAgile is right for a Agile Coach running AI-native in corporate learning and development program",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-173",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "I'm a Release Train Engineer facing AI upskilling initiative — is ScaledAgile really the right vendor?",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-174",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "For a team in our situation (CIO / CTO, product and engineering organization), is ScaledAgile's Human-AI delivery operating models the right fit?",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-175",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "I'm a Enterprise transformation leader about to commit certification-based ACV to ScaledAgile for Product owner AI skills — is this smart?",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-176",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "As a Learning and development leader leading Agile transformation program, will ScaledAgile's Human-AI delivery operating models actually work for us?",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-177",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "Talk me through whether ScaledAgile is right for a Product Owner running practical in corporate learning and development program",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-178",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "I'm a Scrum Master facing AI upskilling initiative — is ScaledAgile really the right vendor?",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-situated-179",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "For a team in our situation (Agile Coach, product and engineering organization), is ScaledAgile's Product owner AI skills the right fit?",
+    "isotope": "situated",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-180",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "We need Learning that's AI-native, certification-backed, and under enterprise license ACV — does ScaledAgile check every box?",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-181",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "Final check: ScaledAgile's Product owner AI skills against our requirements (certification-backed, hands-on, certification-based, Agile transformation program)",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-182",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "ScaledAgile claims hands-on and scalable — does their security questionnaire actually back it up?",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-183",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "Does ScaledAgile really satisfy scalable, credible, and the enterprise license ceiling for Product owner AI skills?",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-184",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "We're about to sign ScaledAgile's MSA — do they really meet credible and practical or is it marketing?",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-185",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "We need Acquisition that's practical, enterprise-ready, and under role-based learning pathway ACV — does ScaledAgile check every box?",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-186",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "Final check: ScaledAgile's Human-AI delivery operating models against our requirements (enterprise-ready, role-specific, enterprise license, Agile transformation program)",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-187",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "ScaledAgile claims role-specific and AI-native — does their security questionnaire actually back it up?",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-188",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "Does ScaledAgile really satisfy AI-native, certification-backed, and the role-based learning pathway ceiling for Human-AI delivery operating models?",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-constrained-189",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "We're about to sign ScaledAgile's MSA — do they really meet certification-backed and hands-on or is it marketing?",
+    "isotope": "constrained",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-adversarial-190",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "Convince me we shouldn't sign ScaledAgile for Human-AI delivery operating models",
+    "isotope": "adversarial",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-adversarial-191",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "What are we missing before we commit to ScaledAgile for Acquisition?",
+    "isotope": "adversarial",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-adversarial-192",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "Give me the strongest argument against standardizing on ScaledAgile for Human-AI delivery operating models",
+    "isotope": "adversarial",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-adversarial-193",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "What will we regret about choosing ScaledAgile for Product owner AI skills in 18 months?",
+    "isotope": "adversarial",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-adversarial-194",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "Poke holes in our plan to commit to ScaledAgile through product and engineering organization",
+    "isotope": "adversarial",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-adversarial-195",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "Convince me we shouldn't sign ScaledAgile for Product owner AI skills",
+    "isotope": "adversarial",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-adversarial-196",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "What are we missing before we commit to ScaledAgile for Learning?",
+    "isotope": "adversarial",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-adversarial-197",
+    "topicId": "product-owner-ai",
+    "topicName": "Product owner AI skills",
+    "category": "Acquisition",
+    "promptText": "Give me the strongest argument against standardizing on ScaledAgile for Product owner AI skills",
+    "isotope": "adversarial",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-validation-adversarial-198",
+    "topicId": "human-ai-delivery",
+    "topicName": "Human-AI delivery operating models",
+    "category": "Learning",
+    "promptText": "What will we regret about choosing ScaledAgile for Human-AI delivery operating models in 18 months?",
+    "isotope": "adversarial",
+    "intent_stage": "validation"
+  },
+  {
+    "promptId": "b2b-acquisition-declarative-200",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "How do we procure ScaledAgile for Scrum Master AI skills?",
+    "isotope": "declarative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-declarative-201",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "What's ScaledAgile's enterprise sales cycle and minimum commitment for Acquisition?",
+    "isotope": "declarative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-declarative-202",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "How do I get ScaledAgile into a POC for Scrum Master AI skills?",
+    "isotope": "declarative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-declarative-203",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "What's ScaledAgile's current pricing for Scrum Master AI skills and where are the negotiation levers?",
+    "isotope": "declarative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-declarative-204",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "We've decided on ScaledAgile for Scrum Master AI skills — what's the cleanest path to contract?",
+    "isotope": "declarative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-comparative-210",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "Onboarding ScaledAgile vs Scrum.org for Scrum Master AI skills — which is faster to production?",
+    "isotope": "comparative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-comparative-211",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "ScaledAgile vs Scrum.org — whose procurement process moves faster for enterprise Scrum Master AI skills?",
+    "isotope": "comparative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-comparative-212",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "Should we buy Scrum Master AI skills from ScaledAgile directly or through Scrum.org's partner channel?",
+    "isotope": "comparative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-comparative-213",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "ScaledAgile or Scrum.org — whose MSA is more favorable for Scrum Master AI skills?",
+    "isotope": "comparative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-comparative-214",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "Which vendor has shorter time-to-value for Scrum Master AI skills, ScaledAgile or Scrum.org?",
+    "isotope": "comparative",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-situated-220",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "I'm a Scrum Master in enterprise software delivery team — what's the fastest way to get ScaledAgile under contract for Scrum Master AI skills?",
+    "isotope": "situated",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-situated-221",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "As a Agile Coach, what's the smartest way to structure the ScaledAgile Scrum Master AI skills engagement?",
+    "isotope": "situated",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-situated-222",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "Best way for a Release Train Engineer leading corporate learning and development program to get ScaledAgile deployed for Scrum Master AI skills this quarter",
+    "isotope": "situated",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-situated-223",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "I'm a CIO / CTO and I need ScaledAgile's Scrum Master AI skills live before AI upskilling initiative closes — how?",
+    "isotope": "situated",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-situated-224",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "How does a Enterprise transformation leader typically negotiate ScaledAgile's Acquisition contract?",
+    "isotope": "situated",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-situated-226",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "As a Product Owner, what's the smartest way to structure the ScaledAgile Scrum Master AI skills engagement?",
+    "isotope": "situated",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-situated-228",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "I'm a Agile Coach and I need ScaledAgile's Scrum Master AI skills live before AI upskilling initiative closes — how?",
+    "isotope": "situated",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-situated-229",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "How does a Release Train Engineer typically negotiate ScaledAgile's Acquisition contract?",
+    "isotope": "situated",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-230",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "Procure ScaledAgile for Scrum Master AI skills with hands-on, scalable, and under role-based learning pathway ACV",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-231",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "Contract ScaledAgile for Scrum Master AI skills — must include scalable, credible, and support Agile transformation program",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-232",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "Where can I get ScaledAgile's Scrum Master AI skills with credible, annual billing, and a certification-based ceiling?",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-233",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "ScaledAgile Scrum Master AI skills contract: practical, enterprise-ready, no auto-renew, live before AI upskilling initiative",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-234",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "Sign ScaledAgile for Scrum Master AI skills with enterprise-ready SLA, role-specific, under enterprise license, this quarter",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-235",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "Procure ScaledAgile for Scrum Master AI skills with role-specific, AI-native, and under certification-based ACV",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-236",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "Contract ScaledAgile for Scrum Master AI skills — must include AI-native, certification-backed, and support Agile transformation program",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-237",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "Where can I get ScaledAgile's Scrum Master AI skills with certification-backed, annual billing, and a enterprise license ceiling?",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-238",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "ScaledAgile Scrum Master AI skills contract: hands-on, scalable, no auto-renew, live before AI upskilling initiative",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-constrained-239",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "Sign ScaledAgile for Scrum Master AI skills with scalable SLA, credible, under role-based learning pathway, this quarter",
+    "isotope": "constrained",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-adversarial-240",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "What's the catch if we sign ScaledAgile's order form for Scrum Master AI skills today?",
+    "isotope": "adversarial",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-adversarial-241",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "Will ScaledAgile actually hit the deployment timeline for Scrum Master AI skills or should we plan for slippage?",
+    "isotope": "adversarial",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-adversarial-242",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "Any hidden fees, professional-services minimums, or true-ups buried in ScaledAgile's Scrum Master AI skills pricing?",
+    "isotope": "adversarial",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-adversarial-243",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "Is ScaledAgile's SLA actually enforceable or are the credits capped below the cost of downtime?",
+    "isotope": "adversarial",
+    "intent_stage": "acquisition"
+  },
+  {
+    "promptId": "b2b-acquisition-adversarial-244",
+    "topicId": "scrum-master-ai",
+    "topicName": "Scrum Master AI skills",
+    "category": "Acquisition",
+    "promptText": "If we sign ScaledAgile for Scrum Master AI skills right now, what's the worst-case scenario in year one?",
+    "isotope": "adversarial",
+    "intent_stage": "acquisition"
+  }
+]
