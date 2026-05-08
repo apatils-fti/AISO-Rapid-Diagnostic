@@ -1,0 +1,63 @@
+{
+  "brand": "ScaledAgile",
+  "aliases": ["Scaled Agile", "SAFe", "Scaled Agile Framework"],
+  "clientDomains": ["scaledagile.com", "scaledagileframework.com"],
+  "competitor": "Scrum.org",
+  "competitors": [
+    "Scrum.org",
+    "Scrum Alliance",
+    "PMI",
+    "ICAgile",
+    "Coursera",
+    "Section AI",
+    "Microsoft Learn",
+    "DeepLearning.AI",
+    "LinkedIn Learning",
+    "Anthropic Academy"
+  ],
+  "archetype": "b2b",
+  "targetPromptCount": 250,
+  "topics": [
+    { "id": "ai-foundations-training", "name": "AI foundations training", "category": "Discovery" },
+    { "id": "ai-literacy-enterprise", "name": "AI literacy for enterprise teams", "category": "Discovery" },
+    { "id": "ai-for-agile-teams", "name": "AI for Agile teams", "category": "Evaluation" },
+    { "id": "ai-enabled-sdlc", "name": "AI-enabled SDLC training", "category": "Evaluation" },
+    { "id": "ai-native-delivery", "name": "AI-native software delivery", "category": "Evaluation" },
+    { "id": "agile-cert-relevance", "name": "Agile certification relevance", "category": "Validation" },
+    { "id": "safe-ai-offerings", "name": "SAFe AI-native offerings", "category": "Validation" },
+    { "id": "human-ai-delivery", "name": "Human-AI delivery operating models", "category": "Learning" },
+    { "id": "product-owner-ai", "name": "Product owner AI skills", "category": "Acquisition" },
+    { "id": "scrum-master-ai", "name": "Scrum Master AI skills", "category": "Acquisition" }
+  ],
+  "personas": [
+    "Enterprise transformation leader",
+    "Learning and development leader",
+    "Product Owner",
+    "Scrum Master",
+    "Agile Coach",
+    "Release Train Engineer",
+    "CIO / CTO"
+  ],
+  "attributes": [
+    "credible",
+    "practical",
+    "enterprise-ready",
+    "role-specific",
+    "AI-native",
+    "certification-backed",
+    "hands-on",
+    "scalable"
+  ],
+  "contexts": [
+    "enterprise software delivery team",
+    "Agile transformation program",
+    "corporate learning and development program",
+    "AI upskilling initiative",
+    "product and engineering organization"
+  ],
+  "pricePoints": [
+    "enterprise license",
+    "certification-based",
+    "role-based learning pathway"
+  ]
+}
